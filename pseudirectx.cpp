@@ -4,15 +4,15 @@ D3DMATRIX ID3DXMatrixStack::RotateYawPitchRollLocal(float yaw, float pitch, floa
 }
 D3DMATRIX ID3DXMatrixStack::Push() {
 }
-        D3DMATRIX ID3DXMatrixStack::Pop() {
+D3DMATRIX ID3DXMatrixStack::Pop() {
 }
-        D3DMATRIX ID3DXMatrixStack::TranslateLocal(float x, float y, float z) {
+D3DMATRIX ID3DXMatrixStack::TranslateLocal(float x, float y, float z) {
 }
-        D3DMATRIX ID3DXMatrixStack::LoadIdentity() {
+D3DMATRIX ID3DXMatrixStack::LoadIdentity() {
 }
-        const D3DMATRIX* ID3DXMatrixStack::GetTop() {
+const D3DMATRIX* ID3DXMatrixStack::GetTop() {
 }
-        D3DMATRIX ID3DXMatrixStack::ScaleLocal(float, float, float) {
+D3DMATRIX ID3DXMatrixStack::ScaleLocal(float, float, float) {
 }
 int D3DFVF_TEXCOORDSIZE2(int) {
 }
@@ -44,64 +44,64 @@ void DIRECTDRAW7::Release() {
 void DIRECT3D7::Release() {
 }
 
-        HRESULT DIRECTDRAWSURFACE7::Blt(LPRECT destRect, DIRECTDRAWSURFACE7*& src, LPRECT srcRect, DWORD dwFlags, void*) {
+HRESULT DIRECTDRAWSURFACE7::Blt(LPRECT destRect, DIRECTDRAWSURFACE7*& src, LPRECT srcRect, DWORD dwFlags, void*) {
 }
-        HRESULT DIRECTDRAWSURFACE7::BltFast(DWORD x, DWORD y, DIRECTDRAWSURFACE7*& src, LPRECT srcRect, DWORD dwTrans) {
+HRESULT DIRECTDRAWSURFACE7::BltFast(DWORD x, DWORD y, DIRECTDRAWSURFACE7*& src, LPRECT srcRect, DWORD dwTrans) {
 }
-        void DIRECTDRAWSURFACE7::SetColorKey(int, DDCOLORKEY*) {
+void DIRECTDRAWSURFACE7::SetColorKey(int, DDCOLORKEY*) {
 }
-        void DIRECTDRAWSURFACE7::Release() {
+void DIRECTDRAWSURFACE7::Release() {
 }
 
 void DIRECT3DDEVICE7::SetRenderState(int, int mode) {
 }
-        void DIRECT3DDEVICE7::SetTransform(UINT enum_transformStateType, const D3DMATRIX*) {
+void DIRECT3DDEVICE7::SetTransform(UINT enum_transformStateType, const D3DMATRIX*) {
 }
-        void DIRECT3DDEVICE7::SetTransform(UINT enum_transformStateType, const D3DMATRIX) {
+void DIRECT3DDEVICE7::SetTransform(UINT enum_transformStateType, const D3DMATRIX) {
 }
-        void DIRECT3DDEVICE7::LightEnable(int, bool) {
+void DIRECT3DDEVICE7::LightEnable(int, bool) {
 }
-        void DIRECT3DDEVICE7::Clear(int, void*, int, int, int, int) {
+void DIRECT3DDEVICE7::Clear(int, void*, int, int, int, int) {
 }
-        void DIRECT3DDEVICE7::SetTexture(int, DIRECTDRAWSURFACE7*&) {
+void DIRECT3DDEVICE7::SetTexture(int, DIRECTDRAWSURFACE7*&) {
 }
-        void DIRECT3DDEVICE7::DrawPrimitive(UINT enum_PrimitiveType, UINT start_vertex, UINT primitive_count) {
+void DIRECT3DDEVICE7::DrawPrimitive(UINT enum_PrimitiveType, UINT start_vertex, UINT primitive_count) {
 }
-        void DIRECT3DDEVICE7::DrawPrimitive(UINT enum_PrimitiveType, UINT primitive_count, const void* data, UINT stride, void*) {
+void DIRECT3DDEVICE7::DrawPrimitive(UINT enum_PrimitiveType, UINT primitive_count, const void* data, UINT stride, void*) {
 }
-        //void DIRECT3DDEVICE7::DrawPrimitive(enum primitive_type, UINT start_vertex, UINT primitive_count) {}
-        void DIRECT3DDEVICE7::SetMaterial(D3DMATERIAL7*) {
+//void DIRECT3DDEVICE7::DrawPrimitive(enum primitive_type, UINT start_vertex, UINT primitive_count) {}
+void DIRECT3DDEVICE7::SetMaterial(D3DMATERIAL7*) {
 }
-        void DIRECT3DDEVICE7::ComputeSphereVisibility(D3DVECTOR*, float*, int, int, DWORD*) {
+void DIRECT3DDEVICE7::ComputeSphereVisibility(D3DVECTOR*, float*, int, int, DWORD*) {
 }
-        void DIRECT3DDEVICE7::SetLight(int, D3DLIGHT7*) {
+void DIRECT3DDEVICE7::SetLight(int, D3DLIGHT7*) {
 }
-        void DIRECT3DDEVICE7::SetTextureStageState(DWORD, int, DWORD) {
+void DIRECT3DDEVICE7::SetTextureStageState(DWORD, int, DWORD) {
 }
-        void DIRECT3DDEVICE7::GetRenderTarget(LPDIRECTDRAWSURFACE7*) {
+void DIRECT3DDEVICE7::GetRenderTarget(LPDIRECTDRAWSURFACE7*) {
 }
-        void DIRECT3DDEVICE7::SetViewport(D3DVIEWPORT7*) {
+void DIRECT3DDEVICE7::SetViewport(D3DVIEWPORT7*) {
 }
-        int  DIRECT3DDEVICE7::GetCaps(D3DDEVICEDESC7*) {
+int  DIRECT3DDEVICE7::GetCaps(D3DDEVICEDESC7*) {
 }
-        void DIRECT3DDEVICE7::Release() {
+void DIRECT3DDEVICE7::Release() {
 }
-        void DIRECT3DDEVICE7::BeginScene() {
+void DIRECT3DDEVICE7::BeginScene() {
 }
-        void DIRECT3DDEVICE7::EndScene() {
+void DIRECT3DDEVICE7::EndScene() {
 }
-        bool DIRECT3DDEVICE7::GetLightEnable(int, BOOL*) {
+bool DIRECT3DDEVICE7::GetLightEnable(int, BOOL*) {
 }
 
-        void D3DXCONTEXT::UpdateFrame(int) {
+void D3DXCONTEXT::UpdateFrame(int) {
 }
-        LPDIRECT3D7 D3DXCONTEXT::GetD3D() {
+LPDIRECT3D7 D3DXCONTEXT::GetD3D() {
 }
-        LPDIRECTDRAW7 D3DXCONTEXT::GetDD() {
+LPDIRECTDRAW7 D3DXCONTEXT::GetDD() {
 }
-        LPDIRECTDRAWSURFACE7 D3DXCONTEXT::GetPrimary() {
+LPDIRECTDRAWSURFACE7 D3DXCONTEXT::GetPrimary() {
 }
-        LPDIRECT3DDEVICE7 D3DXCONTEXT::GetD3DDevice() {
+LPDIRECT3DDEVICE7 D3DXCONTEXT::GetD3DDevice() {
 }
 
 HRESULT DirectSoundCreate(int* guid, LPDIRECTSOUND* ds, void* unkOuter) {
@@ -200,11 +200,11 @@ int GetStockObject(int) {
    Structures in here should actually be defined in bikez2.h, bikez2.cpp or some elusive header. They are here just temporarily. */
 /*struct pvertex {
   D3DVECTOR position {
-}
+  }
   float     u, v {
-}
+  }
   } {
-}*/
+  }*/
 void lataa(const char*, void*, bool, bool) {
 }
 //                    pvertex*
