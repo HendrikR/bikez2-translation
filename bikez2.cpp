@@ -431,7 +431,7 @@ void init(void)
 	m_pDevice->SetTransform(D3DTRANSFORMSTATE_PROJECTION, &m_Projection);
 
 	// Set the render states
-	//m_pDevice->SetRenderState(D3DRENDERSTATE_ANTIALIAS,D3DANTIALIAS_SORTDEPENDENT );//ota DDSCAPS2_HINTANTIALIASING pois jos poistat
+	//m_pDevice->SetRenderState(D3DRENDERSTATE_ANTIALIAS,D3DANTIALIAS_SORTDEPENDENT );//ota DDSCAPS2_HINTANTIALIASING inactive jos inactivetat
 
 	//sumut
 	if((desc3d.dpcTriCaps.dwRasterCaps&D3DPRASTERCAPS_FOGVERTEX)&&(!(desc3d.dpcTriCaps.dwRasterCaps&D3DPRASTERCAPS_FOGRANGE)))
@@ -583,17 +583,17 @@ void init(void)
 	ase[q].bullet_picture=0;
 	ase[q].smoke_filled=0;
 	ase[q].smoke_duration=5000;
-	ase[q].paino=0.00001f;
-	ase[q].pommi=0;
+	ase[q].weight=0.00001f;
+	ase[q].explosion_size=0;
 	ase[q].smoke_count=0;
-	ase[q].kimmokkeita=3;
+	ase[q].num_bounces=3;
 	ase[q].damage=0.4f;
 	ase[q].homing=false;
-	ase[q].savukoko=1.0f;
+	ase[q].smoke_size=1.0f;
 	ase[q].pdamage=1;
 	ase[q].pspeed=5;
 	ase[q].prate_of_fire=9;
-	ase[q].hauleja=1;
+	ase[q].bullets_per_shot=1;
 	ase[q]._type=4;
 
 
@@ -606,17 +606,17 @@ void init(void)
 	ase[q].bullet_picture=1;
 	ase[q].smoke_filled=2;
 	ase[q].smoke_duration=1000;
-	ase[q].paino=0.0f;
-	ase[q].pommi=3;
+	ase[q].weight=0.0f;
+	ase[q].explosion_size=3;
 	ase[q].smoke_count=10;
-	ase[q].kimmokkeita=0;
+	ase[q].num_bounces=0;
 	ase[q].damage=8;
 	ase[q].homing=true;
-	ase[q].savukoko=1.0f;
+	ase[q].smoke_size=1.0f;
 	ase[q].pdamage=10;
 	ase[q].pspeed=1;
 	ase[q].prate_of_fire=2;
-	ase[q].hauleja=1;
+	ase[q].bullets_per_shot=1;
 	ase[q]._type=4;
 
 	q=2;
@@ -628,16 +628,16 @@ void init(void)
 	ase[q].bullet_picture=2;
 	ase[q].smoke_filled=0;
 	ase[q].smoke_duration=5000;
-	ase[q].paino=0.01f;
-	ase[q].pommi=0;
+	ase[q].weight=0.01f;
+	ase[q].explosion_size=0;
 	ase[q].smoke_count=0;
-	ase[q].kimmokkeita=0;
+	ase[q].num_bounces=0;
 	ase[q].damage=1;
 	ase[q].homing=false;
 	ase[q].pdamage=2;
 	ase[q].pspeed=2;
 	ase[q].prate_of_fire=2;
-	ase[q].hauleja=1;
+	ase[q].bullets_per_shot=1;
 	ase[q]._type=4;
 
 	q=3;
@@ -649,16 +649,16 @@ void init(void)
 	ase[q].bullet_picture=2;
 	ase[q].smoke_filled=0;
 	ase[q].smoke_duration=5000;
-	ase[q].paino=0.01f;
-	ase[q].pommi=0;
+	ase[q].weight=0.01f;
+	ase[q].explosion_size=0;
 	ase[q].smoke_count=0;
-	ase[q].kimmokkeita=0;
+	ase[q].num_bounces=0;
 	ase[q].damage=0;
 	ase[q].homing=false;
 	ase[q].pdamage=2;
 	ase[q].pspeed=2;
 	ase[q].prate_of_fire=2;
-	ase[q].hauleja=1;
+	ase[q].bullets_per_shot=1;
 	ase[q]._type=4;
 
 	q=4;
@@ -670,16 +670,16 @@ void init(void)
 	ase[q].bullet_picture=3;
 	ase[q].smoke_filled=0;
 	ase[q].smoke_duration=5000;
-	ase[q].paino=0.01f;
-	ase[q].pommi=0;
+	ase[q].weight=0.01f;
+	ase[q].explosion_size=0;
 	ase[q].smoke_count=0;
-	ase[q].kimmokkeita=0;
+	ase[q].num_bounces=0;
 	ase[q].damage=0;
 	ase[q].homing=false;
 	ase[q].pdamage=2;
 	ase[q].pspeed=2;
 	ase[q].prate_of_fire=2;
-	ase[q].hauleja=1;
+	ase[q].bullets_per_shot=1;
 	ase[q]._type=4;
 
 	q=5;
@@ -691,16 +691,16 @@ void init(void)
 	ase[q].bullet_picture=0;
 	ase[q].smoke_filled=0;
 	ase[q].smoke_duration=5000;
-	ase[q].paino=0.00001f;
-	ase[q].pommi=0;
+	ase[q].weight=0.00001f;
+	ase[q].explosion_size=0;
 	ase[q].smoke_count=0;
-	ase[q].kimmokkeita=2;
+	ase[q].num_bounces=2;
 	ase[q].damage=2.1f;
 	ase[q].homing=false;
 	ase[q].pdamage=2;
 	ase[q].pspeed=2;
 	ase[q].prate_of_fire=2;
-	ase[q].hauleja=1;
+	ase[q].bullets_per_shot=1;
 	ase[q]._type=4;
 /*
   q=6;
@@ -712,10 +712,10 @@ void init(void)
   ase[q].bullet_picture=0;
   ase[q].smoke_filled=0;
   ase[q].smoke_duration=5000;
-  ase[q].paino=0.00001f;
-  ase[q].pommi=0;
+  ase[q].weight=0.00001f;
+  ase[q].explosion_size=0;
   ase[q].smoke_count=0;
-  ase[q].kimmokkeita=2;
+  ase[q].num_bounces=2;
   ase[q].damage=0.1f;
   ase[q].homing=false;
   ase[q].pdamage=2;
@@ -731,10 +731,10 @@ void init(void)
   ase[q].bullet_picture=0;
   ase[q].smoke_filled=0;
   ase[q].smoke_duration=5000;
-  ase[q].paino=0.00001f;
-  ase[q].pommi=0;
+  ase[q].weight=0.00001f;
+  ase[q].explosion_size=0;
   ase[q].smoke_count=0;
-  ase[q].kimmokkeita=2;
+  ase[q].num_bounces=2;
   ase[q].damage=0.1f;
   ase[q].homing=false;
   ase[q].pdamage=2;
@@ -750,10 +750,10 @@ void init(void)
   ase[q].bullet_picture=0;
   ase[q].smoke_filled=0;
   ase[q].smoke_duration=5000;
-  ase[q].paino=0.00001f;
-  ase[q].pommi=0;
+  ase[q].weight=0.00001f;
+  ase[q].explosion_size=0;
   ase[q].smoke_count=0;
-  ase[q].kimmokkeita=2;
+  ase[q].num_bounces=2;
   ase[q].damage=0.1f;
   ase[q].homing=false;
   ase[q].pdamage=2;
@@ -769,10 +769,10 @@ void init(void)
   ase[q].bullet_picture=0;
   ase[q].smoke_filled=0;
   ase[q].smoke_duration=5000;
-  ase[q].paino=0.00001f;
-  ase[q].pommi=0;
+  ase[q].weight=0.00001f;
+  ase[q].explosion_size=0;
   ase[q].smoke_count=0;
-  ase[q].kimmokkeita=2;
+  ase[q].num_bounces=2;
   ase[q].damage=0.1f;
   ase[q].homing=false;
   ase[q].pdamage=2;
@@ -788,14 +788,14 @@ void init(void)
 	ase[q].bullet_picture=0;
 	ase[q].smoke_filled=0;
 	ase[q].smoke_duration=5000;
-	ase[q].paino=0.00001f;
-	ase[q].pommi=0;
+	ase[q].weight=0.00001f;
+	ase[q].explosion_size=0;
 	ase[q].smoke_count=0;
-	ase[q].kimmokkeita=5;
+	ase[q].num_bounces=5;
 	ase[q].damage=5.5f;
 	ase[q].homing=false;
-	ase[q].savukoko=1.0f;
-	ase[q].hauleja=1;
+	ase[q].smoke_size=1.0f;
+	ase[q].bullets_per_shot=1;
 	ase[q].pdamage=3;
 	ase[q].pspeed=2;
 	ase[q].prate_of_fire=2;
@@ -810,14 +810,14 @@ void init(void)
 	ase[q].bullet_picture=0;
 	ase[q].smoke_filled=0;
 	ase[q].smoke_duration=5000;
-	ase[q].paino=0.00001f;
-	ase[q].pommi=0;
+	ase[q].weight=0.00001f;
+	ase[q].explosion_size=0;
 	ase[q].smoke_count=0;
-	ase[q].kimmokkeita=3;
+	ase[q].num_bounces=3;
 	ase[q].damage=0.8f;
 	ase[q].homing=false;
-	ase[q].savukoko=1.0f;
-	ase[q].hauleja=1;
+	ase[q].smoke_size=1.0f;
+	ase[q].bullets_per_shot=1;
 	ase[q].pdamage=2;
 	ase[q].pspeed=5;
 	ase[q].prate_of_fire=9;
@@ -832,14 +832,14 @@ void init(void)
 	ase[q].bullet_picture=1;
 	ase[q].smoke_filled=2;
 	ase[q].smoke_duration=1000;
-	ase[q].paino=0.0f;
-	ase[q].pommi=3;
+	ase[q].weight=0.0f;
+	ase[q].explosion_size=3;
 	ase[q].smoke_count=10;
-	ase[q].kimmokkeita=0;
+	ase[q].num_bounces=0;
 	ase[q].damage=10;
 	ase[q].homing=true;
-	ase[q].savukoko=1.0f;
-	ase[q].hauleja=1;
+	ase[q].smoke_size=1.0f;
+	ase[q].bullets_per_shot=1;
 	ase[q].pdamage=10;
 	ase[q].pspeed=1;
 	ase[q].prate_of_fire=1;
@@ -975,7 +975,7 @@ mallit[q].malli[7].z=16.8f-mallit[q].malli[8].z;
 
 }
 
-void initializemopeds(void)//initialize mopeds
+void initMopeds(void)//initialize mopeds
 {
 	int d,a;
 
@@ -986,10 +986,10 @@ void initializemopeds(void)//initialize mopeds
 	moped[d].ase[2]=8;
 	moped[d].ase[3]=9;
 	moped[d].timesparks=-1;
-	moped[d].mission.suoritettu=3;
+	moped[d].mission.status=3;
 	moped[d].mopona=1;
 	moped[d].numero=d;
-	moped[d].energia=100;
+	moped[d].energy=100;
 	moped[d].level=0;
 	moped[d].direction=pi*0.25f;
 	moped[d].x1=(float)(majaz*8000+2450);
@@ -999,7 +999,7 @@ void initializemopeds(void)//initialize mopeds
 	moped[d].speed=0.00f;
 	moped[d].sektorix=(int)moped[d].x1/8000;
 	moped[d].sektoriz=(int)moped[d].z1/8000;
-	moped[d].pois=false;
+	moped[d].inactive=false;
 	for (a=0; a<100; a++)moped[d].osuma[a]=false;
 	moped[d].directiontimer=0;
 	moped[d].visible=true;
@@ -1007,7 +1007,7 @@ void initializemopeds(void)//initialize mopeds
 	moped[d].z3=moped[d].z1;
 	moped[d].x4=moped[d].x2;
 	moped[d].z4=moped[d].z2;
-	moped[d].rahat=50;
+	moped[d].money=50;
 
 
 	for (d=1; d<mopoja; d++){
@@ -1019,7 +1019,7 @@ void initializemopeds(void)//initialize mopeds
 BOOL loadwall(char nimi[200],linjagroup *target,BOOL mirror)
 {
 	FILE *fil;
-	CHAR rivi[300];
+	CHAR row[300];
 	fil = fopen(nimi,"rt");
 	int b,a,c;
 	FLOAT groupx,groupy,groupz;
@@ -1031,33 +1031,33 @@ BOOL loadwall(char nimi[200],linjagroup *target,BOOL mirror)
 //add mirror properties to both ways
 
 
-	fgets(rivi,sizeof(rivi),fil);//ammount of groups
-	target->grouppia=atoi(rivi);
+	fgets(row,sizeof(row),fil);//ammount of groups
+	target->grouppia=atoi(row);
 	target->viivat=new linjat[target->grouppia];
 
 	for (b=0; b<target->grouppia; b++)
 	{
 		//location of group
-		fgets(rivi,sizeof(rivi),fil);
-		groupx=(float)atof(rivi);
-		fgets(rivi,sizeof(rivi),fil);
-		groupy=(float)atof(rivi);
-		fgets(rivi,sizeof(rivi),fil);
-		groupz=(float)atof(rivi);
+		fgets(row,sizeof(row),fil);
+		groupx=(float)atof(row);
+		fgets(row,sizeof(row),fil);
+		groupy=(float)atof(row);
+		fgets(row,sizeof(row),fil);
+		groupz=(float)atof(row);
 
-		fgets(rivi,sizeof(rivi),fil);//ammount of buildings
-		target->viivat[b].viivaa=atoi(rivi);
+		fgets(row,sizeof(row),fil);//ammount of buildings
+		target->viivat[b].viivaa=atoi(row);
 		target->viivat[b].viiva=new linja[target->viivat[b].viivaa];
 		for (a=0; a<target->viivat[b].viivaa; a++)
 		{
-			fgets(rivi,sizeof(rivi),fil);//ammount of lines in a building
-			target->viivat[b].viiva[a].linjaa=atoi(rivi);
+			fgets(row,sizeof(row),fil);//ammount of lines in a building
+			target->viivat[b].viiva[a].linjaa=atoi(row);
 			target->viivat[b].viiva[a].point=new dot[target->viivat[b].viiva[a].linjaa];
 			for (c=0; c<target->viivat[b].viiva[a].linjaa; c++)//read points
 			{
-				x[c]=(float)atof(fgets(rivi,sizeof(rivi),fil))-groupx;//x
-				y[c]=(float)atof(fgets(rivi,sizeof(rivi),fil))-groupy;//y
-				z[c]=(float)atof(fgets(rivi,sizeof(rivi),fil))-groupz;//z
+				x[c]=(float)atof(fgets(row,sizeof(row),fil))-groupx;//x
+				y[c]=(float)atof(fgets(row,sizeof(row),fil))-groupy;//y
+				z[c]=(float)atof(fgets(row,sizeof(row),fil))-groupz;//z
 			}
 			for (c=0; c<target->viivat[b].viiva[a].linjaa-1; c++)//making lines to every except the last one. (NOTE -1)
 			{
@@ -1083,10 +1083,10 @@ BOOL loadwall(char nimi[200],linjagroup *target,BOOL mirror)
 	return true;
 }
 
-BOOL load(char nimi[200],obj *target,BOOL mirror,BOOL miekkakala)
+BOOL load(const char filename[200],obj *target,BOOL mirror,BOOL miekkakala)
 {
 	FILE *fil;
-	CHAR rivi[300];
+	CHAR row[300];
 	//INT faces;
 	INT kolme,kolmi;
 	FLOAT x[2000];
@@ -1120,40 +1120,40 @@ BOOL load(char nimi[200],obj *target,BOOL mirror,BOOL miekkakala)
 	//INT kolmion;//triangle's
 
 	INT i,j,b,a,q,faces;
-	fil = fopen(nimi,"rt");
+	fil = fopen(filename,"rt");
 
 
 	//target = new objekt[lootia];
 
 
-	fgets(rivi,sizeof(rivi),fil);
-	j=atoi(rivi);
+	fgets(row,sizeof(row),fil);
+	j=atoi(row);
 	//lataaapu(j,&target); //load help(j,&target);
 	//*target	= new obj[j];
 
 
 	for (b=0; b<j; b++)
 	{
-		fgets(rivi,sizeof(rivi),fil);
-		a=atoi(rivi);
+		fgets(row,sizeof(row),fil);
+		a=atoi(row);
 
-		fgets(rivi,sizeof(rivi),fil);
-		groupx=(float)atof(rivi);
-		fgets(rivi,sizeof(rivi),fil);
-		groupy=(float)atof(rivi);
-		fgets(rivi,sizeof(rivi),fil);
-		groupz=(float)atof(rivi);
+		fgets(row,sizeof(row),fil);
+		groupx=(float)atof(row);
+		fgets(row,sizeof(row),fil);
+		groupy=(float)atof(row);
+		fgets(row,sizeof(row),fil);
+		groupz=(float)atof(row);
 
 //At this point we load the tip of the sword.
 
 		if (miekkakala)//swordfish
 		{
-			fgets(rivi,sizeof(rivi),fil);
-			target[b].swordpointx=(float)atof(rivi)-groupx;
-			fgets(rivi,sizeof(rivi),fil);
-			target[b].swordpointy=(float)atof(rivi)-groupy;
-			fgets(rivi,sizeof(rivi),fil);
-			target[b].swordpointz=(float)atof(rivi)-groupz;
+			fgets(row,sizeof(row),fil);
+			target[b].swordpointx=(float)atof(row)-groupx;
+			fgets(row,sizeof(row),fil);
+			target[b].swordpointy=(float)atof(row)-groupy;
+			fgets(row,sizeof(row),fil);
+			target[b].swordpointz=(float)atof(row)-groupz;
 		}
 
 		target[b].mirror=mirror;
@@ -1162,17 +1162,17 @@ BOOL load(char nimi[200],obj *target,BOOL mirror,BOOL miekkakala)
 
 		for (q=0; q<a; q++)
 		{
-                	fgets(rivi,sizeof(rivi),fil);//666666
-			fgets(rivi,sizeof(rivi),fil);//materials
-			target[b].sisus[q].material=atoi(rivi);
-			fgets(rivi,sizeof(rivi),fil);//materials second time
+                	fgets(row,sizeof(row),fil);//666666
+			fgets(row,sizeof(row),fil);//materials
+			target[b].sisus[q].material=atoi(row);
+			fgets(row,sizeof(row),fil);//materials second time
 
 			{
-				fgets(rivi,sizeof(rivi),fil);
-                                //new(INT faces=atoi(rivi));
-				kolme=atoi(rivi);
-				fgets(rivi,sizeof(rivi),fil);
-				faces=atoi(rivi);
+				fgets(row,sizeof(row),fil);
+                                //new(INT faces=atoi(row));
+				kolme=atoi(row);
+				fgets(row,sizeof(row),fil);
+				faces=atoi(row);
 				//D3DVERTEX triangle[faces*3];
 				//FLOAT new( x[kolme]);
 				//x=new(FLOAT[kolme]);
@@ -1189,12 +1189,12 @@ BOOL load(char nimi[200],obj *target,BOOL mirror,BOOL miekkakala)
 
 				for (i=0; i<kolme; i++)
 				{
-					fgets(rivi,sizeof(rivi),fil);
-					x[i]=(((float)atof(rivi))-groupx);
-					fgets(rivi,sizeof(rivi),fil);
-					y[i]=(((float)atof(rivi))-groupy);
-					fgets(rivi,sizeof(rivi),fil);
-					z[i]=(((float)atof(rivi))-groupz)*peili;
+					fgets(row,sizeof(row),fil);
+					x[i]=(((float)atof(row))-groupx);
+					fgets(row,sizeof(row),fil);
+					y[i]=(((float)atof(row))-groupy);
+					fgets(row,sizeof(row),fil);
+					z[i]=(((float)atof(row))-groupz)*peili;
 
 					//dimensions
 					if(x[i]<target[b].sisus[q].upleft.x) target[b].sisus[q].upleft.x=x[i];
@@ -1207,46 +1207,46 @@ BOOL load(char nimi[200],obj *target,BOOL mirror,BOOL miekkakala)
 
 				for (i=0; i<faces; i++)
 				{
-					fgets(rivi,sizeof(rivi),fil);
-					sivu0[i]=atoi(rivi);
-					fgets(rivi,sizeof(rivi),fil);
-					sivu1[i]=atoi(rivi);
-					fgets(rivi,sizeof(rivi),fil);
-					sivu2[i]=atoi(rivi);
+					fgets(row,sizeof(row),fil);
+					sivu0[i]=atoi(row);
+					fgets(row,sizeof(row),fil);
+					sivu1[i]=atoi(row);
+					fgets(row,sizeof(row),fil);
+					sivu2[i]=atoi(row);
 				}
 
-				fgets(rivi,sizeof(rivi),fil);
-				kolmi=atoi(rivi);
+				fgets(row,sizeof(row),fil);
+				kolmi=atoi(row);
 
 				for (i=0; i<kolmi; i++)
 				{
-					fgets(rivi,sizeof(rivi),fil);
-					u[i]=(float)atof(rivi);
-					fgets(rivi,sizeof(rivi),fil);
-					v[i]=1.0f-(float)atof(rivi);
-					fgets(rivi,sizeof(rivi),fil);
-					w[i]=(float)atof(rivi);
+					fgets(row,sizeof(row),fil);
+					u[i]=(float)atof(row);
+					fgets(row,sizeof(row),fil);
+					v[i]=1.0f-(float)atof(row);
+					fgets(row,sizeof(row),fil);
+					w[i]=(float)atof(row);
 				}
 
-				fgets(rivi,sizeof(rivi),fil);
-				kolmi=atoi(rivi);
+				fgets(row,sizeof(row),fil);
+				kolmi=atoi(row);
 				for (i=0; i<kolmi; i++)
 				{
-					fgets(rivi,sizeof(rivi),fil);
-					sivu20[i]=atoi(rivi);
-					fgets(rivi,sizeof(rivi),fil);
-					sivu21[i]=atoi(rivi);
-					fgets(rivi,sizeof(rivi),fil);
-					sivu22[i]=atoi(rivi);
+					fgets(row,sizeof(row),fil);
+					sivu20[i]=atoi(row);
+					fgets(row,sizeof(row),fil);
+					sivu21[i]=atoi(row);
+					fgets(row,sizeof(row),fil);
+					sivu22[i]=atoi(row);
 				}
 				for (i=0; i<(3*faces); i++)
 				{
-					fgets(rivi,sizeof(rivi),fil);
-					x1[i]=((float)atof(rivi));
-					fgets(rivi,sizeof(rivi),fil);
-					y1[i]=((float)atof(rivi));
-					fgets(rivi,sizeof(rivi),fil);
-					z1[i]=((float)atof(rivi))*peili;
+					fgets(row,sizeof(row),fil);
+					x1[i]=((float)atof(row));
+					fgets(row,sizeof(row),fil);
+					y1[i]=((float)atof(row));
+					fgets(row,sizeof(row),fil);
+					z1[i]=((float)atof(row))*peili;
 				}
 
 				for (i=0; i<faces; i++)
@@ -1292,9 +1292,9 @@ BOOL load(char nimi[200],obj *target,BOOL mirror,BOOL miekkakala)
 				}
 
 
-				fgets(rivi,sizeof(rivi),fil);
-				target[b].sisus[q].texture=atoi(rivi);
-				target[b].sisus[q].texture2=atoi(rivi);
+				fgets(row,sizeof(row),fil);
+				target[b].sisus[q].texture=atoi(row);
+				target[b].sisus[q].texture2=atoi(row);
 				target[b].sisus[q].x=0.0f;
 				target[b].sisus[q].y=0.0f;
 				target[b].sisus[q].z=0.0f;
@@ -1321,9 +1321,9 @@ BOOL loadtext()
 {
 
 	FILE *fil;
-	CHAR rivi[300];
-	CHAR rivit[13];
-	CHAR texturenimi[100];
+	CHAR row[300];
+	CHAR rows[13];
+	CHAR texturefilename[100];
 	DWORD x=100;
 	DWORD y=100;
 	DWORD mipmaps=D3DX_DEFAULT;
@@ -1331,13 +1331,13 @@ BOOL loadtext()
 	int q;
 	fil = fopen("models/mat.3dw","rt");
 
-	fgets(rivi,sizeof(rivi),fil);
-	materiaa=atoi(rivi);
-	mat = new D3DMATERIAL7[materiaa];
-	background = new LPDIRECTDRAWSURFACE7[materiaa];
+	fgets(row,sizeof(row),fil);
+	material_count=atoi(row);
+	mat = new D3DMATERIAL7[material_count];
+	background = new LPDIRECTDRAWSURFACE7[material_count];
 	bool filter[300];//to filter or not to filter
 
-	for (q=0; q<materiaa; q++)
+	for (q=0; q<material_count; q++)
 		filter[q]=false;
 /*
 //audience is not filtered
@@ -1345,7 +1345,7 @@ filter[49]=true;
 filter[50]=true;
 */
 
-	/*for (q=materiaa; q<materiaa+40; q++)
+	/*for (q=material_count; q<material_count+40; q++)
           {
 
           D3DXCreateTexture(
@@ -1361,54 +1361,54 @@ filter[50]=true;
 
           }*/
 
-	for (q=0; q<materiaa; q++)
+	for (q=0; q<material_count; q++)
 	{
 		ZeroMemory( &background[q], sizeof(background[q]) );
 		ZeroMemory( &mat[q], sizeof(mat[q]) );
 
 		// Set the RGBA for ambient reflection.
-		fgets(rivi,sizeof(rivi),fil);
-		mat[q].dcvAmbient.r = (D3DVALUE)atof(rivi);
-		fgets(rivi,sizeof(rivi),fil);
-		mat[q].dcvAmbient.g = (D3DVALUE)atof(rivi);
-		fgets(rivi,sizeof(rivi),fil);
-		mat[q].dcvAmbient.b = (D3DVALUE)atof(rivi);
+		fgets(row,sizeof(row),fil);
+		mat[q].dcvAmbient.r = (D3DVALUE)atof(row);
+		fgets(row,sizeof(row),fil);
+		mat[q].dcvAmbient.g = (D3DVALUE)atof(row);
+		fgets(row,sizeof(row),fil);
+		mat[q].dcvAmbient.b = (D3DVALUE)atof(row);
 		mat[q].dcvAmbient.a = (D3DVALUE)1.0;
 
 		// Set the RGBA for diffuse reflection.
-		fgets(rivi,sizeof(rivi),fil);
-		mat[q].dcvDiffuse.r = (D3DVALUE)atof(rivi);
-		fgets(rivi,sizeof(rivi),fil);
-		mat[q].dcvDiffuse.g = (D3DVALUE)atof(rivi);
-		fgets(rivi,sizeof(rivi),fil);
-		mat[q].dcvDiffuse.b = (D3DVALUE)atof(rivi);
+		fgets(row,sizeof(row),fil);
+		mat[q].dcvDiffuse.r = (D3DVALUE)atof(row);
+		fgets(row,sizeof(row),fil);
+		mat[q].dcvDiffuse.g = (D3DVALUE)atof(row);
+		fgets(row,sizeof(row),fil);
+		mat[q].dcvDiffuse.b = (D3DVALUE)atof(row);
 		mat[q].dcvDiffuse.a = (D3DVALUE)1.0;
 
 		// Set the color and sharpness of specular highlights.
-		fgets(rivi,sizeof(rivi),fil);
-		mat[q].dcvSpecular.r = (D3DVALUE)atof(rivi);
-		fgets(rivi,sizeof(rivi),fil);
-		mat[q].dcvSpecular.g = (D3DVALUE)atof(rivi);
-		fgets(rivi,sizeof(rivi),fil);
-		mat[q].dcvSpecular.b = (D3DVALUE)atof(rivi);
+		fgets(row,sizeof(row),fil);
+		mat[q].dcvSpecular.r = (D3DVALUE)atof(row);
+		fgets(row,sizeof(row),fil);
+		mat[q].dcvSpecular.g = (D3DVALUE)atof(row);
+		fgets(row,sizeof(row),fil);
+		mat[q].dcvSpecular.b = (D3DVALUE)atof(row);
 		mat[q].dcvSpecular.a =1;
 		mat[q].dvPower = 50;
 
-		fgets(rivit,sizeof(rivit),fil);
-		fgets(rivi,sizeof(rivi),fil);
+		fgets(rows,sizeof(rows),fil);
+		fgets(row,sizeof(row),fil);
 
-		//itoa(tallennuspaikka,temprivi,10);//(saveplace, templine, 10)
-		strcpy(texturenimi,"textures/");
-		strcat(texturenimi,rivit);
+		//itoa(tallennusplace,temprow,10);//(saveplace, templine, 10)
+		strcpy(texturefilename,"textures/");
+		strcat(texturefilename,rows);
 
-		//if(atoi(rivi)==155)
-
-
+		//if(atoi(row)==155)
 
 
-		//if(atoi(rivi)==255)
 
-		//background[q]=loadPicture(m_pDD,rivit,true);//background[q]loadpicture
+
+		//if(atoi(row)==255)
+
+		//background[q]=loadPicture(m_pDD,rows,true);//background[q]loadpicture
 
 		D3DX_SURFACEFORMAT pixel;
 
@@ -1422,13 +1422,13 @@ filter[50]=true;
 		//D3DXCheckTextureRequirements(m_pDevice,NULL,0,0,&pixel);
 
 
-		//background[q]=loadTexture(screenmode,info,&m_pDevice,m_pDD,texturenimi,true);//background[q]=loadtexture(screenmode,info,&m_pDevice,m_pDD,texturename,true);
+		//background[q]=loadTexture(screenmode,info,&m_pDevice,m_pDD,texturefilename,true);//background[q]=loadtexture(screenmode,info,&m_pDevice,m_pDD,texturename,true);
 		/*
                   D3DXLoadTextureFromFile(
                   m_pDevice,
                   background[q],                       // destination
                   D3DX_DEFAULT ,               // all mip levels
-                  texturenimi,		//texturenimi		        // source
+                  texturefilename,		//texturefilename		        // source
                   NULL,                       // entire source
                   NULL,                       // entire destination
                   D3DX_FT_LINEAR );
@@ -1444,7 +1444,7 @@ filter[50]=true;
                                         0,
                                         &background[q],
                                         NULL,
-                                        texturenimi,
+                                        texturefilename,
                                         D3DX_FT_POINT    //D3DX_FT_DEFAULT
                                 );
 		else
@@ -1457,7 +1457,7 @@ filter[50]=true;
                                         0,
                                         &background[q],
                                         &mipmaps,
-                                        texturenimi,
+                                        texturefilename,
                                         D3DX_FT_DEFAULT
                                 );
 
@@ -1718,7 +1718,7 @@ void readkeyb(void)
                                 moped[0].mission=moped[0].mission_random;
                                 //a dude comes aboard
                                 if(moped[0].mission._type==1)
-                                        character[moped->nearestcharacter].pois=true;
+                                        character[moped->nearestcharacter].inactive=true;
                         }
                         missionantovaihe=1;//introduction is readed
                 }
@@ -1793,7 +1793,7 @@ void readkeyb(void)
                         if(pelivaihe2==1)
 				if((menuvalittu<11)&&(menuvalittu>0))
 				{
-					tallennuspaikka=menuvalittu-1;
+					tallennusplace=menuvalittu-1;
 					game_load();
 					SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 					break;
@@ -1802,14 +1802,14 @@ void readkeyb(void)
                         if(pelivaihe2==2)
 				if((menuvalittu<11)&&(menuvalittu>0))
 				{
-					tallennuspaikka=menuvalittu-1;
+					tallennusplace=menuvalittu-1;
 					pelivaihe2=3;
-					letters_in_name=kirjaintan[tallennuspaikka];
-					strcpy(savenimi,"                                                 ");
-					strcpy(savenimi,m_filenames[tallennuspaikka]);
-					if(!loadable[tallennuspaikka]){
+					letters_in_name=kirjaintan[tallennusplace];
+					strcpy(savefilename,"                                                 ");
+					strcpy(savefilename,m_filenames[tallennusplace]);
+					if(!loadable[tallennusplace]){
 						letters_in_name=0;
-						strcpy(savenimi,"                                                 ");
+						strcpy(savefilename,"                                                 ");
 					}
 					SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 					break;
@@ -1818,7 +1818,7 @@ void readkeyb(void)
                         if(pelivaihe2==3)
 				if((menuvalittu<11)&&(menuvalittu>0))
 				{
-					tallennuspaikka=menuvalittu-1;
+					tallennusplace=menuvalittu-1;
 					game_save();
 					if(pelivaihe_oli==2){
 						pelivaihe2=0;
@@ -1948,27 +1948,27 @@ void calculatesmokes(void)//calculate smokes
 	float rotatespeed=0.001f;
 
 	for (a=0; a<MAX_SMOKES; a++){
-		if(savu[a].pois)continue;
-		savu[a].aika=savu[a].aika-elapsed*gamespeed;
+		if(savu[a].inactive)continue;
+		savu[a].timer=savu[a].timer-elapsed*gamespeed;
 
 		//A smoke disappears if it is too small
-		savu[a].koko=savu[a].koko+savu[a].suurenee*elapsed*gamespeed;
-		if(savu[a].koko<=0) {savu[a].aika=-1;}
+		savu[a].size=savu[a].size+savu[a].suurenee*elapsed*gamespeed;
+		if(savu[a].size<=0) {savu[a].timer=-1;}
 
-		/*if(savu[a].aika<0){   //if(smoke[a].time<0)
-                  for (q=a; q<savuja; q++){
+		/*if(savu[a].timer<0){   //if(smoke[a].time<0)
+                  for (q=a; q<smoke_count; q++){
                   savu[q]=savu[q+1];//smoke
                   }
-                  savuja=savuja-1;//smokes
+                  smoke_count=smoke_count-1;//smokes
                   }*/
-		if(savu[a].aika<0){
-			savu[a].pois=true;
+		if(savu[a].timer<0){
+			savu[a].inactive=true;
 			continue;
 		}
 
 		//smoke[a].w=savu[a].w+rotatespeed*savu[a].rotate*elapsed*gamespeed;//smokes are rolling
 
-		//smoke[a].koko=savu[a].koko+0.0001f*elapsed*gamespeed;
+		//smoke[a].size=savu[a].size+0.0001f*elapsed*gamespeed;
 
 		//smokes fly
 		if(savu[a].up!=0){
@@ -1977,23 +1977,23 @@ void calculatesmokes(void)//calculate smokes
                           savu[a].w=0;
                           savu[a].e=-atan2f(-kameray2+kameray1,((-kameraz2+kameraz1+0.1f)*(-kamerax2+kamerax1+0.1f)));
 			*/
-			savu[a].paikka.x=savu[a].paikka.x+savu[a].cos*elapsed*gamespeed*savunspeed;
-			savu[a].paikka.y=savu[a].paikka.y+savu[a].up*elapsed*gamespeed*savunspeed;
-			savu[a].paikka.z=savu[a].paikka.z+savu[a].sin*elapsed*gamespeed*savunspeed;
+			savu[a].place.x=savu[a].place.x+savu[a].cos*elapsed*gamespeed*savunspeed;
+			savu[a].place.y=savu[a].place.y+savu[a].up*elapsed*gamespeed*savunspeed;
+			savu[a].place.z=savu[a].place.z+savu[a].sin*elapsed*gamespeed*savunspeed;
 		}
 
 	}
 }
 
-void fromsmoke(float koko, float suurenee,bool rotate,float smoke_duration,float x,float y,float z,int _type,float q,float w,float e)//does smokes and explosion
+void fromsmoke(float size, float suurenee,bool rotate,float smoke_duration,float x,float y,float z,int _type,float q,float w,float e)//does smokes and explosion
 {
 	int a,b;
-	/*if(savuja>=MAX_SMOKES)//Remove a smokes if there are too many
+	/*if(smoke_count>=MAX_SMOKES)//Remove a smokes if there are too many
           {
-          for (a=randInt(0,savuja); a<savuja; a++){
+          for (a=randInt(0,smoke_count); a<smoke_count; a++){
           savu[a]=savu[a+1];
           }
-          savuja=savuja-1;//smokes
+          smoke_count=smoke_count-1;//smokes
           }*/
 	//deciding wich bullet is replaced with a new one
         a=0;
@@ -2001,16 +2001,16 @@ void fromsmoke(float koko, float suurenee,bool rotate,float smoke_duration,float
   alku1:
         a=randInt(0,MAX_SMOKES);
         b=b+1;
-        if(b>MAX_SMOKES)savu[a].pois=true;
-        if(!savu[a].pois)goto alku1;
+        if(b>MAX_SMOKES)savu[a].inactive=true;
+        if(!savu[a].inactive)goto alku1;
 
-	savu[a].pois=false;
-	savu[a].paikka.x=x;
-	savu[a].paikka.y=y;
-	savu[a].paikka.z=z;
+	savu[a].inactive=false;
+	savu[a].place.x=x;
+	savu[a].place.y=y;
+	savu[a].place.z=z;
 	savu[a]._type=_type;
-	savu[a].koko=koko+randDouble(-0.2f,0.2f);
-	if(koko<0.1f)koko=0.1f;
+	savu[a].size=size+randDouble(-0.2f,0.2f);
+	if(size<0.1f)size=0.1f;
 
 	//picture for cloud smoke is randomly selected from to pictures.
 	if(_type==2)
@@ -2022,7 +2022,7 @@ void fromsmoke(float koko, float suurenee,bool rotate,float smoke_duration,float
 	savu[a].suurenee=suurenee;
 
 
-	savu[a].aika=randDouble(0,smoke_duration);
+	savu[a].timer=randDouble(0,smoke_duration);
 	savu[a].cos=(float)cos(savu[a].q);
 	savu[a].sin=(float)sin(savu[a].q);
 	savu[a].up=0;
@@ -2039,7 +2039,7 @@ void calculatebullets(void)//calculates bullets
 {
 	int j,a,q,q2,d;
 	D3DXVECTOR3 skaalattu;
-	float korkeus,kuljettumatka;
+	float height,kuljettumatka;
 	int pommeja=1;//ammount of explosions
 
 	RECT r1;
@@ -2058,23 +2058,23 @@ void calculatebullets(void)//calculates bullets
 		if(bullet[a].remove)continue;
 
 		//time
-		if(bullet[a].aika<-1)bullet[a].remove=true;
-		if(bullet[a].aika!=-1)bullet[a].aika=bullet[a].aika-elapsed*gamespeed*0.999f;
+		if(bullet[a].timer<-1)bullet[a].remove=true;
+		if(bullet[a].timer!=-1)bullet[a].timer=bullet[a].timer-elapsed*gamespeed*0.999f;
 		if(a>9){//Bullets at the beginning are for mopeds to run over people
-			bullet[a].place_old=bullet[a].paikka;//save old place for collisions
-			bullet[a].direction.y=bullet[a].direction.y-ase[bullet[a].aseesta].paino*elapsed*gamespeed;//bullet falls down
+			bullet[a].place_old=bullet[a].place;//save old place for collisions
+			bullet[a].direction.y=bullet[a].direction.y-ase[bullet[a].from_gun].weight*elapsed*gamespeed;//bullet falls down
 			D3DXVec3Scale(&skaalattu,&bullet[a].direction,elapsed*gamespeed);//liikkuu * elapsed*gamespeed //moves*elapsed*gamespeed
-			D3DXVec3Add(&bullet[a].paikka,&bullet[a].paikka,&skaalattu);
-			bullet[a].distance=sqrtf(sqr(bullet[a].paikka.x-moped[0].x1)+sqr(bullet[a].paikka.z-moped[0].z1));
+			D3DXVec3Add(&bullet[a].place,&bullet[a].place,&skaalattu);
+			bullet[a].distance=sqrtf(sqr(bullet[a].place.x-moped[0].x1)+sqr(bullet[a].place.z-moped[0].z1));
 			if(bullet[a].distance>20000){bullet[a].remove=true;continue;}
-			if((bullet[a].paikka.x<0)||(bullet[a].paikka.z<0)||(bullet[a].paikka.x>mapsx*8000)||(bullet[a].paikka.z>mapsz*8000)){bullet[a].remove=true;continue;}
+			if((bullet[a].place.x<0)||(bullet[a].place.z<0)||(bullet[a].place.x>mapsx*8000)||(bullet[a].place.z>mapsz*8000)){bullet[a].remove=true;continue;}
 		}
-		bullet[a].sektorix[0]=(int)bullet[a].paikka.x/8000;
-		bullet[a].sektoriz[0]=(int)bullet[a].paikka.z/8000;
+		bullet[a].sektorix[0]=(int)bullet[a].place.x/8000;
+		bullet[a].sektoriz[0]=(int)bullet[a].place.z/8000;
 		bullet[a].sektorix[1]=(int)bullet[a].place_old.x/8000;
 		bullet[a].sektoriz[1]=(int)bullet[a].place_old.z/8000;
-		/*bullet[a].jaosx=(int)bullet[a].paikka.x/800;
-                  bullet[a].jaosz=(int)bullet[a].paikka.z/800;*/
+		/*bullet[a].jaosx=(int)bullet[a].place.x/800;
+                  bullet[a].jaosz=(int)bullet[a].place.z/800;*/
 		w[1]=maps[bullet[a].sektoriz[1]][bullet[a].sektorix[1]];//define mapsquare 1
 		w[0]=maps[bullet[a].sektoriz[0]][bullet[a].sektorix[0]];//define mapsquare 2
 		sektoreita=1;
@@ -2083,18 +2083,18 @@ void calculatebullets(void)//calculates bullets
 
 
 		//homing // seeking target
-		if((ase[bullet[a].aseesta].homing)&&(bullet[a].target!=-6667)){
+		if((ase[bullet[a].from_gun].homing)&&(bullet[a].target!=-6667)){
 			if(bullet[a].target<=-1){
-				//dq=-atan2f(moped[-bullet[a].target-1].z1-bullet[a].paikka.z,moped[-bullet[a].target-1].x1-bullet[a].paikka.x);
-				dq=-atan2f(bullet[a].paikka.z-moped[-bullet[a].target-1].z1,bullet[a].paikka.x-moped[-bullet[a].target-1].x1)+pi;
+				//dq=-atan2f(moped[-bullet[a].target-1].z1-bullet[a].place.z,moped[-bullet[a].target-1].x1-bullet[a].place.x);
+				dq=-atan2f(bullet[a].place.z-moped[-bullet[a].target-1].z1,bullet[a].place.x-moped[-bullet[a].target-1].x1)+pi;
 				//dq=atan2f(moped[d].z1-moped[0].z1,moped[d].x1-moped[0].x1)+pi;
-				bullet[a].e=bullet[a].e+atan2f(moped[-bullet[a].target-1].y1-bullet[a].paikka.y,(moped[-bullet[a].target-1].x1-bullet[a].paikka.x)*(moped[-bullet[a].target-1].z1-bullet[a].paikka.z));
+				bullet[a].e=bullet[a].e+atan2f(moped[-bullet[a].target-1].y1-bullet[a].place.y,(moped[-bullet[a].target-1].x1-bullet[a].place.x)*(moped[-bullet[a].target-1].z1-bullet[a].place.z));
 			}
 			if(bullet[a].target>=0){
-				//dq=-atan2f(character[bullet[a].target].z-bullet[a].paikka.z,character[bullet[a].target].x-bullet[a].paikka.x);
-				dq=-atan2f(bullet[a].paikka.z-character[bullet[a].target].z,bullet[a].paikka.x-character[bullet[a].target].x)+pi;
+				//dq=-atan2f(character[bullet[a].target].z-bullet[a].place.z,character[bullet[a].target].x-bullet[a].place.x);
+				dq=-atan2f(bullet[a].place.z-character[bullet[a].target].z,bullet[a].place.x-character[bullet[a].target].x)+pi;
 				//dq=atan2f(moped[d].z1-moped[0].z1,moped[d].x1-moped[0].x1)+pi;
-				bullet[a].e=bullet[a].e+atan2f(70-bullet[a].paikka.y,(character[bullet[a].target].x-bullet[a].paikka.x)*(character[bullet[a].target].z-bullet[a].paikka.z));
+				bullet[a].e=bullet[a].e+atan2f(70-bullet[a].place.y,(character[bullet[a].target].x-bullet[a].place.x)*(character[bullet[a].target].z-bullet[a].place.z));
 			}
 /*
 
@@ -2132,16 +2132,16 @@ void calculatebullets(void)//calculates bullets
 
 
 		//smoketrail
-		if(ase[bullet[a].aseesta].smoke_count>0)//if there is any smoke
+		if(ase[bullet[a].from_gun].smoke_count>0)//if there is any smoke
                         bullet[a].smoke_count=bullet[a].smoke_count+elapsed*gamespeed;
 		while(bullet[a].smoke_count>0){
-			bullet[a].smoke_count=bullet[a].smoke_count-ase[bullet[a].aseesta].smoke_count;
-			fromsmoke(ase[bullet[a].aseesta].savukoko, 0.0f,true,100,bullet[a].paikka.x,bullet[a].paikka.y,bullet[a].paikka.z,ase[bullet[a].aseesta].smoke_filled,randDouble(-bullet[a].q+pi-pi/2,-bullet[a].q+pi+pi/2),(float)fabs(randDouble(0,pi)),randDouble(0,2*pi));
+			bullet[a].smoke_count=bullet[a].smoke_count-ase[bullet[a].from_gun].smoke_count;
+			fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.0f,true,100,bullet[a].place.x,bullet[a].place.y,bullet[a].place.z,ase[bullet[a].from_gun].smoke_filled,randDouble(-bullet[a].q+pi-pi/2,-bullet[a].q+pi+pi/2),(float)fabs(randDouble(0,pi)),randDouble(0,2*pi));
 		}
 
 
 		//there is no point about calculating collisions if a bullet is harmless
-		if(ase[bullet[a].aseesta].damage<=0){if(bullet[a].paikka.y<0)bullet[a].remove=true; continue;}
+		if(ase[bullet[a].from_gun].damage<=0){if(bullet[a].place.y<0)bullet[a].remove=true; continue;}
 
 		//go thruogh all the sectors that a bullet visits
 		for (j=0; j<sektoreita; j++){
@@ -2149,17 +2149,17 @@ void calculatebullets(void)//calculates bullets
 			//bullet's retangle
 			r1.left=(long)bullet[a].place_old.x-bullet[a].sektorix[j]*8000;
 			r1.top=(long)bullet[a].place_old.z-bullet[a].sektoriz[j]*8000;
-			r1.right=(long)bullet[a].paikka.x-bullet[a].sektorix[j]*8000;
-			r1.bottom=(long)bullet[a].paikka.z-bullet[a].sektoriz[j]*8000;
+			r1.right=(long)bullet[a].place.x-bullet[a].sektorix[j]*8000;
+			r1.bottom=(long)bullet[a].place.z-bullet[a].sektoriz[j]*8000;
 
-			if(bullet[a].place_old.x>bullet[a].paikka.x){
+			if(bullet[a].place_old.x>bullet[a].place.x){
 				r1.right=(long)bullet[a].place_old.x-bullet[a].sektorix[j]*8000;
-				r1.left=(long)bullet[a].paikka.x-bullet[a].sektorix[j]*8000;
+				r1.left=(long)bullet[a].place.x-bullet[a].sektorix[j]*8000;
 			}
-			if(bullet[a].place_old.z>bullet[a].paikka.z){
+			if(bullet[a].place_old.z>bullet[a].place.z){
 				r1.bottom=(long)bullet[a].place_old.z-bullet[a].sektoriz[j]*8000;
 
-				r1.top=(long)bullet[a].paikka.z-bullet[a].sektoriz[j]*8000;
+				r1.top=(long)bullet[a].place.z-bullet[a].sektoriz[j]*8000;
 			}
 
 
@@ -2168,49 +2168,49 @@ void calculatebullets(void)//calculates bullets
                         {
 
                                 for (q=0; q<characters; q++){
-                                        if(bullet[a].place_old.y>(130*character[q].korkeus))continue;//if not too high
+                                        if(bullet[a].place_old.y>(130*character[q].height))continue;//if not too high
                                         if(character[q].sektorix!=bullet[a].sektorix[j])continue;//sector check
                                         if(character[q].sektoriz!=bullet[a].sektoriz[j])continue;//sector check
-                                        if(bullet[a].kuka==q)continue;//characters cannot shoot them selves
+                                        if(bullet[a].from_character==q)continue;//characters cannot shoot them selves
                                         if(character[q].distance>10000)continue;//there is no point about calculating if a character is too far
                                         if(character[q].dying)continue;//continue if it already has hit
-                                        if(character[q].pois)continue;//continue if it already has hit
+                                        if(character[q].inactive)continue;//continue if it already has hit
 
-                                        if(sqrtf(sqr(bullet[a].paikka.x-character[q].x)+sqr(bullet[a].paikka.z-character[q].z))>bullet[a].speed*elapsed*gamespeed+100)
+                                        if(sqrtf(sqr(bullet[a].place.x-character[q].x)+sqr(bullet[a].place.z-character[q].z))>bullet[a].speed*elapsed*gamespeed+100)
                                         {continue;}
 
-                                        if(!linecollidesline(&osuma,&osumax,&osumaz,bullet[a].place_old.x-bullet[a].sektorix[j]*8000,bullet[a].place_old.z-bullet[a].sektoriz[j]*8000,bullet[a].paikka.x-bullet[a].sektorix[j]*8000,bullet[a].paikka.z-bullet[a].sektoriz[j]*8000,character[q].x-character[q].sektorix*8000-40,character[q].z-character[q].sektoriz*8000-40,character[q].x-character[q].sektorix*8000+40,character[q].z-character[q].sektoriz*8000+40))continue;
-                                        if(linecollidesline(&osuma,&osumax,&osumaz,bullet[a].place_old.x-bullet[a].sektorix[j]*8000,bullet[a].place_old.z-bullet[a].sektoriz[j]*8000,bullet[a].paikka.x-bullet[a].sektorix[j]*8000,bullet[a].paikka.z-bullet[a].sektoriz[j]*8000,character[q].x-character[q].sektorix*8000+40,character[q].z-character[q].sektoriz*8000+40,character[q].x-character[q].sektorix*8000-40,character[q].z-character[q].sektoriz*8000-40))
+                                        if(!linecollidesline(&osuma,&osumax,&osumaz,bullet[a].place_old.x-bullet[a].sektorix[j]*8000,bullet[a].place_old.z-bullet[a].sektoriz[j]*8000,bullet[a].place.x-bullet[a].sektorix[j]*8000,bullet[a].place.z-bullet[a].sektoriz[j]*8000,character[q].x-character[q].sektorix*8000-40,character[q].z-character[q].sektoriz*8000-40,character[q].x-character[q].sektorix*8000+40,character[q].z-character[q].sektoriz*8000+40))continue;
+                                        if(linecollidesline(&osuma,&osumax,&osumaz,bullet[a].place_old.x-bullet[a].sektorix[j]*8000,bullet[a].place_old.z-bullet[a].sektoriz[j]*8000,bullet[a].place.x-bullet[a].sektorix[j]*8000,bullet[a].place.z-bullet[a].sektoriz[j]*8000,character[q].x-character[q].sektorix*8000+40,character[q].z-character[q].sektoriz*8000+40,character[q].x-character[q].sektorix*8000-40,character[q].z-character[q].sektoriz*8000-40))
                                         {
                                                 kuljettumatka=(float)sqrtf(sqr(osumax+bullet[a].sektorix[j]*8000-bullet[a].place_old.x)+sqr(osumaz+bullet[a].sektoriz[j]*8000-bullet[a].place_old.z))/(bullet[a].speed*elapsed*gamespeed);
-                                                korkeus=bullet[a].place_old.y+kuljettumatka*(bullet[a].paikka.y-bullet[a].place_old.y);
+                                                height=bullet[a].place_old.y+kuljettumatka*(bullet[a].place.y-bullet[a].place_old.y);
 
                                                 //a passive character may change tacktic if he is being shot
-                                                if(bullet[a].kenen==0)//bullet is not players
-                                                        if(character[q].puoli==1){
+                                                if(bullet[a].from_moped==0)//bullet is not players
+                                                        if(character[q].movement_type==1){
                                                                 //character escapes if it doesnt have a gun
-                                                                if(character[q].aseena==-1)character[q].taktiikka=2;
+                                                                if(character[q].aseena==-1)character[q].tactics=2;
                                                                 //character attacks if it has a gun
-                                                                if(character[q].aseena!=-1)character[q].taktiikka=0;
+                                                                if(character[q].aseena!=-1)character[q].tactics=0;
                                                         }
 
                                                 //reducing energy and removing bullet
-                                                character[q].energia=character[q].energia-ase[bullet[a].aseesta].damage;
+                                                character[q].energy=character[q].energy-ase[bullet[a].from_gun].damage;
                                                 bullet[a].remove=true;
 
                                                 //blood
-                                                //if(ase[bullet[a].aseesta].kimmokkeita!=0){
+                                                //if(ase[bullet[a].from_gun].num_bounces!=0){
 						for (q2=0; q2<50; q2++){
-							shoot(-6667,-1,bullet[a].kenen,randDouble(0,250),moped,4,osumax+bullet[a].sektorix[j]*8000,korkeus,osumaz+bullet[a].sektoriz[j]*8000,bullet[a].q,bullet[a].w,bullet[a].e);
+							shoot(-6667,-1,bullet[a].from_moped,randDouble(0,250),moped,4,osumax+bullet[a].sektorix[j]*8000,height,osumaz+bullet[a].sektoriz[j]*8000,bullet[a].q,bullet[a].w,bullet[a].e);
 						}
                                                 //}
 
                                                 //character dies
-                                                if(character[q].energia<0){
+                                                if(character[q].energy<0){
                                                         character[q].dying=true;
                                                         //payment for player
-                                                        if(bullet[a].kenen==0)//bullet is player's
-                                                                moped[bullet[a].kenen].rahat=moped[bullet[a].kenen].rahat+1;
+                                                        if(bullet[a].from_moped==0)//bullet is player's
+                                                                moped[bullet[a].from_moped].money=moped[bullet[a].from_moped].money+1;
                                                         //bodyparts fly
                                                         for (q2=0; q2<11; q2++){
                                                                 character[q].bodypart_coords[q2].gox=(float)randDouble(-0.3f,0.3f);
@@ -2221,24 +2221,24 @@ void calculatebullets(void)//calculates bullets
                                                 }
 
                                                 //smoke to air
-                                                if(ase[bullet[a].aseesta].smoke_filled!=0)
+                                                if(ase[bullet[a].from_gun].smoke_filled!=0)
                                                         for (q2=0; q2<3; q2++){
-                                                                fromsmoke(ase[bullet[a].aseesta].savukoko, 0.001f,true,ase[bullet[a].aseesta].smoke_duration+1000,osumax+bullet[a].sektorix[j]*8000,bullet[a].paikka.y,osumaz+bullet[a].sektoriz[j]*8000,ase[bullet[a].aseesta].smoke_filled,randDouble(-bullet[a].q+pi-pi/2,-bullet[a].q+pi+pi/2),(float)fabs(randDouble(0,pi)),randDouble(0,2*pi));
+                                                                fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.001f,true,ase[bullet[a].from_gun].smoke_duration+1000,osumax+bullet[a].sektorix[j]*8000,bullet[a].place.y,osumaz+bullet[a].sektoriz[j]*8000,ase[bullet[a].from_gun].smoke_filled,randDouble(-bullet[a].q+pi-pi/2,-bullet[a].q+pi+pi/2),(float)fabs(randDouble(0,pi)),randDouble(0,2*pi));
                                                         }
                                                 //explosion
-                                                if(ase[bullet[a].aseesta].pommi!=0){
-                                                        for (q2=0; q2<ase[bullet[a].aseesta].pommi*30; q2++){
-                                                                shoot(-6667,-1,bullet[a].kenen,randDouble(100,300),moped,2,osumax+bullet[a].sektorix[j]*8000,bullet[a].paikka.y,osumaz+bullet[a].sektoriz[j]*8000,randDouble(-pi,pi),randDouble(-pi,pi),randDouble(-pi,pi));
+                                                if(ase[bullet[a].from_gun].explosion_size!=0){
+                                                        for (q2=0; q2<ase[bullet[a].from_gun].explosion_size*30; q2++){
+                                                                shoot(-6667,-1,bullet[a].from_moped,randDouble(100,300),moped,2,osumax+bullet[a].sektorix[j]*8000,bullet[a].place.y,osumaz+bullet[a].sektoriz[j]*8000,randDouble(-pi,pi),randDouble(-pi,pi),randDouble(-pi,pi));
                                                         }
                                                         for (q2=0; q2<pommeja; q2++){
-                                                                fromsmoke(ase[bullet[a].aseesta].savukoko, 0.004f*ase[bullet[a].aseesta].pommi,true,ase[bullet[a].aseesta].smoke_duration,osumax+bullet[a].sektorix[j]*8000,bullet[a].paikka.y,osumaz+bullet[a].sektoriz[j]*8000,3,0,0,0);
+                                                                fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.004f*ase[bullet[a].from_gun].explosion_size,true,ase[bullet[a].from_gun].smoke_duration,osumax+bullet[a].sektorix[j]*8000,bullet[a].place.y,osumaz+bullet[a].sektoriz[j]*8000,3,0,0,0);
                                                         }
                                                         quake=10000/bullet[a].distance;
                                                         playsound(8,2,osumax+bullet[a].sektorix[j]*8000,osumaz+bullet[a].sektoriz[j]*8000);
                                                 }
                                                 //sound
-                                                if(ase[bullet[a].aseesta].pommi==0){
-                                                        if(ase[bullet[a].aseesta]._type!=4)
+                                                if(ase[bullet[a].from_gun].explosion_size==0){
+                                                        if(ase[bullet[a].from_gun]._type!=4)
                                                                 playsound(randInt(13,18),1,osumax+bullet[a].sektorix[j]*8000,osumaz+bullet[a].sektoriz[j]*8000);
                                                 }
 
@@ -2249,42 +2249,42 @@ void calculatebullets(void)//calculates bullets
                         //does it hit a bike
                         for (d=0; d<mopoja; d++) {
                                 if(a<10)continue;
-                                if(moped[d].pois)continue;
+                                if(moped[d].inactive)continue;
                                 if(moped[d].sektorix!=bullet[a].sektorix[j])continue;//sector check
                                 if(moped[d].sektoriz!=bullet[a].sektoriz[j])continue;//sector check
 
-                                if(bullet[a].kenen!=d) {//is not player's
+                                if(bullet[a].from_moped!=d) {//is not player's
                                         //if it is too close
-                                        if(sqrtf(sqr(moped[d].x1-bullet[a].paikka.x)+sqr(moped[d].z1-bullet[a].paikka.z))<60) {
+                                        if(sqrtf(sqr(moped[d].x1-bullet[a].place.x)+sqr(moped[d].z1-bullet[a].place.z))<60) {
                                                 //reducing energy
 
-                                                moped[d].energia=moped[d].energia-ase[bullet[a].aseesta].damage;
+                                                moped[d].energy=moped[d].energy-ase[bullet[a].from_gun].damage;
                                                 //bounce
-                                                if(ase[bullet[a].aseesta].kimmokkeita!=0){
-                                                        for (q2=0; q2<ase[bullet[a].aseesta].kimmokkeita; q2++){
-                                                                shoot(-6667,-1,bullet[a].kenen,randDouble(0,50),moped,3,moped[d].x1,70,moped[d].z1,randDouble(-pi,pi),randDouble(-pi,pi),randDouble(-pi,pi));
+                                                if(ase[bullet[a].from_gun].num_bounces!=0){
+                                                        for (q2=0; q2<ase[bullet[a].from_gun].num_bounces; q2++){
+                                                                shoot(-6667,-1,bullet[a].from_moped,randDouble(0,50),moped,3,moped[d].x1,70,moped[d].z1,randDouble(-pi,pi),randDouble(-pi,pi),randDouble(-pi,pi));
                                                         }
                                                 }
                                                 //smoke to air
-                                                if(ase[bullet[a].aseesta].smoke_filled!=0) {
+                                                if(ase[bullet[a].from_gun].smoke_filled!=0) {
                                                         for (q=0; q<3; q++){
-                                                                fromsmoke(ase[bullet[a].aseesta].savukoko, 0.001f,true,ase[bullet[a].aseesta].smoke_duration+1000,moped[d].x1,70,moped[d].z1,ase[bullet[a].aseesta].smoke_filled,randDouble(-bullet[a].q+pi-pi/2,-bullet[a].q+pi+pi/2),(float)fabs(randDouble(0,pi)),randDouble(0,2*pi));
+                                                                fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.001f,true,ase[bullet[a].from_gun].smoke_duration+1000,moped[d].x1,70,moped[d].z1,ase[bullet[a].from_gun].smoke_filled,randDouble(-bullet[a].q+pi-pi/2,-bullet[a].q+pi+pi/2),(float)fabs(randDouble(0,pi)),randDouble(0,2*pi));
                                                         }
                                                 }
                                                 //explosion
-                                                if(ase[bullet[a].aseesta].pommi!=0){
-                                                        for (q2=0; q2<ase[bullet[a].aseesta].pommi*30; q2++){
-                                                                shoot(-6667,-1,bullet[a].kenen,randDouble(100,300),moped,3,moped[d].x1,70,moped[d].z1,randDouble(-pi,pi),randDouble(-pi,pi),randDouble(-pi,pi));
+                                                if(ase[bullet[a].from_gun].explosion_size!=0){
+                                                        for (q2=0; q2<ase[bullet[a].from_gun].explosion_size*30; q2++){
+                                                                shoot(-6667,-1,bullet[a].from_moped,randDouble(100,300),moped,3,moped[d].x1,70,moped[d].z1,randDouble(-pi,pi),randDouble(-pi,pi),randDouble(-pi,pi));
                                                         }
                                                         for (q2=0; q2<pommeja; q2++){
-                                                                fromsmoke(ase[bullet[a].aseesta].savukoko, 0.004f*ase[bullet[a].aseesta].pommi,true,ase[bullet[a].aseesta].smoke_duration,moped[d].x1,70,moped[d].z1,3,0,0,0);
+                                                                fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.004f*ase[bullet[a].from_gun].explosion_size,true,ase[bullet[a].from_gun].smoke_duration,moped[d].x1,70,moped[d].z1,3,0,0,0);
                                                         }
                                                         quake=10000/bullet[a].distance;
                                                         playsound(8,2,osumax+bullet[a].sektorix[j]*8000,osumaz+bullet[a].sektoriz[j]*8000);
                                                 }
                                                 //sound
-                                                if(ase[bullet[a].aseesta].pommi==0){
-                                                        if(ase[bullet[a].aseesta]._type!=4)
+                                                if(ase[bullet[a].from_gun].explosion_size==0){
+                                                        if(ase[bullet[a].from_gun]._type!=4)
                                                                 playsound(randInt(9,13),1,osumax+bullet[a].sektorix[j]*8000,osumaz+bullet[a].sektoriz[j]*8000);
                                                 }
                                                 //removing bullet
@@ -2292,14 +2292,14 @@ void calculatebullets(void)//calculates bullets
                                         }
 
                                         //does it collide with lines
-                                        if(linecollidesline(&osuma,&osuix,&osuiz,bullet[a].place_old.x-bullet[a].sektorix[j]*8000,bullet[a].place_old.z-bullet[a].sektoriz[j]*8000,bullet[a].paikka.x-bullet[a].sektorix[j]*8000,bullet[a].paikka.z-bullet[a].sektoriz[j]*8000,	moped[d].x6-bullet[a].sektorix[j]*8000,moped[d].z6-bullet[a].sektoriz[j]*8000,moped[d].x5-bullet[a].sektorix[j]*8000,moped[d].z5-bullet[a].sektoriz[j]*8000))
+                                        if(linecollidesline(&osuma,&osuix,&osuiz,bullet[a].place_old.x-bullet[a].sektorix[j]*8000,bullet[a].place_old.z-bullet[a].sektoriz[j]*8000,bullet[a].place.x-bullet[a].sektorix[j]*8000,bullet[a].place.z-bullet[a].sektoriz[j]*8000,	moped[d].x6-bullet[a].sektorix[j]*8000,moped[d].z6-bullet[a].sektoriz[j]*8000,moped[d].x5-bullet[a].sektorix[j]*8000,moped[d].z5-bullet[a].sektoriz[j]*8000))
 
                                         {
                                                 kuljettumatka=(float)sqrtf(sqr(osuix+bullet[a].sektorix[j]*8000-bullet[a].place_old.x)+sqr(osuiz+bullet[a].sektoriz[j]*8000-bullet[a].place_old.z))/(bullet[a].speed*elapsed*gamespeed);
-                                                korkeus=bullet[a].place_old.y+kuljettumatka*(bullet[a].paikka.y-bullet[a].place_old.y);
+                                                height=bullet[a].place_old.y+kuljettumatka*(bullet[a].place.y-bullet[a].place_old.y);
                                                 float xa,za;
                                                 xa=sqrtf(sqr(osuix-moped[d].x6+bullet[a].sektorix[j]*8000)+sqr(osuiz-moped[d].z6+bullet[a].sektoriz[j]*8000));
-                                                za=korkeus;
+                                                za=height;
 
                                                 wallhits=0;
                                                 //is it inside a sidepicture
@@ -2311,33 +2311,33 @@ void calculatebullets(void)//calculates bullets
                                                 }
                                                 if((float)wallhits/2*1000!=((int)(wallhits/2))*1000){
                                                         //reduce energy
-                                                        moped[d].energia=moped[d].energia-ase[bullet[a].aseesta].damage;
+                                                        moped[d].energy=moped[d].energy-ase[bullet[a].from_gun].damage;
                                                         //bounce
-                                                        if(ase[bullet[a].aseesta].kimmokkeita!=0){
-                                                                for (q2=0; q2<ase[bullet[a].aseesta].kimmokkeita; q2++){
-                                                                        shoot(-6667,-1,bullet[a].kenen,randDouble(0,50),moped,3,osuix+bullet[a].sektorix[j]*8000,korkeus,osuiz+bullet[a].sektoriz[j]*8000,randDouble(-pi,pi),randDouble(-pi,pi),randDouble(-pi,pi));
+                                                        if(ase[bullet[a].from_gun].num_bounces!=0){
+                                                                for (q2=0; q2<ase[bullet[a].from_gun].num_bounces; q2++){
+                                                                        shoot(-6667,-1,bullet[a].from_moped,randDouble(0,50),moped,3,osuix+bullet[a].sektorix[j]*8000,height,osuiz+bullet[a].sektoriz[j]*8000,randDouble(-pi,pi),randDouble(-pi,pi),randDouble(-pi,pi));
                                                                 }
                                                         }
                                                         //smoke to air
-                                                        if(ase[bullet[a].aseesta].smoke_filled!=0){
+                                                        if(ase[bullet[a].from_gun].smoke_filled!=0){
                                                                 for (q=0; q<3; q++){
-                                                                        fromsmoke(ase[bullet[a].aseesta].savukoko, 0.001f,true,ase[bullet[a].aseesta].smoke_duration+1000,osuix+bullet[a].sektorix[j]*8000,korkeus,osuiz+bullet[a].sektoriz[j]*8000,ase[bullet[a].aseesta].smoke_filled,randDouble(-bullet[a].q+pi-pi/2,-bullet[a].q+pi+pi/2),(float)fabs(randDouble(0,pi)),randDouble(0,2*pi));
+                                                                        fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.001f,true,ase[bullet[a].from_gun].smoke_duration+1000,osuix+bullet[a].sektorix[j]*8000,height,osuiz+bullet[a].sektoriz[j]*8000,ase[bullet[a].from_gun].smoke_filled,randDouble(-bullet[a].q+pi-pi/2,-bullet[a].q+pi+pi/2),(float)fabs(randDouble(0,pi)),randDouble(0,2*pi));
                                                                 }
                                                         }
                                                         //explosion
-                                                        if(ase[bullet[a].aseesta].pommi!=0){
-                                                                for (q2=0; q2<ase[bullet[a].aseesta].pommi*30; q2++){
-                                                                        shoot(-6667,-1,bullet[a].kenen,randDouble(100,300),moped,3,osuix+bullet[a].sektorix[j]*8000,korkeus,osuiz+bullet[a].sektoriz[j]*8000,randDouble(-pi,pi),randDouble(-pi,pi),randDouble(-pi,pi));
+                                                        if(ase[bullet[a].from_gun].explosion_size!=0){
+                                                                for (q2=0; q2<ase[bullet[a].from_gun].explosion_size*30; q2++){
+                                                                        shoot(-6667,-1,bullet[a].from_moped,randDouble(100,300),moped,3,osuix+bullet[a].sektorix[j]*8000,height,osuiz+bullet[a].sektoriz[j]*8000,randDouble(-pi,pi),randDouble(-pi,pi),randDouble(-pi,pi));
                                                                 }
                                                                 for (q2=0; q2<pommeja; q2++){
-                                                                        fromsmoke(ase[bullet[a].aseesta].savukoko, 0.004f*ase[bullet[a].aseesta].pommi,true,ase[bullet[a].aseesta].smoke_duration,osuix+bullet[a].sektorix[j]*8000,korkeus,osuiz+bullet[a].sektoriz[j]*8000,3,0,0,0);
+                                                                        fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.004f*ase[bullet[a].from_gun].explosion_size,true,ase[bullet[a].from_gun].smoke_duration,osuix+bullet[a].sektorix[j]*8000,height,osuiz+bullet[a].sektoriz[j]*8000,3,0,0,0);
                                                                 }
                                                                 quake=10000/bullet[a].distance;
                                                                 playsound(8,2,osumax+bullet[a].sektorix[j]*8000,osumaz+bullet[a].sektoriz[j]*8000);
                                                         }
                                                         //sound
-                                                        if(ase[bullet[a].aseesta].pommi==0){
-                                                                if(ase[bullet[a].aseesta]._type!=4)
+                                                        if(ase[bullet[a].from_gun].explosion_size==0){
+                                                                if(ase[bullet[a].from_gun]._type!=4)
                                                                         playsound(randInt(9,13),1,osumax+bullet[a].sektorix[j]*8000,osumaz+bullet[a].sektoriz[j]*8000);
                                                         }
                                                         //removing bullet
@@ -2400,51 +2400,51 @@ void calculatebullets(void)//calculates bullets
                         for (b=0; b<viivagroup[0].viivat[w[j]].viivaa; b++){
                                 for (c=0; c<viivagroup[0].viivat[w[j]].viiva[b].linjaa; c++){
 
-                                        if(linecollidesline(&osuma,&osumax,&osumaz,bullet[a].place_old.x-bullet[a].sektorix[j]*8000,bullet[a].place_old.z-bullet[a].sektoriz[j]*8000,bullet[a].paikka.x-bullet[a].sektorix[j]*8000,bullet[a].paikka.z-bullet[a].sektoriz[j]*8000,	viivagroup[0].viivat[w[j]].viiva[b].point[c].x1,viivagroup[0].viivat[w[j]].viiva[b].point[c].z1,viivagroup[0].viivat[w[j]].viiva[b].point[c].x2,viivagroup[0].viivat[w[j]].viiva[b].point[c].z2))
+                                        if(linecollidesline(&osuma,&osumax,&osumaz,bullet[a].place_old.x-bullet[a].sektorix[j]*8000,bullet[a].place_old.z-bullet[a].sektoriz[j]*8000,bullet[a].place.x-bullet[a].sektorix[j]*8000,bullet[a].place.z-bullet[a].sektoriz[j]*8000,	viivagroup[0].viivat[w[j]].viiva[b].point[c].x1,viivagroup[0].viivat[w[j]].viiva[b].point[c].z1,viivagroup[0].viivat[w[j]].viiva[b].point[c].x2,viivagroup[0].viivat[w[j]].viiva[b].point[c].z2))
                                         {
                                                 wallkulma=-atan2f(viivagroup[0].viivat[w[j]].viiva[b].point[c].z2-viivagroup[0].viivat[w[j]].viiva[b].point[c].z1,viivagroup[0].viivat[w[j]].viiva[b].point[c].x2-viivagroup[0].viivat[w[j]].viiva[b].point[c].x1);
                                                 osumax2=osumax+cosf(-bullet[a].q+pi+pi)*-100;
                                                 osumaz2=osumaz+sinf(-bullet[a].q+pi+pi)*-100;
                                                 //prosentual distance that the bullet has travelled before collision.
                                                 kuljettumatka=(float)sqrtf(sqr(osumax+bullet[a].sektorix[j]*8000-bullet[a].place_old.x)+sqr(osumaz+bullet[a].sektoriz[j]*8000-bullet[a].place_old.z))/(bullet[a].speed*elapsed*gamespeed);
-                                                korkeus=bullet[a].place_old.y+kuljettumatka*(bullet[a].paikka.y-bullet[a].place_old.y);
+                                                height=bullet[a].place_old.y+kuljettumatka*(bullet[a].place.y-bullet[a].place_old.y);
 
 
                                                 //bullet hole
-                                                if(ase[bullet[a].aseesta].decal_picture>-1)
-                                                        fromsmoke(ase[bullet[a].aseesta].savukoko, 0,false,40000,osumax+bullet[a].sektorix[j]*8000,korkeus,osumaz+bullet[a].sektoriz[j]*8000,ase[bullet[a].aseesta].decal_picture,-wallkulma,randDouble(0,2*pi),0);
+                                                if(ase[bullet[a].from_gun].decal_picture>-1)
+                                                        fromsmoke(ase[bullet[a].from_gun].smoke_size, 0,false,40000,osumax+bullet[a].sektorix[j]*8000,height,osumaz+bullet[a].sektoriz[j]*8000,ase[bullet[a].from_gun].decal_picture,-wallkulma,randDouble(0,2*pi),0);
                                                 //smoke to air
-                                                if(ase[bullet[a].aseesta].smoke_filled!=0)
+                                                if(ase[bullet[a].from_gun].smoke_filled!=0)
                                                         for (q=0; q<3; q++){
-                                                                fromsmoke(ase[bullet[a].aseesta].savukoko, 0.001f,true,ase[bullet[a].aseesta].smoke_duration+1000,osumax2+bullet[a].sektorix[j]*8000,korkeus,osumaz2+bullet[a].sektoriz[j]*8000,ase[bullet[a].aseesta].smoke_filled,randDouble(-bullet[a].q+pi-pi/2,-bullet[a].q+pi+pi/2),(float)fabs(randDouble(0,pi)),randDouble(0,2*pi));
+                                                                fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.001f,true,ase[bullet[a].from_gun].smoke_duration+1000,osumax2+bullet[a].sektorix[j]*8000,height,osumaz2+bullet[a].sektoriz[j]*8000,ase[bullet[a].from_gun].smoke_filled,randDouble(-bullet[a].q+pi-pi/2,-bullet[a].q+pi+pi/2),(float)fabs(randDouble(0,pi)),randDouble(0,2*pi));
                                                         }
                                                 //explosion
-                                                if(ase[bullet[a].aseesta].pommi!=0){
-                                                        for (q2=0; q2<ase[bullet[a].aseesta].pommi*30; q2++){
-                                                                shoot(-6667,-1,bullet[a].kenen,randDouble(100,300),moped,2,osumax+bullet[a].sektorix[j]*8000,korkeus,osumaz+bullet[a].sektoriz[j]*8000,randDouble(-pi,pi),randDouble(-pi,pi),randDouble(-pi,pi));
+                                                if(ase[bullet[a].from_gun].explosion_size!=0){
+                                                        for (q2=0; q2<ase[bullet[a].from_gun].explosion_size*30; q2++){
+                                                                shoot(-6667,-1,bullet[a].from_moped,randDouble(100,300),moped,2,osumax+bullet[a].sektorix[j]*8000,height,osumaz+bullet[a].sektoriz[j]*8000,randDouble(-pi,pi),randDouble(-pi,pi),randDouble(-pi,pi));
                                                         }
                                                         for (q2=0; q2<pommeja; q2++){
-                                                                fromsmoke(ase[bullet[a].aseesta].savukoko, 0.004f*ase[bullet[a].aseesta].pommi,true,ase[bullet[a].aseesta].smoke_duration,osumax+bullet[a].sektorix[j]*8000,korkeus,osumaz+bullet[a].sektoriz[j]*8000,3,0,0,0);
+                                                                fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.004f*ase[bullet[a].from_gun].explosion_size,true,ase[bullet[a].from_gun].smoke_duration,osumax+bullet[a].sektorix[j]*8000,height,osumaz+bullet[a].sektoriz[j]*8000,3,0,0,0);
                                                         }
                                                         quake=10000/bullet[a].distance;
                                                         playsound(8,2,osumax+bullet[a].sektorix[j]*8000,osumaz+bullet[a].sektoriz[j]*8000);
                                                 }
                                                 //bounce
-                                                if(ase[bullet[a].aseesta].kimmokkeita>0){
-                                                        for (q2=0; q2<ase[bullet[a].aseesta].kimmokkeita; q2++){
-                                                                shoot(-6667,-1,bullet[a].kenen,randDouble(0,50),moped,3,osumax+bullet[a].sektorix[j]*8000,korkeus,osumaz+bullet[a].sektoriz[j]*8000,randDouble(-pi,pi),randDouble(-pi,pi),randDouble(-pi,pi));
+                                                if(ase[bullet[a].from_gun].num_bounces>0){
+                                                        for (q2=0; q2<ase[bullet[a].from_gun].num_bounces; q2++){
+                                                                shoot(-6667,-1,bullet[a].from_moped,randDouble(0,50),moped,3,osumax+bullet[a].sektorix[j]*8000,height,osumaz+bullet[a].sektoriz[j]*8000,randDouble(-pi,pi),randDouble(-pi,pi),randDouble(-pi,pi));
                                                         }
                                                 }
                                                 //sound
-                                                if(ase[bullet[a].aseesta].pommi==0){
-                                                        if(ase[bullet[a].aseesta]._type!=4)
+                                                if(ase[bullet[a].from_gun].explosion_size==0){
+                                                        if(ase[bullet[a].from_gun]._type!=4)
                                                                 playsound(randInt(9,13),1,osumax+bullet[a].sektorix[j]*8000,osumaz+bullet[a].sektoriz[j]*8000);
                                                 }
 
 
 
                                                 //light
-                                                //	setLights(osumax2+bullet[a].sektorix*8000,bullet[a].paikka.y,osumaz2+bullet[a].sektoriz*8000);
+                                                //	setLights(osumax2+bullet[a].sektorix*8000,bullet[a].place.y,osumaz2+bullet[a].sektoriz*8000);
 
 
                                                 bullet[a].remove=true;
@@ -2454,37 +2454,37 @@ void calculatebullets(void)//calculates bullets
 
 
 
-                        if(bullet[a].paikka.y<0)//bullet hits the ground
+                        if(bullet[a].place.y<0)//bullet hits the ground
                         {
                                 //smoke to air
-                                if(ase[bullet[a].aseesta].smoke_filled!=0)
+                                if(ase[bullet[a].from_gun].smoke_filled!=0)
                                         for (q=0; q<3; q++){
                                                 osumax=osumax+cosf(-bullet[a].q+pi+pi)*-100;
                                                 osumaz=osumaz+sinf(-bullet[a].q+pi+pi)*-100;
-                                                fromsmoke(ase[bullet[a].aseesta].savukoko, 0.001f,true,ase[bullet[a].aseesta].smoke_duration,bullet[a].paikka.x,0,bullet[a].paikka.z,ase[bullet[a].aseesta].smoke_filled,randDouble(-bullet[a].q+pi-pi/2,-bullet[a].q+pi+pi/2),(float)fabs(randDouble(0,pi)),randDouble(0,2*pi));
+                                                fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.001f,true,ase[bullet[a].from_gun].smoke_duration,bullet[a].place.x,0,bullet[a].place.z,ase[bullet[a].from_gun].smoke_filled,randDouble(-bullet[a].q+pi-pi/2,-bullet[a].q+pi+pi/2),(float)fabs(randDouble(0,pi)),randDouble(0,2*pi));
                                         }
                                 //explosion
-                                if(ase[bullet[a].aseesta].pommi!=0){
-                                        for (q2=0; q2<ase[bullet[a].aseesta].pommi*30; q2++){
-						shoot(-6667,-1,bullet[a].kenen,randDouble(100,300),moped,2,bullet[a].paikka.x,bullet[a].paikka.y,bullet[a].paikka.z,randDouble(-pi,pi),randDouble(-pi,pi),randDouble(-pi,pi));
+                                if(ase[bullet[a].from_gun].explosion_size!=0){
+                                        for (q2=0; q2<ase[bullet[a].from_gun].explosion_size*30; q2++){
+						shoot(-6667,-1,bullet[a].from_moped,randDouble(100,300),moped,2,bullet[a].place.x,bullet[a].place.y,bullet[a].place.z,randDouble(-pi,pi),randDouble(-pi,pi),randDouble(-pi,pi));
                                         }
                                         for (q2=0; q2<pommeja; q2++){
-                                                fromsmoke(ase[bullet[a].aseesta].savukoko, 0.004f*ase[bullet[a].aseesta].pommi,true,ase[bullet[a].aseesta].smoke_duration,bullet[a].paikka.x,0,bullet[a].paikka.z,3,0,0,0);
+                                                fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.004f*ase[bullet[a].from_gun].explosion_size,true,ase[bullet[a].from_gun].smoke_duration,bullet[a].place.x,0,bullet[a].place.z,3,0,0,0);
                                         }
                                         quake=10000/bullet[a].distance;
-                                        playsound(8,2,bullet[a].paikka.x,bullet[a].paikka.z);
+                                        playsound(8,2,bullet[a].place.x,bullet[a].place.z);
                                 }
                                 //sound
-                                if(ase[bullet[a].aseesta].pommi==0){
-                                        if(ase[bullet[a].aseesta]._type!=4)
-						playsound(randInt(9,13),1,bullet[a].paikka.x,bullet[a].paikka.z);
+                                if(ase[bullet[a].from_gun].explosion_size==0){
+                                        if(ase[bullet[a].from_gun]._type!=4)
+						playsound(randInt(9,13),1,bullet[a].place.x,bullet[a].place.z);
                                 }
 
                                 bullet[a].remove=true;
                         }
 		}//j ends
 
-		if(bullet[a].paikka.y>2500)bullet[a].remove=true;
+		if(bullet[a].place.y>2500)bullet[a].remove=true;
 
 	}
 
@@ -2525,16 +2525,16 @@ void setLights(float x,float y,float z)
 }
 
 
-void shoot(int target,int kuka, int kenen,float aika,bikebase *moped, int aseena,float paikkax,float paikkay,float paikkaz,float directionx,float directiony,float directionz)//shooting
+void shoot(int target,int from_character, int from_moped,float timer,bikebase *moped, int aseena,float placex,float placey,float placez,float directionx,float directiony,float directionz)//shooting
 {
 	int a,b,q;
 	int d=-1;
 	float rekyyli;
 
-	if(paikkax==0.0){//shooting from a bike
-		while(moped->asetime[aseena]>=0){
-			moped->asetime[aseena]=moped->asetime[aseena]-ase[moped->ase[aseena]].rate_of_fire;
-			for (q=0; q<ase[moped->ase[aseena]].hauleja; q++){
+	if(placex==0.0){//shooting from a bike
+		while(moped->gun_timer[aseena]>=0){
+			moped->gun_timer[aseena]=moped->gun_timer[aseena]-ase[moped->ase[aseena]].rate_of_fire;
+			for (q=0; q<ase[moped->ase[aseena]].bullets_per_shot; q++){
                                 //deciding wich bullet is replaced with a new one
                                 a=10;
                                 b=0;
@@ -2553,24 +2553,24 @@ void shoot(int target,int kuka, int kenen,float aika,bikebase *moped, int aseena
 
                                 moped->has_muzzle_flare=true;
                                 bullet[a].remove=false;
-                                bullet[a].kenen=kenen;
-                                bullet[a].aseesta=moped->ase[aseena];
+                                bullet[a].from_moped=from_moped;
+                                bullet[a].from_gun=moped->ase[aseena];
                                 bullet[a].smoke_count=ase[moped->ase[aseena]].smoke_count;
-                                /*bullet[a].paikka.x=moped->x1+cosf(moped->direction)*15*moped->speed;
-                                  bullet[a].paikka.y=moped->y1+70;
-                                  bullet[a].paikka.z=moped->z1+sinf(moped->direction)*15*moped->speed;*/
-                                bullet[a].paikka.x=moped->piippu.m30;
-                                bullet[a].paikka.y=moped->piippu.m31;
-                                bullet[a].paikka.z=moped->piippu.m32;
+                                /*bullet[a].place.x=moped->x1+cosf(moped->direction)*15*moped->speed;
+                                  bullet[a].place.y=moped->y1+70;
+                                  bullet[a].place.z=moped->z1+sinf(moped->direction)*15*moped->speed;*/
+                                bullet[a].place.x=moped->piippu.m30;
+                                bullet[a].place.y=moped->piippu.m31;
+                                bullet[a].place.z=moped->piippu.m32;
 
-                                bullet[a].place_old=bullet[a].paikka;
+                                bullet[a].place_old=bullet[a].place;
                                 bullet[a].q=-moped->direction;//-mopeds->frontdirection;
-                                bullet[a].w=moped->kulmakallistus;
-                                bullet[a].e=moped->kulmakeuliminen;
-                                bullet[a].aika=aika;
-                                bullet[a].kuka=kuka;
+                                bullet[a].w=moped->angle_roll;
+                                bullet[a].e=moped->angle_pitch;
+                                bullet[a].timer=timer;
+                                bullet[a].from_character=from_character;
                                 //player is target if it is a AI-player's
-                                if(kenen>0)bullet[a].target=-1;
+                                if(from_moped>0)bullet[a].target=-1;
                                 else bullet[a].target=target;
 
                                 //bullet speed
@@ -2599,7 +2599,7 @@ void shoot(int target,int kuka, int kenen,float aika,bikebase *moped, int aseena
 	}
 
 	else{//shot from else where
-		for (q=0; q<ase[aseena].hauleja; q++){
+		for (q=0; q<ase[aseena].bullets_per_shot; q++){
 			//deciding wich bullet is replaced with a new one
 
 			a=10;
@@ -2611,20 +2611,20 @@ void shoot(int target,int kuka, int kenen,float aika,bikebase *moped, int aseena
                         if(!bullet[a].remove)goto alku2;
                         d=a;
 
-                        //moped->asetime[aseena]=moped->asetime[aseena]-ase[moped->ase[aseena]].rate_of_fire;
+                        //moped->gun_timer[aseena]=moped->gun_timer[aseena]-ase[moped->ase[aseena]].rate_of_fire;
                         bullet[a].remove=false;
-                        bullet[a].kenen=kenen;
-                        bullet[a].aseesta=aseena;
+                        bullet[a].from_moped=from_moped;
+                        bullet[a].from_gun=aseena;
                         bullet[a].smoke_count=ase[aseena].smoke_count;
-                        bullet[a].paikka.x=paikkax;
-                        bullet[a].paikka.y=paikkay;
-                        bullet[a].paikka.z=paikkaz;
-                        bullet[a].place_old=bullet[a].paikka;
+                        bullet[a].place.x=placex;
+                        bullet[a].place.y=placey;
+                        bullet[a].place.z=placez;
+                        bullet[a].place_old=bullet[a].place;
                         bullet[a].q=directionx;
                         bullet[a].w=directiony;
                         bullet[a].e=directionz;
-                        bullet[a].aika=aika;
-                        bullet[a].kuka=kuka;
+                        bullet[a].timer=timer;
+                        bullet[a].from_character=from_character;
                         bullet[a].target=target;
 
                         //bullet speed
@@ -2633,10 +2633,10 @@ void shoot(int target,int kuka, int kenen,float aika,bikebase *moped, int aseena
 			else bullet[a].speed=ase[aseena].speed;
 
 			//voices
-			if(ase[bullet[a].aseesta]._type==0)playsound(2,1,bullet[a].paikka.x,bullet[a].paikka.z);
-			if(ase[bullet[a].aseesta]._type==1)playsound(5,1,bullet[a].paikka.x,bullet[a].paikka.z);
-			if(ase[bullet[a].aseesta]._type==2)playsound(4,1,bullet[a].paikka.x,bullet[a].paikka.z);
-			if(ase[bullet[a].aseesta]._type==3)playsound(3,1,bullet[a].paikka.x,bullet[a].paikka.z);
+			if(ase[bullet[a].from_gun]._type==0)playsound(2,1,bullet[a].place.x,bullet[a].place.z);
+			if(ase[bullet[a].from_gun]._type==1)playsound(5,1,bullet[a].place.x,bullet[a].place.z);
+			if(ase[bullet[a].from_gun]._type==2)playsound(4,1,bullet[a].place.x,bullet[a].place.z);
+			if(ase[bullet[a].from_gun]._type==3)playsound(3,1,bullet[a].place.x,bullet[a].place.z);
 
 
 			//speed=random
@@ -2659,10 +2659,10 @@ void shoot(int target,int kuka, int kenen,float aika,bikebase *moped, int aseena
 
         //äänet //a= vähän epävarma
 	if(d>=0){
-                if(ase[bullet[d].aseesta]._type==0)playsound(2,1,bullet[d].paikka.x,bullet[d].paikka.z);
-                if(ase[bullet[d].aseesta]._type==1)playsound(5,1,bullet[d].paikka.x,bullet[d].paikka.z);
-                if(ase[bullet[d].aseesta]._type==2)playsound(4,1,bullet[d].paikka.x,bullet[d].paikka.z);
-                if(ase[bullet[d].aseesta]._type==3)playsound(3,1,bullet[d].paikka.x,bullet[d].paikka.z);
+                if(ase[bullet[d].from_gun]._type==0)playsound(2,1,bullet[d].place.x,bullet[d].place.z);
+                if(ase[bullet[d].from_gun]._type==1)playsound(5,1,bullet[d].place.x,bullet[d].place.z);
+                if(ase[bullet[d].from_gun]._type==2)playsound(4,1,bullet[d].place.x,bullet[d].place.z);
+                if(ase[bullet[d].from_gun]._type==3)playsound(3,1,bullet[d].place.x,bullet[d].place.z);
 	}
 
 
@@ -2707,7 +2707,7 @@ void aja(bikebase *moped)
 	// choosing targetted character
 	moped->target_character=-6667;
 	for (q=0; q<characters; q++){
-		if(character[q].pois)continue;
+		if(character[q].inactive)continue;
 		if(character[q].dying)continue;
 		//accepted angle is 0.075f
 		if(fabs(fabs(character[q].player_angle)-fabs(moped->direction))<0.08f)//if angle is right
@@ -2725,7 +2725,7 @@ void aja(bikebase *moped)
 	temp1=-6667;
 	for (q=0; q<mopoja; q++){
 		if(q==moped->numero)continue;
-		if(moped[q].pois)continue;
+		if(moped[q].inactive)continue;
 		//accepted angle is 0.075f
 		if(fabs(fabs(moped[q].player_angle)-fabs(moped->direction))<0.1f)//is angle is rigth
 		{
@@ -2751,19 +2751,19 @@ void aja(bikebase *moped)
 
 
 	if(moped->timesparks>=0)moped->timesparks=moped->timesparks-elapsed*gamespeed;
-	if(moped->asetime[0]<0)moped->asetime[0]=moped->asetime[0]+elapsed*gamespeed;
-	if(moped->asetime[1]<0)moped->asetime[1]=moped->asetime[1]+elapsed*gamespeed;
-	if(moped->asetime[2]<0)moped->asetime[2]=moped->asetime[2]+elapsed*gamespeed;
-	if(moped->asetime[3]<0)moped->asetime[3]=moped->asetime[3]+elapsed*gamespeed;
+	if(moped->gun_timer[0]<0)moped->gun_timer[0]=moped->gun_timer[0]+elapsed*gamespeed;
+	if(moped->gun_timer[1]<0)moped->gun_timer[1]=moped->gun_timer[1]+elapsed*gamespeed;
+	if(moped->gun_timer[2]<0)moped->gun_timer[2]=moped->gun_timer[2]+elapsed*gamespeed;
+	if(moped->gun_timer[3]<0)moped->gun_timer[3]=moped->gun_timer[3]+elapsed*gamespeed;
 
 
 
 	if((moped->enter==false) & (moped->enter2==true))
 	{
 		//asking for a mission
-		if(moped->mission.suoritettu!=0)//there is no mission
+		if(moped->mission.status!=0)//there is no mission
                         if(moped->nearestcharacter>-1)
-                                if(character[moped->nearestcharacter].puoli==0)
+                                if(character[moped->nearestcharacter].movement_type==0)
                                         if(!character[moped->nearestcharacter].dying)
                                                 if(fabs(moped->speed)<0.7f){
                                                         create_mission(moped,-1);
@@ -2774,13 +2774,13 @@ void aja(bikebase *moped)
 
 	if(moped->up)//throttle
 	{
-		moped->kulmakeuliminen=moped->kulmakeuliminen+2*0.4f*0.001f*elapsed*gamespeed;
+		moped->angle_pitch=moped->angle_pitch+2*0.4f*0.001f*elapsed*gamespeed;
 		moped->speed=moped->speed+(0.002f-sqr(moped->speed)*tuulenvastus/1000)*elapsed*gamespeed;
 	}
 	else if(moped->down)//brake
 	{
-		if(moped->kulmakeuliminen>0)
-			moped->kulmakeuliminen=moped->kulmakeuliminen-2*0.3f*0.001f*elapsed*gamespeed;
+		if(moped->angle_pitch>0)
+			moped->angle_pitch=moped->angle_pitch-2*0.3f*0.001f*elapsed*gamespeed;
 		if(moped->speed>0)//while braking
                         moped->speed=moped->speed-(0.002f+sqr(moped->speed)*tuulenvastus/1000)*elapsed*gamespeed;
 		else//while reverse
@@ -2795,22 +2795,22 @@ void aja(bikebase *moped)
 	}
 
 	//tilting bike
-	moped->kulmakallistus=moped->etudirection*sqr(moped->speed);
+	moped->angle_roll=moped->etudirection*sqr(moped->speed);
 
 	//pop a wheelie
-	//if(moped->kulmakeuliminen>0) //if(mopeds->wheelie angle>0)
-        moped->kulmakeuliminen=moped->kulmakeuliminen-(float)fabs((moped->speed*0.4f+0.2f)*0.001f*elapsed*gamespeed);
-	if(moped->kulmakeuliminen>pi/4)moped->kulmakeuliminen=pi/4;
-	if(moped->kulmakeuliminen<0) moped->kulmakeuliminen=0;
+	//if(moped->angle_pitch>0) //if(mopeds->wheelie angle>0)
+        moped->angle_pitch=moped->angle_pitch-(float)fabs((moped->speed*0.4f+0.2f)*0.001f*elapsed*gamespeed);
+	if(moped->angle_pitch>pi/4)moped->angle_pitch=pi/4;
+	if(moped->angle_pitch<0) moped->angle_pitch=0;
 
-	//if(moped->kulmakeuliminen>0.5f)	//if(mopeds->wheelie angle>0.5f)
-	//if(randInt((int)(moped->kulmakeuliminen*elapsed),10)==9)
+	//if(moped->angle_pitch>0.5f)	//if(mopeds->wheelie angle>0.5f)
+	//if(randInt((int)(moped->angle_pitch*elapsed),10)==9)
 
 
 	//mopeds release smoke
-	moped->savuaika=moped->savuaika+elapsed*gamespeed*(moped->kulmakeuliminen+0.1f);
-	while(moped->savuaika>=0){
-                moped->savuaika=moped->savuaika-4.0f;
+	moped->smoke_timer=moped->smoke_timer+elapsed*gamespeed*(moped->angle_pitch+0.1f);
+	while(moped->smoke_timer>=0){
+                moped->smoke_timer=moped->smoke_timer-4.0f;
                 fromsmoke(1.0f,-0.01f,true,randDouble(200,400),moped->x2+randDouble(-10,10)-cosf(moped->direction)*15,randDouble(0,30),moped->z2+randDouble(-10,10)-sinf(moped->direction)*15,4,randDouble(0,2*pi),0,randDouble(0,2*pi));
 	}
 
@@ -2850,8 +2850,8 @@ void aja(bikebase *moped)
 	moped->z1=moped->z1+(float)sin(moped->direction+moped->etudirection)*liike;
 	//handbrake
 	if(moped->space){
-		if(moped->kulmakeuliminen>0)
-			moped->kulmakeuliminen=moped->kulmakeuliminen-2*0.3f*0.001f*elapsed*gamespeed;
+		if(moped->angle_pitch>0)
+			moped->angle_pitch=moped->angle_pitch-2*0.3f*0.001f*elapsed*gamespeed;
 		if(moped->speed>0)//while braking
 			moped->speed=moped->speed-(0.001f+sqr(moped->speed)*tuulenvastus/1000)*elapsed*gamespeed;
 		else//while reverse
@@ -2879,9 +2879,9 @@ void aja(bikebase *moped)
         float matka=sqrtf((float)sqr(cos(moped->direction)*elapsed*gamespeed*moped->speed)+(float)sqr(sin(moped->direction)*elapsed*gamespeed*moped->speed));
 
         if (moped->speed<0)
-                moped->kulmaetu=moped->kulmaetu+(matka*2*pi)/(2*pi*20);
+                moped->angle_yaw=moped->angle_yaw+(matka*2*pi)/(2*pi*20);
         else
-                moped->kulmaetu=moped->kulmaetu-(matka*2*pi)/(2*pi*20);
+                moped->angle_yaw=moped->angle_yaw-(matka*2*pi)/(2*pi*20);
 
 	//moped->x1=moped->x1+moped->speed*elapsed*gamespeed;
 	//front wheel front side
@@ -2912,12 +2912,12 @@ void aja(bikebase *moped)
 
 	//there is a bullet under a moped
 	bullet[moped->numero].remove=false;
-	bullet[moped->numero].aseesta=5;
-	bullet[moped->numero].kenen=moped->numero;
-	bullet[moped->numero].aika=-1;
-	bullet[moped->numero].paikka.x=moped->x5;
-	bullet[moped->numero].paikka.y=50;
-	bullet[moped->numero].paikka.z=moped->z5;
+	bullet[moped->numero].from_gun=5;
+	bullet[moped->numero].from_moped=moped->numero;
+	bullet[moped->numero].timer=-1;
+	bullet[moped->numero].place.x=moped->x5;
+	bullet[moped->numero].place.y=50;
+	bullet[moped->numero].place.z=moped->z5;
 	bullet[moped->numero].place_old.x=moped->x3;
 	bullet[moped->numero].place_old.y=50;
 	bullet[moped->numero].place_old.z=moped->z3;
@@ -3009,7 +3009,7 @@ void calculateCollisions(void)//collisions
 	float kx,kz;
 
 	for (d=0; d<mopoja; d++){
-                if(moped[d].pois)continue;
+                if(moped[d].inactive)continue;
 		osuma=false;
 		osuu=false;
 
@@ -3106,7 +3106,7 @@ void calculateCollisions(void)//collisions
                                                                         moped[d].y2=moped[d].y4;
                                                                         moped[d].z2=moped[d].z4;
                                                                         moped[d].speed=-moped[d].speed/3;
-                                                                        moped[d].kulmakeuliminen=0;
+                                                                        moped[d].angle_pitch=0;
                                                                 }
                                                         }
 						}
@@ -3115,7 +3115,7 @@ void calculateCollisions(void)//collisions
 					//backwards from wall
 					else{
 						moped[d].speed=-moped[d].speed/3;
-						moped[d].kulmakeuliminen=0;
+						moped[d].angle_pitch=0;
 					}
 
 				}
@@ -3185,16 +3185,16 @@ bool readpictures(void)
   font1->SetColorKey(DDCKEY_SRCBLT,&color);
 */
 
-	char rivi[256], temprivi[256];
+	char row[256], temprow[256];
 
 	for (q=0; q<numpictures; q++){
 
-                strcpy(rivi,"textures/pic");
-                itoa(q,temprivi,10);
-                strcat(rivi,temprivi);
-                strcat(rivi,".bmp");
+                strcpy(row,"textures/pic");
+                itoa(q,temprow,10);
+                strcat(row,temprow);
+                strcat(row,".bmp");
 
-                pictures[q]=loadPicture(m_pDD, rivi,false);
+                pictures[q]=loadPicture(m_pDD, row,false);
                 color.dwColorSpaceHighValue=0x000000;
                 color.dwColorSpaceLowValue=0x000000;
                 pictures[q]->SetColorKey(DDCKEY_SRCBLT,&color);
@@ -3493,7 +3493,7 @@ void calculatecharacters(void) //calculatecharacters
 	float osumax,osumaz;
 	float cos,sin;
 	float MOTION_SPEED=0.1f;
-	int poisko;
+	int inactiveko;
 	int osumia;
 	moped[0].nearestcharacter=-1;
 
@@ -3501,7 +3501,7 @@ void calculatecharacters(void) //calculatecharacters
 	{
 
 		//randomize new character if one is dead
-		if(character[q].pois){
+		if(character[q].inactive){
 			create_character(q);
 		}
 
@@ -3540,7 +3540,7 @@ void calculatecharacters(void) //calculatecharacters
 		character[q].distance=sqrtf(sqr(character[q].x-moped[0].x1)+sqr(character[q].z-moped[0].z1));
 
 		//is it nearest
-		if((character[q].distance<300)&&(character[q].puoli==0))
+		if((character[q].distance<300)&&(character[q].movement_type==0))
                         //if(character[q].aseena==-1)
 			if(moped[0].nearestcharacter==-1)
 				moped[0].nearestcharacter=q;
@@ -3550,16 +3550,16 @@ void calculatecharacters(void) //calculatecharacters
 
 		if(character[q].dying){
 			character[q].speed=0;//doesnt move if dead
-			poisko=0;
+			inactiveko=0;
 			for (a=0; a<11; a++){
 				if(character[q].bodypart_coords[a].y<-100)
-					poisko=poisko+1;
+					inactiveko=inactiveko+1;
 				character[q].bodypart_coords[a].goy=character[q].bodypart_coords[a].goy-elapsed*gamespeed*0.25f/1000;
 				character[q].bodypart_coords[a].x=character[q].bodypart_coords[a].x+character[q].bodypart_coords[a].gox*elapsed*gamespeed;
 				character[q].bodypart_coords[a].y=character[q].bodypart_coords[a].y+character[q].bodypart_coords[a].goy*elapsed*gamespeed;
 				character[q].bodypart_coords[a].z=character[q].bodypart_coords[a].z+character[q].bodypart_coords[a].goz*elapsed*gamespeed;
 			}
-			if(poisko==11)character[q].pois=true;
+			if(inactiveko==11)character[q].inactive=true;
 		}
 		if(character[q].distance<15000){
                         if(character[q].dying)continue;
@@ -3589,7 +3589,7 @@ void calculatecharacters(void) //calculatecharacters
 
 
                         //walks
-                        if(character[q].taktiikka==1){
+                        if(character[q].tactics==1){
 
                                 //arms are swinging
                                 character[q].bodypart_coords[8].rz=(character[q].lx*1.2f+0.24f)*character[q].speed*10;//lift upper arm (rigth)
@@ -3600,7 +3600,7 @@ void calculatecharacters(void) //calculatecharacters
                         }
 
                         //escapes
-                        if(character[q].taktiikka==2){
+                        if(character[q].tactics==2){
 
                                 //arms are swinging
                                 character[q].bodypart_coords[8].rz=(character[q].lx*1.2f+0.24f)*character[q].speed*10;//lift upper arm (rigth)
@@ -3613,7 +3613,7 @@ void calculatecharacters(void) //calculatecharacters
                         }
 
                         //attack
-                        if(character[q].taktiikka==0){
+                        if(character[q].tactics==0){
                                 character[q].menoajastin=character[q].menoajastin-elapsed*gamespeed;
                                 if(character[q].distance<5000)
                                 {
@@ -3631,32 +3631,32 @@ void calculatecharacters(void) //calculatecharacters
                                 if(character[q].menoajastin<0)
                                 {
                                         character[q].menoajastin=character[q].menoajastin+2000;
-                                        character[q].menossa=1;
+                                        character[q].walk_dir=1;
 
                                         if(character[q].distance<1000){
                                                 if(randInt(0,2)==0)
-                                                        character[q].menossa=-1;
+                                                        character[q].walk_dir=-1;
                                         }
                                 }
                                 if(character[q].distance<200){
                                         character[q].menoajastin=2000;
-                                        character[q].menossa=-1;
+                                        character[q].walk_dir=-1;
                                 }
 
-                                if(character[q].menossa==1)
+                                if(character[q].walk_dir==1)
                                         character[q].speed=0.2f;
-                                if(character[q].menossa==-1)
+                                if(character[q].walk_dir==-1)
                                         character[q].speed=-0.2f;
 
                                 //character shoots
-                                if(character[q].asetime<0)character[q].asetime=character[q].asetime+elapsed*gamespeed;
+                                if(character[q].gun_timer<0)character[q].gun_timer=character[q].gun_timer+elapsed*gamespeed;
                                 //if((character[q].distance<1000)|(randInt(0,(int)(elapsed*gamespeed*300))==0)){
                                 if(randInt(0,(int)(elapsed*gamespeed*character[q].distance*character[q].distance*ase[character[q].aseena].rate_of_fire*0.02f*0.000001f+1))<=1){
                                         if(character[q].dying!=true)
                                                 if(character[q].aseena!=-1){
-                                                        while(character[q].asetime>=0){
-                                                                character[q].asetime=character[q].asetime-ase[character[q].aseena].rate_of_fire;
-                                                                shoot(-1,q,-1,-1,moped,character[q].aseena,character[q].x+cos*33,92*character[q].korkeus,character[q].z+sin*33,-character[q].direction,randDouble(-0.03f,0.03f),randDouble(-0.03f,0.03f));
+                                                        while(character[q].gun_timer>=0){
+                                                                character[q].gun_timer=character[q].gun_timer-ase[character[q].aseena].rate_of_fire;
+                                                                shoot(-1,q,-1,-1,moped,character[q].aseena,character[q].x+cos*33,92*character[q].height,character[q].z+sin*33,-character[q].direction,randDouble(-0.03f,0.03f),randDouble(-0.03f,0.03f));
                                                                 //shoot(q,2,-1,moped,character[q].aseena,character[q].x+cos*33,85,character[q].z+sin*33,-character[q].direction,0,0); //shoot
                                                         }
                                                 }
@@ -3690,7 +3690,7 @@ void calculatecharacters(void) //calculatecharacters
                                 wallhits=0;
                                 for (b=0; b<viivagroup[0].viivat[a].viivaa; b++){
 					for (c=0; c<viivagroup[0].viivat[a].viiva[b].linjaa; c++){
-						if(linecollidesline(&osuma,&osumax,&osumaz,character[q].x+cos*100*character[q].menossa-mapx*8000,character[q].z+sin*100*character[q].menossa-mapz*8000,character[q].x+cos*100*character[q].menossa+8000-mapx*8000,character[q].z+sin*100*character[q].menossa-mapz*8000,	viivagroup[0].viivat[a].viiva[b].point[c].x1,viivagroup[0].viivat[a].viiva[b].point[c].z1,viivagroup[0].viivat[a].viiva[b].point[c].x2,viivagroup[0].viivat[a].viiva[b].point[c].z2))
+						if(linecollidesline(&osuma,&osumax,&osumaz,character[q].x+cos*100*character[q].walk_dir-mapx*8000,character[q].z+sin*100*character[q].walk_dir-mapz*8000,character[q].x+cos*100*character[q].walk_dir+8000-mapx*8000,character[q].z+sin*100*character[q].walk_dir-mapz*8000,	viivagroup[0].viivat[a].viiva[b].point[c].x1,viivagroup[0].viivat[a].viiva[b].point[c].z1,viivagroup[0].viivat[a].viiva[b].point[c].x2,viivagroup[0].viivat[a].viiva[b].point[c].z2))
 							wallhits=wallhits+1;
 					}
                                 }
@@ -3755,7 +3755,7 @@ void calculatecharacters(void) //calculatecharacters
                                 if(!character[q].leg) if (character[q].rx< 0.10f)	{character[q].rx=character[q].rx+MOTION_SPEED*0.02f*elapsed*gamespeed;eteen=true;}
 
                                 //deciding new direction
-                                if((character[q].taktiikka!=0)&&(!character[q].visible)){
+                                if((character[q].tactics!=0)&&(!character[q].visible)){
                                         character[q].direction=randDouble(-pi,pi);
                                         //does it collide with walls
                                         cos=cosf(character[q].direction);
@@ -3816,7 +3816,7 @@ void rendercharacters(void){
 
 	for (q=0; q<characters; q++)
 	{
-		if(character[q].pois)continue;
+		if(character[q].inactive)continue;
 		radiuscharacter[q]=50.01f;
 		center_pointcharacter[q].x=character[q].x;
 		center_pointcharacter[q].y=50;
@@ -3834,7 +3834,7 @@ void rendercharacters(void){
 
 	for (a=0; a<characters; a++)
 	{
-		if(character[a].pois)continue;
+		if(character[a].inactive)continue;
                 character[a].visible=true;
 		if((visiblecharacter[a] &D3DSTATUS_CLIPINTERSECTIONALL   ) ){character[a].visible=false; continue;}
 
@@ -3901,9 +3901,9 @@ void rendercharacters(void){
 
 
 			//render mission mark
-			if(moped[0].mission.suoritettu!=0)
+			if(moped[0].mission.status!=0)
                                 if(moped[0].nearestcharacter==a)
-                                        if(character[moped[0].nearestcharacter].puoli==0)
+                                        if(character[moped[0].nearestcharacter].movement_type==0)
                                                 //if(!character[moped[0].nearestcharacter].dying)
                                                 if(fabs(moped[0].speed)<0.7f){
                                                         matrices->LoadIdentity();
@@ -3919,18 +3919,18 @@ void rendercharacters(void){
 				matrices->LoadIdentity();
 				matrices->TranslateLocal(character[a].x,1,character[a].z);
 				matrices->RotateYawPitchRollLocal(0,0,pi/2);
-				if(character[a].puoli==0)drawfast(&mallit[2].malli[13]);
-				if(character[a].puoli==1)drawfast(&mallit[2].malli[11]);
-				if(character[a].puoli==2)drawfast(&mallit[2].malli[14]);
+				if(character[a].movement_type==0)drawfast(&mallit[2].malli[13]);
+				if(character[a].movement_type==1)drawfast(&mallit[2].malli[11]);
+				if(character[a].movement_type==2)drawfast(&mallit[2].malli[14]);
 			}
 			m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,FALSE);
 
 		}
 
 		matrices->LoadIdentity();
-		matrices->TranslateLocal(character[a].x,57*character[a].korkeus+(float)fabs(character[a].rx)*2*character[a].speed*18,character[a].z);
+		matrices->TranslateLocal(character[a].x,57*character[a].height+(float)fabs(character[a].rx)*2*character[a].speed*18,character[a].z);
 		matrices->RotateYawPitchRollLocal(-character[a].direction,0,0);
-		matrices->ScaleLocal(character[a].korkeus,character[a].korkeus,character[a].korkeus);
+		matrices->ScaleLocal(character[a].height,character[a].height,character[a].height);
 
 
 		matrices->Push();q=0;//ass
@@ -3988,7 +3988,7 @@ void rendercharacters(void){
 
 		//attackers have a gun
 		if(!character[a].dying)
-                        if(character[a].taktiikka==0){
+                        if(character[a].tactics==0){
                                 matrices->Push();
                                 matrices->TranslateLocal(30,30,0);
                                 //matrices->RotateYawPitchRollLocal(character[a].bodypart_coords[q].rx,character[a].bodypart_coords[q].ry,character[a].bodypart_coords[q].rz);
@@ -4037,7 +4037,7 @@ void rendertext(INT x, INT y, INT fontti, const char teksti[100]) //write
 	INT nume;
 	int xplus=0;
 	int yplus=0;
-	float korkeus,leveys;
+	float height,leveys;
 	float u1,u2,v1,v2;
 	int xk,yk;
 	bool iso;
@@ -4160,7 +4160,7 @@ void rendertext(INT x, INT y, INT fontti, const char teksti[100]) //write
                 {
 
                         pvertex vertex[6];
-                        korkeus=70;
+                        height=70;
                         leveys=60;
                         yk=(int)(nume/8);
                         xk=nume-yk*8;
@@ -4176,13 +4176,13 @@ void rendertext(INT x, INT y, INT fontti, const char teksti[100]) //write
 			vertex[0].v=v2;
 
 			vertex[1].position.x=leveys;
-			vertex[1].position.y=korkeus;
+			vertex[1].position.y=height;
 			vertex[1].position.z=0;
 			vertex[1].u=u1;
 			vertex[1].v=v1;
 
 			vertex[2].position.x=0;
-			vertex[2].position.y=korkeus;
+			vertex[2].position.y=height;
 			vertex[2].position.z=0;
 			vertex[2].u=u2;
 			vertex[2].v=v1;
@@ -4200,7 +4200,7 @@ void rendertext(INT x, INT y, INT fontti, const char teksti[100]) //write
 			vertex[4].v=v2;
 
 			vertex[5].position.x=leveys;
-			vertex[5].position.y=korkeus;
+			vertex[5].position.y=height;
 			vertex[5].position.z=0;
 			vertex[5].u=u1;
 			vertex[5].v=v1;
@@ -4282,8 +4282,8 @@ void render_game(void){//just renders some moped driving.
 
 	int a,b,q,c,d;
 	float kerroin;
-	char rivi[200];
-	char temprivi[200];
+	char row[200];
+	char temprow[200];
 	//pelivaihe2 		//gamephase2
 	//0=normaali peli 	//normal game
 	//1=loppudemo 		//end demo
@@ -4303,7 +4303,7 @@ void render_game(void){//just renders some moped driving.
 		calculateCollisions();//does mopeds collide with anything
 		laskemoped();//mopeds are rollin //calculatemopeds
 		for (d=0; d<mopoja; d++){
-			if(moped[d].pois)continue;
+			if(moped[d].inactive)continue;
 			aja(&moped[d]);
 		}
 	}
@@ -4400,7 +4400,7 @@ void render_game(void){//just renders some moped driving.
                 m_pDevice->SetTransform(D3DTRANSFORMSTATE_PROJECTION, &m_Projection);
 	}
 
-	luoteja=0;
+	bullet_count=0;
 	if(pelivaihe2==0){
 		svolume(voices[1],DSBVOLUME_MAX, options[1]&&SOUNDS_LOADED);
 		calculatecharacters();
@@ -4412,9 +4412,9 @@ void render_game(void){//just renders some moped driving.
 
 
 	//is character dead
-	if((moped[0].energia<0)&&(pelivaihe2!=5)){
+	if((moped[0].energy<0)&&(pelivaihe2!=5)){
 		pelivaihe2=5;
-		//moped[0].pois=true;
+		//moped[0].inactive=true;
 
 		SndObjStop(voices[1]);//motor stops
                 //smoke to air
@@ -4423,7 +4423,7 @@ void render_game(void){//just renders some moped driving.
                                 fromsmoke(1.0f,0.001f,true,3000,moped[0].x1,60,moped[0].z1,ase[1].smoke_filled,randDouble(pi,-pi),randDouble(pi,-pi),randDouble(pi,-pi));
                         }
                 //explosion
-                if(ase[1].pommi!=0){
+                if(ase[1].explosion_size!=0){
                         quake=3;
                         for (q=0; q<100; q++){
                                 shoot(-6667,-1,1,randDouble(100,300),moped,2,moped[0].x1,60,moped[0].z1,randDouble(-pi,pi),randDouble(-pi,pi),randDouble(-pi,pi));
@@ -4465,7 +4465,7 @@ void render_game(void){//just renders some moped driving.
 			moped[0].x4=moped[0].x2;
 			moped[0].y4=moped[0].y2;
 			moped[0].z4=moped[0].z2;
-			moped[0].kulmakeuliminen=0;
+			moped[0].angle_pitch=0;
 			moped[0].etudirection=0;
 			for (a=0; a<100; a++)moped[0].osuma[a]=false;
 		}
@@ -4478,7 +4478,7 @@ void render_game(void){//just renders some moped driving.
 	lamppu[0].valo.dvPosition.y = 100;
 	lamppu[0].valo.dvPosition.z = moped[0].z1;
 	lamppu[0].valo.dvRange = 4000;
-	lamppu[0].valo.dvDirection=D3DVECTOR((float)cosf(moped[0].direction+moped[0].etudirection),(float)sinf(moped[0].kulmakeuliminen),(float)sinf(moped[0].direction+moped[0].etudirection));
+	lamppu[0].valo.dvDirection=D3DVECTOR((float)cosf(moped[0].direction+moped[0].etudirection),(float)sinf(moped[0].angle_pitch),(float)sinf(moped[0].direction+moped[0].etudirection));
 	lamppu[0].valo.dvFalloff=1.0f;
 	lamppu[0].valo.dltType=D3DLIGHT_SPOT;
 	lamppu[0].valo.dvTheta=0.0f;
@@ -4648,52 +4648,52 @@ else drawfast(&mallit[0].malli[4]);//pohja
 
 
 	//bullets
-	luoteja=0;
+	bullet_count=0;
 	for (a=10; a<MAX_BULLETS; a++){//first 10 are for driving over people
 		if(bullet[a].remove)continue;
-		luoteja=luoteja+1;
+		bullet_count=bullet_count+1;
 		matrices->LoadIdentity();
-		bullet_trace[luoteja*2].position.x=bullet[a].paikka.x;
-		bullet_trace[luoteja*2].position.y=bullet[a].paikka.y;
-		bullet_trace[luoteja*2].position.z=bullet[a].paikka.z;
+		bullet_trace[bullet_count*2].position.x=bullet[a].place.x;
+		bullet_trace[bullet_count*2].position.y=bullet[a].place.y;
+		bullet_trace[bullet_count*2].position.z=bullet[a].place.z;
 
-		bullet_trace[luoteja*2+1].position.x=bullet[a].place_old.x;
-		bullet_trace[luoteja*2+1].position.y=bullet[a].place_old.y;
-		bullet_trace[luoteja*2+1].position.z=bullet[a].place_old.z;
+		bullet_trace[bullet_count*2+1].position.x=bullet[a].place_old.x;
+		bullet_trace[bullet_count*2+1].position.y=bullet[a].place_old.y;
+		bullet_trace[bullet_count*2+1].position.z=bullet[a].place_old.z;
 
-		switch (ase[bullet[a].aseesta].bullet_picture)
+		switch (ase[bullet[a].from_gun].bullet_picture)
 		{
 
 
                 case 0:{
-			bullet_trace[luoteja*2].u=0;
-			bullet_trace[luoteja*2].v=0.16f;
-			bullet_trace[luoteja*2+1].u=1;
-			bullet_trace[luoteja*2+1].v=0.16f;
+			bullet_trace[bullet_count*2].u=0;
+			bullet_trace[bullet_count*2].v=0.16f;
+			bullet_trace[bullet_count*2+1].u=1;
+			bullet_trace[bullet_count*2+1].v=0.16f;
 			break;
                 }
 
                 case 1:{
-			bullet_trace[luoteja*2].u=0;
-			bullet_trace[luoteja*2].v=0.33f;
-			bullet_trace[luoteja*2+1].u=1;
-			bullet_trace[luoteja*2+1].v=0.33f;
+			bullet_trace[bullet_count*2].u=0;
+			bullet_trace[bullet_count*2].v=0.33f;
+			bullet_trace[bullet_count*2+1].u=1;
+			bullet_trace[bullet_count*2+1].v=0.33f;
 			break;
                 }
 
                 case 2:{
-			bullet_trace[luoteja*2].u=0;
-			bullet_trace[luoteja*2].v=0.55f;
-			bullet_trace[luoteja*2+1].u=1;
-			bullet_trace[luoteja*2+1].v=0.55f;
+			bullet_trace[bullet_count*2].u=0;
+			bullet_trace[bullet_count*2].v=0.55f;
+			bullet_trace[bullet_count*2+1].u=1;
+			bullet_trace[bullet_count*2+1].v=0.55f;
 			break;
                 }
 
                 case 3:{
-			bullet_trace[luoteja*2].u=0;
-			bullet_trace[luoteja*2].v=0.80f;
-			bullet_trace[luoteja*2+1].u=1;
-			bullet_trace[luoteja*2+1].v=0.80f;
+			bullet_trace[bullet_count*2].u=0;
+			bullet_trace[bullet_count*2].v=0.80f;
+			bullet_trace[bullet_count*2+1].u=1;
+			bullet_trace[bullet_count*2+1].v=0.80f;
 			break;
                 }
 		}
@@ -4711,14 +4711,14 @@ else drawfast(&mallit[0].malli[4]);//pohja
         m_pDevice->SetTexture( 0, background[30] );
         m_pDevice->SetTransform(D3DTRANSFORMSTATE_WORLD, *matrices->GetTop());
         m_pDevice->DrawPrimitive(D3DPT_LINELIST  ,
-			D3DFVF_XYZ |D3DFVF_TEX1|D3DFVF_TEXCOORDSIZE2(0) ,bullet_trace,luoteja*2,NULL);
+			D3DFVF_XYZ |D3DFVF_TEX1|D3DFVF_TEXCOORDSIZE2(0) ,bullet_trace,bullet_count*2,NULL);
         m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,FALSE);
 
 
 
 	//are mopeds visible
 	for (a=0; a<mopoja; a++){
-                if(moped[a].pois)continue;
+                if(moped[a].inactive)continue;
                 center_pointmap[a].x=moped[a].x1;
                 center_pointmap[a].y=0;
                 center_pointmap[a].z=moped[a].z1;
@@ -4737,7 +4737,7 @@ else drawfast(&mallit[0].malli[4]);//pohja
 	//chasis
 	if(pelivaihe2!=5)//if player is not dead
                 for (d=0; d<mopoja; d++){
-                        if(moped[d].pois)continue;
+                        if(moped[d].inactive)continue;
                         moped[d].visible=true;
                         if(visiblemap[d] &D3DSTATUS_CLIPINTERSECTIONALL){moped[d].visible=false;continue;}
 
@@ -4758,19 +4758,19 @@ else drawfast(&mallit[0].malli[4]);//pohja
                                 matrices->LoadIdentity();
 
                                 matrices->TranslateLocal(moped[d].x2,moped[d].y2,moped[d].z2);
-                                matrices->RotateYawPitchRollLocal(-moped[d].direction,moped[d].kulmakallistus,moped[d].kulmakeuliminen);
+                                matrices->RotateYawPitchRollLocal(-moped[d].direction,moped[d].angle_roll,moped[d].angle_pitch);
                                 drawfast(&mallit[mopopicture].malli[0]);
                         }
                         if(mopopicture==6){
                                 matrices->LoadIdentity();
                                 matrices->TranslateLocal(moped[d].x2,moped[d].y2+1.5f,moped[d].z2);
-                                matrices->RotateYawPitchRollLocal(-moped[d].direction,moped[d].kulmakallistus,moped[d].kulmakeuliminen);
+                                matrices->RotateYawPitchRollLocal(-moped[d].direction,moped[d].angle_roll,moped[d].angle_pitch);
                                 drawfast(&mallit[mopopicture].malli[0]);
                         }
                         if(mopopicture==9){
                                 matrices->LoadIdentity();
                                 matrices->TranslateLocal(moped[d].x2,moped[d].y2+1.5f,moped[d].z2);
-                                matrices->RotateYawPitchRollLocal(-moped[d].direction,moped[d].kulmakallistus,moped[d].kulmakeuliminen);
+                                matrices->RotateYawPitchRollLocal(-moped[d].direction,moped[d].angle_roll,moped[d].angle_pitch);
                                 drawfast(&mallit[mopopicture].malli[0]);
                         }
 /*
@@ -4782,7 +4782,7 @@ else drawfast(&mallit[0].malli[4]);//pohja
 
                         //passanger
                         if(moped[d].mission._type==1)
-                                if(moped[d].mission.suoritettu==0){
+                                if(moped[d].mission.status==0){
                                         matrices->Push();
                                         matrices->TranslateLocal(7,57,0);
 
@@ -4903,7 +4903,7 @@ else drawfast(&mallit[0].malli[4]);//pohja
                                 //rear wheel
                                 matrices->Push();
                                 matrices->TranslateLocal(0,20,0);
-                                matrices->RotateYawPitchRollLocal(0,0,moped[d].kulmaetu);
+                                matrices->RotateYawPitchRollLocal(0,0,moped[d].angle_yaw);
                                 drawfast(&mallit[mopopicture].malli[3]);
                                 matrices->Pop();
                                 //frontside
@@ -4913,14 +4913,14 @@ else drawfast(&mallit[0].malli[4]);//pohja
                                 drawfast(&mallit[mopopicture].malli[2]);
                                 //frontwheel
                                 matrices->TranslateLocal(40,20,0);
-                                matrices->RotateYawPitchRollLocal(0,0,moped[d].kulmaetu);
+                                matrices->RotateYawPitchRollLocal(0,0,moped[d].angle_yaw);
                                 drawfast(&mallit[mopopicture].malli[3]);
                         }
                         if(mopopicture==6){
                                 //rearwheel
                                 matrices->Push();
                                 matrices->TranslateLocal(0,20,0);
-                                matrices->RotateYawPitchRollLocal(0,0,moped[d].kulmaetu);
+                                matrices->RotateYawPitchRollLocal(0,0,moped[d].angle_yaw);
                                 drawfast(&mallit[mopopicture].malli[2]);
                                 matrices->Pop();
                                 //front side
@@ -4929,14 +4929,14 @@ else drawfast(&mallit[0].malli[4]);//pohja
                                 drawfast(&mallit[mopopicture].malli[1]);
                                 //front wheel
                                 matrices->TranslateLocal(40,20,0);
-                                matrices->RotateYawPitchRollLocal(0,0,moped[d].kulmaetu);
+                                matrices->RotateYawPitchRollLocal(0,0,moped[d].angle_yaw);
                                 drawfast(&mallit[mopopicture].malli[2]);
                         }
                         if(mopopicture==9){
                                 //rear wheel
                                 matrices->Push();
                                 matrices->TranslateLocal(0,20,0);
-                                matrices->RotateYawPitchRollLocal(0,0,moped[d].kulmaetu);
+                                matrices->RotateYawPitchRollLocal(0,0,moped[d].angle_yaw);
                                 drawfast(&mallit[mopopicture].malli[2]);
                                 matrices->Pop();
                                 //front side
@@ -4945,7 +4945,7 @@ else drawfast(&mallit[0].malli[4]);//pohja
                                 drawfast(&mallit[mopopicture].malli[1]);
                                 //front wheel
                                 matrices->TranslateLocal(40,20,0);
-                                matrices->RotateYawPitchRollLocal(0,0,moped[d].kulmaetu);
+                                matrices->RotateYawPitchRollLocal(0,0,moped[d].angle_yaw);
                                 drawfast(&mallit[mopopicture].malli[2]);
                         }
 
@@ -4988,7 +4988,7 @@ else drawfast(&mallit[0].malli[4]);//pohja
 
 
 	//bulletholes
-	//if(savuja>0)
+	//if(smoke_count>0)
 	{
                 m_pDevice->SetRenderState( D3DRENDERSTATE_ZBIAS, 1);//set zbias as 1 beacause of the bullet holes
 
@@ -4997,12 +4997,12 @@ else drawfast(&mallit[0].malli[4]);//pohja
 
                 for (q=0; q<MAX_SMOKES; q++)
                 {
-                        if(savu[q].pois)continue;
+                        if(savu[q].inactive)continue;
                         //kappaletta=kappaletta+1;
                         radius[q]=100.01f;
-                        center_point[q].x=savu[q].paikka.x;
-                        center_point[q].y=savu[q].paikka.y;
-                        center_point[q].z=savu[q].paikka.z;
+                        center_point[q].x=savu[q].place.x;
+                        center_point[q].y=savu[q].place.y;
+                        center_point[q].z=savu[q].place.z;
                 }
 
 
@@ -5016,83 +5016,83 @@ else drawfast(&mallit[0].malli[4]);//pohja
 
 
                 for (q=0; q<MAX_SMOKES; q++){
-                        if(savu[q].pois)continue;
+                        if(savu[q].inactive)continue;
                         if((visible[q] &D3DSTATUS_CLIPINTERSECTIONALL   ) ){continue;}
 
 
                         if(savu[q]._type==0){//normal bullet hole
-                                triangles[kappaletta*12+0].position.x=savu[q].paikka.x-savu[q].cos*-2.5f;//*savu[q].koko;
-                                triangles[kappaletta*12+0].position.y=savu[q].paikka.y+0;//*savu[q].koko;
-                                triangles[kappaletta*12+0].position.z=savu[q].paikka.z-savu[q].sin*-2.5f;//*savu[q].koko;
+                                triangles[kappaletta*12+0].position.x=savu[q].place.x-savu[q].cos*-2.5f;//*savu[q].size;
+                                triangles[kappaletta*12+0].position.y=savu[q].place.y+0;//*savu[q].size;
+                                triangles[kappaletta*12+0].position.z=savu[q].place.z-savu[q].sin*-2.5f;//*savu[q].size;
                                 triangles[kappaletta*12+0].u=0.0f;
                                 triangles[kappaletta*12+0].v=1.0f;
 
-                                triangles[kappaletta*12+1].position.x=savu[q].paikka.x+savu[q].cos*2.5f;//*savu[q].koko;
-                                triangles[kappaletta*12+1].position.y=savu[q].paikka.y+5;//*savu[q].koko;
-                                triangles[kappaletta*12+1].position.z=savu[q].paikka.z+savu[q].sin*2.5f;//*savu[q].koko;
+                                triangles[kappaletta*12+1].position.x=savu[q].place.x+savu[q].cos*2.5f;//*savu[q].size;
+                                triangles[kappaletta*12+1].position.y=savu[q].place.y+5;//*savu[q].size;
+                                triangles[kappaletta*12+1].position.z=savu[q].place.z+savu[q].sin*2.5f;//*savu[q].size;
                                 triangles[kappaletta*12+1].u=1.0f;
                                 triangles[kappaletta*12+1].v=1.0f;
 
-                                triangles[kappaletta*12+2].position.x=savu[q].paikka.x+savu[q].cos*-2.5f;//*savu[q].koko;
-                                triangles[kappaletta*12+2].position.y=savu[q].paikka.y+5;//*savu[q].koko;
-                                triangles[kappaletta*12+2].position.z=savu[q].paikka.z+savu[q].sin*-2.5f;//*savu[q].koko;
+                                triangles[kappaletta*12+2].position.x=savu[q].place.x+savu[q].cos*-2.5f;//*savu[q].size;
+                                triangles[kappaletta*12+2].position.y=savu[q].place.y+5;//*savu[q].size;
+                                triangles[kappaletta*12+2].position.z=savu[q].place.z+savu[q].sin*-2.5f;//*savu[q].size;
                                 triangles[kappaletta*12+2].u=0.0f;
                                 triangles[kappaletta*12+2].u=1.0f;
 
-                                triangles[kappaletta*12+3].position.x=savu[q].paikka.x-savu[q].cos*-2.5f;//*savu[q].koko;
-                                triangles[kappaletta*12+3].position.y=savu[q].paikka.y+0;//*savu[q].koko;
-                                triangles[kappaletta*12+3].position.z=savu[q].paikka.z-savu[q].sin*-2.5f;//*savu[q].koko;
+                                triangles[kappaletta*12+3].position.x=savu[q].place.x-savu[q].cos*-2.5f;//*savu[q].size;
+                                triangles[kappaletta*12+3].position.y=savu[q].place.y+0;//*savu[q].size;
+                                triangles[kappaletta*12+3].position.z=savu[q].place.z-savu[q].sin*-2.5f;//*savu[q].size;
                                 triangles[kappaletta*12+3].u=0.0f;
                                 triangles[kappaletta*12+3].v=0.0f;
 
-                                triangles[kappaletta*12+4].position.x=savu[q].paikka.x+savu[q].cos*-2.5f;//*savu[q].koko;
-                                triangles[kappaletta*12+4].position.y=savu[q].paikka.y+5;//*savu[q].koko;
-                                triangles[kappaletta*12+4].position.z=savu[q].paikka.z+savu[q].sin*-2.5f;//*savu[q].koko;
+                                triangles[kappaletta*12+4].position.x=savu[q].place.x+savu[q].cos*-2.5f;//*savu[q].size;
+                                triangles[kappaletta*12+4].position.y=savu[q].place.y+5;//*savu[q].size;
+                                triangles[kappaletta*12+4].position.z=savu[q].place.z+savu[q].sin*-2.5f;//*savu[q].size;
                                 triangles[kappaletta*12+4].u=1.0f;
                                 triangles[kappaletta*12+4].v=1.0f;
 
-                                triangles[kappaletta*12+5].position.x=savu[q].paikka.x+savu[q].cos*-2.5f;//*savu[q].koko;
-                                triangles[kappaletta*12+5].position.y=savu[q].paikka.y+0;//*savu[q].koko;
-                                triangles[kappaletta*12+5].position.z=savu[q].paikka.z+savu[q].sin*-2.5f;//*savu[q].koko;
+                                triangles[kappaletta*12+5].position.x=savu[q].place.x+savu[q].cos*-2.5f;//*savu[q].size;
+                                triangles[kappaletta*12+5].position.y=savu[q].place.y+0;//*savu[q].size;
+                                triangles[kappaletta*12+5].position.z=savu[q].place.z+savu[q].sin*-2.5f;//*savu[q].size;
                                 triangles[kappaletta*12+5].u=0.0f;
                                 triangles[kappaletta*12+5].u=1.0f;
 
 
 
 
-                                triangles[kappaletta*12+6].position.x=savu[q].paikka.x-savu[q].cos*+2.5f;//*savu[q].koko;
-                                triangles[kappaletta*12+6].position.y=savu[q].paikka.y+0;//*savu[q].koko;
-                                triangles[kappaletta*12+6].position.z=savu[q].paikka.z-savu[q].sin*+2.5f;//*savu[q].koko;
+                                triangles[kappaletta*12+6].position.x=savu[q].place.x-savu[q].cos*+2.5f;//*savu[q].size;
+                                triangles[kappaletta*12+6].position.y=savu[q].place.y+0;//*savu[q].size;
+                                triangles[kappaletta*12+6].position.z=savu[q].place.z-savu[q].sin*+2.5f;//*savu[q].size;
                                 triangles[kappaletta*12+6].u=0.0f;
                                 triangles[kappaletta*12+6].v=1.0f;
 
-                                triangles[kappaletta*12+7].position.x=savu[q].paikka.x+savu[q].cos*-2.5f;//*savu[q].koko;
-                                triangles[kappaletta*12+7].position.y=savu[q].paikka.y+5;//*savu[q].koko;
-                                triangles[kappaletta*12+7].position.z=savu[q].paikka.z+savu[q].sin*-2.5f;//*savu[q].koko;
+                                triangles[kappaletta*12+7].position.x=savu[q].place.x+savu[q].cos*-2.5f;//*savu[q].size;
+                                triangles[kappaletta*12+7].position.y=savu[q].place.y+5;//*savu[q].size;
+                                triangles[kappaletta*12+7].position.z=savu[q].place.z+savu[q].sin*-2.5f;//*savu[q].size;
                                 triangles[kappaletta*12+7].u=1.0f;
                                 triangles[kappaletta*12+7].v=1.0f;
 
-                                triangles[kappaletta*12+8].position.x=savu[q].paikka.x+savu[q].cos*+2.5f;//*savu[q].koko;
-                                triangles[kappaletta*12+8].position.y=savu[q].paikka.y+5;//*savu[q].koko;
-                                triangles[kappaletta*12+8].position.z=savu[q].paikka.z+savu[q].sin*+2.5f;//*savu[q].koko;
+                                triangles[kappaletta*12+8].position.x=savu[q].place.x+savu[q].cos*+2.5f;//*savu[q].size;
+                                triangles[kappaletta*12+8].position.y=savu[q].place.y+5;//*savu[q].size;
+                                triangles[kappaletta*12+8].position.z=savu[q].place.z+savu[q].sin*+2.5f;//*savu[q].size;
                                 triangles[kappaletta*12+8].u=0.0f;
                                 triangles[kappaletta*12+8].u=1.0f;
 
-                                triangles[kappaletta*12+9].position.x=savu[q].paikka.x-savu[q].cos*+2.5f;//*savu[q].koko;
-                                triangles[kappaletta*12+9].position.y=savu[q].paikka.y+0;//*savu[q].koko;
-                                triangles[kappaletta*12+9].position.z=savu[q].paikka.z-savu[q].sin*+2.5f;//*savu[q].koko;
+                                triangles[kappaletta*12+9].position.x=savu[q].place.x-savu[q].cos*+2.5f;//*savu[q].size;
+                                triangles[kappaletta*12+9].position.y=savu[q].place.y+0;//*savu[q].size;
+                                triangles[kappaletta*12+9].position.z=savu[q].place.z-savu[q].sin*+2.5f;//*savu[q].size;
                                 triangles[kappaletta*12+9].u=0.0f;
                                 triangles[kappaletta*12+9].v=0.0f;
 
-                                triangles[kappaletta*12+10].position.x=savu[q].paikka.x+savu[q].cos*+2.5f;//*savu[q].koko;
-                                triangles[kappaletta*12+10].position.y=savu[q].paikka.y+5;//*savu[q].koko;
-                                triangles[kappaletta*12+10].position.z=savu[q].paikka.z+savu[q].sin*+2.5f;//*savu[q].koko;
+                                triangles[kappaletta*12+10].position.x=savu[q].place.x+savu[q].cos*+2.5f;//*savu[q].size;
+                                triangles[kappaletta*12+10].position.y=savu[q].place.y+5;//*savu[q].size;
+                                triangles[kappaletta*12+10].position.z=savu[q].place.z+savu[q].sin*+2.5f;//*savu[q].size;
                                 triangles[kappaletta*12+10].u=1.0f;
                                 triangles[kappaletta*12+10].v=1.0f;
 
-                                triangles[kappaletta*12+11].position.x=savu[q].paikka.x+savu[q].cos*+2.5f;//*savu[q].koko;
-                                triangles[kappaletta*12+11].position.y=savu[q].paikka.y+0;//*savu[q].koko;
-                                triangles[kappaletta*12+11].position.z=savu[q].paikka.z+savu[q].sin*+2.5f;//*savu[q].koko;
+                                triangles[kappaletta*12+11].position.x=savu[q].place.x+savu[q].cos*+2.5f;//*savu[q].size;
+                                triangles[kappaletta*12+11].position.y=savu[q].place.y+0;//*savu[q].size;
+                                triangles[kappaletta*12+11].position.z=savu[q].place.z+savu[q].sin*+2.5f;//*savu[q].size;
                                 triangles[kappaletta*12+11].u=0.0f;
                                 triangles[kappaletta*12+11].u=1.0f;
                                 kappaletta=kappaletta+1;
@@ -5122,7 +5122,7 @@ else drawfast(&mallit[0].malli[4]);//pohja
 
 
                 for (q=0; q<MAX_SMOKES; q++){
-                        if(savu[q].pois)continue;
+                        if(savu[q].inactive)continue;
                         if((visible[q] &D3DSTATUS_CLIPINTERSECTIONALL   ) ){continue;}
 
                         //smokes towards camera
@@ -5136,9 +5136,9 @@ else drawfast(&mallit[0].malli[4]);//pohja
 
                         case 4:{//ball like smoke
                                 matrices->LoadIdentity();
-                                matrices->TranslateLocal(savu[q].paikka.x,savu[q].paikka.y,savu[q].paikka.z);
+                                matrices->TranslateLocal(savu[q].place.x,savu[q].place.y,savu[q].place.z);
                                 matrices->RotateYawPitchRollLocal(-savu[q].q+pi/2,savu[q].w,savu[q].e);
-                                matrices->ScaleLocal(savu[q].koko,savu[q].koko,savu[q].koko);
+                                matrices->ScaleLocal(savu[q].size,savu[q].size,savu[q].size);
                                 //m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,TRUE);
                                 m_pDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND,
                                                 D3DBLEND_DESTCOLOR    );
@@ -5151,9 +5151,9 @@ else drawfast(&mallit[0].malli[4]);//pohja
 
                         case 3:{//explosion
                                 matrices->LoadIdentity();
-                                matrices->TranslateLocal(savu[q].paikka.x,savu[q].paikka.y,savu[q].paikka.z);
+                                matrices->TranslateLocal(savu[q].place.x,savu[q].place.y,savu[q].place.z);
                                 matrices->RotateYawPitchRollLocal(-savu[q].q+pi/2,savu[q].w,savu[q].e);
-                                matrices->ScaleLocal(savu[q].koko,savu[q].koko,savu[q].koko);
+                                matrices->ScaleLocal(savu[q].size,savu[q].size,savu[q].size);
                                 //m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,TRUE);
                                 m_pDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND,
                                                 D3DBLEND_ONE );
@@ -5166,9 +5166,9 @@ else drawfast(&mallit[0].malli[4]);//pohja
 
                         case 2:{//smoke
                                 matrices->LoadIdentity();
-                                matrices->TranslateLocal(savu[q].paikka.x,savu[q].paikka.y,savu[q].paikka.z);
+                                matrices->TranslateLocal(savu[q].place.x,savu[q].place.y,savu[q].place.z);
                                 matrices->RotateYawPitchRollLocal(-savu[q].q+pi/2,savu[q].w,savu[q].e);
-                                matrices->ScaleLocal(savu[q].koko,savu[q].koko,savu[q].koko);
+                                matrices->ScaleLocal(savu[q].size,savu[q].size,savu[q].size);
                                 //m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,TRUE);
                                 m_pDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND,
                                                 D3DBLEND_SRCCOLOR );
@@ -5188,9 +5188,9 @@ else drawfast(&mallit[0].malli[4]);//pohja
 
                         case 1:{//One big hell of a hole
                                 matrices->LoadIdentity();
-                                matrices->TranslateLocal(savu[q].paikka.x,savu[q].paikka.y,savu[q].paikka.z);
+                                matrices->TranslateLocal(savu[q].place.x,savu[q].place.y,savu[q].place.z);
                                 matrices->RotateYawPitchRollLocal(-savu[q].q+pi/2,savu[q].w,savu[q].e);
-                                matrices->ScaleLocal(savu[q].koko,savu[q].koko,savu[q].koko);
+                                matrices->ScaleLocal(savu[q].size,savu[q].size,savu[q].size);
 
 
                                 m_pDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND,
@@ -5200,9 +5200,9 @@ else drawfast(&mallit[0].malli[4]);//pohja
                                 drawfast(&mallit[2].malli[4]);
 
                                 matrices->LoadIdentity();
-                                matrices->TranslateLocal(savu[q].paikka.x,savu[q].paikka.y,savu[q].paikka.z);
+                                matrices->TranslateLocal(savu[q].place.x,savu[q].place.y,savu[q].place.z);
                                 matrices->RotateYawPitchRollLocal(-savu[q].q+pi/2,savu[q].w,savu[q].e);
-                                matrices->ScaleLocal(savu[q].koko*0.6f,savu[q].koko*0.6f,savu[q].koko*0.6f);
+                                matrices->ScaleLocal(savu[q].size*0.6f,savu[q].size*0.6f,savu[q].size*0.6f);
 
 
                                 m_pDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND,
@@ -5218,9 +5218,9 @@ else drawfast(&mallit[0].malli[4]);//pohja
 					matrices->LoadIdentity();
 					//m_pDevice->SetRenderState(D3DRENDERSTATE_ZFUNC,D3DCMP_EQUAL);
 					//m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE, FALSE);
-					matrices->TranslateLocal(savu[q].paikka.x,savu[q].paikka.y,savu[q].paikka.z);
+					matrices->TranslateLocal(savu[q].place.x,savu[q].place.y,savu[q].place.z);
 					matrices->RotateYawPitchRollLocal(-savu[q].q+pi/2,savu[q].w,savu[q].e);
-					matrices->ScaleLocal(savu[q].koko,savu[q].koko,savu[q].koko);
+					matrices->ScaleLocal(savu[q].size,savu[q].size,savu[q].size);
 					m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,false);
 					drawfast(&mallit[2].malli[16]);
 					m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,true);
@@ -5245,7 +5245,7 @@ else drawfast(&mallit[0].malli[4]);//pohja
         m_pDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND,D3DBLEND_SRCALPHA);
         m_pDevice->SetRenderState(D3DRENDERSTATE_ZWRITEENABLE,FALSE);
 
-	if(moped[0].mission.suoritettu==0){
+	if(moped[0].mission.status==0){
 		float kx,kz;//targets coordinates
 		int f;
 		//target
@@ -5281,31 +5281,31 @@ else drawfast(&mallit[0].malli[4]);//pohja
 		}
 
 		//timer
-		if(moped[0].mission.aika>0){
-			strcpy(rivi,"time left ");
-			itoa((int)moped[0].mission.aika/1000,temprivi,10);
-			strcat(rivi,temprivi);
-			rendertext((int)(1024*0.03f),(int)(768*0.95f-30),0,rivi);
+		if(moped[0].mission.timer>0){
+			strcpy(row,"time left ");
+			itoa((int)moped[0].mission.timer/1000,temprow,10);
+			strcat(row,temprow);
+			rendertext((int)(1024*0.03f),(int)(768*0.95f-30),0,row);
 		}
 
 
 		//mission brief text
-                rendertext((int)(1024*0.03f),(int)(768*0.95f-15),0,moped[0].mission.shortbriefing);
+                rendertext((int)(1024*0.03f),(int)(768*0.95f-15),0,moped[0].mission.briefing_short);
 		/*//go and kill some one
                   if(moped[0].mission._type==0){
-                  if(moped[0].mission.ala_type==0){
+                  if(moped[0].mission.subtype==0){
                   rendertext((int)(1024*0.03f),(int)(768*0.95f-15),0,"kill him");
                   }
-                  if(moped[0].mission.ala_type==1){
+                  if(moped[0].mission.subtype==1){
                   rendertext((int)(1024*0.03f),(int)(768*0.95f-15),0,"kill him");
                   }
                   }
                   //taxi
                   if(moped[0].mission._type==1){
-                  if(moped[0].mission.ala_type==0){
+                  if(moped[0].mission.subtype==0){
                   rendertext((int)(1024*0.03f),(int)(768*0.95f-15),0,"take me there");
                   }
-                  if(moped[0].mission.ala_type==1){
+                  if(moped[0].mission.subtype==1){
                   rendertext((int)(1024*0.03f),(int)(768*0.95f-15),0,"take me there");
                   }
                   }
@@ -5314,15 +5314,15 @@ else drawfast(&mallit[0].malli[4]);//pohja
 
 	m_pDevice->SetRenderState(D3DRENDERSTATE_ZWRITEENABLE,TRUE);
 
-	if(moped[0].mission.suoritettu==1){
+	if(moped[0].mission.status==1){
                 rendertext((int)(1024*0.03f),(int)(768*0.95f-15),0,"mission accomplished");
 	}
 
-	if(moped[0].mission.suoritettu==2){
+	if(moped[0].mission.status==2){
                 rendertext((int)(1024*0.03f),(int)(768*0.95f-15),0,"mission failed");
 	}
 
-	if(moped[0].mission.suoritettu==3){
+	if(moped[0].mission.status==3){
                 rendertext((int)(1024*0.03f),(int)(768*0.95f-15),0,"no mission");
 	}
 
@@ -5367,10 +5367,10 @@ else drawfast(&mallit[0].malli[4]);//pohja
 	}
 
 	//press enter to ask for a mission
-	if(moped[0].mission.suoritettu!=0){//there is no mission
+	if(moped[0].mission.status!=0){//there is no mission
 		if(moped[0].nearestcharacter!=-1)
                         if(!character[moped[0].nearestcharacter].dying)
-                                if(!character[moped[0].nearestcharacter].puoli==0)
+                                if(!character[moped[0].nearestcharacter].movement_type==0)
                                 {
                                         if(fabs(moped[0].speed)<0.7f)
                                                 rendertext((int)(1024*0.03f),(int)(768*0.95f),0,"press enter");
@@ -5400,54 +5400,54 @@ else drawfast(&mallit[0].malli[4]);//pohja
         matrices->RotateYawPitchRollLocal(0,4.5f,0.15f);
         drawfast(&mallit[2].malli[16]);
         //needle of meter
-        if(moped[0].energia<0)moped[0].energia=0;
-        float energiamittari=-moped[0].energia/100*4.24f+2.120f;
-        matrices->RotateYawPitchRollLocal(energiamittari,0,0);
+        if(moped[0].energy<0)moped[0].energy=0;
+        float energymittari=-moped[0].energy/100*4.24f+2.120f;
+        matrices->RotateYawPitchRollLocal(energymittari,0,0);
         drawfast(&mallit[2].malli[17]);
 
         m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE, TRUE);
 
 
         //money
-        itoa((int)moped[0].rahat,rivi,10);
-        rendertext(896,710,0,rivi);
+        itoa((int)moped[0].money,row,10);
+        rendertext(896,710,0,row);
 
 /*
 //energy meter
 pvertex vertex[6];
-float korkeus=50;
+float height=50;
 vertex[0].position.x=-500;
-vertex[0].position.y=-korkeus;
+vertex[0].position.y=-height;
 vertex[0].position.z=0;
 vertex[0].u=0;
 vertex[0].v=1;
 
 vertex[1].position.x=500;
-vertex[1].position.y=korkeus;
+vertex[1].position.y=height;
 vertex[1].position.z=0;
 vertex[1].u=1;
 vertex[1].v=0;
 
 vertex[2].position.x=-500;
-vertex[2].position.y=korkeus;
+vertex[2].position.y=height;
 vertex[2].position.z=0;
 vertex[2].u=0;
 vertex[2].v=0;
 
 vertex[3].position.x=-500;
-vertex[3].position.y=-korkeus;
+vertex[3].position.y=-height;
 vertex[3].position.z=0;
 vertex[3].u=0;
 vertex[3].v=1;
 
 vertex[4].position.x=500;
-vertex[4].position.y=-korkeus;
+vertex[4].position.y=-height;
 vertex[4].position.z=0;
 vertex[4].u=1;
 vertex[4].v=1;
 
 vertex[5].position.x=500;
-vertex[5].position.y=korkeus;
+vertex[5].position.y=height;
 vertex[5].position.z=0;
 vertex[5].u=1;
 vertex[5].v=0;
@@ -5480,38 +5480,38 @@ D3DFVF_XYZ |D3DFVF_TEX1|D3DFVF_TEXCOORDSIZE2(0) ,vertex,6,NULL);
 //m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,FALSE);
 
 
-vertex[0].position.x=-moped[0].energia/100*1000+500;
-vertex[0].position.y=-korkeus;
+vertex[0].position.x=-moped[0].energy/100*1000+500;
+vertex[0].position.y=-height;
 vertex[0].position.z=0;
-vertex[0].u=1-moped[0].energia/100;
+vertex[0].u=1-moped[0].energy/100;
 vertex[0].v=1;
 
 vertex[1].position.x=500;
-vertex[1].position.y=korkeus;
+vertex[1].position.y=height;
 vertex[1].position.z=0;
 vertex[1].u=1;
 vertex[1].v=0;
 
-vertex[2].position.x=-moped[0].energia/100*1000+500;
-vertex[2].position.y=korkeus;
+vertex[2].position.x=-moped[0].energy/100*1000+500;
+vertex[2].position.y=height;
 vertex[2].position.z=0;
-vertex[2].u=1-moped[0].energia/100;
+vertex[2].u=1-moped[0].energy/100;
 vertex[2].v=0;
 
-vertex[3].position.x=-moped[0].energia/100*1000+500;
-vertex[3].position.y=-korkeus;
+vertex[3].position.x=-moped[0].energy/100*1000+500;
+vertex[3].position.y=-height;
 vertex[3].position.z=0;
-vertex[3].u=1-moped[0].energia/100;
+vertex[3].u=1-moped[0].energy/100;
 vertex[3].v=1;
 
 vertex[4].position.x=500;
-vertex[4].position.y=-korkeus;
+vertex[4].position.y=-height;
 vertex[4].position.z=0;
 vertex[4].u=1;
 vertex[4].v=1;
 
 vertex[5].position.x=500;
-vertex[5].position.y=korkeus;
+vertex[5].position.y=height;
 vertex[5].position.z=0;
 vertex[5].u=1;
 vertex[5].v=0;
@@ -5532,7 +5532,7 @@ m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,FALSE);
 void render_mission(void){//render mission briefing
 
 	int a,b;
-	char rivi[200],temprivi[200];
+	char row[200],temprow[200];
 
 	float kerroin=0.055f;
 	//m_pDevice->Clear( 0, NULL, D3DCLEAR_TARGET, 0x00000000, 0, 0 );
@@ -5552,7 +5552,7 @@ void render_mission(void){//render mission briefing
         moped[0].mission=moped[0].mission_random;
         //character tulee kyytiin
         if(moped[0].mission._type==1)
-        character[moped->nearestcharacter].pois=true;
+        character[moped->nearestcharacter].inactive=true;
         }
         missionantovaihe=1;//mission briefing is readed
 	}*/
@@ -5629,11 +5629,11 @@ m_pDevice->ComputeSphereVisibility(center_pointmap,radiusmap,mapsx*mapsz,0,visib
         rendertext((int)(1024*0.03f),(int)(768*0.90f),0,"enter to continue");	//write
         //rendertext((int)(1024*0.03f),(int)(768*0.90f+13),0,"esc to reject");
         if(missionantovaihe==1){
-                rendertext((int)(1024*0.03f),(int)(768*0.10f+13*0),50,moped->mission_random.rivi0);
-                strcpy(temprivi,"The pay is: ");
-                itoa(moped->mission_random.palkka,rivi,10);
-                strcat(temprivi,rivi);
-                rendertext((int)(1024*0.03f),(int)(768*0.5f),50,temprivi);
+                rendertext((int)(1024*0.03f),(int)(768*0.10f+13*0),50,moped->mission_random.briefing_long);
+                strcpy(temprow,"The pay is: ");
+                itoa(moped->mission_random.bounty,row,10);
+                strcat(temprow,row);
+                rendertext((int)(1024*0.03f),(int)(768*0.5f),50,temprow);
         }
         if(missionantovaihe==0){
                 rendertext((int)(1024*0.03f),(int)(768*0.10f+13*0),50,missioninfo[moped->level]);
@@ -5668,10 +5668,10 @@ void create_mission(bikebase *moped,int missionumero){ //randomize a mission.
 			create_character(moped->mission_random.target[f]);
 			character[moped->mission_random.target[f]].picture=moped->mission_random.asiakas[f].picture;
 			character[moped->mission_random.target[f]].aseena=moped->mission_random.asiakas[f].aseena;
-			character[moped->mission_random.target[f]].energia=moped->mission_random.asiakas[f].energia;
-			character[moped->mission_random.target[f]].korkeus=moped->mission_random.asiakas[f].korkeus;
-			character[moped->mission_random.target[f]].taktiikka=moped->mission_random.asiakas[f].taktiikka;
-			character[moped->mission_random.target[f]].puoli=moped->mission_random.asiakas[f].puoli;
+			character[moped->mission_random.target[f]].energy=moped->mission_random.asiakas[f].energy;
+			character[moped->mission_random.target[f]].height=moped->mission_random.asiakas[f].height;
+			character[moped->mission_random.target[f]].tactics=moped->mission_random.asiakas[f].tactics;
+			character[moped->mission_random.target[f]].movement_type=moped->mission_random.asiakas[f].movement_type;
 		}
 	}
 
@@ -5692,16 +5692,16 @@ void create_mission(bikebase *moped,int missionumero){ //randomize a mission.
 			create_mopo(moped->mission_random.target[f]);
 			moped[moped->mission_random.target[f]].mopona=moped->mission_random.asiakas[f].picture;
 			moped[moped->mission_random.target[f]].ase[0]=moped->mission_random.asiakas[f].aseena;
-			moped[moped->mission_random.target[f]].energia=moped->mission_random.asiakas[f].energia;
-			//moped[moped->mission_random.target].taktiikka=moped->mission_random.asiakas.taktiikka;
-			//moped[moped->mission_random.target].puoli=moped->mission_random.asiakas.puoli;
+			moped[moped->mission_random.target[f]].energy=moped->mission_random.asiakas[f].energy;
+			//moped[moped->mission_random.target].tactics=moped->mission_random.asiakas.tactics;
+			//moped[moped->mission_random.target].movement_type=moped->mission_random.asiakas.movement_type;
 		}
 	}
 
 
 	//timelimit
-	moped->mission_random.aika=0;
-	if(moped->mission_random.ala_type==1){
+	moped->mission_random.timer=0;
+	if(moped->mission_random.subtype==1){
 		if(moped->mission_random.target_type==0)//character
                 {
                         kx=character[moped->mission_random.target[0]].x;
@@ -5719,7 +5719,7 @@ void create_mission(bikebase *moped,int missionumero){ //randomize a mission.
                 }
 
 		distance=sqrtf(sqr(kx-moped->x1)+sqr(kz-moped->z1));
-		moped->mission_random.aika=randDouble((distance/1.7f),(distance/1.3f));
+		moped->mission_random.timer=randDouble((distance/1.7f),(distance/1.3f));
 	}
 
 }
@@ -5757,7 +5757,7 @@ void laskekoordinaatit(float *xa,float *za){//calculate coordinates
 void laskemissiot(bikebase *moped){ //calculate missions
 	int q,f;
 	bool kuollut=true;
-	if(moped->mission.suoritettu!=0) return;
+	if(moped->mission.status!=0) return;
 	//kill some one
 	if(moped->mission._type==0){
 		//remove dead ones from the list
@@ -5771,7 +5771,7 @@ void laskemissiot(bikebase *moped){ //calculate missions
 				}
 			}
 			if(moped->mission.target_type==2){
-				if(moped[moped->mission.target[f]].pois){
+				if(moped[moped->mission.target[f]].inactive){
 					for (q=f; q<moped->mission.kohteita; q++){
 						moped->mission.target[q]=moped->mission.target[q+1];
 					}
@@ -5782,22 +5782,22 @@ void laskemissiot(bikebase *moped){ //calculate missions
 		//is everyone dead?
 		for (f=0; f<moped->mission.kohteita; f++){
 			if(moped->mission.target_type==0) if(!character[moped->mission.target[f]].dying) kuollut=false;
-			if(moped->mission.target_type==2) if(!moped[moped->mission.target[f]].pois) kuollut=false;
+			if(moped->mission.target_type==2) if(!moped[moped->mission.target[f]].inactive) kuollut=false;
 		}
-		if(moped->mission.ala_type==0){//no timelimit
-			if(kuollut==true) moped->mission.suoritettu=1;//character killed
+		if(moped->mission.subtype==0){//no timelimit
+			if(kuollut==true) moped->mission.status=1;//character killed
 		}
-		if(moped->mission.ala_type==1){//with timelimit
-			moped->mission.aika=moped->mission.aika-elapsed*gamespeed;
-			if(moped->mission.aika<0) moped->mission.suoritettu=2;//mission failed
-			if(kuollut==true) moped->mission.suoritettu=1;//character killed
+		if(moped->mission.subtype==1){//with timelimit
+			moped->mission.timer=moped->mission.timer-elapsed*gamespeed;
+			if(moped->mission.timer<0) moped->mission.status=2;//mission failed
+			if(kuollut==true) moped->mission.status=1;//character killed
 		}
 	}
 
 
 	//taxi
 	if(moped->mission._type==1){
-		if(moped->mission.ala_type==0){//no timelimit
+		if(moped->mission.subtype==0){//no timelimit
 			if(sqrtf(sqr(moped->mission.targetx[0]-moped->x1)+sqr(moped->mission.targetz[0]-moped->z1))<100)
 				if(fabs(moped[0].speed)<0.7f){
 					for (f=0; f<moped->mission.kohteita-1; f++){
@@ -5806,7 +5806,7 @@ void laskemissiot(bikebase *moped){ //calculate missions
 					}
 					moped->mission.kohteita=moped->mission.kohteita-1;
                                         if(moped->mission.kohteita==0){
-                                                moped->mission.suoritettu=1;//we are there
+                                                moped->mission.status=1;//we are there
                                                 q=randInt(0,characters);
                                                 character[q]=moped->mission.asiakas[0];
                                                 character[q].x=moped->x2;
@@ -5815,12 +5815,12 @@ void laskemissiot(bikebase *moped){ //calculate missions
                                         }
 				}
 		}
-		if(moped->mission.ala_type==1){//with timelimit
-			moped->mission.aika=moped->mission.aika-elapsed*gamespeed;
-			if(moped->mission.aika<0) moped->mission.suoritettu=2;//mission failed
+		if(moped->mission.subtype==1){//with timelimit
+			moped->mission.timer=moped->mission.timer-elapsed*gamespeed;
+			if(moped->mission.timer<0) moped->mission.status=2;//mission failed
 			if(sqrtf(sqr(moped->mission.targetx[0]-moped->x1)+sqr(moped->mission.targetz[0]-moped->z1))<100)
 				if(fabs(moped[0].speed)<0.7f){
-                                        moped->mission.suoritettu=1;//we are there
+                                        moped->mission.status=1;//we are there
                                         q=randInt(0,characters);
                                         character[q]=moped->mission.asiakas[0];
                                         character[q].x=moped->x2;
@@ -5831,14 +5831,14 @@ void laskemissiot(bikebase *moped){ //calculate missions
 	}
 
 	/*//if failed
-          if(moped->mission.suoritettu==2){
-          moped->rahat=moped->rahat-100;
-          if(moped->rahat<0)moped->rahat=0;
+          if(moped->mission.status==2){
+          moped->money=moped->money-100;
+          if(moped->money<0)moped->money=0;
           }*/
 	//if accomplished
-	if(moped->mission.suoritettu==1){
+	if(moped->mission.status==1){
 		//money is payed
-		moped->rahat=moped->rahat+moped->mission.palkka;
+		moped->money=moped->money+moped->mission.bounty;
 		//level up
 		moped->level=moped->level+1;
 		//read briefing
@@ -5857,11 +5857,11 @@ void create_character(int q){//create random character
 	int prosentti;
 
         for (a=0; a<100; a++)character[q].osuma[a]=false;
-        character[q].korkeus=randDouble(0.9f,1.1f);
-        character[q].menossa=1;
+        character[q].height=randDouble(0.9f,1.1f);
+        character[q].walk_dir=1;
         character[q].menoajastin=0;
         character[q].dying=false;
-        character[q].pois=false;
+        character[q].inactive=false;
         laskekoordinaatit(&character[q].x,&character[q].z);
         character[q].direction=randDouble(-pi,pi);
         character[q].speed=randDouble(0.05f,0.1f);
@@ -5886,18 +5886,18 @@ void create_character(int q){//create random character
         //own
         if((prosentti>=0)&&(prosentti<a1)){
                 character[q].picture=3;
-                character[q].puoli=0;
+                character[q].movement_type=0;
                 character[q].aseena=randInt(10,13);
-                character[q].taktiikka=1;
-                character[q].energia=randDouble(2.4f,3.3f);
+                character[q].tactics=1;
+                character[q].energy=randDouble(2.4f,3.3f);
         }
         //enemy
         if((prosentti>=a1)&&(prosentti<a1+a2)){
                 character[q].picture=8;
-                character[q].puoli=2;
+                character[q].movement_type=2;
                 character[q].aseena=randInt(10,13);
-                character[q].taktiikka=0;
-                character[q].energia=randDouble(1.4f,2.5f);
+                character[q].tactics=0;
+                character[q].energy=randDouble(1.4f,2.5f);
         }
         //passive
         if((prosentti>=a1+a2)&&(prosentti<a1+a2+a3)){
@@ -5906,15 +5906,15 @@ void create_character(int q){//create random character
                 if(character[q].picture==0)character[q].picture=7;
                 if(character[q].picture==1)character[q].picture=10;
 
-                character[q].puoli=1;
+                character[q].movement_type=1;
                 //Randomly select does it have a gun or not.
                 character[q].aseena=-1;
                 ampuva=randInt(0,4);
                 if(ampuva==0){
                         character[q].aseena=randInt(10,13);
                 }
-                character[q].taktiikka=1;
-                character[q].energia=randDouble(0.5f,1.7f);
+                character[q].tactics=1;
+                character[q].energy=randDouble(0.5f,1.7f);
         }
 
 /*
@@ -5937,7 +5937,7 @@ void create_character(int q){//create random character
 void luemissiot(void){ //read missions
 
 	FILE *fil;
-	CHAR rivi[800];
+	CHAR row[800];
 	int q,f,level;
 
         for (q=0; q<10; q++){
@@ -5947,78 +5947,78 @@ void luemissiot(void){ //read missions
         //load missions
         fil = fopen("data/mission.dat","rt");
 
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missioninfo[0],rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missioninfo[1],rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missioninfo[2],rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missioninfo[3],rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missioninfo[4],rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missioninfo[5],rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missioninfo[6],rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missioninfo[7],rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missioninfo[8],rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missioninfo[9],rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missioninfo[10],rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missioninfo[11],rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missioninfo[12],rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missioninfo[13],rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missioninfo[14],rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missioninfo[15],rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missioninfo[16],rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missioninfo[17],rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missioninfo[18],rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missioninfo[19],rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missioninfo[20],rivi);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missioninfo[0],row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missioninfo[1],row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missioninfo[2],row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missioninfo[3],row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missioninfo[4],row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missioninfo[5],row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missioninfo[6],row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missioninfo[7],row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missioninfo[8],row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missioninfo[9],row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missioninfo[10],row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missioninfo[11],row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missioninfo[12],row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missioninfo[13],row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missioninfo[14],row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missioninfo[15],row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missioninfo[16],row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missioninfo[17],row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missioninfo[18],row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missioninfo[19],row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missioninfo[20],row);
 
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        level=atoi(rivi);
+	stripped_fgets(row,sizeof(row),fil);
+        level=atoi(row);
   lue:
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        missionlevel[level].mission[missionlevel[level].missions]._type=atoi(rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        missionlevel[level].mission[missionlevel[level].missions].target_type=atoi(rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        missionlevel[level].mission[missionlevel[level].missions].ala_type=atoi(rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        missionlevel[level].mission[missionlevel[level].missions].kohteita=atoi(rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        missionlevel[level].mission[missionlevel[level].missions].asiakas[0].picture=atoi(rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        missionlevel[level].mission[missionlevel[level].missions].asiakas[0].aseena=atoi(rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        missionlevel[level].mission[missionlevel[level].missions].asiakas[0].energia=(float)atof(rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        missionlevel[level].mission[missionlevel[level].missions].asiakas[0].korkeus=(float)atof(rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        missionlevel[level].mission[missionlevel[level].missions].asiakas[0].taktiikka=atoi(rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        missionlevel[level].mission[missionlevel[level].missions].asiakas[0].puoli=atoi(rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        missionlevel[level].mission[missionlevel[level].missions].palkka=atoi(rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missionlevel[level].mission[missionlevel[level].missions].shortbriefing,rivi);
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        strcpy(missionlevel[level].mission[missionlevel[level].missions].rivi0,rivi);
+	stripped_fgets(row,sizeof(row),fil);
+        missionlevel[level].mission[missionlevel[level].missions]._type=atoi(row);
+	stripped_fgets(row,sizeof(row),fil);
+        missionlevel[level].mission[missionlevel[level].missions].target_type=atoi(row);
+	stripped_fgets(row,sizeof(row),fil);
+        missionlevel[level].mission[missionlevel[level].missions].subtype=atoi(row);
+	stripped_fgets(row,sizeof(row),fil);
+        missionlevel[level].mission[missionlevel[level].missions].kohteita=atoi(row);
+	stripped_fgets(row,sizeof(row),fil);
+        missionlevel[level].mission[missionlevel[level].missions].asiakas[0].picture=atoi(row);
+	stripped_fgets(row,sizeof(row),fil);
+        missionlevel[level].mission[missionlevel[level].missions].asiakas[0].aseena=atoi(row);
+	stripped_fgets(row,sizeof(row),fil);
+        missionlevel[level].mission[missionlevel[level].missions].asiakas[0].energy=(float)atof(row);
+	stripped_fgets(row,sizeof(row),fil);
+        missionlevel[level].mission[missionlevel[level].missions].asiakas[0].height=(float)atof(row);
+	stripped_fgets(row,sizeof(row),fil);
+        missionlevel[level].mission[missionlevel[level].missions].asiakas[0].tactics=atoi(row);
+	stripped_fgets(row,sizeof(row),fil);
+        missionlevel[level].mission[missionlevel[level].missions].asiakas[0].movement_type=atoi(row);
+	stripped_fgets(row,sizeof(row),fil);
+        missionlevel[level].mission[missionlevel[level].missions].bounty=atoi(row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missionlevel[level].mission[missionlevel[level].missions].briefing_short,row);
+	stripped_fgets(row,sizeof(row),fil);
+        strcpy(missionlevel[level].mission[missionlevel[level].missions].briefing_long,row);
 	for (f=0; f<100; f++){
 		missionlevel[level].mission[missionlevel[level].missions].asiakas[f]=missionlevel[level].mission[missionlevel[level].missions].asiakas[0];
 	}
@@ -6026,8 +6026,8 @@ void luemissiot(void){ //read missions
         missionlevel[level].missions=missionlevel[level].missions+1;
 
 	//read next level, if it is 666666 file ends
-	stripped_fgets(rivi,sizeof(rivi),fil);
-        level=atoi(rivi);
+	stripped_fgets(row,sizeof(row),fil);
+        level=atoi(row);
         if(level!=666666)goto lue;
 
         fclose(fil);
@@ -6040,18 +6040,18 @@ void laskemoped(void){ //calculate mopeds
 	int osumia;
 	//if(mopoja==1)return;
 
-	if(moped->mission.suoritettu!=0) return;
+	if(moped->mission.status!=0) return;
 	for (d=1; d<mopoja; d++){
-		if(moped[d].pois)continue;
+		if(moped[d].inactive)continue;
 
-		if(moped[d].energia<0){moped[d].pois=true;
+		if(moped[d].energy<0){moped[d].inactive=true;
                         //smoke to air
                         if(ase[1].smoke_filled!=0)
                                 for (q=0; q<3; q++){
                                         fromsmoke(1.0f,0.001f,true,3000,moped[d].x1,60,moped[d].z1,ase[1].smoke_filled,randDouble(pi,-pi),randDouble(pi,-pi),randDouble(pi,-pi));
                                 }
                         //explosion
-                        if(ase[1].pommi!=0){
+                        if(ase[1].explosion_size!=0){
                                 quake=3;
                                 for (q2=0; q2<100; q2++){
                                         shoot(-6667,-1,1,randDouble(100,300),moped,3,moped[d].x1,60,moped[d].z1,randDouble(-pi,pi),randDouble(-pi,pi),randDouble(-pi,pi));
@@ -6061,7 +6061,7 @@ void laskemoped(void){ //calculate mopeds
                                 //}
                         }
 		}
-		//if(moped[d].pois==true) mopoja=1;//create_mopo(d);
+		//if(moped[d].inactive==true) mopoja=1;//create_mopo(d);
 
 		//angle towards player
 		moped[d].player_angle=atan2f(moped[0].z1-moped[d].z1,moped[0].x1-moped[d].x1)+pi;
@@ -6090,7 +6090,7 @@ void laskemoped(void){ //calculate mopeds
 		moped[d].four=false;
 		moped[d].space=false;
 		moped[d].directiontimer=moped[d].directiontimer+elapsed*gamespeed;
-		moped[d].taktiikkatimer=moped[d].taktiikkatimer+elapsed*gamespeed;
+		moped[d].tacticstimer=moped[d].tacticstimer+elapsed*gamespeed;
 		moped[d].walltimer=moped[d].walltimer-elapsed*gamespeed;
 		if(moped[d].left2){moped[d].left3=moped[d].left3+1;if(moped[d].right3>0)moped[d].right3=moped[d].right3-1;}
 		if(moped[d].right2){moped[d].right3=moped[d].right3+1;if(moped[d].left3>0)moped[d].left3=moped[d].left3-1;}
@@ -6142,16 +6142,16 @@ void laskemoped(void){ //calculate mopeds
                         }
 
                         //taktics
-                        if(moped[d].taktiikkatimer>2000){
-                                moped[d].taktiikkatimer=0;
-                                moped[d].taktiikka=randInt(0,2);
+                        if(moped[d].tacticstimer>2000){
+                                moped[d].tacticstimer=0;
+                                moped[d].tactics=randInt(0,2);
                         }
 
                         //use hand brake
                         if((fabs(moped[d].direction-dq)>0.4f)&&(moped[d].down==false)&&(moped[d].speed>2)){
                                 moped[d].space=true;
                         }
-                        if(moped[d].kulmakeuliminen>0.2f){
+                        if(moped[d].angle_pitch>0.2f){
                                 moped[d].space=true;
                         }
 
@@ -6171,7 +6171,7 @@ void laskemoped(void){ //calculate mopeds
 
 
                         //attack
-                        if(moped[d].taktiikka==0)
+                        if(moped[d].tactics==0)
                         {
                                 if(fabs(moped[d].direction-dq)>0.05f){
 
@@ -6193,7 +6193,7 @@ void laskemoped(void){ //calculate mopeds
                         }
 
                         //escapes
-                        if(moped[d].taktiikka==1){
+                        if(moped[d].tactics==1){
                                 if(fabs(moped[d].direction-dq)>0.3f){
                                         //when turned enough choose new direction
                                         if(moped[d].directiontimer>2000)
@@ -6267,10 +6267,10 @@ void create_mopo(int d){ //randomize moped
 	moped[d].ase[2]=0;
 	moped[d].ase[3]=0;
 	moped[d].timesparks=-1;
-	moped[d].mission.suoritettu=3;
+	moped[d].mission.status=3;
 	moped[d].mopona=0;
 	moped[d].numero=d;
-	moped[d].energia=100;
+	moped[d].energy=100;
 	moped[d].level=0;
 	moped[d].direction=pi*0.25f;
 	laskekoordinaatit(&moped[d].x1,&moped[d].z1);
@@ -6279,10 +6279,10 @@ void create_mopo(int d){ //randomize moped
 	moped[d].speed=0.01f;
 	moped[d].sektorix=(int)moped[d].x1/8000;
 	moped[d].sektoriz=(int)moped[d].z1/8000;
-	moped[d].pois=false;
+	moped[d].inactive=false;
 	for (a=0; a<100; a++)moped[d].osuma[a]=false;
 	moped[d].directiontimer=0;
-	moped[d].taktiikkatimer=0;
+	moped[d].tacticstimer=0;
 	moped[d].visible=true;
 	moped[d].x3=moped[d].x1;
 	moped[d].y3=moped[d].y1;
@@ -6297,7 +6297,7 @@ void render_workshop(void){//render workshop
 	RECT     rcSource, rcDest, loota;
 	int a,b;
 	int valittua,valittub,valittuc;
-	char rivi[200],temprivi[200];
+	char row[200],temprow[200];
 	float nop;
 
 
@@ -6319,14 +6319,14 @@ void render_workshop(void){//render workshop
 	valittub=-2;
 	valittuc=-2;
 
-	float hintataso=1.05f;
+	float pricetaso=1.05f;
 	//advantages and disadvantages
 	for (a=0; a<4; a++){
-		ase[moped[0].ase[a]].hinta=(int)(sqr(ase[moped[0].ase[a]].prate_of_fire+ase[moped[0].ase[a]].pspeed+ase[moped[0].ase[a]].pdamage+ase[moped[0].ase[a]].homing*5)*hintataso);
-		ase[moped[0].ase[a]].hinta2=(int)(sqr(ase[moped[0].ase[a]].prate_of_fire+ase[moped[0].ase[a]].pspeed+ase[moped[0].ase[a]].pdamage+ase[moped[0].ase[a]].homing*5-1)*hintataso);
-		ase[moped[0].ase[a]].hintahoming=0;
+		ase[moped[0].ase[a]].price=(int)(sqr(ase[moped[0].ase[a]].prate_of_fire+ase[moped[0].ase[a]].pspeed+ase[moped[0].ase[a]].pdamage+ase[moped[0].ase[a]].homing*5)*pricetaso);
+		ase[moped[0].ase[a]].price2=(int)(sqr(ase[moped[0].ase[a]].prate_of_fire+ase[moped[0].ase[a]].pspeed+ase[moped[0].ase[a]].pdamage+ase[moped[0].ase[a]].homing*5-1)*pricetaso);
+		ase[moped[0].ase[a]].pricehoming=0;
 		for (b=0; b<5; b++){
-			ase[moped[0].ase[a]].hintahoming=ase[moped[0].ase[a]].hintahoming+(int)(sqr(ase[moped[0].ase[a]].prate_of_fire+ase[moped[0].ase[a]].pspeed+ase[moped[0].ase[a]].pdamage+b)*hintataso);
+			ase[moped[0].ase[a]].pricehoming=ase[moped[0].ase[a]].pricehoming+(int)(sqr(ase[moped[0].ase[a]].prate_of_fire+ase[moped[0].ase[a]].pspeed+ase[moped[0].ase[a]].pdamage+b)*pricetaso);
 		}
 		for (b=0; b<4; b++){
 
@@ -6376,52 +6376,52 @@ void render_workshop(void){//render workshop
 			switch (a)
 			{
                         case 0:{
-                                itoa(ase[moped[0].ase[b]].pdamage,rivi,10);
+                                itoa(ase[moped[0].ase[b]].pdamage,row,10);
                                 break;
                         }
                         case 1:{
-                                itoa(ase[moped[0].ase[b]].prate_of_fire,rivi,10);
+                                itoa(ase[moped[0].ase[b]].prate_of_fire,row,10);
                                 break;
                         }
                         case 2:{
-                                itoa(ase[moped[0].ase[b]].pspeed,rivi,10);
+                                itoa(ase[moped[0].ase[b]].pspeed,row,10);
                                 break;
                         }
                         case 3:{
-                                itoa(ase[moped[0].ase[b]].homing*5,rivi,10);
+                                itoa(ase[moped[0].ase[b]].homing*5,row,10);
                                 break;
                         }
 			}
 
 			//gun points
-			//strcpy(rivi,":");
-			//itoa((int)moped[0].mission.aika/1000,rivi,10);
-			//strcat(rivi,temprivi);
-			rendertext((212+b*180+60),(125+a*29+10),0,rivi);
+			//strcpy(row,":");
+			//itoa((int)moped[0].mission.timer/1000,row,10);
+			//strcat(row,temprow);
+			rendertext((212+b*180+60),(125+a*29+10),0,row);
 
 		}
 		//price
-		itoa((int)ase[moped[0].ase[a]].hinta,rivi,10);
-		rendertext((212+a*180+50),(125+4*29+10),0,rivi);
+		itoa((int)ase[moped[0].ase[a]].price,row,10);
+		rendertext((212+a*180+50),(125+4*29+10),0,row);
 	}
 	//repair moped
 	if((moped[0].korjaamolla2==false)&&(moped[0].korjaamolla==true)){
-		korjaussumma=int(100-moped[0].energia)*((moped[0].level+2)/2);
-		if(korjaussumma>moped[0].rahat)korjaussumma=moped[0].rahat;
-		moped[0].energia=moped[0].energia+korjaussumma/((moped[0].level+2)/2);
-		moped[0].rahat=moped[0].rahat-korjaussumma;
+		korjaussumma=int(100-moped[0].energy)*((moped[0].level+2)/2);
+		if(korjaussumma>moped[0].money)korjaussumma=moped[0].money;
+		moped[0].energy=moped[0].energy+korjaussumma/((moped[0].level+2)/2);
+		moped[0].money=moped[0].money-korjaussumma;
 	}
 
 	//money
-        itoa((int)moped[0].rahat,rivi,10);
-        rendertext((200),(125+5*29+10),0,rivi);
+        itoa((int)moped[0].money,row,10);
+        rendertext((200),(125+5*29+10),0,row);
 
 	//moped fixed
         if(korjaussumma>0){
-                strcpy(rivi,"bike repaired for ");
-                itoa((int)korjaussumma,temprivi,10);
-                strcat(rivi,temprivi);
-                rendertext((190),(76),0,rivi);
+                strcpy(row,"bike repaired for ");
+                itoa((int)korjaussumma,temprow,10);
+                strcat(row,temprow);
+                rendertext((190),(76),0,row);
         }
 
 	//key is pressed. //translator note: could be understood as "a brat is f*cked".
@@ -6432,72 +6432,72 @@ void render_workshop(void){//render workshop
                         case 0:{
                                 if(valittuc==1)
                                         if(ase[moped[0].ase[valittub]].pdamage<10)
-						if(moped[0].rahat>=ase[moped[0].ase[valittub]].hinta)
+						if(moped[0].money>=ase[moped[0].ase[valittub]].price)
 						{
 							SndObjPlay(voices[18], 0, options[1]&&SOUNDS_LOADED);
 							ase[moped[0].ase[valittub]].pdamage=ase[moped[0].ase[valittub]].pdamage+1;
-							moped[0].rahat=moped[0].rahat-ase[moped[0].ase[valittub]].hinta;
+							moped[0].money=moped[0].money-ase[moped[0].ase[valittub]].price;
 						}
                                 if(valittuc==-1)
                                         if(ase[moped[0].ase[valittub]].pdamage>1)
                                         {
                                                 SndObjPlay(voices[19], 0, options[1]&&SOUNDS_LOADED);
                                                 ase[moped[0].ase[valittub]].pdamage=ase[moped[0].ase[valittub]].pdamage-1;
-                                                moped[0].rahat=moped[0].rahat+ase[moped[0].ase[valittub]].hinta2;
+                                                moped[0].money=moped[0].money+ase[moped[0].ase[valittub]].price2;
                                         }
                                 break;
                         }
                         case 1:{
                                 if(valittuc==1)
                                         if(ase[moped[0].ase[valittub]].prate_of_fire<10)
-						if(moped[0].rahat>=ase[moped[0].ase[valittub]].hinta)
+						if(moped[0].money>=ase[moped[0].ase[valittub]].price)
 						{
 							SndObjPlay(voices[18], 0, options[1]&&SOUNDS_LOADED);
 							ase[moped[0].ase[valittub]].prate_of_fire=ase[moped[0].ase[valittub]].prate_of_fire+1;
-							moped[0].rahat=moped[0].rahat-ase[moped[0].ase[valittub]].hinta;
+							moped[0].money=moped[0].money-ase[moped[0].ase[valittub]].price;
 						}
                                 if(valittuc==-1)
                                         if(ase[moped[0].ase[valittub]].prate_of_fire>1)
                                         {
                                                 SndObjPlay(voices[19], 0, options[1]&&SOUNDS_LOADED);
                                                 ase[moped[0].ase[valittub]].prate_of_fire=ase[moped[0].ase[valittub]].prate_of_fire-1;
-                                                moped[0].rahat=moped[0].rahat+ase[moped[0].ase[valittub]].hinta2;
+                                                moped[0].money=moped[0].money+ase[moped[0].ase[valittub]].price2;
                                         }
                                 break;
                         }
                         case 2:{
                                 if(valittuc==1)
                                         if(ase[moped[0].ase[valittub]].pspeed<10)
-						if(moped[0].rahat>=ase[moped[0].ase[valittub]].hinta)
+						if(moped[0].money>=ase[moped[0].ase[valittub]].price)
 						{
 							SndObjPlay(voices[18], 0, options[1]&&SOUNDS_LOADED);
 							ase[moped[0].ase[valittub]].pspeed=ase[moped[0].ase[valittub]].pspeed+1;
-							moped[0].rahat=moped[0].rahat-ase[moped[0].ase[valittub]].hinta;
+							moped[0].money=moped[0].money-ase[moped[0].ase[valittub]].price;
 						}
                                 if(valittuc==-1)
                                         if(ase[moped[0].ase[valittub]].pspeed>1)
                                         {
                                                 SndObjPlay(voices[19], 0, options[1]&&SOUNDS_LOADED);
                                                 ase[moped[0].ase[valittub]].pspeed=ase[moped[0].ase[valittub]].pspeed-1;
-                                                moped[0].rahat=moped[0].rahat+ase[moped[0].ase[valittub]].hinta2;
+                                                moped[0].money=moped[0].money+ase[moped[0].ase[valittub]].price2;
                                         }
                                 break;
                         }
                         case 3:{
                                 if(valittuc==1)
                                         if(ase[moped[0].ase[valittub]].homing==false)
-						if(moped[0].rahat>=ase[moped[0].ase[valittub]].hintahoming)
+						if(moped[0].money>=ase[moped[0].ase[valittub]].pricehoming)
 						{
 							SndObjPlay(voices[18], 0, options[1]&&SOUNDS_LOADED);
 							ase[moped[0].ase[valittub]].homing=true;
-							moped[0].rahat=moped[0].rahat-ase[moped[0].ase[valittub]].hintahoming;
+							moped[0].money=moped[0].money-ase[moped[0].ase[valittub]].pricehoming;
 						}
                                 if(valittuc==-1)
                                         if(ase[moped[0].ase[valittub]].homing==true)
                                         {
                                                 SndObjPlay(voices[19], 0, options[1]&&SOUNDS_LOADED);
                                                 ase[moped[0].ase[valittub]].homing=false;
-                                                moped[0].rahat=moped[0].rahat+ase[moped[0].ase[valittub]].hintahoming;
+                                                moped[0].money=moped[0].money+ase[moped[0].ase[valittub]].pricehoming;
                                         }
                                 break;
                         }
@@ -6603,38 +6603,38 @@ void render_workshop(void){//render workshop
 	for (b=0; b<4; b++){
 		ase[moped[0].ase[b]].damage=ase[moped[0].ase[b]].pdamage*0.1f+(ase[moped[0].ase[b]].pdamage-1)*0.7f;
 		ase[moped[0].ase[b]].speed=ase[moped[0].ase[b]].pspeed*3.7f+(ase[moped[0].ase[b]].pspeed-1)*1.44f;
-		ase[moped[0].ase[b]].hauleja=1;
+		ase[moped[0].ase[b]].bullets_per_shot=1;
 		ase[moped[0].ase[b]]._type=0;
 		ase[moped[0].ase[b]].dispersion=0.01f+ase[moped[0].ase[b]].prate_of_fire*0.01f;
 		nop=(float)ase[moped[0].ase[b]].prate_of_fire;
-		if((ase[moped[0].ase[b]].prate_of_fire>5)&&(ase[moped[0].ase[b]].prate_of_fire)<8){ase[moped[0].ase[b]]._type=2; nop=2;ase[moped[0].ase[b]].hauleja=(int)(7*(ase[moped[0].ase[b]].prate_of_fire-3));ase[moped[0].ase[b]].damage=ase[moped[0].ase[b]].damage/20;ase[moped[0].ase[b]].dispersion=ase[moped[0].ase[b]].dispersion*4;}
+		if((ase[moped[0].ase[b]].prate_of_fire>5)&&(ase[moped[0].ase[b]].prate_of_fire)<8){ase[moped[0].ase[b]]._type=2; nop=2;ase[moped[0].ase[b]].bullets_per_shot=(int)(7*(ase[moped[0].ase[b]].prate_of_fire-3));ase[moped[0].ase[b]].damage=ase[moped[0].ase[b]].damage/20;ase[moped[0].ase[b]].dispersion=ase[moped[0].ase[b]].dispersion*4;}
 		if(ase[moped[0].ase[b]].prate_of_fire>7)ase[moped[0].ase[b]]._type=1;
 
-		//if((ase[moped[0].ase[b]].prate_of_fire>3)&&(ase[moped[0].ase[b]].prate_of_fire)<8){ase[b]._type=2; nop=(float)ase[moped[0].ase[b]].prate_of_fire/(5*(8-ase[moped[0].ase[b]].prate_of_fire));ase[moped[0].ase[b]].hauleja=(int)(5*(8-ase[moped[0].ase[b]].prate_of_fire));}
+		//if((ase[moped[0].ase[b]].prate_of_fire>3)&&(ase[moped[0].ase[b]].prate_of_fire)<8){ase[b]._type=2; nop=(float)ase[moped[0].ase[b]].prate_of_fire/(5*(8-ase[moped[0].ase[b]].prate_of_fire));ase[moped[0].ase[b]].bullets_per_shot=(int)(5*(8-ase[moped[0].ase[b]].prate_of_fire));}
 		ase[moped[0].ase[b]].rate_of_fire=(int)(710+78-nop*78);
 
 		ase[moped[0].ase[b]].smoke_filled=0;
 		if(ase[moped[0].ase[b]].homing){
-			//ase[moped[0].ase[b]].kimmokkeita=0;
+			//ase[moped[0].ase[b]].num_bounces=0;
 			ase[moped[0].ase[b]].smoke_filled=2;
 			ase[moped[0].ase[b]].smoke_count=10;
 		}
 		else {
-			ase[moped[0].ase[b]].kimmokkeita=ase[moped[0].ase[b]].pdamage;
+			ase[moped[0].ase[b]].num_bounces=ase[moped[0].ase[b]].pdamage;
 			ase[moped[0].ase[b]].smoke_count=0;
 		}
-		ase[moped[0].ase[b]].paino=ase[moped[0].ase[b]].pdamage*0.00001f;
-		ase[moped[0].ase[b]].pommi=0;
+		ase[moped[0].ase[b]].weight=ase[moped[0].ase[b]].pdamage*0.00001f;
+		ase[moped[0].ase[b]].explosion_size=0;
 		ase[moped[0].ase[b]].decal_picture=0;
 		if(ase[moped[0].ase[b]].pdamage>6){
 			ase[moped[0].ase[b]]._type=3;
-			ase[moped[0].ase[b]].kimmokkeita=0;
-			ase[moped[0].ase[b]].pommi=ase[moped[0].ase[b]].pdamage-6;
+			ase[moped[0].ase[b]].num_bounces=0;
+			ase[moped[0].ase[b]].explosion_size=ase[moped[0].ase[b]].pdamage-6;
 			ase[moped[0].ase[b]].smoke_filled=2;
 			ase[moped[0].ase[b]].smoke_duration=1000;
 			ase[moped[0].ase[b]].decal_picture=1;
 		}
-		ase[moped[0].ase[b]].savukoko=ase[moped[0].ase[b]].pdamage*0.1f;
+		ase[moped[0].ase[b]].smoke_size=ase[moped[0].ase[b]].pdamage*0.1f;
 
 
 	}
@@ -6821,19 +6821,19 @@ void readsaves(void){ // read saves
 void game_load(void){//load game
 	FILE *fil;
         int q,d,a,b;
-        char temprivi[300];
-        char tallennusrivi[300];
+        char temprow[300];
+        char tallennusrow[300];
         float kx,kz;
 
-        if(!loadable[tallennuspaikka]) return;//exit if not right
+        if(!loadable[tallennusplace]) return;//exit if not right
 
-        itoa(tallennuspaikka,temprivi,10);
-        strcpy(tallennusrivi,"save/s");
-        strcat(tallennusrivi,temprivi);
-        strcat(tallennusrivi,".sav");
+        itoa(tallennusplace,temprow,10);
+        strcpy(tallennusrow,"save/s");
+        strcat(tallennusrow,temprow);
+        strcat(tallennusrow,".sav");
 
 
-        fil = fopen(tallennusrivi,"rb");
+        fil = fopen(tallennusrow,"rb");
 
 
 
@@ -6845,15 +6845,15 @@ void game_load(void){//load game
         pelivaihe=2;
 
 
-        //stripped_fgets(temprivi,sizeof(temprivi),fil);//temprivi
-        //fgets(temprivi,sizeof(temprivi),fil);nextmatsi=atoi(temprivi);
+        //stripped_fgets(temprow,sizeof(temprow),fil);//temprow
+        //fgets(temprow,sizeof(temprow),fil);nextmatsi=atoi(temprow);
 
         //name
-        fgets(temprivi,sizeof(temprivi),fil);
-        fgets(temprivi,sizeof(temprivi),fil);
+        fgets(temprow,sizeof(temprow),fil);
+        fgets(temprow,sizeof(temprow),fil);
 
         //diffucultylevel
-        fgets(temprivi,sizeof(temprivi),fil); game_difficulty=atoi(temprivi);
+        fgets(temprow,sizeof(temprow),fil); game_difficulty=atoi(temprow);
         //weapons change accordin to diffucultylevel
         q=10;
         //police gun 0 pistol
@@ -6877,11 +6877,11 @@ void game_load(void){//load game
         ase[q]._type=3;
 
         //field
-        fgets(temprivi,sizeof(temprivi),fil); mapsx=atoi(temprivi);
-        fgets(temprivi,sizeof(temprivi),fil); mapsz=atoi(temprivi);
+        fgets(temprow,sizeof(temprow),fil); mapsx=atoi(temprow);
+        fgets(temprow,sizeof(temprow),fil); mapsz=atoi(temprow);
         for (a=0; a<mapsz; a++){
                 for (b=0; b<mapsx; b++){
-                        fgets(temprivi,sizeof(temprivi),fil); maps[a][b]=atoi(temprivi);
+                        fgets(temprow,sizeof(temprow),fil); maps[a][b]=atoi(temprow);
                 }
         }
         //dont randomize characters until fiel is randomized
@@ -6892,41 +6892,41 @@ void game_load(void){//load game
                 create_character(q);
         }
         //frontwheel coordinates
-        fgets(temprivi,sizeof(temprivi),fil); moped[0].x1=(float)atof(temprivi);
-        fgets(temprivi,sizeof(temprivi),fil); moped[0].z1=(float)atof(temprivi);
+        fgets(temprow,sizeof(temprow),fil); moped[0].x1=(float)atof(temprow);
+        fgets(temprow,sizeof(temprow),fil); moped[0].z1=(float)atof(temprow);
 
         //rearwheel
-        fgets(temprivi,sizeof(temprivi),fil); moped[0].x2=(float)atof(temprivi);
-        fgets(temprivi,sizeof(temprivi),fil); moped[0].z2=(float)atof(temprivi);
+        fgets(temprow,sizeof(temprow),fil); moped[0].x2=(float)atof(temprow);
+        fgets(temprow,sizeof(temprow),fil); moped[0].z2=(float)atof(temprow);
         //direction
-        fgets(temprivi,sizeof(temprivi),fil); moped[0].direction=(float)atof(temprivi);
+        fgets(temprow,sizeof(temprow),fil); moped[0].direction=(float)atof(temprow);
         //ammount of money
-        fgets(temprivi,sizeof(temprivi),fil); moped[0].rahat=atoi(temprivi);
+        fgets(temprow,sizeof(temprow),fil); moped[0].money=atoi(temprow);
         //weapon properties
         for (q=0; q<4; q++){
-                fgets(temprivi,sizeof(temprivi),fil); ase[moped[0].ase[q]].pdamage=atoi(temprivi);
-                fgets(temprivi,sizeof(temprivi),fil); ase[moped[0].ase[q]].pspeed=atoi(temprivi);
-                fgets(temprivi,sizeof(temprivi),fil); ase[moped[0].ase[q]].prate_of_fire=atoi(temprivi);
-                fgets(temprivi,sizeof(temprivi),fil);
-                if(atoi(temprivi)==0) ase[moped[0].ase[q]].homing=false;
+                fgets(temprow,sizeof(temprow),fil); ase[moped[0].ase[q]].pdamage=atoi(temprow);
+                fgets(temprow,sizeof(temprow),fil); ase[moped[0].ase[q]].pspeed=atoi(temprow);
+                fgets(temprow,sizeof(temprow),fil); ase[moped[0].ase[q]].prate_of_fire=atoi(temprow);
+                fgets(temprow,sizeof(temprow),fil);
+                if(atoi(temprow)==0) ase[moped[0].ase[q]].homing=false;
                 else ase[moped[0].ase[q]].homing=true;
         }
         //energy
-        fgets(temprivi,sizeof(temprivi),fil); moped[0].energia=(float)atof(temprivi);
+        fgets(temprow,sizeof(temprow),fil); moped[0].energy=(float)atof(temprow);
         //what level missions are given
-        fgets(temprivi,sizeof(temprivi),fil); moped[0].level=atoi(temprivi);
+        fgets(temprow,sizeof(temprow),fil); moped[0].level=atoi(temprow);
         //what mission from this level has been given
-        fgets(temprivi,sizeof(temprivi),fil); moped[0].missionumero=atoi(temprivi);
+        fgets(temprow,sizeof(temprow),fil); moped[0].missionumero=atoi(temprow);
 	//mission
         create_mission(&moped[0],moped[0].missionumero);
         moped[0].mission=moped[0].mission_random;
         //how many similiar targets
 
-        fgets(temprivi,sizeof(temprivi),fil); moped[0].mission.kohteita=atoi(temprivi);
+        fgets(temprow,sizeof(temprow),fil); moped[0].mission.kohteita=atoi(temprow);
         //targets coordinates
         for (q=0; q<moped[0].mission.kohteita; q++){
-                fgets(temprivi,sizeof(temprivi),fil); kx=(float)atof(temprivi);
-                fgets(temprivi,sizeof(temprivi),fil); kz=(float)atof(temprivi);
+                fgets(temprow,sizeof(temprow),fil); kx=(float)atof(temprow);
+                fgets(temprow,sizeof(temprow),fil); kz=(float)atof(temprow);
                 if(moped[0].mission.target_type==0)//character
                 {
                         character[moped[0].mission.target[q]].x=kx;
@@ -6944,22 +6944,22 @@ void game_load(void){//load game
                 }
         }
         //is it accomplished
-        fgets(temprivi,sizeof(temprivi),fil); moped[0].mission.suoritettu=atoi(temprivi);
+        fgets(temprow,sizeof(temprow),fil); moped[0].mission.status=atoi(temprow);
         //time
-        fgets(temprivi,sizeof(temprivi),fil); moped[0].mission.aika=(float)atof(temprivi);
+        fgets(temprow,sizeof(temprow),fil); moped[0].mission.timer=(float)atof(temprow);
 
 	//customer
         create_character(10);
         moped[0].mission.asiakas[0]=character[10];
         //what picture on character
-        fgets(temprivi,sizeof(temprivi),fil); moped[0].mission.asiakas[0].picture=atoi(temprivi);
+        fgets(temprow,sizeof(temprow),fil); moped[0].mission.asiakas[0].picture=atoi(temprow);
         //energy
-        fgets(temprivi,sizeof(temprivi),fil); moped[0].mission.asiakas[0].energia=(float)atof(temprivi);
+        fgets(temprow,sizeof(temprow),fil); moped[0].mission.asiakas[0].energy=(float)atof(temprow);
 
         fclose(fil);
 
         for (d=0; d<mopoja; d++){
-                if(moped[d].pois)continue;
+                if(moped[d].inactive)continue;
                 aja(&moped[d]);
         }
 
@@ -6970,27 +6970,27 @@ void game_save(void){//save game
         FILE *fil;
         int q,a,b;
         tallennettu=true;
-        char temprivi[300];
-        char tallennusrivi[300];
+        char temprow[300];
+        char tallennusrow[300];
         float kx,kz;
 
-        itoa(tallennuspaikka,temprivi,10);
-        strcpy(tallennusrivi,"save/s");
-        strcat(tallennusrivi,temprivi);
-        strcat(tallennusrivi,".sav");
+        itoa(tallennusplace,temprow,10);
+        strcpy(tallennusrow,"save/s");
+        strcat(tallennusrow,temprow);
+        strcat(tallennusrow,".sav");
 
         korjaussumma=0;
 
 
-        fil = fopen(tallennusrivi,"wb");
+        fil = fopen(tallennusrow,"wb");
 
         if(letters_in_name==0)
-		strcpy(temprivi,"no name");
+		strcpy(temprow,"no name");
         else
-		strcpy(temprivi,savenimi);
+		strcpy(temprow,savefilename);
 
         //name
-        fprintf(fil, "%s\n", temprivi);
+        fprintf(fil, "%s\n", temprow);
         fprintf(fil, "%d\n", letters_in_name);
         //diffyculty
         fprintf(fil, "%d\n", game_difficulty);
@@ -7011,7 +7011,7 @@ void game_save(void){//save game
         //direction
         fprintf(fil, "%f\n", moped[0].direction);
         //ammount of money
-        fprintf(fil, "%d\n", moped[0].rahat);
+        fprintf(fil, "%d\n", moped[0].money);
         //gun properties
         for (q=0; q<4; q++){
                 fprintf(fil, "%d\n", ase[moped[0].ase[q]].pdamage);
@@ -7020,7 +7020,7 @@ void game_save(void){//save game
                 fprintf(fil, "%d\n", ase[moped[0].ase[q]].homing);
         }
         //energy
-        fprintf(fil, "%f\n", moped[0].energia);
+        fprintf(fil, "%f\n", moped[0].energy);
         //level of missions that will be given.
         fprintf(fil, "%d\n", moped[0].level);
         //what mission from this level has been given
@@ -7049,35 +7049,35 @@ void game_save(void){//save game
                 fprintf(fil, "%f\n", kz);
         }
         //is it accomplished?
-        fprintf(fil, "%d\n", moped[0].mission.suoritettu);
+        fprintf(fil, "%d\n", moped[0].mission.status);
         //time
-        fprintf(fil, "%f\n", moped[0].mission.aika);
+        fprintf(fil, "%f\n", moped[0].mission.timer);
 	//customer
         //what picture on character
         fprintf(fil, "%d\n", moped[0].mission.asiakas[0].picture);
         //energy
-        fprintf(fil, "%f\n", moped[0].mission.asiakas[0].energia);
+        fprintf(fil, "%f\n", moped[0].mission.asiakas[0].energy);
 
 /*		float x1,z1;//front wheel coordinates
 		float x2,z2;//rear wheel
-		int rahat;//ammount of money left
-		float energia;//energy
+		int money;//ammount of money left
+		float energy;//energy
 		int level;//level of missions that will be given.
 		int missionumero;//what mission from this level has been given
 
 		int kohteita;//ammount of similiar targets
 		int target[100];//possible target (kill some one?)
 		float targetx[100], targetz[100];//targets coordinates (go to location x?)
-		float aika;//time
-		int suoritettu;//0=not accomplished 1=accomplished2=failed 3=there is no mission
+		float timer;//time
+		int status;//0=not accomplished 1=accomplished2=failed 3=there is no mission
 
 
 		//person asiakas[100];//as a passanger in a taxi
                 int picture;//what picture is on character
                 int aseena;//wich weapon does it have -1=no weapon
-                float energia;//energy
-                int taktiikka;//what will it do. 0=pursues 1=walks normally 2=escapes
-                int puoli;//0=friend 1=passive 2=enemy
+                float energy;//energy
+                int tactics;//what will it do. 0=pursues 1=walks normally 2=escapes
+                int movement_type;//0=friend 1=passive 2=enemy
 */
 
         fclose(fil);
@@ -7085,7 +7085,7 @@ void game_save(void){//save game
 void render_menu(void){//renders the menu
 	RECT     rcSource, rcDest, loota;
 	char menuteksti[40][256];
-	char rivi[200],temprivi[200];
+	char row[200],temprow[200];
 	int tex,tey;
 	int q;
 	int space;
@@ -7103,8 +7103,8 @@ void render_menu(void){//renders the menu
 
 
 	//cusor
-	kursori=kursori-elapsed;
-	if(kursori<-500)kursori=500;
+	cursor_timer=cursor_timer-elapsed;
+	if(cursor_timer<-500)cursor_timer=500;
 
 
 	//wallpaper
@@ -7136,7 +7136,7 @@ void render_menu(void){//renders the menu
 		strcpy(menuteksti[12],"Back");
 		for (q=0; q<10; q++){
 			strcpy(menuteksti[q+1],m_filenames[q]);
-			//menuteksti[q]=savenimi[q]
+			//menuteksti[q]=savefilename[q]
 		}
 	}
 	if(pelivaihe2==4){//options
@@ -7179,30 +7179,30 @@ void render_menu(void){//renders the menu
 		strcpy(menuteksti[11],"Hand Brake   ");
 		strcpy(menuteksti[12],"Back");
 		for (q=1; q<12; q++){
-			itoa(key[q],temprivi,10);
-			strcat(menuteksti[q],temprivi);
+			itoa(key[q],temprow,10);
+			strcat(menuteksti[q],temprow);
 		}
 	}
 
 
 
         tex=270;tey=220+0*space;
-        if(pelivaihe2==1)strcpy(rivi,"Load");
+        if(pelivaihe2==1)strcpy(row,"Load");
         if(pelivaihe2==2){
                 if(!tallennettu)
-                        strcpy(rivi,"Save");
+                        strcpy(row,"Save");
                 else
-                        strcpy(rivi,"Game saved");
+                        strcpy(row,"Game saved");
         }
         if(pelivaihe2==3){
-                strcpy(rivi,"Enter a name");
-                strcpy(menuteksti[menuvalittu],savenimi);
+                strcpy(row,"Enter a name");
+                strcpy(menuteksti[menuvalittu],savefilename);
         }
-        if(pelivaihe2==4)strcpy(rivi,"Options");
-        if(pelivaihe2==6)strcpy(rivi,"Set Keys");
+        if(pelivaihe2==4)strcpy(row,"Options");
+        if(pelivaihe2==6)strcpy(row,"Set Keys");
 
         if((pelivaihe2==1)||(pelivaihe2==2)||(pelivaihe2==3)||(pelivaihe2==4)||(pelivaihe2==6))
-                rendertext((int)(tex),(int)(tey),0,rivi);
+                rendertext((int)(tex),(int)(tey),0,row);
 
 
 
@@ -7229,7 +7229,7 @@ void render_menu(void){//renders the menu
                 //cursor
 		if((menuvalittu<11)&&(menuvalittu>0))
 		{
-                        if((pelivaihe2==3)&&(menuvalittu==q)&&(kursori<0)&&(letters_in_name<49))
+                        if((pelivaihe2==3)&&(menuvalittu==q)&&(cursor_timer<0)&&(letters_in_name<49))
 				rendertext(int(210+(letters_in_name)*12.5f),(220+q*space),0,":");
 		}
 	}
@@ -7279,26 +7279,26 @@ void render_menu(void){//renders the menu
         moped[d].y2=0;
         moped[d].z2=0;
         moped[d].direction=moped[d].direction+0.002f*elapsed*gamespeed;
-        moped[d].kulmakallistus=0;
-        moped[d].kulmakeuliminen=0;
+        moped[d].angle_roll=0;
+        moped[d].angle_pitch=0;
 
 
         if(mopopicture==0){
                 matrices->LoadIdentity();
                 matrices->TranslateLocal(moped[d].x2,moped[d].y2,moped[d].z2);
-                matrices->RotateYawPitchRollLocal(-moped[d].direction,moped[d].kulmakallistus,moped[d].kulmakeuliminen);
+                matrices->RotateYawPitchRollLocal(-moped[d].direction,moped[d].angle_roll,moped[d].angle_pitch);
                 drawfast(&mallit[mopopicture].malli[0]);
         }
         if(mopopicture==6){
                 matrices->LoadIdentity();
                 matrices->TranslateLocal(moped[d].x2,moped[d].y2+1.5f,moped[d].z2);
-                matrices->RotateYawPitchRollLocal(-moped[d].direction,moped[d].kulmakallistus,moped[d].kulmakeuliminen);
+                matrices->RotateYawPitchRollLocal(-moped[d].direction,moped[d].angle_roll,moped[d].angle_pitch);
                 drawfast(&mallit[mopopicture].malli[0]);
         }
         if(mopopicture==9){
                 matrices->LoadIdentity();
                 matrices->TranslateLocal(moped[d].x2,moped[d].y2+1.5f,moped[d].z2);
-                matrices->RotateYawPitchRollLocal(-moped[d].direction,moped[d].kulmakallistus,moped[d].kulmakeuliminen);
+                matrices->RotateYawPitchRollLocal(-moped[d].direction,moped[d].angle_roll,moped[d].angle_pitch);
                 drawfast(&mallit[mopopicture].malli[0]);
         }
 
@@ -7306,7 +7306,7 @@ void render_menu(void){//renders the menu
 		//rear wheel
 		matrices->Push();
 		matrices->TranslateLocal(0,20,0);
-		matrices->RotateYawPitchRollLocal(0,0,moped[d].kulmaetu);
+		matrices->RotateYawPitchRollLocal(0,0,moped[d].angle_yaw);
 		drawfast(&mallit[mopopicture].malli[3]);
 		matrices->Pop();
 		//front side
@@ -7316,14 +7316,14 @@ void render_menu(void){//renders the menu
 		drawfast(&mallit[mopopicture].malli[2]);
 		//front wheel
 		matrices->TranslateLocal(40,20,0);
-		matrices->RotateYawPitchRollLocal(0,0,moped[d].kulmaetu);
+		matrices->RotateYawPitchRollLocal(0,0,moped[d].angle_yaw);
 		drawfast(&mallit[mopopicture].malli[3]);
 	}
 	if(mopopicture==6){
 		//rear wheel
 		matrices->Push();
 		matrices->TranslateLocal(0,20,0);
-		matrices->RotateYawPitchRollLocal(0,0,moped[d].kulmaetu);
+		matrices->RotateYawPitchRollLocal(0,0,moped[d].angle_yaw);
 		drawfast(&mallit[mopopicture].malli[2]);
 		matrices->Pop();
 		//front side
@@ -7332,14 +7332,14 @@ void render_menu(void){//renders the menu
 		drawfast(&mallit[mopopicture].malli[1]);
 		//front wheel
 		matrices->TranslateLocal(40,20,0);
-		matrices->RotateYawPitchRollLocal(0,0,moped[d].kulmaetu);
+		matrices->RotateYawPitchRollLocal(0,0,moped[d].angle_yaw);
 		drawfast(&mallit[mopopicture].malli[2]);
 	}
 	if(mopopicture==9){
 		//rear wheel
 		matrices->Push();
 		matrices->TranslateLocal(0,20,0);
-		matrices->RotateYawPitchRollLocal(0,0,moped[d].kulmaetu);
+		matrices->RotateYawPitchRollLocal(0,0,moped[d].angle_yaw);
 		drawfast(&mallit[mopopicture].malli[2]);
 		matrices->Pop();
 		//front side
@@ -7348,7 +7348,7 @@ void render_menu(void){//renders the menu
 		drawfast(&mallit[mopopicture].malli[1]);
 		//front wheel
 		matrices->TranslateLocal(40,20,0);
-		matrices->RotateYawPitchRollLocal(0,0,moped[d].kulmaetu);
+		matrices->RotateYawPitchRollLocal(0,0,moped[d].angle_yaw);
 		drawfast(&mallit[mopopicture].malli[2]);
 	}
 
@@ -7397,16 +7397,16 @@ void game_new(void){ //new game
 	ase[q].bullet_picture=0;
 	ase[q].smoke_filled=0;
 	ase[q].smoke_duration=5000;
-	ase[q].paino=0.00001f;
-	ase[q].pommi=0;
+	ase[q].weight=0.00001f;
+	ase[q].explosion_size=0;
 	ase[q].smoke_count=0;
-	ase[q].kimmokkeita=2;
+	ase[q].num_bounces=2;
 	ase[q].damage=0.1f;
 	ase[q].homing=false;
 	ase[q].pdamage=2;
 	ase[q].pspeed=2;
 	ase[q].prate_of_fire=2;
-	ase[q].hauleja=1;
+	ase[q].bullets_per_shot=1;
 
 	q=7;
 	ase[q].picture=0;//moped gun1
@@ -7417,16 +7417,16 @@ void game_new(void){ //new game
 	ase[q].bullet_picture=0;
 	ase[q].smoke_filled=0;
 	ase[q].smoke_duration=5000;
-	ase[q].paino=0.00001f;
-	ase[q].pommi=0;
+	ase[q].weight=0.00001f;
+	ase[q].explosion_size=0;
 	ase[q].smoke_count=0;
-	ase[q].kimmokkeita=2;
+	ase[q].num_bounces=2;
 	ase[q].damage=0.1f;
 	ase[q].homing=false;
 	ase[q].pdamage=2;
 	ase[q].pspeed=2;
 	ase[q].prate_of_fire=2;
-	ase[q].hauleja=1;
+	ase[q].bullets_per_shot=1;
 
 	q=8;
 	ase[q].picture=0;//moped gun2
@@ -7437,16 +7437,16 @@ void game_new(void){ //new game
 	ase[q].bullet_picture=0;
 	ase[q].smoke_filled=0;
 	ase[q].smoke_duration=5000;
-	ase[q].paino=0.00001f;
-	ase[q].pommi=0;
+	ase[q].weight=0.00001f;
+	ase[q].explosion_size=0;
 	ase[q].smoke_count=0;
-	ase[q].kimmokkeita=2;
+	ase[q].num_bounces=2;
 	ase[q].damage=0.1f;
 	ase[q].homing=false;
 	ase[q].pdamage=2;
 	ase[q].pspeed=2;
 	ase[q].prate_of_fire=2;
-	ase[q].hauleja=1;
+	ase[q].bullets_per_shot=1;
 
 	q=9;
 	ase[q].picture=0;//moped gun3
@@ -7457,16 +7457,16 @@ void game_new(void){ //new game
 	ase[q].bullet_picture=0;
 	ase[q].smoke_filled=0;
 	ase[q].smoke_duration=5000;
-	ase[q].paino=0.00001f;
-	ase[q].pommi=0;
+	ase[q].weight=0.00001f;
+	ase[q].explosion_size=0;
 	ase[q].smoke_count=0;
-	ase[q].kimmokkeita=2;
+	ase[q].num_bounces=2;
 	ase[q].damage=0.1f;
 	ase[q].homing=false;
 	ase[q].pdamage=2;
 	ase[q].pspeed=2;
 	ase[q].prate_of_fire=2;
-	ase[q].hauleja=1;
+	ase[q].bullets_per_shot=1;
 
 
 
@@ -7510,9 +7510,9 @@ void game_new(void){ //new game
 
 	//initialize mopeds
 	mopoja=10;
-	initializemopeds();
+	initMopeds();
 	for (q=1; q<100; q++){
-		moped[q].pois=true;
+		moped[q].inactive=true;
 	}
 
 	quake=0;//at the beginning there will be no erthquakes
@@ -7520,8 +7520,8 @@ void game_new(void){ //new game
 	mapmode=true;
 	dx=0;//camera
 	dy=13;//camera
-	luoteja=0;//at the beginning there will be not a single bullet
-	savuja=0;
+	bullet_count=0;//at the beginning there will be not a single bullet
+	smoke_count=0;
 
 
 
@@ -7530,7 +7530,7 @@ void game_new(void){ //new game
 	pelivaihe=0;
 
 	for (d=0; d<mopoja; d++){
-		if(moped[d].pois)continue;
+		if(moped[d].inactive)continue;
 		aja(&moped[d]);
 	}
 
@@ -7538,7 +7538,7 @@ void game_new(void){ //new game
 		bullet[q].remove=true;
 	}
 	for (q=0; q<MAX_SMOKES; q++){
-		savu[q].pois=true;
+		savu[q].inactive=true;
 	}
 
 	//calculate gun properties
@@ -7546,37 +7546,37 @@ void game_new(void){ //new game
 		if((b==2)||(b==3)||(b==4))continue;//blood and sparks are not changed
 		ase[b].damage=ase[b].pdamage*0.1f+(ase[b].pdamage-1)*0.7f;
 		ase[b].speed=ase[b].pspeed*3.7f+(ase[b].pspeed-1)*1.44f;
-		ase[b].hauleja=1;
+		ase[b].bullets_per_shot=1;
 		ase[b]._type=0;
 		nop=(float)ase[b].prate_of_fire;
-		//if((ase[b].prate_of_fire>3)&&(ase[b].prate_of_fire)<8){ase[b]._type=2; nop=(float)ase[b].prate_of_fire/(5*(8-ase[b].prate_of_fire));ase[b].hauleja=(int)(5*(8-ase[b].prate_of_fire));}
-		if((ase[b].prate_of_fire>5)&&(ase[b].prate_of_fire)<8){ase[b]._type=2; nop=2;ase[b].hauleja=(int)(7*(ase[b].prate_of_fire-3));ase[b].damage=ase[b].damage/20;ase[b].dispersion=ase[b].dispersion*4;}
+		//if((ase[b].prate_of_fire>3)&&(ase[b].prate_of_fire)<8){ase[b]._type=2; nop=(float)ase[b].prate_of_fire/(5*(8-ase[b].prate_of_fire));ase[b].bullets_per_shot=(int)(5*(8-ase[b].prate_of_fire));}
+		if((ase[b].prate_of_fire>5)&&(ase[b].prate_of_fire)<8){ase[b]._type=2; nop=2;ase[b].bullets_per_shot=(int)(7*(ase[b].prate_of_fire-3));ase[b].damage=ase[b].damage/20;ase[b].dispersion=ase[b].dispersion*4;}
 		if(ase[b].prate_of_fire>7)ase[b]._type=1;
 
 		ase[b].rate_of_fire=(int)(710+78-nop*78);
 		ase[b].dispersion=0.01f+ase[b].prate_of_fire*0.01f;
 		ase[b].smoke_filled=0;
 		if(ase[b].homing){
-			//ase[b].kimmokkeita=0;
+			//ase[b].num_bounces=0;
 			ase[b].smoke_filled=2;
 			ase[b].smoke_count=10;
 		}
 		else {
-			ase[b].kimmokkeita=ase[b].pdamage;
+			ase[b].num_bounces=ase[b].pdamage;
 			ase[b].smoke_count=0;
 		}
-		ase[b].paino=ase[b].pdamage*0.00001f;
-		ase[b].pommi=0;
+		ase[b].weight=ase[b].pdamage*0.00001f;
+		ase[b].explosion_size=0;
 		ase[b].decal_picture=0;
 		if(ase[b].pdamage>6){
 			ase[b]._type=3;
-			ase[b].kimmokkeita=0;
-			ase[b].pommi=ase[b].pdamage-6;
+			ase[b].num_bounces=0;
+			ase[b].explosion_size=ase[b].pdamage-6;
 			ase[b].smoke_filled=2;
 			ase[b].smoke_duration=1000;
 			ase[b].decal_picture=1;
 		}
-		ase[b].savukoko=ase[b].pdamage*0.1f;
+		ase[b].smoke_size=ase[b].pdamage*0.1f;
 	}
 
 	//guns changed by diffyculty level
@@ -7704,18 +7704,18 @@ void cfg_save(void){
 void cfg_load(void){
         FILE *fil;
         int q,b;
-        char temprivi[300];
+        char temprow[300];
 
 
         fil = fopen("cfg.cfg","rt");
 
         for (q=0; q<10; q++){
-                fgets(temprivi,sizeof(temprivi),fil);b=atoi(temprivi);
+                fgets(temprow,sizeof(temprow),fil);b=atoi(temprow);
                 if(b==0)options[q]=false;
                 else options[q]=true;
         }
         for (q=0; q<13; q++){
-                fgets(temprivi,sizeof(temprivi),fil);key[q]=atoi(temprivi);
+                fgets(temprow,sizeof(temprow),fil);key[q]=atoi(temprow);
         }
 
         fclose(fil);
@@ -7723,15 +7723,15 @@ void cfg_load(void){
         //SOUNDS_ON=options[1];
 
 }
-void playsound(int samplenumero,float volume,float paikkax,float paikkaz){ //play a sound
+void playsound(int samplenumero,float volume,float placex,float placez){ //play a sound
 	if(soundtimer[samplenumero]<40)return;
 	if(!(options[1]&&SOUNDS_LOADED))return;
 
-	float distance=sqrtf(sqr(paikkax-moped[0].x1)+sqr(paikkaz-moped[0].z1));
+	float distance=sqrtf(sqr(placex-moped[0].x1)+sqr(placez-moped[0].z1));
 	if(distance<10000)
 	{
 		//finds out is the bike at rigth or left side
-                float dq=atan2f(moped[0].z1-paikkaz,moped[0].x1-paikkax)+pi;
+                float dq=atan2f(moped[0].z1-placez,moped[0].x1-placex)+pi;
                 float temp1=moped[0].direction;
                 if(moped[0].direction-dq>pi)temp1=temp1-pi*2;
                 if(dq-moped[0].direction>pi)dq=dq-pi*2;

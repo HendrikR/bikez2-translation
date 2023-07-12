@@ -100,7 +100,7 @@ struct obj
 	D3DXMATRIX sijainti;
 };
 
-struct kuvat//pictures
+struct Pictures//pictures
 {
 	obj *malli;
 };
@@ -126,34 +126,34 @@ struct person
 	int sektorix,sektoriz;//in wich sector it is *8000
 	int jaosx,jaosz;//in wich section *400
 	bool dying;//call for dying animation
-	bool pois;//character completely away
+	bool inactive;//character completely away
 	bodypartCoordinates bodypart_coords[11];//bodypart_coordinates bodypart
 	int aseena;//wich weapon? -1=no weapon
-	float asetime;//gun timer
-	float energia;//energy
-	int taktiikka;//What person does. 0=attacks 1=walks normally 2=escapes
-	int menossa;//wich direction it is going 1=forward -1=backward
+	float gun_timer;//gun timer
+	float energy;//energy
+	int tactics;//What person does. 0=attacks 1=walks normally 2=escapes
+	int walk_dir;//wich direction it is going 1=forward -1=backward
 	float menoajastin;//timer for expense
-	int puoli;//0=own 1=passive 2=enemy
+	int movement_type;//0=own 1=passive 2=enemy
 	bool visible;//visible or not.
-	float korkeus;//What size it is
+	float height;//What size it is
 	bool osuma[100];//has it collided with walls lately
 };
 
 struct missio
 {
 	int _type;//mission type (kill a character / go to place x)
-	int ala_type;//mission subtype (kill within a timelimit)
+	int subtype;//mission subtype (kill within a timelimit)
 	int target_type;//target 0=character 1=coordinates 2=moped
 	int target[100];//possible target (kill a character?)
 	person asiakas[100];//taxi ride
 	float targetx[100], targetz[100];//targets coordinates (go to place x?)
-	float aika;//time
-	int suoritettu;//0=not accomplished 1=accomplished 2=lost 3=there is no mission
-	//int suoritettu2;//performed value on last frame
-	int palkka;//bounty from the mission
-	char shortbriefing[100];//short briefing
-	char rivi0[800];//mission briefing
+	float timer;//time
+	int status;//0=not accomplished 1=accomplished 2=lost 3=there is no mission
+	//int status2;//performed value on last frame
+	int bounty;//bounty from the mission
+	char briefing_short[100];//short briefing
+	char briefing_long[800];//mission briefing
 	int kohteita;//Ammount of similiar targets
 };
 
@@ -165,10 +165,10 @@ struct missionReservoir//mission reservoir
 
 struct bikebase
 {
-	float savuaika;//Timer of exhaustgasses
+	float smoke_timer;//Timer of exhaustgasses
 	int numero;//player 1 or 2
 	int ase[4];//Wich gun is where
-	float asetime[4];//timer of guns
+	float gun_timer[4];//timer of guns
 	bool enter,esc,up,down,left,right,one,two,three,four,space;//keys
 	bool enter2,esc2,up2,down2,left2,right2,one2,two2,three2,four2,space2;//keys on last frame
 	float x1,y1,z1;//front wheel coordinates
@@ -179,26 +179,26 @@ struct bikebase
 	float x6,y6,z6;//rear wheel rear side
 	float etudirection;//front wheel direction
 	float speed, direction;		//speed, direction
-	float kulmaetu;//Rotation of wheels in angles
-	float kulmakeuliminen;//Angle of wheelie
-	float kulmakallistus;//tilting of the bike
+	float angle_yaw;//Rotation of wheels in angles
+	float angle_pitch;//Angle of wheelie
+	float angle_roll;//tilting of the bike
 	float timesparks;//sparks doesnt appear too often
 	int nearestcharacter;//Nearest character
 	missio mission;//What mission is on
 	missio mission_random;//random mission
 	int missionumero;//What mission is given from the level
-	int rahat;//ammount of money
+	int money;//ammount of money
 	int mopona;//What kind of moped
 	int sektorix,sektoriz;//In wich sector it is
 	int target_character;//what character is aimed at -3=no-one
-	float energia;//energy
+	float energy;//energy
 	int level;//level of the given mission
 	bool osuma[100];//has it collided with walls lately
 	float directiontimer;//For artificial intelligence: how long it is gone to same direction
-	float taktiikkatimer;//For artificial intelligence: tactic timer
-	int taktiikka;//0=attack 1=escape
+	float tacticstimer;//For artificial intelligence: tactic timer
+	int tactics;//0=attack 1=escape
 	bool visible;//Is in visible on the screen
-	bool pois;//get rid of moped
+	bool inactive;//get rid of moped
 	float distance;//distance from player
 	float player_angle;//angle to player
 	bool has_muzzle_flare;//Muzzleflare
@@ -239,18 +239,18 @@ struct linjagroup//route group
 struct bullet
 {
 	D3DXVECTOR3 place_old;//place old
-	D3DXVECTOR3 paikka;//place
+	D3DXVECTOR3 place;//place
 	D3DXVECTOR3 direction;//direction
 	float q,w,e;//Angle of bullet
-	int aseesta;//from gun
+	int from_gun;//from gun
 	bool remove;//delete
 	float smoke_count;//How much time for making smoketrail
 	int sektorix[2],sektoriz[2];//in wich sector it is
 	//int jaosx,jaosz;//in wich section it is *800
-	float aika;//time
+	float timer;//time
 	float speed;//bullet speed
-	int kenen;//whos bullet it is// positive=mopeds -1=character
-	int kuka;//which character shot it (prevents suicides)
+	int from_moped;//whos bullet it is// positive=mopeds -1=character
+	int from_character;//which character shot it (prevents suicides)
 	float distance;//distance from the player
 	int target;//-6667=no-one, negatives-1 are mopeds, positives are characters
 };
@@ -258,38 +258,38 @@ struct bullet
 struct weapon
 {
 
-	float savukoko;//Size of smoke cloud
+	float smoke_size;//Size of smoke cloud
 	float damage;//damage
 	float dispersion;//dispersion
 	int picture;//what does this gun look like?
 	int bullet_picture;//bullet picture
 	int decal_picture;//hole in wall -1 = empty
 	int smoke_filled;//Is a hole in wall filled with smoke?
-	int pommi;//Size of explosion
+	int explosion_size;//Size of explosion
 	float speed;//speed
 	int rate_of_fire;//rate of fire
 	float smoke_duration;//the smoke lasts
-	float paino;//bullet weigth
+	float weight;//bullet weigth
 	float smoke_count;//how often is smoke trail made?
-	int kimmokkeita;//how many times it bounces from walls;
+	int num_bounces;//how many times it bounces from walls;
 	bool homing;//is it homing
-	int pdamage,pspeed,prate_of_fire,hinta,hinta2,hintahoming;//related to peddling //pdamage,pspeed,prateoffire,price,price2,pricesearch
-	int hauleja;//how many bullets from one shot
+	int pdamage,pspeed,prate_of_fire,price,price2,pricehoming;//related to peddling //pdamage,pspeed,prateoffire,price,price2,pricesearch
+	int bullets_per_shot;//how many bullets from one shot
 	int _type;//gun type 0=pistol 1=machinegun 2=shotgun 3=rocketlauncher 4=no sound
 };
 
 struct smoke
 {
-	D3DXVECTOR3 paikka;//place
+	D3DXVECTOR3 place;//place
 	int _type;//place
 	float q,w,e;//smoke angle
 	int picture;//subpicture 0 or 1
-	float aika;//how much time
+	float timer;//how much time
 	float cos,sin,up;//for the angle
 	float rotate;
-	float koko;//what size it is?
+	float size;//what size it is?
 	float suurenee;//How much it grows
-	bool pois;//off
+	bool inactive;//off
 };
 
 /*struct monttu
@@ -303,14 +303,14 @@ struct light
 {
 	bool on;
 	D3DLIGHT7 valo;	//light
-	float aika;//how much timeleft
+	float timer;//how much timeleft
 };
 
 
 
 
-BOOL load(const char nimi[200],obj *target,BOOL mirror,BOOL miekkakala);//load... swordfish
-BOOL loadwall(const char nimi[200],linjagroup *target,BOOL mirror);//loadwall
+BOOL load(const char filename[200],obj *target,BOOL mirror,BOOL miekkakala);//load... swordfish
+BOOL loadwall(const char filename[200],linjagroup *target,BOOL mirror);//loadwall
 BOOL loadtext();//loadtext
 void init(void);
 bool createscreen(void);
@@ -323,12 +323,12 @@ bool initkeyb(void);
 bool deinitkeyb(void);
 void readkeyb(void);//readkeyb
 void aja(bikebase *moped);//driving mopeds
-void initializemopeds(void);//initializing mopeds
+void initMopeds(void);//initializing mopeds
 void calculateCollisions(void);//calculate collisions
-void shoot(int target,int kuka,int kenen, float aika,bikebase *moped, int aseena,float paikkax,float paikkay,float paikkaz,float directionx,float directiony,float directionz);//shooting //target, who, whos, time, bikebase, mopeds, as_a_weapon, placex,palcey,placez, directionx,directiony,directionz
+void shoot(int target,int from_character,int from_moped, float timer,bikebase *moped, int aseena,float placex,float placey,float placez,float directionx,float directiony,float directionz);//shooting //target, who, whos, time, bikebase, mopeds, as_a_weapon, placex,palcey,placez, directionx,directiony,directionz
 void calculatebullets(void);//bullets fly
-void fromsmoke(float koko, float suurenee,bool rotate,float savukesto,float x,float y,float z,int _type,float q,float w,float e);//creates smoke
-//void removebullet(int a);//poistaa luodin sarjasta
+void fromsmoke(float size, float suurenee,bool rotate,float savukesto,float x,float y,float z,int _type,float q,float w,float e);//creates smoke
+//void removebullet(int a);//inactivetaa luodin sarjasta
 void calculatesmokes(void);//laskee savut
 void SetupPixelFog(DWORD dwColor, DWORD dwMode);//fog
 void SetupVertexFog(float fStart, float fEnd,DWORD dwColor, DWORD dwMode, BOOL fUseRange, FLOAT fDensity);//fog
@@ -360,7 +360,7 @@ void game_new(void);//starts a new game
 void cfg_save(void);//saves settings
 void cfg_load(void);//loads settings
 void sounds_start(void);//initialize voices
-void playsound(int samplenumero,float volume,float paikkax,float paikkaz);//plays a sound
+void playsound(int samplenumero,float volume,float placex,float placez);//plays a sound
 void clearzbuffer(void);
 void startApplication(HINSTANCE hInstance);
 
@@ -412,12 +412,12 @@ int korjaussumma;//price of repairs
 char m_filenames[10][256];//file names of saved files
 int kirjaintan[10];//how many letters are in file names
 bool loadable[10];//is it able to load
-int tallennuspaikka;//wich save is selected
+int tallennusplace;//wich save is selected
 bool tallennettu;//is game saved
 int keytimer;//keyboard timer
 int letters_in_name;//how many letters in name
-char savenimi[256];//name of save
-float kursori;//cursor timer
+char savefilename[256];//name of save
+float cursor_timer;//cursor timer
 int menuvalittu;//what is selected in menu
 int menuja[10];//how many selections are possible
 bool options[10];//options
@@ -437,7 +437,7 @@ WORD			DLLversion;
 float soundtimer[25];//samples are not played every millisecond
 
 //objects
-kuvat mallit[11];
+Pictures mallit[11];
 
 //input
 LPDIRECTINPUT8        g_lpDI;
@@ -453,8 +453,8 @@ bool pressed,pressed2;//is any key pressed
 
 
 int characters;//ammount of characters in a level
-int savuja;//ammount of smokes in a level
-int luoteja;//ammount of bullets in the air
+int smoke_count;//ammount of smokes in a level
+int bullet_count;//ammount of bullets in the air
 LPDIRECT3DDEVICE7 m_pDevice;
 LPDIRECT3D7 m_pD3D;
 LPDIRECTDRAWSURFACE7 taka;
@@ -470,7 +470,7 @@ int screenmode;
 //D3DDEVICEINFO info;
 DWORD m_LastTime;
 bool quittaos;//are we quiting?
-int materiaa;//ammount of materials
+int material_count;//ammount of materials
 D3DMATERIAL7 *mat;
 ID3DXMatrixStack *matrices;
 LONG bug1,bug2,bug3;
