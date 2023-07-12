@@ -102,7 +102,7 @@ struct D3DDEVICEDESC7 {
 typedef struct DIRECTINPUTDEVICE8 {
   HRESULT Acquire();
   HRESULT GetDeviceState(size_t, void*);
-  void SetDataFormat(int*);
+  HRESULT SetDataFormat(DIRECTINPUTDEVICE8**);
   HRESULT SetCooperativeLevel(HWND&, int);
   void Unacquire();
   void Release();

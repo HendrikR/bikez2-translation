@@ -1768,14 +1768,14 @@ void readkeyb(void)
 			if (!KEYDOWN(buffer,  DIK_DOWN )&&KEYDOWN(buffer2,  DIK_DOWN)){
 				menuvalittu=menuvalittu+1;
 				if(menuvalittu>=menuja[pelivaihe2])menuvalittu=0;
-				SndObjPlay(voices[0], NULL,options[1]&&SOUNDS_LOADED);
+				SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 			}
 		//up
 			if(pelivaihe2!=3)
 			if (!KEYDOWN(buffer,  DIK_UP )&&KEYDOWN(buffer2,  DIK_UP)){
 				menuvalittu=menuvalittu-1;
 				if(menuvalittu<0)menuvalittu=menuja[pelivaihe2]-1;
-				SndObjPlay(voices[0], NULL,options[1]&&SOUNDS_LOADED);
+				SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 			}
 
 		//changching keys
@@ -1784,7 +1784,7 @@ void readkeyb(void)
 			{
 				key[menuvalittu]=down;
 				valittu=false;
-				SndObjPlay(voices[0], NULL,options[1]&&SOUNDS_LOADED);
+				SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 				cfg_save();
 			}
 
@@ -1796,7 +1796,7 @@ void readkeyb(void)
 				{
 					tallennuspaikka=menuvalittu-1;
 					game_load();
-					SndObjPlay(voices[0], NULL,options[1]&&SOUNDS_LOADED);
+					SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 					break;
 				}
 				//selecting a load
@@ -1812,7 +1812,7 @@ void readkeyb(void)
 						kirjaintanimessa=0;
 						strcpy(savenimi,"                                                 ");
 					}
-					SndObjPlay(voices[0], NULL,options[1]&&SOUNDS_LOADED);
+					SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 					break;
 				}
 				//saving a game
@@ -1830,7 +1830,7 @@ void readkeyb(void)
 						pelivaihe=4;
 					}
 					readsaves();
-					SndObjPlay(voices[0], NULL,options[1]&&SOUNDS_LOADED);
+					SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 					break;
 				}
 				//changching settings
@@ -1841,7 +1841,7 @@ void readkeyb(void)
 					else options[menuvalittu]=true;
 					options[2]=false;//music permanently off
 					cfg_save();
-					SndObjPlay(voices[0], NULL,options[1]&&SOUNDS_LOADED);
+					SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 				}
 
 				//changching keys //select a key
@@ -1849,7 +1849,7 @@ void readkeyb(void)
 				if((menuvalittu<12)&&(menuvalittu>0))
 				{
 					valittu=true;
-					SndObjPlay(voices[0], NULL,options[1]&&SOUNDS_LOADED);
+					SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 				}
 
 
@@ -1857,52 +1857,52 @@ void readkeyb(void)
 					case 0:
 						if(pelivaihe2==0){//new game
 							pelivaihe2=5;
-							SndObjPlay(voices[0], NULL,options[1]&&SOUNDS_LOADED);
+							SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 							break;
 						}
 						if(pelivaihe2==5){//difficulty level
 							vaikeustaso=0;
-							SndObjPlay(voices[0], NULL,options[1]&&SOUNDS_LOADED);
+							SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 							game_new();
 						}
 						break;
 					case 1:
 						if(pelivaihe2==0){//load
 							readsaves(); pelivaihe2=1; pelivaihe_oli=4;
-							SndObjPlay(voices[0], NULL,options[1]&&SOUNDS_LOADED);
+							SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 						}
 						if(pelivaihe2==5){//difficulty level
 							vaikeustaso=1;
-							SndObjPlay(voices[0], NULL,options[1]&&SOUNDS_LOADED);
+							SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 							game_new();
 						}
 						break;
 					case 2:
 						if(pelivaihe2==0){//options
 							pelivaihe2=4;
-							SndObjPlay(voices[0], NULL,options[1]&&SOUNDS_LOADED);
+							SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 						}
 						if(pelivaihe2==5){//difficulty level
 							vaikeustaso=2;
-							SndObjPlay(voices[0], NULL,options[1]&&SOUNDS_LOADED);
+							SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 							game_new();
 						}
 						break;
 					case 3:
 						if(pelivaihe2==0){//exit
 							SendMessage( hWnd, WM_CLOSE, 0, 0 );
-							//SndObjPlay(voices[0], NULL,options[1]&&SOUNDS_LOADED);
+							//SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 						}
 						if(pelivaihe2==5){//Back
 							pelivaihe2=0;
-							SndObjPlay(voices[0], NULL,options[1]&&SOUNDS_LOADED);
+							SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 						}
 						break;
 					case 11:
 						if(pelivaihe2==4){//set keys
 							pelivaihe2=6;
 							valittu=false;//key not selected
-							SndObjPlay(voices[0], NULL,options[1]&&SOUNDS_LOADED);
+							SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 						}
 						break;
 					case 12:
@@ -1917,19 +1917,19 @@ void readkeyb(void)
 							pelivaihe2=0;
 							pelivaihe=4;
 							}
-							SndObjPlay(voices[0], NULL,options[1]&&SOUNDS_LOADED);
+							SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 						}
 						if(pelivaihe2==3){
 							pelivaihe2=2;
-							SndObjPlay(voices[0], NULL,options[1]&&SOUNDS_LOADED);
+							SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 						}
 						if(pelivaihe2==4){
 							pelivaihe2=0;
-							SndObjPlay(voices[0], NULL,options[1]&&SOUNDS_LOADED);
+							SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 						}
 						if(pelivaihe2==6){
 							pelivaihe2=4;
-							SndObjPlay(voices[0], NULL,options[1]&&SOUNDS_LOADED);
+							SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
 						}
 						break;
 
@@ -1942,7 +1942,7 @@ void readkeyb(void)
 	}
 }
 
-void calculatebullets(void)//calculate smokes
+void calculatesmokes(void)//calculate smokes
 {
 	int a;
 	float savunnopeus=0.1f;
@@ -3231,7 +3231,7 @@ bool initkeyb(void)
 	// it ready to use.
 	// Set the data format using the predefined keyboard data
 	// format provided by the DirectInput object for keyboards.
-	hr = g_lpDIDevice->SetDataFormat(&c_dfDIKeyboard);
+	hr = g_lpDIDevice->SetDataFormat(&g_lpDIDevice);
 	if FAILED(hr)
 	{
 		deinitkeyb();
@@ -3262,7 +3262,7 @@ bool initkeyb(void)
 			deinitkeyb();
 			return FALSE;
 		}
-	hr = g_pMouse->SetDataFormat(&c_dfDIMouse);
+	hr = g_pMouse->SetDataFormat(&g_pMouse);
 	if (FAILED(hr))
 		{
 			deinitkeyb();
@@ -3720,7 +3720,7 @@ void calculatecharacters(void) //calculatecharacters
 										/*q=randInt(0,3);
 										if(q==1)svolume(voices[14+q],(int)-distanssi ,SOUNDS_ON);
 										else svolume(voices[14+q],0 ,SOUNDS_ON);
-										SndObjPlay(voices[14+q], NULL,SOUNDS_ON);*/
+										SndObjPlay(voices[14+q], 0, SOUNDS_ON);*/
 										}
 					if (ukko[q].rx<= 0.20f)	ukko[q].rx=ukko[q].rx+MOTION_SPEED*0.015f*elapsed*pelinopeus;
 					}
@@ -3732,7 +3732,7 @@ void calculatecharacters(void) //calculatecharacters
 										/*q=randInt(0,3);
 										if(q==1)svolume(voices[14+q],(int)-distanssi ,SOUNDS_ON);
 										else svolume(voices[14+q],0 ,SOUNDS_ON);
-										SndObjPlay(voices[14+q], NULL,SOUNDS_ON);*/
+										SndObjPlay(voices[14+q], 0, SOUNDS_ON);*/
 										}
 					if (ukko[q].lx<= 0.20f)	ukko[q].lx=ukko[q].lx+MOTION_SPEED*0.015f*elapsed*pelinopeus;
 					}
@@ -4406,7 +4406,7 @@ void render_game(void){//just renders some moped driving.
 		svolume(voices[1],DSBVOLUME_MAX, options[1]&&SOUNDS_LOADED);
 		calculatecharacters();
 		calculatebullets();
-		calculatebullets();
+		calculatesmokes();
 		laskemissiot(&mopot[0]);
 	}
 
@@ -5363,7 +5363,7 @@ void render_game(void){//just renders some moped driving.
 		luoti[0].poista=true;
 		pelinopeus=0.2f;
 		calculatebullets();
-		calculatebullets();
+		calculatesmokes();
 		rendertext((int)(1024*0.15f),(int)(768*0.48f+15*0),70,"You are dead. All is lost.");
 	}
 
@@ -6441,14 +6441,14 @@ void render_workshop(void){//render workshop
 						if(ase[mopot[0].ase[valittub]].pvahinko<10)
 						if(mopot[0].rahat>=ase[mopot[0].ase[valittub]].hinta)
 						{
-							SndObjPlay(voices[18], NULL,options[1]&&SOUNDS_LOADED);
+							SndObjPlay(voices[18], 0, options[1]&&SOUNDS_LOADED);
 							ase[mopot[0].ase[valittub]].pvahinko=ase[mopot[0].ase[valittub]].pvahinko+1;
 							mopot[0].rahat=mopot[0].rahat-ase[mopot[0].ase[valittub]].hinta;
 						}
 						if(valittuc==-1)
 						if(ase[mopot[0].ase[valittub]].pvahinko>1)
 						{
-							SndObjPlay(voices[19], NULL,options[1]&&SOUNDS_LOADED);
+							SndObjPlay(voices[19], 0, options[1]&&SOUNDS_LOADED);
 							ase[mopot[0].ase[valittub]].pvahinko=ase[mopot[0].ase[valittub]].pvahinko-1;
 							mopot[0].rahat=mopot[0].rahat+ase[mopot[0].ase[valittub]].hinta2;
 						}
@@ -6459,14 +6459,14 @@ void render_workshop(void){//render workshop
 						if(ase[mopot[0].ase[valittub]].pampumanopeus<10)
 						if(mopot[0].rahat>=ase[mopot[0].ase[valittub]].hinta)
 						{
-							SndObjPlay(voices[18], NULL,options[1]&&SOUNDS_LOADED);
+							SndObjPlay(voices[18], 0, options[1]&&SOUNDS_LOADED);
 							ase[mopot[0].ase[valittub]].pampumanopeus=ase[mopot[0].ase[valittub]].pampumanopeus+1;
 							mopot[0].rahat=mopot[0].rahat-ase[mopot[0].ase[valittub]].hinta;
 						}
 						if(valittuc==-1)
 						if(ase[mopot[0].ase[valittub]].pampumanopeus>1)
 						{
-							SndObjPlay(voices[19], NULL,options[1]&&SOUNDS_LOADED);
+							SndObjPlay(voices[19], 0, options[1]&&SOUNDS_LOADED);
 							ase[mopot[0].ase[valittub]].pampumanopeus=ase[mopot[0].ase[valittub]].pampumanopeus-1;
 							mopot[0].rahat=mopot[0].rahat+ase[mopot[0].ase[valittub]].hinta2;
 						}
@@ -6477,14 +6477,14 @@ void render_workshop(void){//render workshop
 						if(ase[mopot[0].ase[valittub]].pnopeus<10)
 						if(mopot[0].rahat>=ase[mopot[0].ase[valittub]].hinta)
 						{
-							SndObjPlay(voices[18], NULL,options[1]&&SOUNDS_LOADED);
+							SndObjPlay(voices[18], 0, options[1]&&SOUNDS_LOADED);
 							ase[mopot[0].ase[valittub]].pnopeus=ase[mopot[0].ase[valittub]].pnopeus+1;
 							mopot[0].rahat=mopot[0].rahat-ase[mopot[0].ase[valittub]].hinta;
 						}
 						if(valittuc==-1)
 						if(ase[mopot[0].ase[valittub]].pnopeus>1)
 						{
-							SndObjPlay(voices[19], NULL,options[1]&&SOUNDS_LOADED);
+							SndObjPlay(voices[19], 0, options[1]&&SOUNDS_LOADED);
 							ase[mopot[0].ase[valittub]].pnopeus=ase[mopot[0].ase[valittub]].pnopeus-1;
 							mopot[0].rahat=mopot[0].rahat+ase[mopot[0].ase[valittub]].hinta2;
 						}
@@ -6495,14 +6495,14 @@ void render_workshop(void){//render workshop
 						if(ase[mopot[0].ase[valittub]].haku==false)
 						if(mopot[0].rahat>=ase[mopot[0].ase[valittub]].hintahaku)
 						{
-							SndObjPlay(voices[18], NULL,options[1]&&SOUNDS_LOADED);
+							SndObjPlay(voices[18], 0, options[1]&&SOUNDS_LOADED);
 							ase[mopot[0].ase[valittub]].haku=true;
 							mopot[0].rahat=mopot[0].rahat-ase[mopot[0].ase[valittub]].hintahaku;
 						}
 						if(valittuc==-1)
 						if(ase[mopot[0].ase[valittub]].haku==true)
 						{
-							SndObjPlay(voices[19], NULL,options[1]&&SOUNDS_LOADED);
+							SndObjPlay(voices[19], 0, options[1]&&SOUNDS_LOADED);
 							ase[mopot[0].ase[valittub]].haku=false;
 							mopot[0].rahat=mopot[0].rahat+ase[mopot[0].ase[valittub]].hintahaku;
 						}
@@ -7768,7 +7768,7 @@ void playsound(int samplenumero,float volume,float paikkax,float paikkaz){ //pla
 		//float voluumi=-(distanssi*distanssi*0.0001f-10000)/10000-(1-volume);
 		float voluumi=(10000-distanssi)/10000-(1-volume);
 		soundtimer[samplenumero]=0;
-		SndObjPlay(voices[samplenumero], NULL,options[1]&&SOUNDS_LOADED);
+		SndObjPlay(voices[samplenumero], 0, options[1]&&SOUNDS_LOADED);
 		svolume(voices[samplenumero],(int)((1-voluumi)*(-6000-DSBVOLUME_MAX)), options[1]&&SOUNDS_LOADED);
 		//DSBPLAY_LOOPING   DSBVOLUME_MIN
 		float pan=(float)(negaatio/10000*distanssi);
