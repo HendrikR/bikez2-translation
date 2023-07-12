@@ -28,10 +28,6 @@
 #include <tchar.h>*/
 
 
-#pragma comment(lib, "d3dx.lib")
-#pragma comment(lib, "ddraw.lib")
-#pragma comment(lib, "dxguid.lib")
-#pragma comment(lib, "dinput.lib")
 
 struct D3DDEVICE
 {

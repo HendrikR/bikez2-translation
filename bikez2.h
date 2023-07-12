@@ -18,18 +18,6 @@
 
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"
-#pragma GCC diagnostic ignored "-Wmisleading-indentation"
-#pragma GCC diagnostic ignored "-Wmultichar"
-#pragma GCC diagnostic ignored "-Wunknown-pragmas"
-
-
-
-
-#pragma comment(lib, "d3dx.lib")
-#pragma comment(lib, "ddraw.lib")
-#pragma comment(lib, "dxguid.lib")
-#pragma comment(lib, "dsound.lib")
-#pragma comment(lib,"dinput8.lib")
 
 /*
 struct D3DDEVICE
@@ -131,13 +119,13 @@ struct person
 	float distanssi;//distance from player
 	float x,z,y;
 	float x2,z2;//x and z were
-	float suunta;//direction
-	float nopeus;//speed
+	float direction;//direction
+	float speed;//speed
 	bool jalka;//wich leg
 	float lx,rx;//left and rigth leg
 	int sektorix,sektoriz;//in wich sector it is *8000
 	int jaosx,jaosz;//in wich section *400
-	bool kuole;//call for dying animation
+	bool dying;//call for dying animation
 	bool pois;//character completely away
 	bodypartCoordinates ruumiinosa[11];//bodypart_coordinates bodypart
 	int aseena;//wich weapon? -1=no weapon
@@ -189,8 +177,8 @@ struct bikebase
 	float x4,y4,z4;//old rear wheel
 	float x5,y5,z5;//front wheel front side
 	float x6,y6,z6;//rear wheel rear side
-	float etusuunta;//front wheel direction
-	float nopeus, suunta;		//speed, direction
+	float etudirection;//front wheel direction
+	float speed, direction;		//speed, direction
 	float kulmaetu;//Rotation of wheels in angles
 	float kulmakeuliminen;//Angle of wheelie
 	float kulmakallistus;//tilting of the bike
@@ -206,7 +194,7 @@ struct bikebase
 	float energia;//energy
 	int level;//level of the given mission
 	bool osuma[100];//has it collided with walls lately
-	float suuntatimer;//For artificial intelligence: how long it is gone to same direction
+	float directiontimer;//For artificial intelligence: how long it is gone to same direction
 	float taktiikkatimer;//For artificial intelligence: tactic timer
 	int taktiikka;//0=attack 1=escape
 	bool visible;//Is in visible on the screen
@@ -252,7 +240,7 @@ struct panos
 {
 	D3DXVECTOR3 paikkavanha;//place old
 	D3DXVECTOR3 paikka;//place
-	D3DXVECTOR3 suunta;//direction
+	D3DXVECTOR3 direction;//direction
 	float q,w,e;//Angle of bullet
 	int aseesta;//from gun
 	bool poista;//delete
@@ -260,7 +248,7 @@ struct panos
 	int sektorix[2],sektoriz[2];//in wich sector it is
 	//int jaosx,jaosz;//in wich section it is *800
 	float aika;//time
-	float nopeus;//bullet speed
+	float speed;//bullet speed
 	int kenen;//whos bullet it is// positive=mopeds -1=character
 	int kuka;//which character shot it (prevents suicides)
 	float distanssi;//distance from the player
@@ -278,14 +266,14 @@ struct weapon
 	int monttukuva;//hole in wall -1 = empty
 	int savumaahan;//Is a hole in wall filled with smoke?
 	int pommi;//Size of explosion
-	float nopeus;//speed
-	int ampumanopeus;//rate of fire
+	float speed;//speed
+	int rate_of_fire;//rate of fire
 	float savukesto;//the smoke lasts
 	float paino;//bullet weigth
 	float savuvana;//how often is smoke trail made?
 	int kimmokkeita;//how many times it bounces from walls;
 	bool haku;//is it homing
-	int pvahinko,pnopeus,pampumanopeus,hinta,hinta2,hintahaku;//related to peddling //pdamage,pspeed,prateoffire,price,price2,pricesearch
+	int pvahinko,pspeed,prate_of_fire,hinta,hinta2,hintahaku;//related to peddling //pdamage,pspeed,prateoffire,price,price2,pricesearch
 	int hauleja;//how many bullets from one shot
 	int tyyppi;//gun type 0=pistol 1=machinegun 2=shotgun 3=rocketlauncher 4=no sound
 };
@@ -337,7 +325,7 @@ void readkeyb(void);//readkeyb
 void aja(bikebase *mopot);//driving mopeds
 void initializemopeds(void);//initializing mopeds
 void calculateCollisions(void);//calculate collisions
-void shoot(int kohde,int kuka,int kenen, float aika,bikebase *mopot, int aseena,float paikkax,float paikkay,float paikkaz,float suuntax,float suuntay,float suuntaz);//shooting //target, who, whos, time, bikebase, mopeds, as_a_weapon, placex,palcey,placez, directionx,directiony,directionz
+void shoot(int kohde,int kuka,int kenen, float aika,bikebase *mopot, int aseena,float paikkax,float paikkay,float paikkaz,float directionx,float directiony,float directionz);//shooting //target, who, whos, time, bikebase, mopeds, as_a_weapon, placex,palcey,placez, directionx,directiony,directionz
 void calculatebullets(void);//bullets fly
 void fromsmoke(float koko, float suurenee,bool rotate,float savukesto,float x,float y,float z,int tyyppi,float q,float w,float e);//creates smoke
 //void removebullet(int a);//poistaa luodin sarjasta
@@ -407,7 +395,7 @@ float radiusukko[maksimiukkoja];//radius character
 D3DVECTOR keskipistemap[1000];//centerpoint character
 DWORD visiblemap[1000];
 float radiusmap[1000];
-//float nopeusoli;
+//float speedoli;
 int pelivaihe,pelivaihe_oli;//gamephase, gamepahse_was
 int pelivaihe2,pelivaihe2_oli;//gamephase2, gamepahse_was2
 light lamppu[maksimivaloja];
@@ -419,7 +407,7 @@ charactertextures ukkotekstuuri[10];//charactertextures
 missionReservoir missionlevel[10];//mission reservoir
 char missioninfo[21][800];//mission briefing
 int missionantovaihe;//is briefing readed
-float pelinopeus;//game speed
+float gamespeed;//game speed
 int korjaussumma;//price of repairs
 char m_filenames[10][256];//file names of saved files
 int kirjaintan[10];//how many letters are in file names
