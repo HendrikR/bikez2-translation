@@ -10,10 +10,11 @@
 #endif // _MSC_VER > 1000
 */
 #define D3D_OVERLOADS
-#include <ddraw.h>
+#include "pseudirectx.h"
+/*#include <ddraw.h>
 #include <d3d.h>
 #include <d3dx.h>
-#include <dinput.h>
+#include <dinput.h>*/
 #include <stdio.h>
 
 /*

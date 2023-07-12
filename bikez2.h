@@ -2,16 +2,16 @@
 
 
 
-#include <windows.h>
+//#include <windows.h>
 #include "resource.h"
 #define D3D_OVERLOADS
-#include <windowsx.h>
+/*#include <windowsx.h>
 #include <mmsystem.h>
 #include <ddraw.h>
 #include <d3d.h>
 #include <d3dx.h>
 #include <dinput.h>
-#include <dsound.h>
+#include <dsound.h>*/
 #include <stdio.h>
 #include "dsutil.h"
 #include "func.h"
