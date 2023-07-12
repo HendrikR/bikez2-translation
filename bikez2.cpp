@@ -1,8 +1,6 @@
 // bikez2.cpp : Defines the entry point for the application.
 //
 
-//#include "stdafx.h"
-#include "resource.h"
 #include "bikez2.h"
 #include "pseudirectx.h"
 
@@ -45,7 +43,7 @@ int sub(int test){
 }
 
 
-BOOL loadwall(char nimi[200],linjagroup *target,BOOL mirror);
+//BOOL loadwall(char nimi[200],linjagroup *target,BOOL mirror);
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hInstNULL, LPSTR lpszCmdLine, int nCmdShow){
 	startApplication(hInstance);
@@ -1024,7 +1022,7 @@ void initMopeds(void)//initialize mopeds
 
 }
 
-BOOL loadwall(char nimi[200],linjagroup *target,BOOL mirror)
+BOOL loadwall(const char *nimi,linjagroup *target,BOOL mirror)
 {
 	FILE *fil;
 	CHAR row[300];
