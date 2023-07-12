@@ -46,6 +46,7 @@ int sub(int test){
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hInstNULL, LPSTR lpszCmdLine, int nCmdShow){
 	startApplication(hInstance);
+        return 0;
 }
 
 void startApplication(HINSTANCE hInstance)
@@ -254,7 +255,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				case 0x08:  // backspace
 					kirjaintanimessa=kirjaintanimessa-1;
 					if(kirjaintanimessa<0)kirjaintanimessa=0;
-					savenimi[kirjaintanimessa]=NULL;
+					savenimi[kirjaintanimessa]=0;
 				break;
 
                 default:
@@ -408,9 +409,7 @@ void init(void)
 	if(rcDest.bottom>SCREEN_HEIGHT)rcDest.bottom=SCREEN_HEIGHT;
 	if(rcDest.right>SCREEN_WIDTH)rcDest.right=SCREEN_WIDTH;*/
 
-	taka->Blt(&rcDest,
-					kuvia[5],
-					&rcSource,DDBLT_WAIT  ,NULL);
+	taka->Blt(&rcDest, kuvia[5], &rcSource,DDBLT_WAIT  ,NULL);
 	//m_pPrimary->Flip(NULL,DDFLIP_WAIT);
 	dxctx->UpdateFrame(0);
 
@@ -1180,13 +1179,13 @@ BOOL lataa(char nimi[200],obj *kohde,BOOL mirror,BOOL miekkakala)
 				kohde[b].sisus[q].loota.kolmijako = new vvertex[faces*3];
 				kohde[b].sisus[q].loota.vert = faces*3;
 
-				kohde[b].sisus[q].upleft.x=NULL;
-				kohde[b].sisus[q].upleft.y=NULL;
-				kohde[b].sisus[q].upleft.z=NULL;
+				kohde[b].sisus[q].upleft.x=0;
+				kohde[b].sisus[q].upleft.y=0;
+				kohde[b].sisus[q].upleft.z=0;
 
-				kohde[b].sisus[q].downright.x=NULL;
-				kohde[b].sisus[q].downright.y=NULL;
-				kohde[b].sisus[q].downright.z=NULL;
+				kohde[b].sisus[q].downright.x=0;
+				kohde[b].sisus[q].downright.y=0;
+				kohde[b].sisus[q].downright.z=0;
 
 				for (i=0; i<kolme; i++)
 				{
@@ -1439,10 +1438,10 @@ BOOL loadtext()
 		D3DXCreateTextureFromFile(
 		m_pDevice,
 		NULL,
-		NULL,
-		NULL,
+		0,
+		0,
 		&pixel,
-		NULL,
+		0,
 		&tausta[q],
 		NULL,
 		texturenimi,
@@ -1455,7 +1454,7 @@ BOOL loadtext()
 		0,
 		0,
 		&pixel,
-		NULL,
+		0,
 		&tausta[q],
 		&mipmaps,
 		texturenimi,
@@ -2532,7 +2531,7 @@ void shoot(int kohde,int kuka, int kenen,float aika,bikebase *mopot, int aseena,
 	int d=-1;
 	float rekyyli;
 
-	if(paikkax==NULL){//shooting from a bike
+	if(paikkax==0.0){//shooting from a bike
 		while(mopot->asetime[aseena]>=0){
 			mopot->asetime[aseena]=mopot->asetime[aseena]-ase[mopot->ase[aseena]].ampumanopeus;
 			for (q=0; q<ase[mopot->ase[aseena]].hauleja; q++){
@@ -2898,13 +2897,13 @@ void aja(bikebase *mopot)
 	mopot->suuliekki=false;
 	//shooting
 	if(mopot->one)
-		shoot(mopot->valittuukko,-1,mopot->numero,-1,mopot,0,NULL,NULL,NULL,NULL,NULL,NULL);
+		shoot(mopot->valittuukko,-1,mopot->numero,-1,mopot,0, 0, 0, 0, 0, 0, 0);
 	if(mopot->two)
-		shoot(mopot->valittuukko,-1,mopot->numero,-1,mopot,1,NULL,NULL,NULL,NULL,NULL,NULL);
+		shoot(mopot->valittuukko,-1,mopot->numero,-1,mopot,1, 0, 0, 0, 0, 0, 0);
 	if(mopot->three)
-		shoot(mopot->valittuukko,-1,mopot->numero,-1,mopot,2,NULL,NULL,NULL,NULL,NULL,NULL);
+		shoot(mopot->valittuukko,-1,mopot->numero,-1,mopot,2, 0, 0, 0, 0, 0, 0);
 	if(mopot->four)
-		shoot(mopot->valittuukko,-1,mopot->numero,-1,mopot,3,NULL,NULL,NULL,NULL,NULL,NULL);
+		shoot(mopot->valittuukko,-1,mopot->numero,-1,mopot,3, 0, 0, 0, 0, 0, 0);
 
 
 	//sectors
@@ -4032,7 +4031,7 @@ void rendercharacters(void){
 
 //font means after ammount of letters text is cut to lines
 //void rendertext(INT x, INT y, INT fontti,CHAR teksti[100],LPDIRECTDRAWSURFACE7 pinta,LPDIRECTDRAWSURFACE7 font1)
-void rendertext(INT x, INT y, INT fontti,CHAR teksti[100]) //write
+void rendertext(INT x, INT y, INT fontti, const char teksti[100]) //write
 {
 	//RECT loota; //boxxy
 	INT nume;
@@ -6315,9 +6314,7 @@ void render_workshop(void){//render workshop
 	rcDest.bottom = SCREEN_HEIGHT;
 	rcDest.right = SCREEN_WIDTH;
 
-	taka->Blt(&rcDest,
-					kuvia[0],
-					&rcSource,0,NULL);
+	taka->Blt(&rcDest, kuvia[0], &rcSource, 0, NULL);
 	valittua=-2;
 	valittub=-2;
 	valittuc=-2;
@@ -6352,9 +6349,7 @@ void render_workshop(void){//render workshop
 				rcSource.bottom = 56;
 				}
 			}
-			taka->Blt(&rcDest,
-							kuvia[2],
-							&rcSource,NULL,NULL);
+			taka->Blt(&rcDest, kuvia[2], &rcSource, 0, NULL);
 
 
 			//advantage
@@ -6376,9 +6371,7 @@ void render_workshop(void){//render workshop
 				rcSource.bottom = 56;
 				}
 			}
-			taka->Blt(&rcDest,
-							kuvia[2],
-							&rcSource,NULL,NULL);
+			taka->Blt(&rcDest, kuvia[2], &rcSource, 0, NULL);
 
 			switch (a)
 			{
@@ -6533,9 +6526,7 @@ void render_workshop(void){//render workshop
 					pelivaihe2=0;
 				}
 			}
-				taka->Blt(&rcDest,
-							kuvia[3],
-							&rcSource,NULL,NULL);
+				taka->Blt(&rcDest, kuvia[3], &rcSource, 0, NULL);
 
 	//load
 			rcSource.top = 0;
@@ -6561,9 +6552,7 @@ void render_workshop(void){//render workshop
 					pelivaihe_oli=2;
 				}
 			}
-				taka->Blt(&rcDest,
-							kuvia[3],
-							&rcSource,NULL,NULL);
+				taka->Blt(&rcDest, kuvia[3], &rcSource, 0, NULL);
 
 	//save
 			rcSource.top = 0;
@@ -6590,9 +6579,7 @@ void render_workshop(void){//render workshop
 					pelivaihe_oli=2;
 				}
 			}
-				taka->Blt(&rcDest,
-							kuvia[3],
-							&rcSource,NULL,NULL);
+				taka->Blt(&rcDest, kuvia[3], &rcSource, 0, NULL);
 
 	//mouse
 		loota.left  =0;
@@ -7130,9 +7117,7 @@ void render_menu(void){//renders the menu
 	rcDest.bottom = SCREEN_HEIGHT;
 	rcDest.right = SCREEN_WIDTH;
 
-	taka->Blt(&rcDest,
-					kuvia[4],
-					&rcSource,0  ,NULL);
+	taka->Blt(&rcDest, kuvia[4], &rcSource, 0,NULL);
 
 	rendertext(340,738,0,"game version 1.21");
 

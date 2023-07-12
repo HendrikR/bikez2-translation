@@ -314,8 +314,8 @@ struct light
 
 
 
-BOOL load(char nimi[200],obj *kohde,BOOL mirror,BOOL miekkakala);//load... swordfish
-BOOL loadwall(char nimi[200],linjagroup *kohde,BOOL mirror);//loadwall
+BOOL load(const char nimi[200],obj *kohde,BOOL mirror,BOOL miekkakala);//load... swordfish
+BOOL loadwall(const char nimi[200],linjagroup *kohde,BOOL mirror);//loadwall
 BOOL loadtext();//loadtext
 void init(void);
 bool createscreen(void);
@@ -345,7 +345,7 @@ void calculatecharacters(void);//calculates movements of humans
 //void removecharacter(int a);//deletes a character
 void rendercharacters(void);//draws characters
 //void rendertext(INT x, INT y, INT fontti,CHAR teksti[100],LPDIRECTDRAWSURFACE7 pinta,LPDIRECTDRAWSURFACE7 font1);
-void rendertext(INT x, INT y, INT fontti,CHAR teksti[100]);
+void rendertext(INT x, INT y, INT fontti,const char teksti[100]);
 void render_game(void);//draws moped driving
 void render_mission(void);//draws mission briefing
 void arvo_mission(bikebase *mopot,int missionumero);
