@@ -86,7 +86,7 @@ struct objekt
 {
 	INT textuuri;//material
 	INT textuuri2;//number of texture
-	INT matsku;//skin 0, steel 1, cloth 2, sword 3
+	INT material;//skin 0, steel 1, cloth 2, sword 3
 	D3DVECTOR upleft,downright;//size
 	esine loota;//object box
 	float x,y,z;

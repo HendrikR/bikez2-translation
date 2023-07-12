@@ -1164,7 +1164,7 @@ BOOL lataa(char nimi[200],obj *kohde,BOOL mirror,BOOL miekkakala)
 		{
                 	fgets(rivi,sizeof(rivi),fil);//666666
 			fgets(rivi,sizeof(rivi),fil);//materials
-                	kohde[b].sisus[q].matsku=atoi(rivi);
+			kohde[b].sisus[q].material=atoi(rivi);
 			fgets(rivi,sizeof(rivi),fil);//materials second time
 
 			{
@@ -3417,7 +3417,7 @@ m_pDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND,
 	for (INT q=0; q<tavara->count; q++)
 	{
 		//make reflektions //if steel// (or sword)
-		/*if((tavara->sisus[q].matsku==1)||(tavara->sisus[q].matsku==3))
+		/*if((tavara->sisus[q].material==1)||(tavara->sisus[q].matsku==3))
 		m_pDevice->SetRenderState(D3DRENDERSTATE_SPECULARENABLE,TRUE);*/
 		//else
 		//m_pDevice->SetRenderState(D3DRENDERSTATE_SPECULARENABLE,TRUE);
@@ -3454,7 +3454,7 @@ BOOL drawfast(obj *tavara)
 	for (INT q=0; q<tavara->count; q++)
 	{
 		//make reflektions //if steel// (or sword)
-		//if((tavara->sisus[q].matsku==1)||(tavara->sisus[q].matsku==3))
+		//if((tavara->sisus[q].material==1)||(tavara->sisus[q].matsku==3))
 		//m_pDevice->SetRenderState(D3DRENDERSTATE_SPECULARENABLE,TRUE);
 		//else
 		//m_pDevice->SetRenderState(D3DRENDERSTATE_SPECULARENABLE,TRUE);
