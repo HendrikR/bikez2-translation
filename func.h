@@ -46,18 +46,18 @@
 	struct D3DDEVICEINFO
 	{
 		CHAR           nimi[100];//name
-		
+
 		D3DDEVICE d3device[100];
- 
+
 		// DDraw Driver info
 		GUID*          pDriverGUID;
 		DDCAPS         ddDriverCaps;
 		DDCAPS         ddHELCaps;
- 
+
 		// DDraw Mode Info
 		DDSURFACEDESC2 ddsdMode;
 		BOOL           bFullscreen;
- 
+
 		// For internal use (apps should not need these)
 		GUID           guidDevice;
 		GUID           guidDriver;
@@ -74,18 +74,12 @@
 	int randInt( int low, int high );
 	float randDouble( float low, float high );
 	bool intersect(RECT eka,RECT toka);
-	char *stripped_fgets(char *s, int n, FILE *f);	
+	char *stripped_fgets(char *s, int n, FILE *f);
 	D3DMATRIX IdentityMatrix();
 	D3DMATRIX ZeroMatrix(void);
 	D3DMATRIX MatrixMult(const D3DMATRIX a, const D3DMATRIX b);
-	D3DMATRIX ViewMatrix(const D3DVECTOR from,const D3DVECTOR at, const D3DVECTOR world_up, const float roll);	
+	D3DMATRIX ViewMatrix(const D3DVECTOR from,const D3DVECTOR at, const D3DVECTOR world_up, const float roll);
 	D3DMATRIX ProjectionMatrix(const float near_plane, const float far_plane, const float fov);
-
-
-
-	
-
-
 
 
 
