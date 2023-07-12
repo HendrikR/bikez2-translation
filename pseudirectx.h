@@ -148,7 +148,7 @@ typedef struct DIRECTDRAWSURFACE7 {
 } *LPDIRECTDRAWSURFACE7;
 
 typedef struct DIRECT3DDEVICE7 {
-  void SetRenderState(int, bool);
+  void SetRenderState(int, int mode);
   void SetTransform(UINT enum_transformStateType, const D3DMATRIX*);
   void SetTransform(UINT enum_transformStateType, const D3DMATRIX);
   void LightEnable(int, bool);

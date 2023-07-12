@@ -16,6 +16,13 @@
 #include "dsutil.h"
 #include "func.h"
 
+#pragma GCC diagnostic ignored "-Wunused-variable"
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+#pragma GCC diagnostic ignored "-Wmisleading-indentation"
+#pragma GCC diagnostic ignored "-Wmultichar"
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+
+
 
 
 #pragma comment(lib, "d3dx.lib")

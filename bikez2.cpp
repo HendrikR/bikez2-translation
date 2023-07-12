@@ -6749,12 +6749,12 @@ void readkey_game(void){
 						 pelinopeus=pelinopeus-0.5f*0.01f*elapsed;
 					}
 				else
-					if(pelinopeus<0.9f+0.1f*vaikeustaso)
+					 if(pelinopeus<0.9f+0.1f*vaikeustaso)
 						pelinopeus=pelinopeus+0.5f*0.01f*elapsed;
 
-					if(pelinopeus>0.9f+0.1f*vaikeustaso)
+                                if(pelinopeus>0.9f+0.1f*vaikeustaso)
 						pelinopeus=0.9f+0.1f*vaikeustaso;
-					if(pelinopeus<0.2f)
+                                if(pelinopeus<0.2f)
 						pelinopeus=0.2f;
 
 				//changching camera mode
