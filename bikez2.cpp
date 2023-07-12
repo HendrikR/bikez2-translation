@@ -4,6 +4,7 @@
 //#include "stdafx.h"
 #include "resource.h"
 #include "bikez2.h"
+#include "pseudirectx.h"
 
 int numpictures=6;
 
@@ -44,9 +45,16 @@ int sub(int test){
 }
 
 
+BOOL loadwall(char nimi[200],linjagroup *target,BOOL mirror);
+
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hInstNULL, LPSTR lpszCmdLine, int nCmdShow){
 	startApplication(hInstance);
         return 0;
+}
+
+int main(int argc, char** argv) {
+  WinMain(0, 0, argv[0], 1);
+  return 0;
 }
 
 void startApplication(HINSTANCE hInstance)
@@ -255,12 +263,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                                         case 0x08:  // backspace
                                                 letters_in_name=letters_in_name-1;
                                                 if(letters_in_name<0)letters_in_name=0;
-                                                savenimi[letters_in_name]=0;
+                                                savefilename[letters_in_name]=0;
                                                 break;
 
                                         default:
                                                 char che=(char)wParam;
-                                                savenimi[letters_in_name]=che;
+                                                savefilename[letters_in_name]=che;
                                                 letters_in_name=letters_in_name+1;
                                                 if(letters_in_name>49)letters_in_name=49;
                                         }

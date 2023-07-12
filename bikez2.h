@@ -3,7 +3,7 @@
 
 
 //#include <windows.h>
-#include "resource.h"
+//#include "resource.h"
 #define D3D_OVERLOADS
 /*#include <windowsx.h>
 #include <mmsystem.h>
@@ -13,7 +13,8 @@
 #include <dinput.h>
 #include <dsound.h>*/
 #include <stdio.h>
-#include "dsutil.h"
+//#include "dsutil.h"
+#include "pseudirectx.h"
 #include "func.h"
 
 #pragma GCC diagnostic ignored "-Wunused-variable"
