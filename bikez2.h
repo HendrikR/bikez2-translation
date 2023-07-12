@@ -72,15 +72,15 @@ struct charactertextures {//character textures
 };
 
 struct vvertex {
-			D3DVECTOR position;
-			D3DVECTOR normal;
-			float     u, v;//, w;
-		};
+        D3DVECTOR position;
+        D3DVECTOR normal;
+        float     u, v;//, w;
+};
 
 struct pvertex {
-			D3DVECTOR position;
-			float     u, v;
-		};
+        D3DVECTOR position;
+        float     u, v;
+};
 
 struct esine//object
 {
@@ -305,11 +305,11 @@ struct smoke
 };
 
 /*struct monttu
-{
-	D3DVECTOR position;
-	float     u, v;
+  {
+  D3DVECTOR position;
+  float     u, v;
 
-};*/
+  };*/
 
 struct light
 {
