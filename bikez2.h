@@ -129,7 +129,7 @@ struct person
 	bool dying;//call for dying animation
 	bool inactive;//character completely away
 	bodypartCoordinates bodypart_coords[11];//bodypart_coordinates bodypart
-	int aseena;//wich weapon? -1=no weapon
+	int weapon_idx;//wich weapon? -1=no weapon
 	float gun_timer;//gun timer
 	float energy;//energy
 	int tactics;//What person does. 0=attacks 1=walks normally 2=escapes
@@ -219,22 +219,22 @@ struct dot
 	float x2,y2,z2;//end point
 };
 
-struct linja//route or a line
+struct Line//route or a line
 {
-	int linjaa;
+	int line_count;
 	dot *point;
 };
 
-struct linjat//routes
+struct Route//routes
 {
-	int viivaa;//line
-	linja *viiva;
+	int route_count;//line
+	Line *route;
 };
 
-struct linjagroup//route group
+struct RouteGroup//route group
 {
-	int grouppia;
-	linjat *viivat;
+	int group_count;
+	Route *routes;
 };
 
 struct bullet
@@ -311,7 +311,7 @@ struct light
 
 
 BOOL load(const char filename[200],obj *target,BOOL mirror,BOOL miekkakala);//load... swordfish
-BOOL loadwall(const char filename[200],linjagroup *target,BOOL mirror);//loadwall
+BOOL loadwall(const char filename[200],RouteGroup *target,BOOL mirror);//loadwall
 BOOL loadtext();//loadtext
 void init(void);
 bool createscreen(void);
@@ -326,7 +326,7 @@ void readkeyb(void);//readkeyb
 void aja(bikebase *moped);//driving mopeds
 void initMopeds(void);//initializing mopeds
 void calculateCollisions(void);//calculate collisions
-void shoot(int target,int from_character,int from_moped, float timer,bikebase *moped, int aseena,float placex,float placey,float placez,float directionx,float directiony,float directionz);//shooting //target, who, whos, time, bikebase, mopeds, as_a_weapon, placex,palcey,placez, directionx,directiony,directionz
+void shoot(int target,int from_character,int from_moped, float timer,bikebase *moped, int weapon_idx,float placex,float placey,float placez,float directionx,float directiony,float directionz);//shooting //target, who, whos, time, bikebase, mopeds, as_a_weapon, placex,palcey,placez, directionx,directiony,directionz
 void calculatebullets(void);//bullets fly
 void fromsmoke(float size, float suurenee,bool rotate,float savukesto,float x,float y,float z,int _type,float q,float w,float e);//creates smoke
 //void removebullet(int a);//inactivetaa luodin sarjasta
@@ -381,13 +381,13 @@ float radius[MAX_SMOKES];
 pvertex triangles[MAX_SMOKES*12];//triangles
 pvertex bullet_trace[MAX_BULLETS*2];//bullet trace
 bikebase moped[1000];//mopeds
-int mopoja;//ammount of mopeds
-int majax,majaz;//coordinates of headquarters
-linjagroup viivagroup[2];//walls
-int viivagrouppia;//ammount of wall groups
+int num_mopeds;//ammount of mopeds
+int headquarter_posx,headquarter_posz;//coordinates of headquarters
+RouteGroup wallgroup[2];//walls
+int num_wallgroups;//ammount of wall groups
 bullet bullet[MAX_BULLETS];//bullets
 weapon ase[20];//guns
-smoke savu[MAX_SMOKES];//smokes
+smoke smokes[MAX_SMOKES];//smokes
 int maps[200][200];
 person character[MAX_CHARACTERS];//person character[maximium ammount of characters]
 D3DVECTOR center_pointcharacter[MAX_CHARACTERS];//center point character
@@ -397,33 +397,32 @@ D3DVECTOR center_pointmap[1000];//centerpoint character
 DWORD visiblemap[1000];
 float radiusmap[1000];
 //float speedoli;
-int pelivaihe,pelivaihe_oli;//gamephase, gamepahse_was
-int pelivaihe2,pelivaihe2_oli;//gamephase2, gamepahse_was2
-light lamppu[MAX_LIGHTS];
-int valoja;//ligths
+int gamephase,gamephase_old;//gamephase, gamepahse_was
+int gamephase2,gamephase2_old;//gamephase2, gamepahse_was2
+light lights[MAX_LIGHTS];
 bool mapmode,mapmode2;//0 =normal 1=from above
 float kamerax1,kameray1,kameraz1;//camera from
 float kamerax2,kameray2,kameraz2;//camera to
 charactertextures charactertexture[10];//charactertextures
 missionReservoir missionlevel[10];//mission reservoir
 char missioninfo[21][800];//mission briefing
-int missionantovaihe;//is briefing readed
+int mission_is_read;//is briefing readed
 float gamespeed;//game speed
-int korjaussumma;//price of repairs
+int repair_cost;//price of repairs
 char m_filenames[10][256];//file names of saved files
-int kirjaintan[10];//how many letters are in file names
+int letters_in_file_names[10];//how many letters are in file names
 bool loadable[10];//is it able to load
-int tallennusplace;//wich save is selected
-bool tallennettu;//is game saved
+int savegame_slot;//wich save is selected
+bool is_saved;//is game saved
 int keytimer;//keyboard timer
 int letters_in_name;//how many letters in name
 char savefilename[256];//name of save
 float cursor_timer;//cursor timer
-int menuvalittu;//what is selected in menu
+int menu_selection;//what is selected in menu
 int menuja[10];//how many selections are possible
 bool options[10];//options
 int game_difficulty;//game difficulty level
-bool valittu;//selected //while setting keys
+bool is_selected;//selected //while setting keys
 float quake;//makes game quake for short time
 
 
@@ -461,7 +460,7 @@ LPDIRECT3D7 m_pD3D;
 LPDIRECTDRAWSURFACE7 taka;
 LPDIRECTDRAWSURFACE7 m_pPrimary;
 LPDIRECTDRAW7 m_pDD;
-LPDIRECTDRAWSURFACE7 zpuskuri;//zbuffer
+LPDIRECTDRAWSURFACE7 zbuffer;//zbuffer
 D3DMATRIX m_World, m_View, m_Projection;
 int enumerationint1,enumerationint2;//enumbering ints
 int SCREEN_WIDTH;
@@ -470,7 +469,7 @@ int SCREEN_BITS;
 int screenmode;
 //D3DDEVICEINFO info;
 DWORD m_LastTime;
-bool quittaos;//are we quiting?
+bool is_quitting;//are we quiting?
 int material_count;//ammount of materials
 D3DMATERIAL7 *mat;
 ID3DXMatrixStack *matrices;
