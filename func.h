@@ -2,13 +2,6 @@
 // engine.h: interface for the engine class.
 //
 //////////////////////////////////////////////////////////////////////
-/*
-#if !defined(AFX_ENGINE_H__EB604380_F9F3_11D3_9282_A0A449C10801__INCLUDED_)
-#define AFX_ENGINE_H__EB604380_F9F3_11D3_9282_A0A449C10801__INCLUDED_
-
-#if _MSC_VER > 1000
-#endif // _MSC_VER > 1000
-*/
 #define D3D_OVERLOADS
 #include "pseudirectx.h"
 /*#include <ddraw.h>
@@ -75,11 +68,3 @@ D3DMATRIX ZeroMatrix(void);
 D3DMATRIX MatrixMult(const D3DMATRIX a, const D3DMATRIX b);
 D3DMATRIX ViewMatrix(const D3DVECTOR from,const D3DVECTOR at, const D3DVECTOR world_up, const float roll);
 D3DMATRIX ProjectionMatrix(const float near_plane, const float far_plane, const float fov);
-
-
-
-
-//};
-
-/*#endif // !defined(AFX_ENGINE_H__EB604380_F9F3_11D3_9282_A0A449C10801__INCLUDED_)
-*/

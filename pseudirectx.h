@@ -4,6 +4,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
+#include <SDL.h>
+#include <glm/ext.hpp>
+#include <GL/gl.h>
+#include <stack>
+#include <exception>
 
 #define WINAPI
 
@@ -20,11 +25,10 @@ typedef DWORD* LPDWORD;
 typedef void VOID;
 typedef const char* HSTR;
 
-typedef uint32_t GUID, HINSTANCE, HSNDOBJ, HWND, WPARAM, LPARAM, HBRUSH, D3DVALUE;
+typedef uint32_t GUID, HINSTANCE, HSNDOBJ, WPARAM, LPARAM, HBRUSH, D3DVALUE;
+typedef SDL_Window* HWND;
 typedef const char *LPSTR, *LPCSTR, *LPCTSTR;
-typedef struct {
-        const char* message;
-} MSG;
+typedef SDL_Event MSG;
 
 typedef struct RECT {
         int top, bottom, left, right;
@@ -37,14 +41,15 @@ class __ANY__ {};
 typedef int DDCAPS, DDSURFACEDESC2, HRESULT, ATOM, LRESULT, HACCEL, D3DX_SURFACEFORMAT, LPDIRECTDRAWPALETTE, D3DX_FILTERTYPE;
 
 struct RGB { float r, g, b, a; };
-struct D3DVECTOR {
+/*struct D3DVECTOR {
         D3DVECTOR(float x=0) :
                         x(x), y(x), z(x) {};
         D3DVECTOR(float x, float y, float z) :
                         x(x), y(y), z(z) {};
         float x, y, z;
-};
-typedef D3DVECTOR D3DXVECTOR3;
+        };*/
+typedef glm::vec3 D3DVECTOR;
+typedef glm::vec3 D3DXVECTOR3;
 
 struct D3DLIGHT7 {
         RGB dcvDiffuse, dcvAmbient, dcvSpecular;
@@ -56,22 +61,26 @@ struct DIMOUSESTATE {
         int rgbButtons[3];
         int lX, lY;
 };
-struct D3DMATRIX {
+
+// TODO: replace by glm::mat
+typedef glm::mat4 D3DMATRIX;
+/*struct D3DMATRIX {
         union {
                 //struct { float _11, _12, _13, _14, _21, _22, _23, _24, _31, _32, _33, _34, _41, _42, _43, _44; };
                 struct { float m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33, m40, m41, m42, m43; };
                 float m[4][4];
         };
-};
+        };*/
 typedef D3DMATRIX D3DXMATRIX;
 struct ID3DXMatrixStack {
-        D3DMATRIX RotateYawPitchRollLocal(float yaw, float pitch, float roll);
-        D3DMATRIX Push();
-        D3DMATRIX Pop();
-        D3DMATRIX TranslateLocal(float x, float y, float z);
-        D3DMATRIX LoadIdentity();
+        void RotateYawPitchRollLocal(float yaw, float pitch, float roll);
+        void Push();
+        void Pop();
+        void TranslateLocal(float x, float y, float z);
+        void LoadIdentity();
+        void ScaleLocal(float, float, float);
         const D3DMATRIX* GetTop();
-        D3DMATRIX ScaleLocal(float, float, float);
+        std::stack<D3DMATRIX> _stack;
 };
 struct DDPIXELFORMAT {
         DWORD dwZBufferBitDepth;
@@ -144,9 +153,10 @@ struct D3DVIEWPORT7 {
 
 typedef struct DIRECTDRAWSURFACE7 {
         HRESULT Blt(LPRECT destRect, DIRECTDRAWSURFACE7*& src, LPRECT srcRect, DWORD dwFlags, void*);
-        HRESULT BltFast(DWORD x, DWORD y, DIRECTDRAWSURFACE7*& src, LPRECT srcRect, DWORD dwTrans);
+        HRESULT BltFast(int x, int y, DIRECTDRAWSURFACE7*& src, LPRECT srcRect, DWORD dwTrans);
         void SetColorKey(int, DDCOLORKEY*);
         void Release();
+        SDL_Surface* surface;
 } *LPDIRECTDRAWSURFACE7;
 
 typedef struct DIRECT3DDEVICE7 {
@@ -170,14 +180,15 @@ typedef struct DIRECT3DDEVICE7 {
         void BeginScene();
         void EndScene();
         bool GetLightEnable(int, BOOL*);
+        DIRECTDRAWSURFACE7* render_surface;
 } *LPDIRECT3DDEVICE7;
 
 typedef struct D3DXCONTEXT {
         void UpdateFrame(int);
-        LPDIRECT3D7 GetD3D();
         LPDIRECTDRAW7 GetDD();
-        LPDIRECTDRAWSURFACE7 GetPrimary();
         LPDIRECT3DDEVICE7 GetD3DDevice();
+        LPDIRECTDRAW7 ddraw7;
+        LPDIRECT3DDEVICE7 d3ddevice7;
 } *LPD3DXCONTEXT;
 
 
@@ -192,13 +203,13 @@ BOOL SndObjSetFrequency(HSNDOBJ obj, float freq);
 
 //HRESULT DirectInput8Create(LPDIRECTINPUT8*, int version);
 HRESULT DirectInput8Create(HINSTANCE hinst, int version);
-HRESULT DirectInput8Create(HINSTANCE hinst, int enum1, int enum2, void**, void*);
+HRESULT DirectInput8Create(HINSTANCE hinst, int enum1, int enum2, LPDIRECTINPUT8* lpdi, void*);
 
 
 HSTR LoadCursor(void*, int);
 void ShowCursor(bool);
 void SetCursor(const char*);
-int GetTickCount();
+uint64_t GetTickCount();
 HSTR LoadIcon(HINSTANCE hinst, LPCTSTR name);
 
 char* itoa(int value, char* str, int base);
@@ -212,9 +223,7 @@ HRESULT D3DXUninitialize();
 HRESULT D3DXVec3Add(D3DXVECTOR3 *pOut, const D3DXVECTOR3 *pV1, const D3DXVECTOR3 *pV2);
 HRESULT D3DXVec3Scale( D3DXVECTOR3 *pOut, const D3DXVECTOR3 *pV, FLOAT s);
 
-void LoadString(HINSTANCE, const char*, void*, int);
 bool PeekMessage(MSG*, void*, int, int, int);
-int LoadAccelerators(HINSTANCE, LPCTSTR);
 bool GetMessage(MSG*, void*, int, int);
 void TranslateMessage(MSG*);
 void DispatchMessage(MSG*);
@@ -226,11 +235,24 @@ HWND CreateWindow(const char*, const char*,
 void ShowWindow(HWND, int);
 void PostQuitMessage(int);
 int RegisterClassEx(WNDCLASSEX*);
-int timeGetTime();
+DWORD timeGetTime();
 void ZeroMemory(void* mem, size_t len);
 int DefWindowProc(HWND, UINT, int, int);
 int GetStockObject(int);
 
+
+
+
+// I added an exception class to have better error handling while porting / fixing things
+class MyEx : public std::exception {
+private:
+  const char* msg;
+public:
+  MyEx(const char* _msg) : msg(_msg) {}
+  virtual const char* what() {
+    return msg;
+  }
+};
 
 
 
@@ -246,6 +268,3 @@ void svolume(int, int, void*, int, int);
 void svolume(int, int, bool);
 
 
-
-const char* const IDC_BIKEZ2="bikez2";
-const char* const IDS_APP_TITLE="bikez2";

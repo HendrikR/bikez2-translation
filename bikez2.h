@@ -17,6 +17,7 @@
 #include "pseudirectx.h"
 #include "func.h"
 
+// TODO: remove these after refactoring
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 
@@ -348,7 +349,7 @@ void create_mission(bikebase *moped,int missionumero);
 void laskekoordinaatit(float *x,float *z);//gives x and z wich are not inside houses from the map.
 void laskemissiot(bikebase *moped);//examines is a mission accomplished
 void create_character(int q);//randomizes a character to field
-void luemissiot(void);//reads missions
+void load_missions(void);//reads missions
 void laskemoped(void);//calculate mopeds //for Artificial intelligence of mopeds
 void create_mopo(int d);//randomizes a moped to field
 void render_workshop(void);//draws a depot

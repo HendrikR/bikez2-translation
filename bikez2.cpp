@@ -19,15 +19,12 @@ const int objnum9=3; //obj4 - bike3
 const int objnum10=11; //character5
 
 
-#define MAX_LOADSTRING 100
 #define RELEASE(x) if (x) {x->Release(); x=NULL;}
 #define sqr(x)				((x)*(x))
 static const float pi = 3.1415926535897932384626433832795f;
 
 // Global Variables:
 HINSTANCE hInst;								// current instance
-TCHAR szTitle[MAX_LOADSTRING];								// The title bar text
-TCHAR szWindowClass[MAX_LOADSTRING];								// The title bar text
 HWND hWnd;
 LPD3DXCONTEXT dxctx;             // Direct3DX context handle.
 
@@ -59,11 +56,8 @@ void startApplication(HINSTANCE hInstance)
 {
  	// TODO: Place code here.
 	MSG msg;
-	HACCEL hAccelTable;
 
 	// Initialize global strings
-	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-	LoadString(hInstance, IDC_BIKEZ2, szWindowClass, MAX_LOADSTRING);
 	MyRegisterClass(hInstance);
 
 	// Perform application initialization:
@@ -73,26 +67,13 @@ void startApplication(HINSTANCE hInstance)
 	}
 
 	init();
-	hAccelTable = LoadAccelerators(hInstance, (LPCTSTR)IDC_BIKEZ2);
-/*
-// Main message loop:
-while (GetMessage(&msg, NULL, 0, 0))
-{
-if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-{
-TranslateMessage(&msg);
-DispatchMessage(&msg);
-}
-}*/
-
 
         BOOL bGotMsg;
-//MSG  msg;
 	m_LastTime = GetTickCount(); //reset timer
 	bool g_bReady=true;
 	bool g_bActive=true;
 	PeekMessage( &msg, NULL, 0U, 0U, PM_NOREMOVE );
-	while( WM_QUIT != msg.message  )
+	while( msg.type != SDL_QUIT )
 	{
                 // Use PeekMessage() if the app is active, so we can use idle time to
                 // render the scene. Else, use GetMessage() to avoid eating CPU time.
@@ -117,7 +98,6 @@ DispatchMessage(&msg);
 				{
 					Render();
 					dxctx->UpdateFrame(0);
-					//m_pPrimary->Flip(NULL,DDFLIP_WAIT);
 
 				}
 				else{
@@ -150,17 +130,17 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
 
-	wcex.style			= CS_HREDRAW | CS_VREDRAW;
+	wcex.style		= CS_HREDRAW | CS_VREDRAW;
 	wcex.lpfnWndProc	= (WNDPROC)WndProc;
 	wcex.cbClsExtra		= 0;
 	wcex.cbWndExtra		= 0;
 	wcex.hInstance		= hInstance;
-	wcex.hIcon			= LoadIcon(hInstance, (LPCTSTR)IDI_ICON1);
+	wcex.hIcon		= LoadIcon(hInstance, (LPCTSTR)IDI_ICON1);
 	wcex.hCursor		= LoadCursor(NULL, IDC_ARROW);
 	//wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
 	wcex.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
-	wcex.lpszMenuName	= (LPCSTR)IDC_BIKEZ2;
-	wcex.lpszClassName	= szWindowClass;
+	wcex.lpszMenuName	= (LPCSTR)"bikez2";
+	wcex.lpszClassName	= "bikez2";
 	wcex.hIconSm		= LoadIcon(wcex.hInstance, (LPCTSTR)IDI_ICON1);
 
 	return RegisterClassEx(&wcex);
@@ -178,16 +158,11 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-        //HWND hWnd;
-
         hInst = hInstance; // Store instance handle in our global variable
 
-        //hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-        //   CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
-
         hWnd=CreateWindow(
-                        szWindowClass,
-                        szTitle,
+                        "bikez2",
+                        "bikez2",
                         WS_POPUPWINDOW|WS_VISIBLE,
                         CW_USEDEFAULT,
                         0,
@@ -198,17 +173,12 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
                         hInstance,
                         NULL);
 
-        /*hWnd = CreateWindow(szWindowClass, szTitle, WS_EX_TOPMOST,//WS_EX_TOPMOST WS_OVERLAPPEDWINDOW
-          CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);*/
-
         if (!hWnd)
         {
                 return FALSE;
         }
 
         ShowWindow(hWnd, nCmdShow);
-//   UpdateWindow(hWnd);
-
         return TRUE;
 }
 
@@ -227,8 +197,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	//int wmId, wmEvent;
 	//PAINTSTRUCT ps;
 	//HDC hdc;
-	//TCHAR szHello[MAX_LOADSTRING];
-	//LoadString(hInst, IDS_HELLO, szHello, MAX_LOADSTRING);
 
 	switch (message)
 	{
@@ -374,7 +342,7 @@ void SetupVertexFog(float fStart, float fEnd, DWORD dwColor, DWORD dwMode, BOOL 
 
 
 //Program initialization
-void init(void)
+void init()
 {
 	int q;
 	RECT rcSource, rcDest;
@@ -391,7 +359,7 @@ void init(void)
 	SOUNDS_LOADED=false;
 
 
-	//initializez 3d
+	//initialize 3d
 	D3DXInitialize();
 	ShowCursor(false);
 	SetCursor(NULL);
@@ -416,7 +384,6 @@ void init(void)
           if(rcDest.right>SCREEN_WIDTH)rcDest.right=SCREEN_WIDTH;*/
 
 	taka->Blt(&rcDest, pictures[5], &rcSource,DDBLT_WAIT  ,NULL);
-	//m_pPrimary->Flip(NULL,DDFLIP_WAIT);
 	dxctx->UpdateFrame(0);
 
 	int t1=timeGetTime();
@@ -487,7 +454,7 @@ void init(void)
 	mousey=(float)(SCREEN_HEIGHT/2);
 
 	//load missions
-	luemissiot();
+	load_missions();
 
 	//load textures
 	loadtext();
@@ -1525,97 +1492,10 @@ bool createscreen(void){
           768,
           0,
           &dxctx);*/
-	m_pD3D=dxctx->GetD3D();
 	m_pDD=dxctx->GetDD();
 	m_pDevice=dxctx->GetD3DDevice();
 	//taka=dxctx->GetBackBuffer(0);
-	m_pPrimary=dxctx->GetPrimary();
 	m_pDevice->GetRenderTarget(&taka);
-
-
-	// Create main DirectDraw object
-	/*if (DirectDrawCreateEx(NULL,(void **)&m_pDD,IID_IDirectDraw7, NULL) != DD_OK)
-          return FALSE;
-          if (m_pDD->SetCooperativeLevel(hWnd, DDSCL_FULLSCREEN | DDSCL_EXCLUSIVE ) != DD_OK)
-          return FALSE;
-          if (m_pDD->SetDisplayMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BITS,0,0))
-          return FALSE;
-
-
-          DDSURFACEDESC2 ddsd;
-
-          // Get the primary display surface
-          //TRACE("DrawPrim Demo: Creating the primary surface\n");
-          ZeroMemory(&ddsd, sizeof(ddsd));
-          ddsd.dwSize = sizeof(ddsd);
-          ddsd.dwFlags = DDSD_CAPS|DDSD_BACKBUFFERCOUNT;
-          //if (hardware) {
-          ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE|DDSCAPS_COMPLEX | DDSCAPS_FLIP | DDSCAPS_3DDEVICE | DDSCAPS_VIDEOMEMORY;
-          //ddsd.ddsCaps.dwCaps2 = DDSCAPS2_HINTANTIALIASING ;
-          //}
-          //else {
-          //ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE|DDSCAPS_COMPLEX | DDSCAPS_FLIP | DDSCAPS_3DDEVICE | DDSCAPS_SYSTEMMEMORY;
-          //}
-          //| DDSCAPS_3DDEVICE
-
-          ddsd.dwBackBufferCount = 2;//triplebuffer
-          if (m_pDD->CreateSurface(&ddsd, &m_pPrimary, NULL) != DD_OK)
-          return FALSE;
-
-
-          ddsd.ddsCaps.dwCaps = DDSCAPS_BACKBUFFER;
-          if (m_pPrimary->GetAttachedSurface(&ddsd.ddsCaps, &taka) != DD_OK)
-          return FALSE;
-
-
-          // Query the DirectDraw object to get the D3D object
-          //TRACE("DrawPrim Demo: Getting the D3D object\n");
-          if (m_pDD->QueryInterface(IID_IDirect3D7, (VOID **)&m_pD3D) != S_OK)
-          return FALSE;
-
-
-          DDPIXELFORMAT ddpfZBuffer;
-          //if (hardware)
-          m_pD3D->EnumZBufferFormats(IID_IDirect3DHALDevice, EnumZBufferCallback, (VOID*)&ddpfZBuffer );
-          //else m_pD3D->EnumZBufferFormats( IID_IDirect3DRGBDevice, EnumZBufferCallback, (VOID*)&ddpfZBuffer );
-
-
-          // If we found a good zbuffer format, then the dwSize field will be
-          // properly set during enumeration. Else, we have a problem and will exit.
-          //if
-          ( sizeof(DDPIXELFORMAT) != ddpfZBuffer.dwSize );
-          //return E_FAIL;
-          // Get z-buffer dimensions from the render target
-          // Setup the surface desc for the z-buffer.
-          ddsd.dwFlags        = DDSD_CAPS|DDSD_WIDTH|DDSD_HEIGHT|DDSD_PIXELFORMAT;
-          ddsd.ddsCaps.dwCaps = DDSCAPS_ZBUFFER;
-          ddsd.dwWidth        = SCREEN_WIDTH;
-          ddsd.dwHeight       = SCREEN_HEIGHT;
-          memcpy( &ddsd.ddpfPixelFormat, &ddpfZBuffer, sizeof(DDPIXELFORMAT) );
-          // For hardware devices, the z-buffer should be in video memory. For
-          // software devices, create the z-buffer in system memory
-          //if(hardware)
-          ddsd.ddsCaps.dwCaps |= DDSCAPS_VIDEOMEMORY;
-          //else
-          //    ddsd.ddsCaps.dwCaps |= DDSCAPS_SYSTEMMEMORY;
-          // Create and attach a z-buffer. Real apps should be able to handle an
-          // error here (DDERR_OUTOFVIDEOMEMORY may be encountered). For this
-          // tutorial, though, we are simply going to exit ungracefully.
-          if (m_pDD->CreateSurface( &ddsd, &zbuffer, NULL ) != DD_OK ) return FALSE;
-          if (taka->AddAttachedSurface(zbuffer) != DD_OK) return FALSE;
-
-
-          // Create the D3D device
-          //TRACE("DrawPrim Demo: Creating the device\n");
-          //if(hardware)
-          HRESULT res=m_pD3D->CreateDevice(IID_IDirect3DHALDevice, taka, &m_pDevice);
-          if (res != D3D_OK)
-          return FALSE;
-          //m_pD3D->CreateDevice(infot[driver].d3device[device].ddDeviceDesc.deviceGUID, taka, &m_pDevice);
-          //RELEASE(m_pDevice);
-          //if(!hardware) if (m_pD3D->CreateDevice(IID_IDirect3DRGBDevice, taka, &m_pDevice) != D3D_OK)
-          //return FALSE;
-          */
 
 	//memset(&m_pViewport, 0, sizeof(D3DVIEWPORT7));
 	D3DVIEWPORT7 m_pViewport;
@@ -2515,7 +2395,7 @@ void setLights(float x,float y,float z)
         lights[q].valo.dcvSpecular.r = 1.0f;
         lights[q].valo.dcvSpecular.g = 1.0f;
         lights[q].valo.dcvSpecular.b = 1.0f;
-        lights[q].valo.dvDirection=1.0f;
+        lights[q].valo.dvDirection=D3DVECTOR(1.0f);
         lights[q].valo.dvPosition.x = x;
         lights[q].valo.dvPosition.y = y;
         lights[q].valo.dvPosition.z = z;
@@ -2563,9 +2443,9 @@ void shoot(int target,int from_character, int from_moped,float timer,bikebase *m
                                 /*bullet[a].place.x=moped->x1+cosf(moped->direction)*15*moped->speed;
                                   bullet[a].place.y=moped->y1+70;
                                   bullet[a].place.z=moped->z1+sinf(moped->direction)*15*moped->speed;*/
-                                bullet[a].place.x=moped->piippu.m30;
-                                bullet[a].place.y=moped->piippu.m31;
-                                bullet[a].place.z=moped->piippu.m32;
+                                bullet[a].place.x=moped->piippu[3][0];
+                                bullet[a].place.y=moped->piippu[3][1];
+                                bullet[a].place.z=moped->piippu[3][2];
 
                                 bullet[a].place_old=bullet[a].place;
                                 bullet[a].q=-moped->direction;//-mopeds->frontdirection;
@@ -3210,14 +3090,10 @@ bool readpictures(void)
 
 bool initkeyb(void)
 {
-
-
-
-
 	HRESULT hr;
 	// Create the DirectInput object.
         hr = DirectInput8Create(hInst, DIRECTINPUT_VERSION,
-                        IID_IDirectInput8, (void**)&g_lpDI, NULL);
+                        IID_IDirectInput8, &g_lpDI, NULL);
         if FAILED(hr) return FALSE;
 
 	//näpiskä //this is some weird slang word. seriously wtf, wille!?
@@ -3382,9 +3258,7 @@ void CleanUp(void)
 	RELEASE(m_pDevice);
 	RELEASE(m_pDD);
 
-	RELEASE(m_pD3D);
 	RELEASE(taka);
-	RELEASE(m_pPrimary);
 	RELEASE(zbuffer);
 
 	if(SOUNDS_LOADED){
@@ -4505,7 +4379,7 @@ void render_game(void){//just renders some moped driving.
 	lights[1].valo.dcvSpecular.r = 0.0f;
 	lights[1].valo.dcvSpecular.g = 0.0f;
 	lights[1].valo.dcvSpecular.b = 0.0f;
-	lights[1].valo.dvDirection=1.0f;
+	lights[1].valo.dvDirection=D3DVECTOR(1.0f);
 	lights[1].valo.dvFalloff=1.0f;
 	lights[1].valo.dltType=D3DLIGHT_POINT;
 	lights[1].valo.dvAttenuation0=0.05f;
@@ -5938,7 +5812,7 @@ void create_character(int q){//create random character
 
 }
 
-void luemissiot(void){ //read missions
+void load_missions(void){ //read missions
 
 	FILE *fil;
 	CHAR row[800];
@@ -7265,7 +7139,7 @@ void render_menu(void){//renders the menu
         lights[1].valo.dcvSpecular.r = 1.0f;
         lights[1].valo.dcvSpecular.g = 1.0f;
         lights[1].valo.dcvSpecular.b = 1.0f;
-        lights[1].valo.dvDirection=1.0f;
+        lights[1].valo.dvDirection=D3DVECTOR(1.0f);
         lights[1].valo.dvPosition.x = 0;
         lights[1].valo.dvPosition.y = 0;
         lights[1].valo.dvPosition.z = 0;
