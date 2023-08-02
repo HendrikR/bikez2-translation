@@ -7492,7 +7492,7 @@ void game_new(void){ //new game
 
 
 }
-void sounds_start(void){
+void sounds_start(){
 
 	//sounds
 	if((!options[1])&&(!options[2])){return;}
@@ -7605,6 +7605,7 @@ void playsound(int samplenumero,float volume,float placex,float placez){ //play 
 	if(soundtimer[samplenumero]<40)return;
 	if(!(options[1]&&SOUNDS_LOADED))return;
 
+        // TODO: use Mix_SetPosition here instead
 	float distance=sqrtf(sqr(placex-moped[0].x1)+sqr(placez-moped[0].z1));
 	if(distance<10000)
 	{

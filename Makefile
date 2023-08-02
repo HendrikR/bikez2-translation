@@ -1,4 +1,4 @@
-LIBS=sdl2 glm gl
+LIBS=sdl2 glm gl SDL2_mixer
 CXX = g++
 CXXFLAGS = -g `pkg-config --cflags ${LIBS}`
 LDFLAGS = -lc `pkg-config --libs ${LIBS}`

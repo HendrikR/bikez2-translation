@@ -166,20 +166,49 @@ LPDIRECT3DDEVICE7 D3DXCONTEXT::GetD3DDevice() {
 }
 
 HRESULT DirectSoundCreate(int* guid, LPDIRECTSOUND* ds, void* unkOuter) {
+  //Initialize SDL_mixer
+  if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 ) {
+    throw MyEx(Mix_GetError());
+  }
+
+  // TODO: number of channels is arbitrary. See SndObjStop also.
+  if( Mix_AllocateChannels(4) < 0 ) {
+    throw MyEx(Mix_GetError());
+  }
+  return TRUE;
 }
 BOOL IDirectSound_SetCooperativeLevel(LPDIRECTSOUND, HWND hwnd, DWORD level) {
+  return true;
 }
 BOOL SndObjPlay(HSNDOBJ obj, DWORD playFlags, BOOL todo_something) {
+  // TODO
+  Mix_PlayChannel(-1, obj, 0);
+  return true;
 }
 BOOL SndObjStop(HSNDOBJ obj) {
+  // TODO: Bad fit. SDL2-mixer uses channels; this expects individual sound objects
+  // One way to do it would be for each HSNDOBJ to have its own channel.
+  Mix_HaltChannel(-1);
+  return true;
 }
 HSNDOBJ SndObjCreate(LPDIRECTSOUND ds, HSTR name, int concurrent) {
+  return Mix_LoadWAV(name);
 }
 BOOL SndObjSetPan(HSNDOBJ obj, DOUBLE pan) {
+  // pan \in [-1,1], Mix_SetPanning expects 0..255
+  int right = (pan+1.0)*128;
+  for (int channel=0; channel<4; channel++) {
+    Mix_SetPanning(channel, 255-right, right);
+  }
+  return true;
 }
-BOOL SndObjDestroy(HSNDOBJ) {
+BOOL SndObjDestroy(HSNDOBJ snd) {
+  Mix_FreeChunk(snd);
+  return true;
 }
 BOOL SndObjSetFrequency(HSNDOBJ obj, float freq) {
+  // TODO: SDL2-mixer does not support this
+  return true;
 }
 
 //HRESULT DirectInput8Create(LPDIRECTINPUT8*, int version) {}
@@ -329,7 +358,7 @@ int GetStockObject(int x) {
 void lataa(const char*, void*, bool, bool) {
 }
 //                    pvertex*
-void svolume(int, int, void*, int, int) {
+void svolume(HSNDOBJ, int, void*, int, int) {
 }
-void svolume(int, int, bool) {
+void svolume(HSNDOBJ, int, bool) {
 }

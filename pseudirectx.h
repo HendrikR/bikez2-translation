@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <SDL.h>
+#include <SDL_mixer.h>
 #include <glm/ext.hpp>
 #include <GL/gl.h>
 #include <stack>
@@ -25,10 +26,11 @@ typedef DWORD* LPDWORD;
 typedef void VOID;
 typedef const char* HSTR;
 
-typedef uint32_t GUID, HINSTANCE, HSNDOBJ, WPARAM, LPARAM, HBRUSH, D3DVALUE;
+typedef uint32_t GUID, HINSTANCE, WPARAM, LPARAM, HBRUSH, D3DVALUE;
 typedef SDL_Window* HWND;
 typedef const char *LPSTR, *LPCSTR, *LPCTSTR;
 typedef SDL_Event MSG;
+typedef Mix_Chunk* HSNDOBJ;
 
 typedef struct RECT {
         int top, bottom, left, right;
@@ -264,7 +266,7 @@ public:
   };*/
 void lataa(const char*, void*, bool, bool);
 //                    pvertex*
-void svolume(int, int, void*, int, int);
-void svolume(int, int, bool);
+void svolume(HSNDOBJ, int, void*, int, int);
+void svolume(HSNDOBJ, int, bool);
 
 
