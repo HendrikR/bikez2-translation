@@ -1,11 +1,28 @@
 #include "func.h"
+#include <iostream>
 
 // TODO: remove error supression after refactoring
 #pragma GCC diagnostic ignored "-Wreturn-type"
 
 bool linecollidesline(bool *osuma,float *osumax,float *osumaz,float piste1x,float piste1z,float piste2x,float piste2z,float piste3x,float piste3z,float piste4x,float piste4z) {
 }//does a line collide with another
+
 LPDIRECTDRAWSURFACE7 loadPicture(LPDIRECTDRAW7 m_pDD, char name[200], BOOL hardware) {
+  // TODO: consider https://dev.to/noah11012/using-sdl2-optimizing-surface-blitting-38f8
+  DIRECTDRAWSURFACE7* surf = new DIRECTDRAWSURFACE7();
+  surf->surface = SDL_LoadBMP(name);
+  if (surf->surface == nullptr) {
+    delete surf;
+    throw MyEx("Error creating surface");
+    return nullptr;
+  }
+  return surf;
+  /*glGenTextures(1, &tex);
+  glBindTexture(GL_TEXTURE_2D, tex);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, border 0, GL_RGB, GL_UNSIGNED_BYTE, buf);
+  return tex;*/
 }//loadpicture
 
 LPDIRECTDRAWSURFACE7 loadTexture(int screenmode,D3DDEVICEINFO info, LPDIRECT3DDEVICE7 *m_pDevice,LPDIRECTDRAW7 m_pDD,char name[200], BOOL hardware) {
@@ -26,7 +43,9 @@ bool intersect(RECT a, RECT b) {
      &&  ((a.left < b.left && b.left < a.right)  || (b.left < a.left && a.left < b.right));
 }
 char *stripped_fgets(char *s, int n, FILE *f) {
-  // TODO
+  // TODO: remove whitespace and ‘;‘-prefixed line comments
+  char* ret = fgets(s,n,f);
+  return fgets(s, n, f);
 }
 D3DMATRIX IdentityMatrix() {
   return glm::identity<glm::mat4>();

@@ -481,14 +481,14 @@ void init()
 	load("models/obj1.3dw",	mallit[0].malli,	false,	false);
 	load("models/map0.3dw",	mallit[1].malli,	false,	false);
 	load("models/obj2.3dw",	mallit[2].malli,	false,	false);
-	load("models/character0.3dw",	mallit[3].malli,	false,	false);
-	load("models/character1.3dw",	mallit[4].malli,	false,	false);
-	load("models/character2.3dw",	mallit[5].malli,	false,	false);
+	load("models/ukko0.3dw",	mallit[3].malli,	false,	false);
+	load("models/ukko1.3dw",	mallit[4].malli,	false,	false);
+	load("models/ukko2.3dw",	mallit[5].malli,	false,	false);
 	load("models/obj3.3dw",	mallit[6].malli,	false,	false);
-	load("models/character3.3dw",	mallit[7].malli,	false,	false);
-	load("models/character4.3dw",	mallit[8].malli,	false,	false);
+	load("models/ukko3.3dw",	mallit[7].malli,	false,	false);
+	load("models/ukko4.3dw",	mallit[8].malli,	false,	false);
 	load("models/obj4.3dw",	mallit[9].malli,	false,	false);
-	load("models/character5.3dw",	mallit[10].malli,	false,	false);
+	load("models/ukko5.3dw",	mallit[10].malli,	false,	false);
 
 /*
   moveparts(3);//moves character0 pieces to their places
