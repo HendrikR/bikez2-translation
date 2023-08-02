@@ -1,2 +1,8 @@
 *.o
 bikez2
+cfg.cfg
+data
+models
+save
+textures
+ui
