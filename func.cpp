@@ -1,5 +1,4 @@
 #include "func.h"
-#include <iostream>
 
 // TODO: remove error supression after refactoring
 #pragma GCC diagnostic ignored "-Wreturn-type"

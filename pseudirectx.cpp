@@ -1,8 +1,5 @@
 #include "pseudirectx.h"
 
-// TODO: remove error supression after refactoring
-#pragma GCC diagnostic ignored "-Wreturn-type"
-
 void ID3DXMatrixStack::RotateYawPitchRollLocal(float yaw, float pitch, float roll) {
   // TODO: use quaternions
   //_stack.top *= glm::rotate(glm::vec3(0,1,0), yaw);
@@ -30,12 +27,17 @@ void ID3DXMatrixStack::LoadIdentity() {
 }
 const D3DMATRIX* ID3DXMatrixStack::GetTop() {
   // TODO
-  //return _stack.top;
+  GLfloat m[16];
+  glGetFloatv(GL_MODELVIEW_MATRIX, m);
+  D3DMATRIX* mat = new D3DMATRIX(m[0], m[1], m[2], m[3], m[4], m[5], m[6], m[7], m[8], m[9], m[10], m[11], m[12], m[13], m[14], m[15]);
+  return mat;
 }
 void ID3DXMatrixStack::ScaleLocal(float x, float y, float z) {
   glScalef(x, y, z);
 }
 int D3DFVF_TEXCOORDSIZE2(int) {
+  // TODO: probably not needed at all.
+  return 0;
 }
 
 HRESULT DIRECTINPUTDEVICE8::Acquire() {
@@ -84,7 +86,8 @@ HRESULT DIRECTDRAWSURFACE7::Blt(LPRECT destRect, DIRECTDRAWSURFACE7*& src, LPREC
                     destRect->left,
                     destRect->right - destRect->left,
                     destRect->bottom - destRect->top};
-  SDL_BlitSurface(src->surface, &srcRect2, this->surface, &destRect2);
+  int status = SDL_BlitSurface(src->surface, &srcRect2, this->surface, &destRect2);
+  return 1;
 }
 HRESULT DIRECTDRAWSURFACE7::BltFast(int x, int y, DIRECTDRAWSURFACE7*& src, LPRECT srcRect, DWORD dwTrans) {
   SDL_Rect srcRect2{srcRect->top,
@@ -92,8 +95,8 @@ HRESULT DIRECTDRAWSURFACE7::BltFast(int x, int y, DIRECTDRAWSURFACE7*& src, LPRE
                     srcRect->right - srcRect->left,
                     srcRect->bottom - srcRect->top};
   SDL_Rect destRect{x, y, srcRect2.w, srcRect2.h};
-  SDL_BlitSurface(src->surface, &srcRect2, this->surface, &destRect);
-  
+  int status = SDL_BlitSurface(src->surface, &srcRect2, this->surface, &destRect);
+  return 1;
 }
 void DIRECTDRAWSURFACE7::SetColorKey(int key, DDCOLORKEY* flag) {
   SDL_SetColorKey(this->surface, SDL_TRUE, key);
@@ -197,9 +200,7 @@ void ShowCursor(bool) {
 void SetCursor(const char*) {
 }
 uint64_t GetTickCount() {
-  struct timespec ts;
-  clock_gettime(CLOCK_MONOTONIC, &ts);
-  return (uint64_t)(ts.tv_nsec / 1000000) + ((uint64_t)ts.tv_sec * 1000ull);
+  return SDL_GetTicks();
 }
 
 HSTR LoadIcon(HINSTANCE hinst, LPCTSTR name) {
@@ -215,11 +216,19 @@ char* ltoa(long value, char* str, int base) {
 HRESULT D3DXCreateContext(DWORD deviceIndex, DWORD flags, HWND hwnd, DWORD width, DWORD height, LPD3DXCONTEXT* ppCtx) {
   // TODO: Do I need this? The gl_context is immediately thrown away.
   SDL_GLContext gl_context = SDL_GL_CreateContext(hwnd);
+  unsigned int rmask, gmask, bmask, amask;
+  int bpp;
+  uint32_t pixel_format = SDL_GetWindowPixelFormat(hwnd);
+  SDL_PixelFormatEnumToMasks(pixel_format, &bpp, &rmask, &gmask, &bmask, &amask);
+  SDL_Surface* surface = SDL_CreateRGBSurface(0, width, height, bpp, rmask, gmask, bmask, amask);
+  if (!surface) {
+    throw MyEx("could not create SDL surface");
+  }
   LPD3DXCONTEXT ptr = new D3DXCONTEXT();
   ptr->ddraw7 = new DIRECTDRAW7();
   ptr->d3ddevice7 = new DIRECT3DDEVICE7();
   ptr->d3ddevice7->render_surface = new DIRECTDRAWSURFACE7();
-  ptr->d3ddevice7->render_surface->surface = SDL_CreateRGBSurface(0, width, height, 32, 0x0F00, 0x00F0, 0x000F, 0xF000);
+  ptr->d3ddevice7->render_surface->surface = surface;
   *ppCtx = ptr;
   return 1;
 }
@@ -229,7 +238,13 @@ HRESULT D3DXCreateMatrixStack(DWORD flags, ID3DXMatrixStack **stack) {
 }
 HRESULT D3DXCreateTextureFromFile(LPDIRECT3DDEVICE7 pd3dDevice, LPDWORD pFlags, LPDWORD pWidth, LPDWORD pHeight, D3DX_SURFACEFORMAT* pPixelFormat,
                 LPDIRECTDRAWPALETTE pDDPal, LPDIRECTDRAWSURFACE7* ppDDSurf, LPDWORD pNumMipMaps, LPSTR pSrcName, D3DX_FILTERTYPE filterType) {
-  // TODO
+  DIRECTDRAWSURFACE7* surf = new DIRECTDRAWSURFACE7();
+  *ppDDSurf = surf;
+  surf->surface = SDL_LoadBMP(pSrcName);
+  if (surf->surface == nullptr) {
+    delete surf;
+    throw MyEx("Error creating surface");
+  }
   return 1;
 }
 HRESULT D3DXInitialize() {
@@ -239,10 +254,20 @@ HRESULT D3DXInitialize() {
 }
 HRESULT D3DXUninitialize() {
   SDL_Quit();
+  return TRUE;
 }
 HRESULT D3DXVec3Add(D3DXVECTOR3 *pOut, const D3DXVECTOR3 *pV1, const D3DXVECTOR3 *pV2) {
+  // TODO: use glm operator+
+  glm::vec3 v1(*pV1);
+  glm::vec3 v2(*pV2);
+  //glm::vec3 v3 = v1 + v2;
+  *pOut = D3DXVECTOR3(v1+v2);
+  return TRUE;
 }
 HRESULT D3DXVec3Scale( D3DXVECTOR3 *pOut, const D3DXVECTOR3 *pV, FLOAT s) {
+  glm::vec3 v(*pV);
+  *pOut = D3DXVECTOR3(v*s);
+  return TRUE;
 }
 
 bool PeekMessage(MSG* event, void*, int, int, int) {
@@ -276,12 +301,14 @@ int RegisterClassEx(WNDCLASSEX*) {
   return 1;
 }
 DWORD timeGetTime() {
-  return GetTickCount();
+  return SDL_GetTicks();
 }
 void ZeroMemory(void* mem, size_t len) {
   memset(mem, 1, len);
 }
 int DefWindowProc(HWND, UINT, int, int) {
+  // TODO
+  return 0;
 }
 int GetStockObject(int x) {
   return x;
