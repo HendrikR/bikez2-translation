@@ -105,15 +105,78 @@ void DIRECTDRAWSURFACE7::Release() {
   SDL_FreeSurface(this->surface);
 }
 
-void DIRECT3DDEVICE7::SetRenderState(int, int mode) {
+void DIRECT3DDEVICE7::SetRenderState(int key, DWORD value) {
+  switch(key) {
+  case D3DRENDERSTATE_LIGHTING:
+  case D3DRENDERSTATE_AMBIENT:
+  case D3DRENDERSTATE_FOGENABLE:
+  case D3DRENDERSTATE_ALPHABLENDENABLE:
+  case D3DRENDERSTATE_ZENABLE:
+    value == TRUE ? glEnable(key) : glDisable(key);
+    break;
+  case D3DRENDERSTATE_COLORKEYENABLE: break; // TODO: GL supports no colorkey
+    //case D3DTRANSFORMSTATE_WORLD: break; // TODO
+  case D3DRENDERSTATE_FOGCOLOR:
+    {
+      GLint colors[] = {(GLint)(value >> 16 & 0xFF),
+                        (GLint)(value >> 8 & 0xFF),
+                        (GLint)(value >> 0 & 0xFF),
+                        (GLint)(value >> 24 & 0xFF)}; // ARGB-->RGBA (TODO: verify)
+      glFogiv(key, colors);
+    }
+    break;
+  case D3DRENDERSTATE_FOGSTART:
+  case D3DRENDERSTATE_FOGEND:
+    glFogf(key, *(float*)(&value));
+    break;
+  case D3DRENDERSTATE_FOGDENSITY:
+    glFogf(GL_FOG_DENSITY, *(float*)(&value));
+    break;
+  case D3DRENDERSTATE_FOGTABLEMODE:
+  case D3DRENDERSTATE_FOGVERTEXMODE:
+    glFogi(GL_FOG_MODE, value); break;
+  case D3DRENDERSTATE_RANGEFOGENABLE:
+    glHint(GL_FOG_HINT, value == TRUE ? GL_NICEST : GL_FASTEST);
+    break;
+  case D3DRENDERSTATE_CULLMODE:
+    glFrontFace(value); break;
+  case D3DRENDERSTATE_SHADEMODE:
+    glShadeModel(value); break;
+  case D3DRENDERSTATE_TEXTUREPERSPECTIVE:
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, value == TRUE ? GL_NICEST : GL_FASTEST);
+    break;
+  case D3DRENDERSTATE_SRCBLEND:
+    {
+      GLint old;
+      glGetIntegerv(GL_BLEND_DST, &old);
+      glBlendFunc(value, old);
+    }
+    break;
+  case D3DRENDERSTATE_DESTBLEND:
+    {
+      GLint old;
+      glGetIntegerv(GL_BLEND_SRC, &old);
+      glBlendFunc(old, value);
+    }
+    break;
+  case D3DRENDERSTATE_ZBIAS:
+    glPixelTransferf(GL_DEPTH_BIAS, value); break;
+  case D3DRENDERSTATE_ZWRITEENABLE:
+    glDepthMask(value == TRUE ? GL_TRUE : GL_FALSE); break;
+  default: throw MyEx("unknown key for SetRenderState");
+  }
 }
 void DIRECT3DDEVICE7::SetTransform(UINT enum_transformStateType, const D3DMATRIX*) {
 }
 void DIRECT3DDEVICE7::SetTransform(UINT enum_transformStateType, const D3DMATRIX) {
 }
-void DIRECT3DDEVICE7::LightEnable(int, bool) {
+void DIRECT3DDEVICE7::LightEnable(int which, bool state) {
+  int gl_which = GL_LIGHT0+which;
+  if (state == TRUE) glEnable(which);
+  else               glDisable(which);
 }
 void DIRECT3DDEVICE7::Clear(int, void*, int, int, int, int) {
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 void DIRECT3DDEVICE7::SetTexture(int, DIRECTDRAWSURFACE7*&) {
   
@@ -151,12 +214,14 @@ void DIRECT3DDEVICE7::BeginScene() {
 }
 void DIRECT3DDEVICE7::EndScene() {
 }
-bool DIRECT3DDEVICE7::GetLightEnable(int light, BOOL* state) {
-  // TODO
-  return state;
+void DIRECT3DDEVICE7::GetLightEnable(int light, BOOL* state) {
+  GLint v;
+  glGetIntegerv(GL_LIGHT0, &v);
+  *state = (v != 0);
 }
 
 void D3DXCONTEXT::UpdateFrame(int) {
+  SDL_GL_SwapWindow(this->wnd);
 }
 LPDIRECTDRAW7 D3DXCONTEXT::GetDD() {
   return this->ddraw7;
@@ -243,8 +308,8 @@ char* ltoa(long value, char* str, int base) {
   return SDL_ltoa(value, str, base);
 }
 HRESULT D3DXCreateContext(DWORD deviceIndex, DWORD flags, HWND hwnd, DWORD width, DWORD height, LPD3DXCONTEXT* ppCtx) {
-  // TODO: Do I need this? The gl_context is immediately thrown away.
-  SDL_GLContext gl_context = SDL_GL_CreateContext(hwnd);
+  
+  SDL_GLContext gl_context = SDL_GL_CreateContext(hwnd); // TODO: needed? The gl_context is immediately thrown away.
   unsigned int rmask, gmask, bmask, amask;
   int bpp;
   uint32_t pixel_format = SDL_GetWindowPixelFormat(hwnd);
@@ -254,6 +319,7 @@ HRESULT D3DXCreateContext(DWORD deviceIndex, DWORD flags, HWND hwnd, DWORD width
     throw MyEx("could not create SDL surface");
   }
   LPD3DXCONTEXT ptr = new D3DXCONTEXT();
+  ptr->wnd = hwnd;
   ptr->ddraw7 = new DIRECTDRAW7();
   ptr->d3ddevice7 = new DIRECT3DDEVICE7();
   ptr->d3ddevice7->render_surface = new DIRECTDRAWSURFACE7();
