@@ -188,8 +188,14 @@ void DIRECT3DDEVICE7::LightEnable(int which, bool state) {
 void DIRECT3DDEVICE7::Clear(int, void*, int, int, int, int) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
-void DIRECT3DDEVICE7::SetTexture(int, DIRECTDRAWSURFACE7*&) {
-  
+void DIRECT3DDEVICE7::SetTexture(int num, DIRECTDRAWSURFACE7*& surf) {
+  // TODO this goes to initialization
+  glEnable(GL_TEXTURE_2D);
+  glEnable(GL_COLOR_MATERIAL); // todo: need?
+  glBindTexture(GL_TEXTURE_2D, surf->texture);
+}
+void DIRECT3DDEVICE7::DrawPrimitive(UINT primitiveType, DWORD texflags, const vvertex* data, UINT count, void* unk) {
+  //TODO
 }
 void DIRECT3DDEVICE7::DrawPrimitive(UINT primitiveType, DWORD texflags, const void* data, UINT count, void* unk) {
   //TODO

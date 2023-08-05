@@ -8,20 +8,33 @@ bool linecollidesline(bool *osuma,float *osumax,float *osumaz,float piste1x,floa
 
 LPDIRECTDRAWSURFACE7 loadPicture(LPDIRECTDRAW7 m_pDD, char name[200], BOOL hardware) {
   // TODO: consider https://dev.to/noah11012/using-sdl2-optimizing-surface-blitting-38f8
-  DIRECTDRAWSURFACE7* surf = new DIRECTDRAWSURFACE7();
-  surf->surface = SDL_LoadBMP(name);
-  if (surf->surface == nullptr) {
-    delete surf;
+  // TODO!: this loads indexed palette format, need to convert it before using
+  SDL_Surface* surface = SDL_LoadBMP(name);
+  if (surface == nullptr) {
     throw MyEx("Error creating surface");
     return nullptr;
   }
-  return surf;
-  /*glGenTextures(1, &tex);
+
+  //SDL_Texture* tex1 = SDL_CreateTextureFromSurface(renderer, surface);
+  /*SDL_Surface* newSurface = SDL_CreateRGBSurface(0, surface->w, surface->h, 24, 0xff000000, 0x00ff0000, 0x0000ff00, 0);
+  if (newSurface == nullptr) {
+    throw MyEx(SDL_GetError());
+  }
+  SDL_BlitSurface(surface, 0, newSurface, 0); // Blit onto a purely RGB Surface*/
+
+  
+  GLuint tex;
+  glGenTextures(1, &tex);
   glBindTexture(GL_TEXTURE_2D, tex);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, border 0, GL_RGB, GL_UNSIGNED_BYTE, buf);
-  return tex;*/
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RED, GL_UNSIGNED_BYTE, surface->pixels);
+
+  SDL_FreeSurface(surface);
+  DIRECTDRAWSURFACE7* out = new DIRECTDRAWSURFACE7();
+  //out->surface = surface;
+  out->texture = tex;
+  return out;
 }//loadpicture
 
 LPDIRECTDRAWSURFACE7 loadTexture(int screenmode,D3DDEVICEINFO info, LPDIRECT3DDEVICE7 *m_pDevice,LPDIRECTDRAW7 m_pDD,char name[200], BOOL hardware) {
