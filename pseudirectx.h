@@ -251,7 +251,7 @@ private:
   const char* msg;
 public:
   MyEx(const char* _msg) : msg(_msg) {}
-  virtual const char* what() {
+  const char* what() const noexcept {
     return msg;
   }
 };

@@ -3,6 +3,7 @@
 
 #include "bikez2.h"
 #include "pseudirectx.h"
+#include <iostream>
 
 int numpictures=6;
 
@@ -393,6 +394,7 @@ void init()
 
 	plusmiinus=0;
 
+        std::cout << "initializing 3D parameters" << std::endl;
         // Initialize and set the matrices
 	m_World = IdentityMatrix();
 	m_View = ViewMatrix(D3DVECTOR(0,0,0), D3DVECTOR(0,0,1), D3DVECTOR(0,1,0), 0);
@@ -467,6 +469,7 @@ void init()
 	background[15]->SetColorKey(DDCKEY_SRCBLT,&color);
 
 	//load objects //remember to add mallit[n]
+        std::cout << "loading objects" << std::endl;
 	mallit[0].malli= new obj[objnum0];
 	mallit[1].malli= new obj[objnum1];
 	mallit[2].malli= new obj[objnum2];
@@ -502,6 +505,7 @@ void init()
 	D3DXCreateMatrixStack(  0, &matrices);
 
 	//load walls
+        std::cout << "loading walls" << std::endl;
 	num_wallgroups=2;//remember to add it to the header
 	loadwall("models/wall0.3dw",&wallgroup[0],false);//walls of maps(or levels)
 	loadwall("models/wall1.3dw",&wallgroup[1],false);//moped
@@ -547,6 +551,7 @@ void init()
 
 	//weapons
 	//weapons could be loaded from a file.
+        std::cout << "initializing weapons" << std::endl;
 	q=0;
 	ase[q].picture=0;//machine gun
 	ase[q].speed=70;
@@ -1292,6 +1297,7 @@ BOOL load(const char filename[200],obj *target,BOOL mirror,BOOL miekkakala)
 
 BOOL loadtext()
 {
+        std::cout << "loading textures" << std::endl;
 
 	FILE *fil;
 	CHAR row[300];
@@ -1465,8 +1471,7 @@ static HRESULT WINAPI EnumZBufferCallback( DDPIXELFORMAT* pddpf, VOID* pddpfDesi
 
 
 bool createscreen(void){
-
-
+        std::cout << "creating screen" << std::endl;
 	SCREEN_WIDTH=1024;
 	SCREEN_HEIGHT=768;
 	SCREEN_BITS=32;
@@ -2812,7 +2817,6 @@ void aja(bikebase *moped)
 
 bool Render(void)
 {
-
 	m_pDevice->BeginScene();
 
 	switch (gamephase)
@@ -3059,6 +3063,8 @@ void calculateCollisions(void)//collisions
 
 bool readpictures(void)
 {
+        std::cout << "loading pictures" << std::endl;
+
 	DDCOLORKEY color;
 	int q;
 	pictures	=	new LPDIRECTDRAWSURFACE7[numpictures];
@@ -3090,6 +3096,7 @@ bool readpictures(void)
 
 bool initkeyb(void)
 {
+        std::cout << "initializing keyboard" << std::endl;
 	HRESULT hr;
 	// Create the DirectInput object.
         hr = DirectInput8Create(hInst, DIRECTINPUT_VERSION,
@@ -5813,6 +5820,7 @@ void create_character(int q){//create random character
 }
 
 void load_missions(void){ //read missions
+        std::cout << "loading missions" << std::endl;
 
 	FILE *fil;
 	CHAR row[800];
@@ -7493,6 +7501,7 @@ void game_new(void){ //new game
 
 }
 void sounds_start(){
+        std::cout << "initializing sound" << std::endl;
 
 	//sounds
 	if((!options[1])&&(!options[2])){return;}
@@ -7580,6 +7589,7 @@ void cfg_save(void){
 }
 
 void cfg_load(void){
+        std::cout << "loading config" << std::endl;
         FILE *fil;
         int q,b;
         char temprow[300];
