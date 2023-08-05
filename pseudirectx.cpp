@@ -166,9 +166,19 @@ void DIRECT3DDEVICE7::SetRenderState(int key, DWORD value) {
   default: throw MyEx("unknown key for SetRenderState");
   }
 }
-void DIRECT3DDEVICE7::SetTransform(UINT enum_transformStateType, const D3DMATRIX*) {
+void DIRECT3DDEVICE7::SetTransform(UINT enum_transformStateType, const D3DMATRIX* mat) {
+  SetTransform(enum_transformStateType, *mat);
 }
-void DIRECT3DDEVICE7::SetTransform(UINT enum_transformStateType, const D3DMATRIX) {
+void DIRECT3DDEVICE7::SetTransform(UINT enum_transformStateType, const D3DMATRIX mat) {
+  GLint which;
+  switch (enum_transformStateType) {
+  case D3DTRANSFORMSTATE_PROJECTION: which = GL_PROJECTION; break;
+  case D3DTRANSFORMSTATE_VIEW: which = GL_MODELVIEW; break;
+  case D3DTRANSFORMSTATE_WORLD: which = GL_MODELVIEW; break;
+  }
+  glMatrixMode(which);
+  // TODO: this is a bit dangerous
+  glMultMatrixf((GLfloat*)(&mat));
 }
 void DIRECT3DDEVICE7::LightEnable(int which, bool state) {
   int gl_which = GL_LIGHT0+which;
@@ -181,12 +191,25 @@ void DIRECT3DDEVICE7::Clear(int, void*, int, int, int, int) {
 void DIRECT3DDEVICE7::SetTexture(int, DIRECTDRAWSURFACE7*&) {
   
 }
-void DIRECT3DDEVICE7::DrawPrimitive(UINT enum_PrimitiveType, UINT start_vertex, UINT primitive_count) {
+void DIRECT3DDEVICE7::DrawPrimitive(UINT primitiveType, DWORD texflags, const void* data, UINT count, void* unk) {
+  //TODO
 }
-void DIRECT3DDEVICE7::DrawPrimitive(UINT enum_PrimitiveType, UINT primitive_count, const void* data, UINT stride, void*) {
+
+void DIRECT3DDEVICE7::DrawPrimitive(UINT primitiveType, DWORD texflags, const pvertex* data, UINT count, void* unk) {
+  glBegin(primitiveType);
+  for (UINT i=0; i<count; ++i) {
+    glTexCoord2f(data[i].u, data[i].v);
+    glVertex3fv((float*)(&data[i].position));
+  }
+  glEnd();
+  
 }
 //void DIRECT3DDEVICE7::DrawPrimitive(enum primitive_type, UINT start_vertex, UINT primitive_count) {}
-void DIRECT3DDEVICE7::SetMaterial(D3DMATERIAL7*) {
+void DIRECT3DDEVICE7::SetMaterial(D3DMATERIAL7* m) {
+  glMaterialfv(GL_FRONT | GL_BACK, GL_AMBIENT,   (GLfloat*)(&m->dcvAmbient));
+  glMaterialfv(GL_FRONT | GL_BACK, GL_DIFFUSE,   (GLfloat*)(&m->dcvDiffuse));
+  glMaterialfv(GL_FRONT | GL_BACK, GL_SPECULAR,  (GLfloat*)(&m->dcvSpecular));
+  glMaterialf(GL_FRONT | GL_BACK, GL_SHININESS, m->dvPower);
 }
 void DIRECT3DDEVICE7::ComputeSphereVisibility(D3DVECTOR*, float*, int, int, DWORD*) {
 }

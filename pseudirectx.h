@@ -217,8 +217,9 @@ typedef struct DIRECT3DDEVICE7 {
         void LightEnable(int, bool);
         void Clear(int, void*, int, int, int, int);
         void SetTexture(int, DIRECTDRAWSURFACE7*&);
-        void DrawPrimitive(UINT enum_PrimitiveType, UINT start_vertex, UINT primitive_count);
-        void DrawPrimitive(UINT enum_PrimitiveType, UINT primitive_count, const void* data, UINT stride, void*);
+        void DrawPrimitive(UINT primitiveType, DWORD flags, const vvertex* data, UINT count, void* unk);
+        void DrawPrimitive(UINT primitiveType, DWORD flags, const pvertex* data, UINT count, void* unk);
+        void DrawPrimitive(UINT primitiveType, DWORD flags, const void* data, UINT count, void* unk);
         //void DrawPrimitive(enum primitive_type, UINT start_vertex, UINT primitive_count);
         void SetMaterial(D3DMATERIAL7*);
         void ComputeSphereVisibility(D3DVECTOR*, float*, int, int, DWORD*);

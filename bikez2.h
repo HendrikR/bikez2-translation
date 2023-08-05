@@ -61,17 +61,6 @@ struct charactertextures {//character textures
 	int bodypart[4];
 };
 
-struct vvertex {
-        D3DVECTOR position;
-        D3DVECTOR normal;
-        float     u, v;//, w;
-};
-
-struct pvertex {
-        D3DVECTOR position;
-        float     u, v;
-};
-
 struct esine//object
 {
 	vvertex *triangle;
