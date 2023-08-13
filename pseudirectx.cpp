@@ -77,8 +77,8 @@ void DIRECTDRAW7::Release() {
 void DIRECT3D7::Release() {
 }
 
-HRESULT DIRECTDRAWSURFACE7::Blt(LPRECT destRect, DIRECTDRAWSURFACE7*& src, LPRECT srcRect, DWORD dwFlags, void* blt_fx) {
-  SDL_Rect srcRect2{srcRect->top,
+HRESULT DIRECTDRAWSURFACE7::Blt(LPRECT dstRect, DIRECTDRAWSURFACE7*& src, LPRECT srcRect, DWORD dwFlags, void* blt_fx) {
+  /*SDL_Rect srcRect2{srcRect->top,
                     srcRect->left,
                     srcRect->right - srcRect->left,
                     srcRect->bottom - srcRect->top};
@@ -86,16 +86,31 @@ HRESULT DIRECTDRAWSURFACE7::Blt(LPRECT destRect, DIRECTDRAWSURFACE7*& src, LPREC
                     destRect->left,
                     destRect->right - destRect->left,
                     destRect->bottom - destRect->top};
-  int status = SDL_BlitSurface(src->surface, &srcRect2, this->surface, &destRect2);
+  int status = SDL_BlitSurface(src->surface, &srcRect2, this->surface, &destRect2);*/
+  // TODO: a feeble try to simulate blitting
+  glBindTexture(GL_TEXTURE_2D, src->texture);
+  glBegin(GL_QUADS);
+  glTexCoord2f(srcRect->left,  srcRect->top);    glVertex2f(dstRect->left,  dstRect->top);
+  glTexCoord2f(srcRect->right, srcRect->top);    glVertex2f(dstRect->right, dstRect->top);
+  glTexCoord2f(srcRect->right, srcRect->bottom); glVertex2f(dstRect->right, dstRect->bottom);
+  glTexCoord2f(srcRect->left,  srcRect->bottom); glVertex2f(dstRect->left,  dstRect->bottom);
+  glEnd();
   return 1;
 }
 HRESULT DIRECTDRAWSURFACE7::BltFast(int x, int y, DIRECTDRAWSURFACE7*& src, LPRECT srcRect, DWORD dwTrans) {
-  SDL_Rect srcRect2{srcRect->top,
+  /*SDL_Rect srcRect2{srcRect->top,
                     srcRect->left,
                     srcRect->right - srcRect->left,
                     srcRect->bottom - srcRect->top};
   SDL_Rect destRect{x, y, srcRect2.w, srcRect2.h};
-  int status = SDL_BlitSurface(src->surface, &srcRect2, this->surface, &destRect);
+  int status = SDL_BlitSurface(src->surface, &srcRect2, this->surface, &destRect);*/
+  RECT* dstRect = new RECT();
+  dstRect->top = x;
+  dstRect->left = y;
+  dstRect->right = srcRect->right - srcRect->left + y;
+  dstRect->bottom = srcRect->bottom - srcRect->top + y;
+  this->Blt(dstRect, src, srcRect, dwTrans, nullptr);
+  delete dstRect;
   return 1;
 }
 void DIRECTDRAWSURFACE7::SetColorKey(int key, DDCOLORKEY* flag) {
@@ -195,10 +210,13 @@ void DIRECT3DDEVICE7::SetTexture(int num, DIRECTDRAWSURFACE7*& surf) {
   glBindTexture(GL_TEXTURE_2D, surf->texture);
 }
 void DIRECT3DDEVICE7::DrawPrimitive(UINT primitiveType, DWORD texflags, const vvertex* data, UINT count, void* unk) {
-  //TODO
-}
-void DIRECT3DDEVICE7::DrawPrimitive(UINT primitiveType, DWORD texflags, const void* data, UINT count, void* unk) {
-  //TODO
+  glBegin(primitiveType);
+  for (UINT i=0; i<count; ++i) {
+    glTexCoord2f(data[i].u, data[i].v);
+    glNormal3fv((float*)(&data[i].normal));
+    glVertex3fv((float*)(&data[i].position));
+  }
+  glEnd();
 }
 
 void DIRECT3DDEVICE7::DrawPrimitive(UINT primitiveType, DWORD texflags, const pvertex* data, UINT count, void* unk) {
@@ -208,8 +226,17 @@ void DIRECT3DDEVICE7::DrawPrimitive(UINT primitiveType, DWORD texflags, const pv
     glVertex3fv((float*)(&data[i].position));
   }
   glEnd();
-  
 }
+
+void DIRECT3DDEVICE7::DrawPrimitive(UINT primitiveType, DWORD texflags, const void* data, UINT count, void* unk) {
+  float* fdata = (float*)(data);
+  glBegin(primitiveType);
+  for (UINT i=0; i<count; i+=3) {
+    glVertex3f(fdata[i], fdata[i+1], fdata[i+2]);
+  }
+  glEnd();
+}
+
 //void DIRECT3DDEVICE7::DrawPrimitive(enum primitive_type, UINT start_vertex, UINT primitive_count) {}
 void DIRECT3DDEVICE7::SetMaterial(D3DMATERIAL7* m) {
   glMaterialfv(GL_FRONT | GL_BACK, GL_AMBIENT,   (GLfloat*)(&m->dcvAmbient));
@@ -411,7 +438,10 @@ void SendMessage(HWND, HSTR, int, int) {
 HWND CreateWindow(const char* wndclass, const char* title,
                 int flags, int flags2, int unk1, int width, int height,
                 void* unk2, void* unk3, HINSTANCE hinst, void* unk4) {
-  return SDL_CreateWindow(title, 0, 0, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+  HWND wnd = SDL_CreateWindow(title, 0, 0, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+  SDL_GLContext context = SDL_GL_CreateContext(wnd);
+  SDL_GL_MakeCurrent(wnd, context);
+  return wnd;
 }
 void ShowWindow(HWND wnd, int) {
   SDL_ShowWindow(wnd);

@@ -220,7 +220,6 @@ typedef struct DIRECT3DDEVICE7 {
         void DrawPrimitive(UINT primitiveType, DWORD flags, const vvertex* data, UINT count, void* unk);
         void DrawPrimitive(UINT primitiveType, DWORD flags, const pvertex* data, UINT count, void* unk);
         void DrawPrimitive(UINT primitiveType, DWORD flags, const void* data, UINT count, void* unk);
-        //void DrawPrimitive(enum primitive_type, UINT start_vertex, UINT primitive_count);
         void SetMaterial(D3DMATERIAL7*);
         void ComputeSphereVisibility(D3DVECTOR*, float*, int, int, DWORD*);
         void SetLight(int, D3DLIGHT7*);
