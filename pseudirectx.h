@@ -206,8 +206,9 @@ typedef struct DIRECTDRAWSURFACE7 {
         HRESULT BltFast(int x, int y, DIRECTDRAWSURFACE7*& src, LPRECT srcRect, DWORD dwTrans);
         void SetColorKey(int, DDCOLORKEY*);
         void Release();
-        SDL_Surface* surface;
+        //SDL_Surface* surface;
         GLuint texture;
+        GLuint w, h;
 } *LPDIRECTDRAWSURFACE7;
 
 typedef struct DIRECT3DDEVICE7 {

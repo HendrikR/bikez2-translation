@@ -15,25 +15,23 @@ LPDIRECTDRAWSURFACE7 loadPicture(LPDIRECTDRAW7 m_pDD, char name[200], BOOL hardw
     return nullptr;
   }
 
-  //SDL_Texture* tex1 = SDL_CreateTextureFromSurface(renderer, surface);
-  /*SDL_Surface* newSurface = SDL_CreateRGBSurface(0, surface->w, surface->h, 24, 0xff000000, 0x00ff0000, 0x0000ff00, 0);
-  if (newSurface == nullptr) {
-    throw MyEx(SDL_GetError());
-  }
-  SDL_BlitSurface(surface, 0, newSurface, 0); // Blit onto a purely RGB Surface*/
-
-  
+  SDL_Surface* s2 = SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_ARGB8888, 0);
   GLuint tex;
+
   glGenTextures(1, &tex);
   glBindTexture(GL_TEXTURE_2D, tex);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RED, GL_UNSIGNED_BYTE, surface->pixels);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, s2->pixels);
+
+  DIRECTDRAWSURFACE7* out = new DIRECTDRAWSURFACE7();
+  out->texture = tex;
+  out->w = s2->w;
+  out->h = s2->h;
 
   SDL_FreeSurface(surface);
-  DIRECTDRAWSURFACE7* out = new DIRECTDRAWSURFACE7();
+  SDL_FreeSurface(s2);
   //out->surface = surface;
-  out->texture = tex;
   return out;
 }//loadpicture
 

@@ -1,30 +1,17 @@
 #include "pseudirectx.h"
+#include <iostream>
 
-void ID3DXMatrixStack::RotateYawPitchRollLocal(float yaw, float pitch, float roll) {
-  // TODO: use quaternions
-  //_stack.top *= glm::rotate(glm::vec3(0,1,0), yaw);
-  //_stack.top *= glm::rotate(glm::vec3(1,0,0), pitch);
-  //_stack.top *= glm::rotate(glm::vec3(0,0,1), roll);
-  glRotatef(yaw, 0, 1, 0);
-  glRotatef(pitch, 1, 0, 0);
-  glRotatef(roll, 0, 0, 1);
-}
 void ID3DXMatrixStack::Push() {
   // TODO: use glm or or glPushMatrix/PopMatrix/LoadIdentity?
   //_stack.push(glm::identity<glm::mat4>());
   glPushMatrix();
 }
+
 void ID3DXMatrixStack::Pop() {
   glPopMatrix();
   //_stack.pop();
 }
-void ID3DXMatrixStack::TranslateLocal(float x, float y, float z) {
-  glTranslatef(x, y, z);
-  //_stack.top = glm::translate(_stack.top, glm::vec3(x, y, z));
-}
-void ID3DXMatrixStack::LoadIdentity() {
-  glLoadIdentity();
-}
+
 const D3DMATRIX* ID3DXMatrixStack::GetTop() {
   // TODO
   GLfloat m[16];
@@ -32,9 +19,34 @@ const D3DMATRIX* ID3DXMatrixStack::GetTop() {
   D3DMATRIX* mat = new D3DMATRIX(m[0], m[1], m[2], m[3], m[4], m[5], m[6], m[7], m[8], m[9], m[10], m[11], m[12], m[13], m[14], m[15]);
   return mat;
 }
+
+void ID3DXMatrixStack::LoadIdentity() {
+  glMatrixMode(GL_MODELVIEW); // TODO: good? bad?
+  glLoadIdentity();
+}
+
+void ID3DXMatrixStack::TranslateLocal(float x, float y, float z) {
+  glMatrixMode(GL_MODELVIEW); // TODO: good? bad?
+  glTranslatef(x, y, z);
+  //_stack.top = glm::translate(_stack.top, glm::vec3(x, y, z));
+}
+
+void ID3DXMatrixStack::RotateYawPitchRollLocal(float yaw, float pitch, float roll) {
+  // TODO: use quaternions
+  //_stack.top *= glm::rotate(glm::vec3(0,1,0), yaw);
+  //_stack.top *= glm::rotate(glm::vec3(1,0,0), pitch);
+  //_stack.top *= glm::rotate(glm::vec3(0,0,1), roll);
+  glMatrixMode(GL_MODELVIEW); // TODO: good? bad?
+  glRotatef(yaw, 0, 1, 0);
+  glRotatef(pitch, 1, 0, 0);
+  glRotatef(roll, 0, 0, 1);
+}
+
 void ID3DXMatrixStack::ScaleLocal(float x, float y, float z) {
+  glMatrixMode(GL_MODELVIEW); // TODO: good? bad?
   glScalef(x, y, z);
 }
+
 int D3DFVF_TEXCOORDSIZE2(int) {
   // TODO: probably not needed at all.
   return 0;
@@ -87,23 +99,32 @@ HRESULT DIRECTDRAWSURFACE7::Blt(LPRECT dstRect, DIRECTDRAWSURFACE7*& src, LPRECT
                     destRect->right - destRect->left,
                     destRect->bottom - destRect->top};
   int status = SDL_BlitSurface(src->surface, &srcRect2, this->surface, &destRect2);*/
-  // TODO: a feeble try to simulate blitting
+  // TODO: a feeble try to simulate blitting -- won‘t work, because screen might be turned to some arbitrary position
+  glMatrixMode(GL_PROJECTION);
+  glPushMatrix();
+  glLoadIdentity();
+  glOrtho(0,1024, 0, 768, -1, 1);
+  glMatrixMode(GL_MODELVIEW);
+  glPushMatrix();
+  glLoadIdentity();
+
+  //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glBindTexture(GL_TEXTURE_2D, src->texture);
   glBegin(GL_QUADS);
-  glTexCoord2f(srcRect->left,  srcRect->top);    glVertex2f(dstRect->left,  dstRect->top);
-  glTexCoord2f(srcRect->right, srcRect->top);    glVertex2f(dstRect->right, dstRect->top);
-  glTexCoord2f(srcRect->right, srcRect->bottom); glVertex2f(dstRect->right, dstRect->bottom);
-  glTexCoord2f(srcRect->left,  srcRect->bottom); glVertex2f(dstRect->left,  dstRect->bottom);
+  glTexCoord2f(srcRect->left/src->w,  1.0-srcRect->top/src->h);    glVertex2f(dstRect->left,  dstRect->top);
+  glTexCoord2f(srcRect->right/src->w, 1.0-srcRect->top/src->h);    glVertex2f(dstRect->right, dstRect->top);
+  glTexCoord2f(srcRect->right/src->w, 1.0-srcRect->bottom/src->h); glVertex2f(dstRect->right, dstRect->bottom);
+  glTexCoord2f(srcRect->left/src->w,  1.0-srcRect->bottom/src->h); glVertex2f(dstRect->left,  dstRect->bottom);
   glEnd();
+
+  glPopMatrix();
+  glMatrixMode(GL_PROJECTION);
+  glPopMatrix();
+  glMatrixMode(GL_MODELVIEW);
   return 1;
 }
 HRESULT DIRECTDRAWSURFACE7::BltFast(int x, int y, DIRECTDRAWSURFACE7*& src, LPRECT srcRect, DWORD dwTrans) {
-  /*SDL_Rect srcRect2{srcRect->top,
-                    srcRect->left,
-                    srcRect->right - srcRect->left,
-                    srcRect->bottom - srcRect->top};
-  SDL_Rect destRect{x, y, srcRect2.w, srcRect2.h};
-  int status = SDL_BlitSurface(src->surface, &srcRect2, this->surface, &destRect);*/
   RECT* dstRect = new RECT();
   dstRect->top = x;
   dstRect->left = y;
@@ -114,10 +135,10 @@ HRESULT DIRECTDRAWSURFACE7::BltFast(int x, int y, DIRECTDRAWSURFACE7*& src, LPRE
   return 1;
 }
 void DIRECTDRAWSURFACE7::SetColorKey(int key, DDCOLORKEY* flag) {
-  SDL_SetColorKey(this->surface, SDL_TRUE, key);
+  //SDL_SetColorKey(this->surface, SDL_TRUE, key);
 }
 void DIRECTDRAWSURFACE7::Release() {
-  SDL_FreeSurface(this->surface);
+  //SDL_FreeSurface(this->surface);
 }
 
 void DIRECT3DDEVICE7::SetRenderState(int key, DWORD value) {
@@ -205,8 +226,6 @@ void DIRECT3DDEVICE7::Clear(int, void*, int, int, int, int) {
 }
 void DIRECT3DDEVICE7::SetTexture(int num, DIRECTDRAWSURFACE7*& surf) {
   // TODO this goes to initialization
-  glEnable(GL_TEXTURE_2D);
-  glEnable(GL_COLOR_MATERIAL); // todo: need?
   glBindTexture(GL_TEXTURE_2D, surf->texture);
 }
 void DIRECT3DDEVICE7::DrawPrimitive(UINT primitiveType, DWORD texflags, const vvertex* data, UINT count, void* unk) {
@@ -255,10 +274,16 @@ void DIRECT3DDEVICE7::GetRenderTarget(LPDIRECTDRAWSURFACE7* surf) {
   // TODO
 }
 void DIRECT3DDEVICE7::SetViewport(D3DVIEWPORT7* vp) {
+  // TODO: perspective, not ortho
+  std::cout << "setting viewport to " << vp->dwWidth <<"x"<< vp->dwHeight <<" @ "<< vp->dwX <<"x"<< vp->dwY << std::endl;
   glViewport(vp->dwX, vp->dwY, vp->dwWidth, vp->dwHeight);
-  glFrustum(vp->dwX, vp->dwX + vp->dwWidth,
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  glOrtho(0, vp->dwWidth, 0, vp->dwHeight, -1.0f, 1.0f);
+  /*glFrustum(vp->dwX, vp->dwX + vp->dwWidth,
             vp->dwY, vp->dwY + vp->dwHeight,
-            vp->dvMinZ, vp->dvMaxZ);
+            vp->dvMinZ, vp->dvMaxZ);*/
+  glMatrixMode(GL_MODELVIEW);
 }
 int  DIRECT3DDEVICE7::GetCaps(D3DDEVICEDESC7*) {
   // TODO
@@ -296,7 +321,7 @@ HRESULT DirectSoundCreate(int* guid, LPDIRECTSOUND* ds, void* unkOuter) {
   if( Mix_AllocateChannels(4) < 0 ) {
     throw MyEx(Mix_GetError());
   }
-  return TRUE;
+  return DS_OK;
 }
 BOOL IDirectSound_SetCooperativeLevel(LPDIRECTSOUND, HWND hwnd, DWORD level) {
   return true;
@@ -364,8 +389,6 @@ char* ltoa(long value, char* str, int base) {
   return SDL_ltoa(value, str, base);
 }
 HRESULT D3DXCreateContext(DWORD deviceIndex, DWORD flags, HWND hwnd, DWORD width, DWORD height, LPD3DXCONTEXT* ppCtx) {
-  
-  SDL_GLContext gl_context = SDL_GL_CreateContext(hwnd); // TODO: needed? The gl_context is immediately thrown away.
   unsigned int rmask, gmask, bmask, amask;
   int bpp;
   uint32_t pixel_format = SDL_GetWindowPixelFormat(hwnd);
@@ -379,8 +402,12 @@ HRESULT D3DXCreateContext(DWORD deviceIndex, DWORD flags, HWND hwnd, DWORD width
   ptr->ddraw7 = new DIRECTDRAW7();
   ptr->d3ddevice7 = new DIRECT3DDEVICE7();
   ptr->d3ddevice7->render_surface = new DIRECTDRAWSURFACE7();
-  ptr->d3ddevice7->render_surface->surface = surface;
+  //ptr->d3ddevice7->render_surface->surface = surface;
   *ppCtx = ptr;
+
+  glEnable(GL_TEXTURE_2D);
+  glEnable(GL_COLOR_MATERIAL);
+
   return 1;
 }
 HRESULT D3DXCreateMatrixStack(DWORD flags, ID3DXMatrixStack **stack) {
@@ -391,13 +418,25 @@ HRESULT D3DXCreateTextureFromFile(LPDIRECT3DDEVICE7 pd3dDevice, LPDWORD pFlags, 
                 LPDIRECTDRAWPALETTE pDDPal, LPDIRECTDRAWSURFACE7* ppDDSurf, LPDWORD pNumMipMaps, LPSTR pSrcName, D3DX_FILTERTYPE filterType) {
   DIRECTDRAWSURFACE7* surf = new DIRECTDRAWSURFACE7();
   *ppDDSurf = surf;
-  surf->surface = SDL_LoadBMP(pSrcName);
-  if (surf->surface == nullptr) {
+  SDL_Surface* surface = SDL_LoadBMP(pSrcName);
+  if (surface == nullptr) {
     delete surf;
     throw MyEx("Error creating surface");
   }
+  SDL_Surface* s2 = SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_ARGB8888, 0);
+  surf->w = s2->w;
+  surf->h = s2->h;
+
+  glGenTextures(1, &surf->texture);
+  glBindTexture(GL_TEXTURE_2D, surf->texture);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, s2->pixels);
+  SDL_FreeSurface(surface);
+  SDL_FreeSurface(s2);
   return 1;
 }
+
 HRESULT D3DXInitialize() {
   // TODO: remove. Cannot call SDL_Init _after_ window creation.
   //SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);

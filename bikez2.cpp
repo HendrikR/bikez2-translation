@@ -6964,7 +6964,7 @@ void game_save(void){//save game
         fclose(fil);
 }
 void render_menu(void){//renders the menu
-	RECT     rcSource, rcDest, loota;
+        RECT     rcSource, rcDest, loota;
 	char menuteksti[40][256];
 	char row[200],temprow[200];
 	int tex,tey;
