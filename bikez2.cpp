@@ -49,8 +49,8 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hInstNULL, LPSTR lpszCmdLine
 }
 
 int main(int argc, char** argv) {
-  WinMain(0, 0, argv[0], 1);
-  return 0;
+        WinMain(0, 0, argv[0], 1);
+        return 0;
 }
 
 void startApplication(HINSTANCE hInstance)
@@ -386,11 +386,6 @@ void init()
 
 	taka->Blt(&rcDest, pictures[5], &rcSource,DDBLT_WAIT  ,NULL);
 	dxctx->UpdateFrame(0);
-
-	int t1=timeGetTime();
-	while(timeGetTime()-t1<3000){
-		int test=0;
-	}
 
 	plusmiinus=0;
 
