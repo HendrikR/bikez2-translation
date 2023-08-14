@@ -75,7 +75,7 @@ D3DMATRIX MatrixMult(const D3DMATRIX a, const D3DMATRIX b) {
 
 D3DMATRIX ViewMatrix(const D3DVECTOR from,const D3DVECTOR at, const D3DVECTOR world_up, const float roll) {
   // TODO: this does not respect @roll
-  return glm::lookAt(from, at, world_up);
+  return glm::lookAt(at, from, world_up);
 }
 
 D3DMATRIX ProjectionMatrix(const float near_plane, const float far_plane, const float fov) {

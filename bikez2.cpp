@@ -3913,6 +3913,7 @@ void rendercharacters(void){
 //void rendertext(INT x, INT y, INT fontti,CHAR teksti[100],LPDIRECTDRAWSURFACE7 pinta,LPDIRECTDRAWSURFACE7 font1)
 void rendertext(INT x, INT y, INT fontti, const char teksti[100]) //write
 {
+        std::cout<< "render text '"<<teksti<<"' @ "<<x <<"x"<<y <<std::endl;
 	//RECT loota; //boxxy
 	INT nume;
 	int xplus=0;
@@ -4099,7 +4100,8 @@ void rendertext(INT x, INT y, INT fontti, const char teksti[100]) //write
 			kamerax2=kamerax1+3.7f;
 			kameray2=kameray1+3.7f;
 			kameraz2=0;
-			m_View = ViewMatrix(D3DVECTOR(kamerax1,kameray1,kameraz1), D3DVECTOR(kamerax2,kameray2,kameraz2), D3DVECTOR(0,1,0), 0);
+			//m_View = ViewMatrix(D3DVECTOR(kamerax1,kameray1,kameraz1), D3DVECTOR(kamerax2,kameray2,kameraz2), D3DVECTOR(0,1,0), 0);
+                        m_View = ViewMatrix(D3DVECTOR(kamerax1*0.85,kameray1*0.3,kameraz1), D3DVECTOR(kamerax2*0.85,kameray2*0.3,kameraz2), D3DVECTOR(0,1,0), 0);
 			m_pDevice->SetTransform(D3DTRANSFORMSTATE_VIEW, &m_View);
 
 
@@ -4115,7 +4117,8 @@ void rendertext(INT x, INT y, INT fontti, const char teksti[100]) //write
 			kamerax2=kamerax1;
 			kameray2=kameray1;
 			kameraz2=0;
-			m_View = ViewMatrix(D3DVECTOR(kamerax1,kameray1,kameraz1), D3DVECTOR(kamerax2,kameray2,kameraz2), D3DVECTOR(0,1,0), 0);
+			//m_View = ViewMatrix(D3DVECTOR(kamerax1,kameray1,kameraz1), D3DVECTOR(kamerax2,kameray2,kameraz2), D3DVECTOR(0,1,0), 0);
+                        m_View = ViewMatrix(D3DVECTOR(kamerax1,kameray1,kameraz1), D3DVECTOR(kamerax2,kameray2,kameraz2), D3DVECTOR(0,1,0), 0);
 			m_pDevice->SetTransform(D3DTRANSFORMSTATE_VIEW, &m_View);
 
 

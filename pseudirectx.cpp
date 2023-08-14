@@ -208,13 +208,23 @@ void DIRECT3DDEVICE7::SetTransform(UINT enum_transformStateType, const D3DMATRIX
 void DIRECT3DDEVICE7::SetTransform(UINT enum_transformStateType, const D3DMATRIX mat) {
   GLint which;
   switch (enum_transformStateType) {
-  case D3DTRANSFORMSTATE_PROJECTION: which = GL_PROJECTION; break;
+  case D3DTRANSFORMSTATE_PROJECTION: which = GL_PROJECTION; return; break;
   case D3DTRANSFORMSTATE_VIEW: which = GL_MODELVIEW; break;
-  case D3DTRANSFORMSTATE_WORLD: which = GL_MODELVIEW; break;
+  case D3DTRANSFORMSTATE_WORLD: which = GL_MODELVIEW; return; break;
   }
+  /*std::cout << "set matrix "<< which <<" to ";
+  for(int i=0;i<4;i++) {
+          std::cout << "\n  ";
+          for(int j=0;j<4;j++) {
+                  std::cout << mat[j][i] << " ";
+          }
+  }
+  std::cout << std::endl;*/
   glMatrixMode(which);
+  glLoadIdentity();
   // TODO: this is a bit dangerous
   glMultMatrixf((GLfloat*)(&mat));
+  glMatrixMode(GL_MODELVIEW);
 }
 void DIRECT3DDEVICE7::LightEnable(int which, bool state) {
   int gl_which = GL_LIGHT0+which;
@@ -279,10 +289,11 @@ void DIRECT3DDEVICE7::SetViewport(D3DVIEWPORT7* vp) {
   glViewport(vp->dwX, vp->dwY, vp->dwWidth, vp->dwHeight);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  glOrtho(0, vp->dwWidth, 0, vp->dwHeight, -1.0f, 1.0f);
-  /*glFrustum(vp->dwX, vp->dwX + vp->dwWidth,
+  glOrtho(-(int)vp->dwWidth, vp->dwWidth, -1.8*(int)vp->dwHeight, vp->dwHeight, -1.0f, 1.0f);
+  //glOrtho(-0.5*vp->dwWidth, vp->dwWidth/2, -0.5*vp->dwHeight, vp->dwHeight/2, -1.0f, 1.0f);
+  glFrustum(vp->dwX, vp->dwX + vp->dwWidth,
             vp->dwY, vp->dwY + vp->dwHeight,
-            vp->dvMinZ, vp->dvMaxZ);*/
+            vp->dvMinZ, vp->dvMaxZ);
   glMatrixMode(GL_MODELVIEW);
 }
 int  DIRECT3DDEVICE7::GetCaps(D3DDEVICEDESC7*) {
