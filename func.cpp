@@ -1,9 +1,19 @@
 #include "func.h"
 
-// TODO: remove error supression after refactoring
-#pragma GCC diagnostic ignored "-Wreturn-type"
+bool linecollidesline(bool *osuma,float *osumax,float *osumay,float x1,float y1,float x2,float y2,float x3,float y3,float x4,float y4) {
+  float div = ((y4-y3)*(x2-x1)) - ((x4-x3)*(y2-y1));
+  float num1= ((x4-x3)*(y1-y3)) - ((y4-y3)*(x1-x3));
+  float num2= ((x2-x1)*(y1-y3)) - ((y2-y1)*(x1-x3));
 
-bool linecollidesline(bool *osuma,float *osumax,float *osumaz,float piste1x,float piste1z,float piste2x,float piste2z,float piste3x,float piste3z,float piste4x,float piste4z) {
+  if (div == 0) {
+    *osuma = false;
+  } else {
+    float u1 = num1/div, u2 = num2/div;
+    *osumax = x1 + (u1 * (x2-x1));
+    *osumay = y1 + (u1 * (y2-y1));
+    *osuma = true;
+  }
+  return *osuma;
 }//does a line collide with another
 
 LPDIRECTDRAWSURFACE7 loadPicture(LPDIRECTDRAW7 m_pDD, char name[200], BOOL hardware) {
@@ -34,13 +44,6 @@ LPDIRECTDRAWSURFACE7 loadPicture(LPDIRECTDRAW7 m_pDD, char name[200], BOOL hardw
   //out->surface = surface;
   return out;
 }//loadpicture
-
-LPDIRECTDRAWSURFACE7 loadTexture(int screenmode,D3DDEVICEINFO info, LPDIRECT3DDEVICE7 *m_pDevice,LPDIRECTDRAW7 m_pDD,char name[200], BOOL hardware) {
-  // TODO: not needed
-}//loadtexture
-LPDIRECTDRAWSURFACE7 loadWall(int screenmode,D3DDEVICEINFO info, LPDIRECT3DDEVICE7 *m_pDevice,LPDIRECTDRAW7 m_pDD,char name[200], BOOL hardware) {
-  // TODO: not needed.
-}//loadtexture
 
 int randInt( int low, int high ) {
   return low + std::rand() % (high-low+1);
