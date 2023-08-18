@@ -351,7 +351,6 @@ BOOL IDirectSound_SetCooperativeLevel(LPDIRECTSOUND, HWND hwnd, DWORD level) {
   return true;
 }
 BOOL SndObjPlay(HSNDOBJ obj, DWORD playFlags, BOOL todo_something) {
-  // TODO
   Mix_PlayChannel(-1, obj, 0);
   return true;
 }
@@ -362,7 +361,14 @@ BOOL SndObjStop(HSNDOBJ obj) {
   return true;
 }
 HSNDOBJ SndObjCreate(LPDIRECTSOUND ds, HSTR name, int concurrent) {
-  return Mix_LoadWAV(name);
+  char buf[255];
+  sprintf(buf, "sound/snd%s\0", name);
+  std::cout << "loading sound file " << buf << std::endl;
+  Mix_Chunk* ret = Mix_LoadWAV(buf);
+  if (ret == nullptr) {
+    throw MyEx(Mix_GetError());
+  }
+  return ret;
 }
 BOOL SndObjSetPan(HSNDOBJ obj, DOUBLE pan) {
   // pan \in [-1,1], Mix_SetPanning expects 0..255
