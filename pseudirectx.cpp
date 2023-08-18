@@ -391,12 +391,17 @@ HRESULT DirectInput8Create(HINSTANCE hinst, int enum1, int enum2, LPDIRECTINPUT8
 }
 
 
-HSTR LoadCursor(void*, int) {
-  return "";
+SDL_Cursor* LoadCursor(void*, SDL_SystemCursor cursor_id) {
+  // TODO
+  SDL_Cursor* cursor = SDL_CreateSystemCursor(cursor_id);
+  SDL_SetCursor(cursor);
+  return cursor;
 }
-void ShowCursor(bool) {
+void ShowCursor(bool state) {
+  SDL_ShowCursor(state);
 }
-void SetCursor(const char*) {
+void SetCursor(SDL_Cursor* cursor) {
+  SDL_SetCursor(cursor);
 }
 uint64_t GetTickCount() {
   return SDL_GetTicks();

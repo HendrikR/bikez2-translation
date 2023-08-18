@@ -203,7 +203,8 @@ struct WNDCLASSEX {
         int cbSize, style, cbClsExtra, cbWndExtra;
         WNDPROC lpfnWndProc;
         HINSTANCE hInstance;
-        HSTR hIcon, hIconSm, hCursor, lpszMenuName, lpszClassName;
+        SDL_Cursor* hCursor;
+        HSTR hIcon, hIconSm, lpszMenuName, lpszClassName;
         HBRUSH hbrBackground;
 };
 
@@ -274,9 +275,9 @@ HRESULT DirectInput8Create(HINSTANCE hinst, int version);
 HRESULT DirectInput8Create(HINSTANCE hinst, int enum1, int enum2, LPDIRECTINPUT8* lpdi, void*);
 
 
-HSTR LoadCursor(void*, int);
+SDL_Cursor* LoadCursor(void*, SDL_SystemCursor);
 void ShowCursor(bool);
-void SetCursor(const char*);
+void SetCursor(SDL_Cursor*);
 uint64_t GetTickCount();
 HSTR LoadIcon(HINSTANCE hinst, LPCTSTR name);
 
