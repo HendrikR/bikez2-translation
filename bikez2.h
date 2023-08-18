@@ -308,7 +308,7 @@ bool createscreen(void);
 bool Render(void);
 bool readpictures(void);//read pictures
 void CleanUp(void);//destroys stuff
-BOOL draw(obj *tavara);
+BOOL draw(obj *objects);
 void removeobj(obj *target, int indeksi);//delete object
 bool initkeyb(void);
 bool deinitkeyb(void);
@@ -326,7 +326,7 @@ void SetupVertexFog(float fStart, float fEnd,DWORD dwColor, DWORD dwMode, BOOL f
 void setLights(float x,float y,float z);//makes light
 void removeLight(int a, int *b);//deletes light
 void moveparts(int q);//moves parts to their places
-BOOL drawfast(obj *tavara);//draws faster
+BOOL drawfast(obj *objects);//draws faster
 void calculatecharacters(void);//calculates movements of humans
 //void removecharacter(int a);//deletes a character
 void rendercharacters(void);//draws characters

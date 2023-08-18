@@ -3273,17 +3273,17 @@ void CleanUp(void)
 
 
 
-BOOL draw(obj *tavara)
+BOOL draw(obj *objects)
 {
 
 /*
-  matrices->TranslateLocal(tavara->x,tavara->y,tavara->z); //matrices = matrix
-  matrices->RotateYawPitchRollLocal(tavara->rx,tavara->ry,tavara->rz);
+  matrices->TranslateLocal(objects->x,objects->y,objects->z); //matrices = matrix
+  matrices->RotateYawPitchRollLocal(objects->rx,objects->ry,objects->rz);
 */
-	//matrices->TranslateLocal(tavara->x,tavara->y,tavara->z);
+	//matrices->TranslateLocal(objects->x,objects->y,objects->z);
 	m_pDevice->SetTransform(D3DTRANSFORMSTATE_WORLD, *matrices->GetTop());
-	tavara->sijainti=*matrices->GetTop();
-	if (tavara->mirror) m_pDevice->SetRenderState(D3DRENDERSTATE_CULLMODE, D3DCULL_CW);
+	objects->sijainti=*matrices->GetTop();
+	if (objects->mirror) m_pDevice->SetRenderState(D3DRENDERSTATE_CULLMODE, D3DCULL_CW);
 	else m_pDevice->SetRenderState(D3DRENDERSTATE_CULLMODE, D3DCULL_CCW);
 /*
   m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,TRUE);
@@ -3294,25 +3294,25 @@ BOOL draw(obj *tavara)
 m_pDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND,
 D3DBLEND_SRCCOLOR );
 */
-	for (INT q=0; q<tavara->count; q++)
+	for (INT q=0; q<objects->count; q++)
 	{
 		//make reflektions //if steel// (or sword)
-		/*if((tavara->sisus[q].material==1)||(tavara->sisus[q].matsku==3))
+		/*if((objects->sisus[q].material==1)||(objects->sisus[q].matsku==3))
                   m_pDevice->SetRenderState(D3DRENDERSTATE_SPECULARENABLE,TRUE);*/
 		//else
 		//m_pDevice->SetRenderState(D3DRENDERSTATE_SPECULARENABLE,TRUE);
 
 
 		//matrices->Push();
-		//matrices->TranslateLocal(tavara->sisus[q].x,tavara->sisus[q].y,tavara->sisus[q].z);
-		//matrices->TranslateLocal(tavara->sisus[q].x,tavara->sisus[q].y,tavara->sisus[q].z);
+		//matrices->TranslateLocal(objects->sisus[q].x,objects->sisus[q].y,objects->sisus[q].z);
+		//matrices->TranslateLocal(objects->sisus[q].x,objects->sisus[q].y,objects->sisus[q].z);
 		//m_pDevice->SetTransform(D3DTRANSFORMSTATE_WORLD, *matrices->GetTop());
-		m_pDevice->SetMaterial( &mat[tavara->sisus[q].texture] );
-		m_pDevice->SetTexture( 0, background[tavara->sisus[q].texture2] );
+		m_pDevice->SetMaterial( &mat[objects->sisus[q].texture] );
+		m_pDevice->SetTexture( 0, background[objects->sisus[q].texture2] );
 
 		m_pDevice->DrawPrimitive(D3DPT_TRIANGLELIST  ,
                                 D3DFVF_XYZ  | D3DFVF_NORMAL | D3DFVF_TEX1|D3DFVF_TEXCOORDSIZE2(0)//|D3DFVF_TEXCOORDSIZE1(1)
-                                ,(LPVOID)tavara->sisus[q].loota.triangle,tavara->sisus[q].loota.vert,NULL);
+                                ,(LPVOID)objects->sisus[q].loota.triangle,objects->sisus[q].loota.vert,NULL);
 		//matrices->Pop();
 	}
 	//m_pDevice->SetRenderState(D3DRENDERSTATE_SPECULARENABLE,FALSE);
@@ -3322,42 +3322,42 @@ D3DBLEND_SRCCOLOR );
 }
 
 
-BOOL drawfast(obj *tavara)
+BOOL drawfast(obj *objects)
 {
 
 
 	m_pDevice->SetTransform(D3DTRANSFORMSTATE_WORLD, *matrices->GetTop());
-	//tavara->sijainti=*matrices->GetTop();
-	//if (tavara->mirror) m_pDevice->SetRenderState(D3DRENDERSTATE_CULLMODE, D3DCULL_CW);
+	//objects->sijainti=*matrices->GetTop();
+	//if (objects->mirror) m_pDevice->SetRenderState(D3DRENDERSTATE_CULLMODE, D3DCULL_CW);
 	//else m_pDevice->SetRenderState(D3DRENDERSTATE_CULLMODE, D3DCULL_CCW);
 
-	for (INT q=0; q<tavara->count; q++)
+	for (INT q=0; q<objects->count; q++)
 	{
 		//make reflektions //if steel// (or sword)
-		//if((tavara->sisus[q].material==1)||(tavara->sisus[q].matsku==3))
+		//if((objects->sisus[q].material==1)||(objects->sisus[q].matsku==3))
 		//m_pDevice->SetRenderState(D3DRENDERSTATE_SPECULARENABLE,TRUE);
 		//else
 		//m_pDevice->SetRenderState(D3DRENDERSTATE_SPECULARENABLE,TRUE);
 
 
 		//matrices->Push();
-		//matrices->TranslateLocal(tavara->sisus[q].x,tavara->sisus[q].y,tavara->sisus[q].z);
+		//matrices->TranslateLocal(objects->sisus[q].x,objects->sisus[q].y,objects->sisus[q].z);
 		if(quake>0){
 			matrices->TranslateLocal(randDouble(-quake,quake),randDouble(-quake,quake),randDouble(-quake,quake));
 			m_pDevice->SetTransform(D3DTRANSFORMSTATE_WORLD, *matrices->GetTop());
 		}
 
-		m_pDevice->SetMaterial( &mat[tavara->sisus[q].texture] );
-		m_pDevice->SetTexture( 0, background[tavara->sisus[q].texture2] );
+		m_pDevice->SetMaterial( &mat[objects->sisus[q].texture] );
+		m_pDevice->SetTexture( 0, background[objects->sisus[q].texture2] );
 
 		m_pDevice->DrawPrimitive(D3DPT_TRIANGLELIST  ,
                                 D3DFVF_XYZ  | D3DFVF_NORMAL | D3DFVF_TEX1|D3DFVF_TEXCOORDSIZE2(0)//|D3DFVF_TEXCOORDSIZE1(1)
-                                ,(LPVOID)tavara->sisus[q].loota.triangle,tavara->sisus[q].loota.vert,NULL);
+                                ,(LPVOID)objects->sisus[q].loota.triangle,objects->sisus[q].loota.vert,NULL);
 		//matrices->Pop();
 
 		/*m_pDevice->DrawPrimitive(D3DPT_TRIANGLELIST  ,
                   D3DFVF_XYZ  | D3DFVF_NORMAL | D3DFVF_TEX1|D3DFVF_TEXCOORDSIZE2(0)//|D3DFVF_TEXCOORDSIZE1(1)
-                  ,(LPVOID)tavara->sisus[q].loota.triangle,tavara->sisus[q].loota.vert,NULL);		*/
+                  ,(LPVOID)objects->sisus[q].loota.triangle,objects->sisus[q].loota.vert,NULL);		*/
 	}
 	//m_pDevice->SetRenderState(D3DRENDERSTATE_SPECULARENABLE,FALSE);
 	//m_pDevice->SetTexture( 0, NULL);//tarvitaanko tätä?
@@ -3913,7 +3913,7 @@ void rendercharacters(void){
 //void rendertext(INT x, INT y, INT fontti,CHAR teksti[100],LPDIRECTDRAWSURFACE7 pinta,LPDIRECTDRAWSURFACE7 font1)
 void rendertext(INT x, INT y, INT fontti, const char teksti[100]) //write
 {
-        std::cout<< "render text '"<<teksti<<"' @ "<<x <<"x"<<y <<std::endl;
+        //std::cout<< "render text '"<<teksti<<"' @ "<<x <<"x"<<y <<std::endl;
 	//RECT loota; //boxxy
 	INT nume;
 	int xplus=0;
