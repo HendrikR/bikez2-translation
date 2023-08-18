@@ -52,10 +52,20 @@ int D3DFVF_TEXCOORDSIZE2(int) {
   return 0;
 }
 
-HRESULT DIRECTINPUTDEVICE8::Acquire() {
+HRESULT DIRECTINPUTDEVICE8::GetDeviceState(size_t memsize, DIMOUSESTATE* mouse) {
+  SDL_GetMouseState(&mouse->lX, &mouse->lY);
+  mouse->rgbButtons[0] = SDL_BUTTON(SDL_BUTTON_LEFT);
+  mouse->rgbButtons[1] = SDL_BUTTON(SDL_BUTTON_MIDDLE);
+  mouse->rgbButtons[2] = SDL_BUTTON(SDL_BUTTON_RIGHT);
   return true;
 }
-HRESULT DIRECTINPUTDEVICE8::GetDeviceState(size_t, void*) {
+HRESULT DIRECTINPUTDEVICE8::GetDeviceState(size_t memsize, char* keybuffer) {
+  SDL_PumpEvents();
+  int sdlkeys_len;
+  const Uint8* sdlkeys = SDL_GetKeyboardState(&sdlkeys_len);
+  for(int i=0; i<256;i++) {
+    keybuffer[i] = sdlkeys[i] == 1 ? 0x80 : 0x00;
+  }
   return true;
 }
 HRESULT DIRECTINPUTDEVICE8::SetDataFormat(DIRECTINPUTDEVICE8**) {
@@ -66,6 +76,9 @@ HRESULT DIRECTINPUTDEVICE8::SetCooperativeLevel(HWND&, int) {
   SDL_CaptureMouse(SDL_TRUE);
   SDL_SetRelativeMouseMode(SDL_TRUE);
   return 1;
+}
+HRESULT DIRECTINPUTDEVICE8::Acquire() {
+  return true;
 }
 void DIRECTINPUTDEVICE8::Unacquire() {
 }

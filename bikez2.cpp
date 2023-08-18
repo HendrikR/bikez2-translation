@@ -1567,7 +1567,7 @@ void readkeyb(void)
 	for (q=0; q<256; q++){buffer2[q]=buffer[q];}
 
 
-	hr = g_lpDIDevice->GetDeviceState(sizeof(buffer),(LPVOID)&buffer);
+	hr = g_lpDIDevice->GetDeviceState(sizeof(buffer), buffer);
         if FAILED(hr)
                  {
                          // If it failed, the device has probably been lost.
