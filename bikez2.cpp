@@ -6185,7 +6185,7 @@ void render_workshop(void){//render workshop
 	float nop;
 
 
-
+        std::cout << "rendering workshop" << std::endl;
 	gamespeed=1;
 
 	//background picture
@@ -6711,6 +6711,7 @@ void game_load(void){//load game
 
         if(!loadable[savegame_slot]) return;//exit if not right
 
+        std::cout << "loading game ..." << std::endl;
         itoa(savegame_slot,temprow,10);
         strcpy(tallennusrow,"save/s");
         strcat(tallennusrow,temprow);
@@ -6858,6 +6859,7 @@ void game_save(void){//save game
         char tallennusrow[300];
         float kx,kz;
 
+        std::cout << "saving game" << std::endl;
         itoa(savegame_slot,temprow,10);
         strcpy(tallennusrow,"save/s");
         strcat(tallennusrow,temprow);
@@ -7121,7 +7123,7 @@ void render_menu(void){//renders the menu
 
 
 
-
+        // TODO: not sure why rendering the moped happens in the game menu.
 	//render moped
         //set camera to its place
         float kamerax1=0;
@@ -7268,7 +7270,7 @@ void game_new(void){ //new game
 	float nop;
 
 
-
+        std::cout << "starting new game" << std::endl;
 	SndObjPlay(voices[1], DSBPLAY_LOOPING,options[1]&&SOUNDS_LOADED);
 
 
@@ -7463,7 +7465,7 @@ void game_new(void){ //new game
 		ase[b].smoke_size=ase[b].pdamage*0.1f;
 	}
 
-	//guns changed by diffyculty level
+	//guns changed by difficulty level
 	q=10;
 	//police gun 0 pistol
 	if(game_difficulty==0) ase[q].damage=3.5f;
@@ -7494,10 +7496,8 @@ void game_new(void){ //new game
 	gamephase2=0;
 	render_game();
 	gamephase2=3;
-
-
-
 }
+
 void sounds_start(){
         std::cout << "initializing sound" << std::endl;
 
