@@ -46,7 +46,7 @@ LPDIRECTDRAWSURFACE7 loadPicture(LPDIRECTDRAW7 m_pDD, char name[200], BOOL hardw
 }//loadpicture
 
 int randInt( int low, int high ) {
-  return low + std::rand() % (high-low+1);
+  return low + std::rand() % (high-low);
 }
 float randDouble( float low, float high ) {
   return low + (std::rand() / (float)RAND_MAX) * (high-low);

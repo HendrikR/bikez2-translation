@@ -273,7 +273,11 @@ void DIRECT3DDEVICE7::LightEnable(int which, bool state) {
   if (state == TRUE) glEnable(which);
   else               glDisable(which);
 }
-void DIRECT3DDEVICE7::Clear(int, void*, int, int, int, int) {
+void DIRECT3DDEVICE7::Clear(int, void*, int, int color, int, int) {
+  glClearColor(((color >> 16) & 0xFF) / 255.0,
+               ((color >> 8) & 0xFF) / 255.0,
+               ((color) & 0xFF) / 255.0,
+               ((color >> 24) & 0xFF) / 255.0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 void DIRECT3DDEVICE7::SetTexture(int num, DIRECTDRAWSURFACE7*& surf) {
