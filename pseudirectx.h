@@ -74,7 +74,9 @@ typedef glm::mat4 D3DMATRIX;
         };
         };*/
 typedef D3DMATRIX D3DXMATRIX;
-struct ID3DXMatrixStack {
+class ID3DXMatrixStack {
+public:
+        ID3DXMatrixStack();
         void RotateYawPitchRollLocal(float yaw, float pitch, float roll);
         void Push();
         void Pop();
@@ -249,6 +251,7 @@ typedef struct DIRECT3DDEVICE7 {
         void EndScene();
         void GetLightEnable(int, BOOL*);
         DIRECTDRAWSURFACE7* render_surface;
+        D3DMATRIX proj_matrix, world_matrix, view_matrix;
 } *LPDIRECT3DDEVICE7;
 
 typedef struct D3DXCONTEXT {

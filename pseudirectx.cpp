@@ -1,50 +1,80 @@
 #include "pseudirectx.h"
 #include <iostream>
+#include <iomanip>
 
+#define GLM_STACK
+
+
+ID3DXMatrixStack::ID3DXMatrixStack() : _stack() {}
 void ID3DXMatrixStack::Push() {
-  // TODO: use glm or or glPushMatrix/PopMatrix/LoadIdentity?
-  //_stack.push(glm::identity<glm::mat4>());
+  #ifdef GLM_STACK
+  _stack.push(glm::identity<glm::mat4>());
+  #else
   glPushMatrix();
+  #endif
 }
 
 void ID3DXMatrixStack::Pop() {
+  #ifdef GLM_STACK
+  _stack.pop();
+  #else
   glPopMatrix();
-  //_stack.pop();
+  #endif
 }
 
 const D3DMATRIX* ID3DXMatrixStack::GetTop() {
-  // TODO
+  #ifdef GLM_STACK
+  assert(!_stack.empty());
+  if (_stack.empty()) _stack.push(glm::identity<glm::mat4>());
+  return &(_stack.top());
+  #else
   GLfloat m[16];
   glGetFloatv(GL_MODELVIEW_MATRIX, m);
   D3DMATRIX* mat = new D3DMATRIX(m[0], m[1], m[2], m[3], m[4], m[5], m[6], m[7], m[8], m[9], m[10], m[11], m[12], m[13], m[14], m[15]);
   return mat;
+  #endif
 }
 
 void ID3DXMatrixStack::LoadIdentity() {
-  glMatrixMode(GL_MODELVIEW); // TODO: good? bad?
+  #ifdef GLM_STACK
+  while(!_stack.empty()) _stack.pop();
+  _stack.push(glm::identity<glm::mat4>());
+  #else
+  glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
+  #endif
 }
 
 void ID3DXMatrixStack::TranslateLocal(float x, float y, float z) {
-  glMatrixMode(GL_MODELVIEW); // TODO: good? bad?
+  #ifdef GLM_STACK
+  _stack.top() = glm::translate(_stack.top(), glm::vec3(x, y, z));
+  #else
+  glMatrixMode(GL_MODELVIEW);
   glTranslatef(x, y, z);
-  //_stack.top = glm::translate(_stack.top, glm::vec3(x, y, z));
+  #endif
 }
 
 void ID3DXMatrixStack::RotateYawPitchRollLocal(float yaw, float pitch, float roll) {
-  // TODO: use quaternions
-  //_stack.top *= glm::rotate(glm::vec3(0,1,0), yaw);
-  //_stack.top *= glm::rotate(glm::vec3(1,0,0), pitch);
-  //_stack.top *= glm::rotate(glm::vec3(0,0,1), roll);
-  glMatrixMode(GL_MODELVIEW); // TODO: good? bad?
+  // TODO: can I rotate in one go?
+  #ifdef GLM_STACK
+  _stack.top() = glm::rotate(_stack.top(), yaw,   glm::vec3(0,1,0));
+  _stack.top() = glm::rotate(_stack.top(), pitch, glm::vec3(1,0,0));
+  _stack.top() = glm::rotate(_stack.top(), roll,  glm::vec3(0,0,1));
+  #else
+  glMatrixMode(GL_MODELVIEW);
   glRotatef(yaw, 0, 1, 0);
   glRotatef(pitch, 1, 0, 0);
   glRotatef(roll, 0, 0, 1);
+  #endif
 }
 
 void ID3DXMatrixStack::ScaleLocal(float x, float y, float z) {
-  glMatrixMode(GL_MODELVIEW); // TODO: good? bad?
+  #ifdef GLM_STACK
+  _stack.top() = glm::scale(_stack.top(), glm::vec3(x, y, z));
+  #else
+  glMatrixMode(GL_MODELVIEW);
   glScalef(x, y, z);
+  #endif
 }
 
 int D3DFVF_TEXCOORDSIZE2(int) {
@@ -218,8 +248,7 @@ void DIRECT3DDEVICE7::SetRenderState(int key, DWORD value) {
 void DIRECT3DDEVICE7::SetTransform(UINT enum_transformStateType, const D3DMATRIX* mat) {
   SetTransform(enum_transformStateType, *mat);
 }
-void DIRECT3DDEVICE7::SetTransform(UINT enum_transformStateType, const D3DMATRIX mat) {
-  GLint which;
+void DIRECT3DDEVICE7::SetTransform(UINT enum_transformStateType, const D3DMATRIX m) {
   switch (enum_transformStateType) {
   case D3DTRANSFORMSTATE_PROJECTION: which = GL_PROJECTION; return; break;
   case D3DTRANSFORMSTATE_VIEW: which = GL_MODELVIEW; break;
@@ -302,12 +331,14 @@ void DIRECT3DDEVICE7::SetViewport(D3DVIEWPORT7* vp) {
   glViewport(vp->dwX, vp->dwY, vp->dwWidth, vp->dwHeight);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  glOrtho(-(int)vp->dwWidth, vp->dwWidth, -1.8*(int)vp->dwHeight, vp->dwHeight, -1.0f, 1.0f);
+  //glOrtho(-(int)vp->dwWidth, vp->dwWidth, -1.8*(int)vp->dwHeight, vp->dwHeight, -1.0f, 1.0f);
+  glOrtho(-(int)vp->dwWidth*1.4, vp->dwWidth*1.4, -1.8*(int)vp->dwHeight*1.2, vp->dwHeight*1.2, -1.0f, 1.0f);
   //glOrtho(-0.5*vp->dwWidth, vp->dwWidth/2, -0.5*vp->dwHeight, vp->dwHeight/2, -1.0f, 1.0f);
   glFrustum(vp->dwX, vp->dwX + vp->dwWidth,
             vp->dwY, vp->dwY + vp->dwHeight,
             vp->dvMinZ, vp->dvMaxZ);
   glMatrixMode(GL_MODELVIEW);
+  this->proj_matrix = this->view_matrix = this->world_matrix = D3DMATRIX(1,0,0,0,  0,1,0,0,  0,0,1,0, 0,0,0,1);
 }
 int  DIRECT3DDEVICE7::GetCaps(D3DDEVICEDESC7*) {
   // TODO
@@ -446,7 +477,7 @@ HRESULT D3DXCreateContext(DWORD deviceIndex, DWORD flags, HWND hwnd, DWORD width
   return 1;
 }
 HRESULT D3DXCreateMatrixStack(DWORD flags, ID3DXMatrixStack **stack) {
-  // TODO
+  *stack = new ID3DXMatrixStack();
   return 1;
 }
 HRESULT D3DXCreateTextureFromFile(LPDIRECT3DDEVICE7 pd3dDevice, LPDWORD pFlags, LPDWORD pWidth, LPDWORD pHeight, D3DX_SURFACEFORMAT* pPixelFormat,
@@ -482,7 +513,6 @@ HRESULT D3DXUninitialize() {
   return TRUE;
 }
 HRESULT D3DXVec3Add(D3DXVECTOR3 *pOut, const D3DXVECTOR3 *pV1, const D3DXVECTOR3 *pV2) {
-  // TODO: use glm operator+
   glm::vec3 v1(*pV1);
   glm::vec3 v2(*pV2);
   //glm::vec3 v3 = v1 + v2;
@@ -542,22 +572,5 @@ int GetStockObject(int x) {
   return x;
 }
 
-
-
-
-/* TODO: Here be dragons
-   Structures in here should actually be defined in bikez2.h, bikez2.cpp or some elusive header. They are here just temporarily. */
-/*struct pvertex {
-  D3DVECTOR position {
-  }
-  float     u, v {
-  }
-  } {
-  }*/
-void lataa(const char*, void*, bool, bool) {
-}
-//                    pvertex*
-void svolume(HSNDOBJ, int, void*, int, int) {
-}
 void svolume(HSNDOBJ, int, bool) {
 }
