@@ -5,6 +5,17 @@
 #define GLM_STACK
 
 
+void printMatrix(const char* text, const D3DMATRIX mat) {
+  std::cout << text;
+  for(int i=0;i<4;i++) {
+    std::cout << "\n  ";
+    for(int j=0;j<4;j++) {
+      std::cout << std::fixed << std::setw(7) << std::setprecision(2) << mat[j][i] << " ";
+    }
+  }
+  std::cout << std::endl;
+}
+
 ID3DXMatrixStack::ID3DXMatrixStack() : _stack() {}
 void ID3DXMatrixStack::Push() {
   #ifdef GLM_STACK
