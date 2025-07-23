@@ -35,7 +35,6 @@ void ID3DXMatrixStack::Pop() {
 
 const D3DMATRIX* ID3DXMatrixStack::GetTop() {
   #ifdef GLM_STACK
-  assert(!_stack.empty());
   if (_stack.empty()) _stack.push(glm::identity<glm::mat4>());
   return &(_stack.top());
   #else
@@ -114,8 +113,8 @@ HRESULT DIRECTINPUTDEVICE8::SetDataFormat(DIRECTINPUTDEVICE8**) {
 }
 HRESULT DIRECTINPUTDEVICE8::SetCooperativeLevel(HWND&, int) {
   // TODO: does not like relativemouse
-  SDL_CaptureMouse(SDL_TRUE);
-  SDL_SetRelativeMouseMode(SDL_TRUE);
+  //SDL_CaptureMouse(SDL_TRUE);
+  //SDL_SetRelativeMouseMode(SDL_TRUE);
   return 1;
 }
 HRESULT DIRECTINPUTDEVICE8::Acquire() {
