@@ -261,23 +261,32 @@ void DIRECT3DDEVICE7::SetTransform(UINT enum_transformStateType, const D3DMATRIX
 }
 void DIRECT3DDEVICE7::SetTransform(UINT enum_transformStateType, const D3DMATRIX m) {
   switch (enum_transformStateType) {
-  case D3DTRANSFORMSTATE_PROJECTION: which = GL_PROJECTION; return; break;
-  case D3DTRANSFORMSTATE_VIEW: which = GL_MODELVIEW; break;
-  case D3DTRANSFORMSTATE_WORLD: which = GL_MODELVIEW; return; break;
+  case D3DTRANSFORMSTATE_PROJECTION: this->proj_matrix = D3DMATRIX(m[0][0], m[0][1], m[0][2], m[0][3],
+                                                                   m[1][0], m[1][1], m[1][2], m[1][3],
+                                                                   m[2][0], m[2][1], m[2][2], m[2][3]+1,
+                                                                   m[3][0], m[3][1], m[3][2]+50.0, m[3][3]+1);
+          break;
+  case D3DTRANSFORMSTATE_VIEW: this->view_matrix = D3DMATRIX(m[0][0], m[0][1], m[0][2], m[0][3],
+                                                             m[1][0], m[1][1], m[1][2], m[1][3],
+                                                             m[2][0], m[2][1], m[2][2], m[2][3],
+                                                             m[3][0], m[3][1], m[3][2], m[3][3]);
+          break;
+  case D3DTRANSFORMSTATE_WORLD: this->world_matrix = D3DMATRIX(m[0][0], m[0][1], m[0][2], m[0][3],
+                                                               m[1][0], m[1][1], m[1][2], m[1][3],
+                                                               m[2][0], m[2][1], m[2][2], m[2][3],
+                                                               m[3][0], m[3][1], m[3][2], m[3][3]);
+          break;
   }
-  /*std::cout << "set matrix "<< which <<" to ";
-  for(int i=0;i<4;i++) {
-          std::cout << "\n  ";
-          for(int j=0;j<4;j++) {
-                  std::cout << mat[j][i] << " ";
-          }
-  }
-  std::cout << std::endl;*/
-  glMatrixMode(which);
+
+  //printMatrix("set view matrix to ", view_matrix);
+  glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  // TODO: this is a bit dangerous
-  glMultMatrixf((GLfloat*)(&mat));
+  glOrtho(-1024, 1024, -768, 768, 1.0f, -1.0f);
+  glMultMatrixf((GLfloat*)(&this->proj_matrix));
   glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  //glMultMatrixf((GLfloat*)(&this->world_matrix));
+  glMultMatrixf((GLfloat*)(&this->view_matrix));
 }
 void DIRECT3DDEVICE7::LightEnable(int which, bool state) {
   int gl_which = GL_LIGHT0+which;
