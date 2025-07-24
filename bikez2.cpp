@@ -4160,32 +4160,14 @@ void rendertext(INT x, INT y, INT fontti, const char teksti[100]) //write
 
 }
 
-
-void render_game(void){//just renders some moped driving.
-
-	int a,b,q,c,d;
-	float kerroin;
-	char row[200];
-	char temprow[200];
-	//gamephase2 		//gamephase2
-	//0=normaali peli 	//normal game
-	//1=loppudemo 		//end demo
-	//2=paussi 		// pause
-	//3=alkudemo 		//beginning demo
-	//4=alkudemo 		//beginning demo
-	//5=dyingma 		//death
-	ase[2]._type=4;
-	ase[3]._type=4;
-	ase[4]._type=4;
-
-
+void render_game_pre_fx() {
 	if(quake>7)quake=7;
 	if(quake>0)quake=quake-0.03f*elapsed*gamespeed;//earthquake
 
 	if(gamephase2==0){
 		calculateCollisions();//does mopeds collide with anything
 		laskemoped();//mopeds are rollin //calculatemopeds
-		for (d=0; d<num_mopeds; d++){
+		for (int d=0; d<num_mopeds; d++){
 			if(moped[d].inactive)continue;
 			aja(&moped[d]);
 		}
@@ -4199,13 +4181,12 @@ void render_game(void){//just renders some moped driving.
 	if(options[1]&&SOUNDS_LOADED)
 		SndObjSetFrequency(voices[1],hertsi);
 	//SndObjPlay(voices[1], DSBPLAY_LOOPING,options[1]&&SOUNDS_LOADED);
+}
 
-
-	//normal vision angle
+void render_game_mapmode() {
 	if(mapmode){
 		//background is grey ; it is not needed if sky is renderet separetly
 		m_pDevice->Clear( 0, NULL, D3DCLEAR_TARGET, 0x004C4C4C, 0, 0 );
-		kerroin=1.0f;
                 float kameraspeed;
                 float fSinXY,fSinXZ,fCosXZ,ero;
                 float xcam=moped[0].x1;
@@ -4258,15 +4239,13 @@ void render_game(void){//just renders some moped driving.
 			drawfast(&mallit[2].malli[11]);
 			m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE,TRUE);
 			m_pDevice->LightEnable(0, TRUE);
-                */
+		*/
 //SetupVertexFog(maxvisible-5000,maxvisible,0x004C4C4C, D3DFOG_LINEAR  , TRUE, 0);//sumu
+        }
+}
 
-
-
-	}
-
-
-	//vision from above
+void render_game_prepare(float &kerroin) {
+        //vision from above
 	if(!mapmode){
                 kerroin=0.45f;
                 kamerax1=moped[0].x1+100;
@@ -4302,13 +4281,13 @@ void render_game(void){//just renders some moped driving.
 		SndObjStop(voices[1]);//motor stops
                 //smoke to air
                 if(ase[1].smoke_filled!=0)
-                        for (q=0; q<3; q++){
+                        for (int q=0; q<3; q++){
                                 fromsmoke(1.0f,0.001f,true,3000,moped[0].x1,60,moped[0].z1,ase[1].smoke_filled,randDouble(pi,-pi),randDouble(pi,-pi),randDouble(pi,-pi));
                         }
                 //explosion
                 if(ase[1].explosion_size!=0){
                         quake=3;
-                        for (q=0; q<100; q++){
+                        for (int q=0; q<100; q++){
                                 shoot(-6667,-1,1,randDouble(100,300),moped,2,moped[0].x1,60,moped[0].z1,randDouble(-pi,pi),randDouble(-pi,pi),randDouble(-pi,pi));
                         }
                         fromsmoke(1.0f,0.01f,true,3000,moped[0].x1,60,moped[0].z1,3,0,0,0);
@@ -4318,10 +4297,12 @@ void render_game(void){//just renders some moped driving.
 
 	}
 
+}
 
+
+void render_game_workshop() {
 	//is the character at workshop
 	if(maps[moped[0].sektoriz][moped[0].sektorix]==6){
-
 		float mopox=moped[0].x1-moped[0].sektorix*8000;
 		float mopoz=moped[0].z1-moped[0].sektoriz*8000;
 
@@ -4350,12 +4331,12 @@ void render_game(void){//just renders some moped driving.
 			moped[0].z4=moped[0].z2;
 			moped[0].angle_pitch=0;
 			moped[0].etudirection=0;
-			for (a=0; a<100; a++)moped[0].osuma[a]=false;
+			for (int a=0; a<100; a++)moped[0].osuma[a]=false;
 		}
 	}
+}
 
-
-
+void render_game_lights() {
 	//headlight
 	lights[0].valo.dvPosition.x = moped[0].x1;
 	lights[0].valo.dvPosition.y = 100;
@@ -4445,12 +4426,13 @@ void render_game(void){//just renders some moped driving.
 
           }
 	*/
+}
 
-
-	//maps
+void render_game_houses(float kerroin) {
+        //maps
 	//can you see it ?
-	for (a=0; a<mapsz; a++){
-		for (b=0; b<mapsx; b++){
+	for (int a=0; a<mapsz; a++){
+		for (int b=0; b<mapsx; b++){
 			center_pointmap[a*mapsx+b].x=(float)b*8000+4000;
 			center_pointmap[a*mapsx+b].y=0;
 			center_pointmap[a*mapsx+b].z=(float)a*8000+4000;
@@ -4469,10 +4451,10 @@ void render_game(void){//just renders some moped driving.
 	int maporderx[500];
 	int maporderz[500];
 	int mapsvisible;
-	for (q=0; q<500; q++)
+	for (int q=0; q<500; q++)
 		maporder[q]=499;
-	for (a=0; a<mapsz; a++){
-		for (b=0; b<mapsx; b++){
+	for (int a=0; a<mapsz; a++){
+		for (int b=0; b<mapsx; b++){
 			//if(visiblemap[a*mapsx+b] &D3DSTATUS_CLIPINTERSECTIONALL){continue;}
 			mapdistance[a*mapsx+b]=sqrtf(sqr(b*8000+4000-moped[0].x1)+sqr(a*8000+4000-moped[0].z1));
 		}
@@ -4480,9 +4462,9 @@ void render_game(void){//just renders some moped driving.
 
 	//arrange first nearests
 	mapdistance[499]=1000000;
-	for (c=0; c<200; c++){
-		for (a=0; a<mapsz; a++){
-			for (b=0; b<mapsx; b++){
+	for (int c=0; c<200; c++){
+		for (int a=0; a<mapsz; a++){
+			for (int b=0; b<mapsx; b++){
 				if(visiblemap[a*mapsx+b] &D3DSTATUS_CLIPINTERSECTIONALL){continue;}
 				if(mapdistance[a*mapsx+b]<mapdistance[maporder[c]])
 				{
@@ -4497,9 +4479,9 @@ void render_game(void){//just renders some moped driving.
 	}
 
 	//render nearest 6
-	q=16;
+	int q=16;
 	if(mapsvisible<q)q=mapsvisible;
-	for (c=0; c<q; c++){
+	for (int c=0; c<q; c++){
                 //if(visiblemap[a*mapsx+b] &D3DSTATUS_CLIPINTERSECTIONALL){continue;}
 
                 matrices->LoadIdentity();
@@ -4527,12 +4509,12 @@ else drawfast(&mallit[0].malli[4]);//pohja
 }
 }
 */
+}
 
-
-
-	//bullets
+void render_game_bullets() {
+        //bullets
 	bullet_count=0;
-	for (a=10; a<MAX_BULLETS; a++){//first 10 are for driving over people
+	for (int a=10; a<MAX_BULLETS; a++){//first 10 are for driving over people
 		if(bullet[a].remove)continue;
 		bullet_count=bullet_count+1;
 		matrices->LoadIdentity();
@@ -4584,7 +4566,9 @@ else drawfast(&mallit[0].malli[4]);//pohja
 
 
 	}
+}
 
+void render_game_mopeds() {
 	m_pDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND,
                         D3DBLEND_ONE );
 	m_pDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND,
@@ -4597,10 +4581,8 @@ else drawfast(&mallit[0].malli[4]);//pohja
 			D3DFVF_XYZ |D3DFVF_TEX1|D3DFVF_TEXCOORDSIZE2(0) ,bullet_trace,bullet_count*2,NULL);
         m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,FALSE);
 
-
-
-	//are mopeds visible
-	for (a=0; a<num_mopeds; a++){
+        //are mopeds visible
+	for (int a=0; a<num_mopeds; a++){
                 if(moped[a].inactive)continue;
                 center_pointmap[a].x=moped[a].x1;
                 center_pointmap[a].y=0;
@@ -4619,7 +4601,7 @@ else drawfast(&mallit[0].malli[4]);//pohja
 
 	//chasis
 	if(gamephase2!=5)//if player is not dead
-                for (d=0; d<num_mopeds; d++){
+                for (int d=0; d<num_mopeds; d++){
                         if(moped[d].inactive)continue;
                         moped[d].visible=true;
                         if(visiblemap[d] &D3DSTATUS_CLIPINTERSECTIONALL){moped[d].visible=false;continue;}
@@ -4670,15 +4652,14 @@ else drawfast(&mallit[0].malli[4]);//pohja
                                         matrices->TranslateLocal(7,57,0);
 
                                         //select textures
-                                        switch (moped[d].mission.asiakas[0].picture)
-                                        {
+                                        switch (moped[d].mission.asiakas[0].picture) {
                                         case 3:{
                                                 e=0;
                                                 break;
                                         }
                                         case 7:{
-                                                e=2;
-                                                break;
+                                                        e=2;
+                                                        break;
                                         }
                                         case 8:{
                                                 e=3;
@@ -4690,7 +4671,7 @@ else drawfast(&mallit[0].malli[4]);//pohja
                                         }
                                         }
 
-                                        matrices->Push();q=0;//ass
+                                        matrices->Push();int q=0;//ass
                                         matrices->TranslateLocal(moped[d].mission.asiakas[0].bodypart_coords[q].x,moped[d].mission.asiakas[0].bodypart_coords[q].y,moped[d].mission.asiakas[0].bodypart_coords[q].z);
                                         matrices->RotateYawPitchRollLocal(0,0,0);
                                         mallit[moped[d].mission.asiakas[0].picture].malli[q].sisus[0].texture2=charactertexture[e].bodypart[1];
@@ -4833,15 +4814,17 @@ else drawfast(&mallit[0].malli[4]);//pohja
                         }
 
                 }
+}
 
+void render_game_crosshair1(float& camq, float& camw, float& came) {
 	m_pDevice->LightEnable(1, FALSE);
 	rendercharacters();
 	m_pDevice->LightEnable(1, TRUE);
 
 	//camera angle
-	float camq=-atan2f(-kamerax2+kamerax1,-kameraz2+kameraz1);
-	float camw=0;
-	float came=-atan2f(-kameray2+kameray1,sqrtf((sqr(-kameraz2+kameraz1)+sqr(-kamerax2+kamerax1))));
+	camq=-atan2f(-kamerax2+kamerax1,-kameraz2+kameraz1);
+	camw=0;
+	came=-atan2f(-kameray2+kameray1,sqrtf((sqr(-kameraz2+kameraz1)+sqr(-kamerax2+kamerax1))));
 
 	if(moped[0].target_character!=-6667){
                 /*m_pDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND,
@@ -4868,18 +4851,18 @@ else drawfast(&mallit[0].malli[4]);//pohja
 	}
 
 	//}
+}
 
-
-	//bulletholes
+void render_game_bulletholes(float camq, float camw, float came) {
 	//if(smoke_count>0)
 	{
+                //bulletholes
                 m_pDevice->SetRenderState( D3DRENDERSTATE_ZBIAS, 1);//set zbias as 1 beacause of the bullet holes
 
 
 
 
-                for (q=0; q<MAX_SMOKES; q++)
-                {
+                for (int q=0; q<MAX_SMOKES; q++) {
                         if(smokes[q].inactive)continue;
                         //kappaletta=kappaletta+1;
                         radius[q]=100.01f;
@@ -4898,7 +4881,7 @@ else drawfast(&mallit[0].malli[4]);//pohja
                 int kappaletta=0;//ammount of bullet holes
 
 
-                for (q=0; q<MAX_SMOKES; q++){
+                for (int q=0; q<MAX_SMOKES; q++){
                         if(smokes[q].inactive)continue;
                         if((visible[q] &D3DSTATUS_CLIPINTERSECTIONALL   ) ){continue;}
 
@@ -4985,8 +4968,6 @@ else drawfast(&mallit[0].malli[4]);//pohja
                 }
 
 
-
-
                 //render bulletholes2
 
                 if(kappaletta>0){
@@ -4996,7 +4977,7 @@ else drawfast(&mallit[0].malli[4]);//pohja
 			matrices->LoadIdentity();
 			m_pDevice->SetTransform(D3DTRANSFORMSTATE_WORLD, *matrices->GetTop());
 			m_pDevice->DrawPrimitive(D3DPT_TRIANGLELIST  ,
-                                        D3DFVF_XYZ |D3DFVF_TEX1|D3DFVF_TEXCOORDSIZE2(0) ,triangles,kappaletta*12,NULL);
+			                         D3DFVF_XYZ |D3DFVF_TEX1|D3DFVF_TEXCOORDSIZE2(0) ,triangles,kappaletta*12,NULL);
 			m_pDevice->SetRenderState(D3DRENDERSTATE_COLORKEYENABLE ,FALSE);
                 }
 
@@ -5004,7 +4985,7 @@ else drawfast(&mallit[0].malli[4]);//pohja
 
 
 
-                for (q=0; q<MAX_SMOKES; q++){
+                for (int q=0; q<MAX_SMOKES; q++){
                         if(smokes[q].inactive)continue;
                         if((visible[q] &D3DSTATUS_CLIPINTERSECTIONALL   ) ){continue;}
 
@@ -5024,9 +5005,9 @@ else drawfast(&mallit[0].malli[4]);//pohja
                                 matrices->ScaleLocal(smokes[q].size,smokes[q].size,smokes[q].size);
                                 //m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,TRUE);
                                 m_pDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND,
-                                                D3DBLEND_DESTCOLOR    );
+                                                          D3DBLEND_DESTCOLOR    );
                                 m_pDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND,
-                                                D3DBLEND_SRCALPHA     );
+                                                          D3DBLEND_SRCALPHA     );
                                 drawfast(&mallit[2].malli[10]);
                                 //m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,FALSE);
                                 break;
@@ -5039,9 +5020,9 @@ else drawfast(&mallit[0].malli[4]);//pohja
                                 matrices->ScaleLocal(smokes[q].size,smokes[q].size,smokes[q].size);
                                 //m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,TRUE);
                                 m_pDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND,
-                                                D3DBLEND_ONE );
+                                                          D3DBLEND_ONE );
                                 m_pDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND,
-                                                D3DBLEND_ONE );
+                                                          D3DBLEND_ONE );
                                 drawfast(&mallit[2].malli[5]);
                                 //m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,FALSE);
                                 break;
@@ -5054,9 +5035,9 @@ else drawfast(&mallit[0].malli[4]);//pohja
                                 matrices->ScaleLocal(smokes[q].size,smokes[q].size,smokes[q].size);
                                 //m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,TRUE);
                                 m_pDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND,
-                                                D3DBLEND_SRCCOLOR );
+                                                          D3DBLEND_SRCCOLOR );
                                 m_pDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND,
-                                                D3DBLEND_SRCALPHA );
+                                                          D3DBLEND_SRCALPHA );
 
                                 //select randomly from two options
                                 if(smokes[q].picture==0){
@@ -5070,17 +5051,17 @@ else drawfast(&mallit[0].malli[4]);//pohja
                         }
 
                         case 1:{//One big hell of a hole
-                                matrices->LoadIdentity();
-                                matrices->TranslateLocal(smokes[q].place.x,smokes[q].place.y,smokes[q].place.z);
-                                matrices->RotateYawPitchRollLocal(-smokes[q].q+pi/2,smokes[q].w,smokes[q].e);
-                                matrices->ScaleLocal(smokes[q].size,smokes[q].size,smokes[q].size);
+				matrices->LoadIdentity();
+				matrices->TranslateLocal(smokes[q].place.x,smokes[q].place.y,smokes[q].place.z);
+				matrices->RotateYawPitchRollLocal(-smokes[q].q+pi/2,smokes[q].w,smokes[q].e);
+				matrices->ScaleLocal(smokes[q].size,smokes[q].size,smokes[q].size);
 
 
-                                m_pDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND,
-                                                D3DBLEND_ONE );
-                                m_pDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND,
-                                                D3DBLEND_ONE );
-                                drawfast(&mallit[2].malli[4]);
+				m_pDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND,
+				                          D3DBLEND_ONE );
+				m_pDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND,
+				                          D3DBLEND_ONE );
+				drawfast(&mallit[2].malli[4]);
 
                                 matrices->LoadIdentity();
                                 matrices->TranslateLocal(smokes[q].place.x,smokes[q].place.y,smokes[q].place.z);
@@ -5089,40 +5070,39 @@ else drawfast(&mallit[0].malli[4]);//pohja
 
 
                                 m_pDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND,
-                                                D3DBLEND_ZERO    );
-                                m_pDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND,
-                                                D3DBLEND_INVSRCCOLOR       );
-                                drawfast(&mallit[2].malli[4]);
+				                          D3DBLEND_ZERO    );
+				m_pDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND,
+				                          D3DBLEND_INVSRCCOLOR       );
+				drawfast(&mallit[2].malli[4]);
 
-                                break;
-                        }
+				break;
+			}
 
                                 /*	case 1:{//One big hell of a hole
-					matrices->LoadIdentity();
-					//m_pDevice->SetRenderState(D3DRENDERSTATE_ZFUNC,D3DCMP_EQUAL);
-					//m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE, FALSE);
-					matrices->TranslateLocal(smokes[q].place.x,smokes[q].place.y,smokes[q].place.z);
-					matrices->RotateYawPitchRollLocal(-smokes[q].q+pi/2,smokes[q].w,smokes[q].e);
-					matrices->ScaleLocal(smokes[q].size,smokes[q].size,smokes[q].size);
-					m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,false);
-					drawfast(&mallit[2].malli[16]);
-					m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,true);
-					//m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE, TRUE);
-					//m_pDevice->SetRenderState(D3DRENDERSTATE_ZFUNC,D3DCMP_LESSEQUAL);
-					break;
+                                        matrices->LoadIdentity();
+                                        //m_pDevice->SetRenderState(D3DRENDERSTATE_ZFUNC,D3DCMP_EQUAL);
+                                        //m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE, FALSE);
+                                        matrices->TranslateLocal(smokes[q].place.x,smokes[q].place.y,smokes[q].place.z);
+                                        matrices->RotateYawPitchRollLocal(-smokes[q].q+pi/2,smokes[q].w,smokes[q].e);
+                                        matrices->ScaleLocal(smokes[q].size,smokes[q].size,smokes[q].size);
+                                        m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,false);
+                                        drawfast(&mallit[2].malli[16]);
+                                        m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,true);
+                                        //m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE, TRUE);
+                                        //m_pDevice->SetRenderState(D3DRENDERSTATE_ZFUNC,D3DCMP_LESSEQUAL);
+                                        break;
                                         }*/
-			}
+                        }
 
                 }
                 m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,FALSE);
                 m_pDevice->SetRenderState(D3DRENDERSTATE_ZWRITEENABLE,TRUE);
+        }
+}
 
 
-	}
-
-
-
-	//arrows and crosshairs related to mission
+void render_arrows_and_crosshairs(float camq, float camw, float came) {
+        //arrows and crosshairs related to mission
         m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,TRUE);
         m_pDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND,D3DBLEND_SRCCOLOR);
         m_pDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND,D3DBLEND_SRCALPHA);
@@ -5130,9 +5110,8 @@ else drawfast(&mallit[0].malli[4]);//pohja
 
 	if(moped[0].mission.status==0){
 		float kx,kz;//targets coordinates
-		int f;
 		//target
-		for (f=0; f<moped[0].mission.kohteita; f++){
+		for (int f=0; f<moped[0].mission.kohteita; f++){
 			matrices->LoadIdentity();
 			if(moped[0].mission.target_type==0)//character //character
 			{
@@ -5165,6 +5144,8 @@ else drawfast(&mallit[0].malli[4]);//pohja
 
 		//timer
 		if(moped[0].mission.timer>0){
+                        char row[200];
+                        char temprow[200];
 			strcpy(row,"time left ");
 			itoa((int)moped[0].mission.timer/1000,temprow,10);
 			strcat(row,temprow);
@@ -5208,14 +5189,10 @@ else drawfast(&mallit[0].malli[4]);//pohja
 	if(moped[0].mission.status==3){
                 rendertext((int)(1024*0.03f),(int)(768*0.95f-15),0,"no mission");
 	}
+}
 
-
-
-
-
-
-
-	m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,FALSE);
+void render_game_text() {
+        m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,FALSE);
 
 
 	//end demo
@@ -5292,6 +5269,7 @@ else drawfast(&mallit[0].malli[4]);//pohja
 
 
         //money
+        char row[200];
         itoa((int)moped[0].money,row,10);
         rendertext(896,710,0,row);
 
@@ -5407,6 +5385,47 @@ D3DFVF_XYZ |D3DFVF_TEX1|D3DFVF_TEXCOORDSIZE2(0) ,vertex,6,NULL);
 m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE, TRUE);
 m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,FALSE);
 */
+}
+
+void render_game(void){//just renders some moped driving.
+
+	int a,b,q,c,d;
+	float kerroin;
+	//gamephase2 		//gamephase2
+	//0=normaali peli 	//normal game
+	//1=loppudemo 		//end demo
+	//2=paussi 		// pause
+	//3=alkudemo 		//beginning demo
+	//4=alkudemo 		//beginning demo
+	//5=dyingma 		//death
+	ase[2]._type=4;
+	ase[3]._type=4;
+	ase[4]._type=4;
+
+
+        render_game_pre_fx();
+
+	//normal vision angle
+        render_game_mapmode();
+
+        render_game_prepare(kerroin);
+
+        render_game_workshop();
+
+        render_game_lights();
+        render_game_houses(kerroin);
+        render_game_bullets();
+        render_game_mopeds();
+
+        float camq, camw, came;
+        render_game_crosshair1(camq, camw, came);
+        render_game_bulletholes(camq, camw, came);
+
+        render_arrows_and_crosshairs(camq, camw, came);
+
+
+        render_game_text();
+
 
         m_pDevice->LightEnable(1, FALSE);
 
