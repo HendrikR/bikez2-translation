@@ -3676,7 +3676,7 @@ void calculatecharacters(void) //calculatecharacters
                                 character[q].osuma[a]=false;
                         }
 
-                        calc_cooordinates(&character[q].x,&character[q].z);
+                        calc_coordinates(&character[q].x,&character[q].z);
 		}
 
 
@@ -5581,7 +5581,7 @@ void create_mission(bikebase *moped,int missionumero){ //randomize a mission.
 	if(moped->mission_random.target_type==1){
                 moped->mission_random.asiakas[0]=character[moped->nearestcharacter];//characer becomes passanger
 		for (f=0; f<moped->mission_random.kohteita; f++){
-			calc_cooordinates(&moped->mission_random.targetx[f],&moped->mission_random.targetz[f]);//randomizes coordinates outside of houses
+			calc_coordinates(&moped->mission_random.targetx[f],&moped->mission_random.targetz[f]);//randomizes coordinates outside of houses
 		}
 	}
 
@@ -5626,7 +5626,7 @@ void create_mission(bikebase *moped,int missionumero){ //randomize a mission.
 
 }
 
-void calc_cooordinates(float *xa,float *za){//calculate coordinates
+void calc_coordinates(float *xa,float *za){//calculate coordinates
 
 	int a,b,c;
 	bool osuma=false;
@@ -5764,7 +5764,7 @@ void create_character(int q){//create random character
         character[q].menoajastin=0;
         character[q].dying=false;
         character[q].inactive=false;
-        calc_cooordinates(&character[q].x,&character[q].z);
+        calc_coordinates(&character[q].x,&character[q].z);
         character[q].direction=randDouble(-pi,pi);
         character[q].speed=randDouble(0.05f,0.1f);
         character[q].lx=0;
@@ -6151,7 +6151,7 @@ void calc_moped(void){ //calculate mopeds
 
 			if((osumia>90)&&(moped[d].visible==false)){
 
-				calc_cooordinates(&moped[d].x1,&moped[d].z1);
+				calc_coordinates(&moped[d].x1,&moped[d].z1);
 
 			}
 
@@ -6174,7 +6174,7 @@ void create_mopo(int d){ //randomize moped
 	moped[d].energy=100;
 	moped[d].level=0;
 	moped[d].direction=pi*0.25f;
-	calc_cooordinates(&moped[d].x1,&moped[d].z1);
+	calc_coordinates(&moped[d].x1,&moped[d].z1);
 	moped[d].x2=moped[d].x1+sinf(moped[d].direction)*70;
 	moped[d].z2=moped[d].z1+cosf(moped[d].direction)*70;
 	moped[d].speed=0.01f;

@@ -335,11 +335,11 @@ void rendertext(INT x, INT y, INT fontti,const char teksti[100]);
 void render_game(void);//draws moped driving
 void render_mission(void);//draws mission briefing
 void create_mission(bikebase *moped,int missionumero);
-void laskekoordinaatit(float *x,float *z);//gives x and z wich are not inside houses from the map.
-void laskemissiot(bikebase *moped);//examines is a mission accomplished
+void calc_coordinates(float *x,float *z);//gives x and z wich are not inside houses from the map.
+void calc_missions(bikebase *moped);//examines is a mission accomplished
 void create_character(int q);//randomizes a character to field
 void load_missions(void);//reads missions
-void laskemoped(void);//calculate mopeds //for Artificial intelligence of mopeds
+void calc_moped(void);//calculate mopeds //for Artificial intelligence of mopeds
 void create_mopo(int d);//randomizes a moped to field
 void render_workshop(void);//draws a depot
 void readkey_game(void);//read keys during game
