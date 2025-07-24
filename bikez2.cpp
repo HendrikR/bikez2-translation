@@ -3676,7 +3676,7 @@ void calculatecharacters(void) //calculatecharacters
                                 character[q].osuma[a]=false;
                         }
 
-                        laskekoordinaatit(&character[q].x,&character[q].z);
+                        calc_cooordinates(&character[q].x,&character[q].z);
 		}
 
 
@@ -4166,7 +4166,7 @@ void render_game_pre_fx() {
 
 	if(gamephase2==0){
 		calculateCollisions();//does mopeds collide with anything
-		laskemoped();//mopeds are rollin //calculatemopeds
+		calc_moped();//mopeds are rollin //calculatemopeds
 		for (int d=0; d<num_mopeds; d++){
 			if(moped[d].inactive)continue;
 			aja(&moped[d]);
@@ -4268,7 +4268,7 @@ void render_game_prepare(float &kerroin) {
 		calculatecharacters();
 		calculatebullets();
 		calculatesmokes();
-		laskemissiot(&moped[0]);
+		calc_missions(&moped[0]);
 	}
 
 
@@ -5581,7 +5581,7 @@ void create_mission(bikebase *moped,int missionumero){ //randomize a mission.
 	if(moped->mission_random.target_type==1){
                 moped->mission_random.asiakas[0]=character[moped->nearestcharacter];//characer becomes passanger
 		for (f=0; f<moped->mission_random.kohteita; f++){
-			laskekoordinaatit(&moped->mission_random.targetx[f],&moped->mission_random.targetz[f]);//randomizes coordinates outside of houses
+			calc_cooordinates(&moped->mission_random.targetx[f],&moped->mission_random.targetz[f]);//randomizes coordinates outside of houses
 		}
 	}
 
@@ -5626,7 +5626,7 @@ void create_mission(bikebase *moped,int missionumero){ //randomize a mission.
 
 }
 
-void laskekoordinaatit(float *xa,float *za){//calculate coordinates
+void calc_cooordinates(float *xa,float *za){//calculate coordinates
 
 	int a,b,c;
 	bool osuma=false;
@@ -5656,7 +5656,7 @@ void laskekoordinaatit(float *xa,float *za){//calculate coordinates
 
 }
 
-void laskemissiot(bikebase *moped){ //calculate missions
+void calc_missions(bikebase *moped){ //calculate missions
 	int q,f;
 	bool kuollut=true;
 	if(moped->mission.status!=0) return;
@@ -5764,7 +5764,7 @@ void create_character(int q){//create random character
         character[q].menoajastin=0;
         character[q].dying=false;
         character[q].inactive=false;
-        laskekoordinaatit(&character[q].x,&character[q].z);
+        calc_cooordinates(&character[q].x,&character[q].z);
         character[q].direction=randDouble(-pi,pi);
         character[q].speed=randDouble(0.05f,0.1f);
         character[q].lx=0;
@@ -5936,7 +5936,7 @@ void load_missions(void){ //read missions
         fclose(fil);
 }
 
-void laskemoped(void){ //calculate mopeds
+void calc_moped(void){ //calculate mopeds
 	int q,q2,d;
 	float dq,temp1;
 	int negaatio;
@@ -6151,13 +6151,11 @@ void laskemoped(void){ //calculate mopeds
 
 			if((osumia>90)&&(moped[d].visible==false)){
 
-				laskekoordinaatit(&moped[d].x1,&moped[d].z1);
+				calc_cooordinates(&moped[d].x1,&moped[d].z1);
 
 			}
 
                 }
-
-
         }
 }
 
@@ -6176,7 +6174,7 @@ void create_mopo(int d){ //randomize moped
 	moped[d].energy=100;
 	moped[d].level=0;
 	moped[d].direction=pi*0.25f;
-	laskekoordinaatit(&moped[d].x1,&moped[d].z1);
+	calc_cooordinates(&moped[d].x1,&moped[d].z1);
 	moped[d].x2=moped[d].x1+sinf(moped[d].direction)*70;
 	moped[d].z2=moped[d].z1+cosf(moped[d].direction)*70;
 	moped[d].speed=0.01f;
@@ -6193,7 +6191,6 @@ void create_mopo(int d){ //randomize moped
 	moped[d].x4=moped[d].x2;
 	moped[d].y4=moped[d].y2;
 	moped[d].z4=moped[d].z2;
-
 }
 
 void render_workshop(void){//render workshop
