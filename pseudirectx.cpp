@@ -340,7 +340,21 @@ void DIRECT3DDEVICE7::SetMaterial(D3DMATERIAL7* m) {
 }
 void DIRECT3DDEVICE7::ComputeSphereVisibility(D3DVECTOR*, float*, int, int, DWORD*) {
 }
-void DIRECT3DDEVICE7::SetLight(int, D3DLIGHT7*) {
+void DIRECT3DDEVICE7::SetLight(int id, D3DLIGHT7* params) {
+  unsigned gl_id;
+  if (id >= 0 && id <= 7) {
+    gl_id = GL_LIGHT0 + id;
+  } else {
+    std::cerr << "invalid light id: " << id << std::endl;
+    return;
+  }
+  glEnable(gl_id);
+  glLightfv(gl_id, GL_AMBIENT, (GLfloat*)(&params->dcvAmbient));
+  glLightfv(gl_id, GL_DIFFUSE, (GLfloat*)(&params->dcvDiffuse));
+  glLightfv(gl_id, GL_SPECULAR, (GLfloat*)(&params->dcvSpecular));
+  glLightfv(gl_id, GL_POSITION, (GLfloat*)(&params->dvPosition));
+  // TODO: this is ignoring direction, attenuation, range, falloff, type, theta, phi
+  return;
 }
 void DIRECT3DDEVICE7::SetTextureStageState(DWORD, int, DWORD) {
 }
