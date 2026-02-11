@@ -6577,44 +6577,25 @@ void readkey_game(void){
 	if (KEYDOWN(buffer, DIK_RETURN))
 		moped[0].enter=true;
 	if (KEYDOWN(buffer, DIK_ESCAPE))
-		moped[0].esc=true;
-	/*if (KEYDOWN(buffer, DIK_UP))
-          moped[0].up=true;
-          if (KEYDOWN(buffer, DIK_DOWN))
-          moped[0].down=true;
-          if (KEYDOWN(buffer, DIK_LEFT))
-          moped[0].left=true;
-          if (KEYDOWN(buffer, DIK_RIGHT))
-          moped[0].right=true;
-          if (KEYDOWN(buffer, DIK_1))
-          moped[0].one=true;
-          if (KEYDOWN(buffer, DIK_2))
-          moped[0].two=true;
-          if (KEYDOWN(buffer, DIK_3))
-          moped[0].three=true;
-          if (KEYDOWN(buffer, DIK_4))
-          moped[0].four=true;
-          if (KEYDOWN(buffer, DIK_SPACE))
-          moped[0].space=true;
-	*/
-	if (buffer[key[1]]& 0x80)
-		moped[0].up=true;
-	if (buffer[key[2]]& 0x80)
-		moped[0].down=true;
-	if (buffer[key[3]]& 0x80)
-		moped[0].left=true;
-	if (buffer[key[4]]& 0x80)
-		moped[0].right=true;
-	if (buffer[key[5]]& 0x80)
-		moped[0].one=true;
-	if (buffer[key[6]]& 0x80)
-		moped[0].two=true;
-	if (buffer[key[7]]& 0x80)
-		moped[0].three=true;
-	if (buffer[key[8]]& 0x80)
-		moped[0].four=true;
-	if (buffer[key[11]]& 0x80)
-		moped[0].space=true;
+	    moped[0].esc=true;
+	if (KEYDOWN(buffer, DIK_UP))
+        moped[0].up=true;
+    if (KEYDOWN(buffer, DIK_DOWN))
+        moped[0].down=true;
+    if (KEYDOWN(buffer, DIK_LEFT))
+        moped[0].left=true;
+	if (KEYDOWN(buffer, DIK_RIGHT))
+        moped[0].right=true;
+    if (KEYDOWN(buffer, DIK_1))
+        moped[0].one=true;
+    if (KEYDOWN(buffer, DIK_2))
+        moped[0].two=true;
+    if (KEYDOWN(buffer, DIK_3))
+        moped[0].three=true;
+    if (KEYDOWN(buffer, DIK_4))
+        moped[0].four=true;
+    if (KEYDOWN(buffer, DIK_SPACE))
+        moped[0].space=true;
 
         //skip demo by pressing enter
         if (!KEYDOWN(buffer,  DIK_RETURN )&&KEYDOWN(buffer2,  DIK_RETURN)){
@@ -6643,7 +6624,7 @@ void readkey_game(void){
         }
 
         //slow the game down
-        if (buffer[key[9]]& 0x80)
+        if (KEYDOWN(buffer, DIK_5))
         {
                 if(gamespeed>0.2f)
                         gamespeed=gamespeed-0.5f*0.01f*elapsed;
@@ -6658,8 +6639,8 @@ void readkey_game(void){
                 gamespeed=0.2f;
 
         //changching camera mode
-        if (buffer[key[10]]& 0x80)
-                if (!(buffer2[key[10]]& 0x80))
+        if (KEYDOWN(buffer, DIK_TAB))
+                if (!(KEYDOWN(buffer2, DIK_TAB)))
                 {
                         if(!mapmode)mapmode=true;
                         else mapmode=false;
