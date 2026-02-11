@@ -338,7 +338,11 @@ void DIRECT3DDEVICE7::SetMaterial(D3DMATERIAL7* m) {
   glMaterialfv(GL_FRONT | GL_BACK, GL_SPECULAR,  (GLfloat*)(&m->dcvSpecular));
   glMaterialf(GL_FRONT | GL_BACK, GL_SHININESS, m->dvPower);
 }
-void DIRECT3DDEVICE7::ComputeSphereVisibility(D3DVECTOR*, float*, int, int, DWORD*) {
+void DIRECT3DDEVICE7::ComputeSphereVisibility(D3DVECTOR* lpCenters, float* lpRadii, DWORD dwNumSpheres, DWORD dwFlags, DWORD* lpdwReturnValues) {
+  // TODO: Sphere visibility is computed by back-transforming the viewing frustum to the model space, using the inverse of the combined world, view, or projection matrices. If the combined matrix cannot be inverted (if the determinant is 0), the method fails, returning D3DERR_INVALIDMATRIX.
+  for(int i=0; i<dwNumSpheres; i++) {
+    lpdwReturnValues[i] = 1; // TODO: implement actual visibility test
+  }
 }
 void DIRECT3DDEVICE7::SetLight(int id, D3DLIGHT7* params) {
   unsigned gl_id;

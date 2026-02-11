@@ -249,7 +249,7 @@ typedef struct DIRECT3DDEVICE7 {
         void DrawPrimitive(UINT primitiveType, DWORD flags, const pvertex* data, UINT count, void* unk);
         void DrawPrimitive(UINT primitiveType, DWORD flags, const void* data, UINT count, void* unk);
         void SetMaterial(D3DMATERIAL7*);
-        void ComputeSphereVisibility(D3DVECTOR*, float*, int, int, DWORD*);
+        void ComputeSphereVisibility(D3DVECTOR* lpCenters, float* lpRadii, DWORD dwNumSpheres, DWORD dwFlags, DWORD* lpdwReturnValues);
         void SetLight(int, D3DLIGHT7*);
         void SetTextureStageState(DWORD, int, DWORD);
         void GetRenderTarget(LPDIRECTDRAWSURFACE7*);
@@ -293,6 +293,8 @@ void SetCursor(SDL_Cursor*);
 uint64_t GetTickCount();
 HSTR LoadIcon(HINSTANCE hinst, LPCTSTR name);
 
+
+void printMatrix(const char* text, const D3DMATRIX mat);
 char* itoa(int value, char* str, int base);
 char* ltoa(long value, char* str, int base);
 HRESULT D3DXCreateContext(DWORD deviceIndex, DWORD flags, HWND hwnd, DWORD width, DWORD height, LPD3DXCONTEXT* ppCtx);
