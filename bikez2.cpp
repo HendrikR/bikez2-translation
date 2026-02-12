@@ -2541,7 +2541,7 @@ void shoot(int target,int from_character, int from_moped,float timer,bikebase *m
 	}
 
 
-        //äänet //a= vähän epävarma
+        //Ã¤Ã¤net //a= vÃ¤hÃ¤n epÃ¤varma
 	if(d>=0){
                 if(ase[bullet[d].from_gun]._type==0)playsound(2,1,bullet[d].place.x,bullet[d].place.z);
                 if(ase[bullet[d].from_gun]._type==1)playsound(5,1,bullet[d].place.x,bullet[d].place.z);
@@ -3098,7 +3098,7 @@ bool initkeyb(void)
                         IID_IDirectInput8, &g_lpDI, NULL);
         if FAILED(hr) return FALSE;
 
-	//näpiskä //this is some weird slang word. seriously wtf, wille!?
+	//nÃ¤piskÃ¤ //this is some weird slang word. seriously wtf, wille!?
 	//keyboard,
 	// Retrieve a pointer to an IDirectInputDevice7 interface
 	hr = g_lpDI->CreateDevice(GUID_SysKeyboard,
@@ -3316,7 +3316,7 @@ D3DBLEND_SRCCOLOR );
 		//matrices->Pop();
 	}
 	//m_pDevice->SetRenderState(D3DRENDERSTATE_SPECULARENABLE,FALSE);
-	//m_pDevice->SetTexture( 0, NULL);//tarvitaanko tätä?
+	//m_pDevice->SetTexture( 0, NULL);//tarvitaanko tÃ¤tÃ¤?
 	return true;
 
 }
@@ -3360,7 +3360,7 @@ BOOL drawfast(obj *objects)
                   ,(LPVOID)objects->sisus[q].loota.triangle,objects->sisus[q].loota.vert,NULL);		*/
 	}
 	//m_pDevice->SetRenderState(D3DRENDERSTATE_SPECULARENABLE,FALSE);
-	//m_pDevice->SetTexture( 0, NULL);//tarvitaanko tätä?
+	//m_pDevice->SetTexture( 0, NULL);//tarvitaanko tÃ¤tÃ¤?
 	return true;
 
 }
@@ -3980,9 +3980,9 @@ void rendertext(INT x, INT y, INT fontti, const char teksti[100]) //write
                 case 'x':{nume=23;goto fa;}
                 case 'y':{nume=24;goto fa;}
                 case 'z':{nume=25;goto fa;}
-                case 'å':{nume=26;goto fa;}
-                case 'ä':{nume=27;goto fa;}
-                case 'ö':{nume=28;goto fa;}
+                case 'Ã¥':{nume=26;goto fa;}
+                case 'Ã¤':{nume=27;goto fa;}
+                case 'Ã¶':{nume=28;goto fa;}
                 case '1':{nume=29;goto fa;}
                 case '2':{nume=30;goto fa;}
                 case '3':{nume=31;goto fa;}
@@ -3997,7 +3997,7 @@ void rendertext(INT x, INT y, INT fontti, const char teksti[100]) //write
                 case '.':{nume=40;goto fa;}
                 case '/':{nume=41;goto fa;}
                 case ':':{nume=42;goto fa;}
-                case '´':{nume=43;goto fa;}
+                case 'Â´':{nume=43;goto fa;}
                 case '?':{nume=44;goto fa;}
                 case ',':{nume=45;goto fa;}
                 case '!':{nume=46;goto fa;}
@@ -4028,9 +4028,9 @@ void rendertext(INT x, INT y, INT fontti, const char teksti[100]) //write
                 case 'X':{nume=23;goto fr;}
                 case 'Y':{nume=24;goto fr;}
                 case 'Z':{nume=25;goto fr;}
-                case 'Å':{nume=26;goto fr;}
-                case 'Ä':{nume=27;goto fr;}
-                case 'Ö':{nume=28;goto fr;}
+                case 'Ã…':{nume=26;goto fr;}
+                case 'Ã„':{nume=27;goto fr;}
+                case 'Ã–':{nume=28;goto fr;}
 		}
 
           fr:
@@ -4875,7 +4875,7 @@ void render_game_bulletholes(float camq, float camw, float came) {
                 matrices->LoadIdentity();
                 m_pDevice->SetTransform(D3DTRANSFORMSTATE_WORLD, *matrices->GetTop());
                 m_pDevice->ComputeSphereVisibility(center_point,radius,MAX_SMOKES,0,visible);//remember SetTransform
-                m_pDevice->SetRenderState(D3DRENDERSTATE_ZWRITEENABLE,FALSE);//ei rendertext z-bufferiin, jotta smokest olisi läpinäkyvät
+                m_pDevice->SetRenderState(D3DRENDERSTATE_ZWRITEENABLE,FALSE);//ei rendertext z-bufferiin, jotta smokest olisi lÃ¤pinÃ¤kyvÃ¤t
                 //m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE,FALSE);
 
                 int kappaletta=0;//ammount of bullet holes
@@ -5213,7 +5213,7 @@ void render_game_text() {
 	}
 	//beginning demo
 	if(gamephase2==4){
-		rendertext((int)(1024*0.08f),(int)(768*0.15f),60,"Keys: Put your right hand on the arrow keys and your left hand so that your little finger is on number 1 and your index finger on number 4. Use 5 to slow the game down. Shift between bird´s eye view and following camera by pressing the tab key. Space is hand brake.");
+		rendertext((int)(1024*0.08f),(int)(768*0.15f),60,"Keys: Put your right hand on the arrow keys and your left hand so that your little finger is on number 1 and your index finger on number 4. Use 5 to slow the game down. Shift between birdÂ´s eye view and following camera by pressing the tab key. Space is hand brake.");
 		rendertext((int)(1024*0.08f),(int)(768*0.30f),60,"When you are low on energy, in need of a weapons upgrade, or need to save your game, you should find a Bikez warehouse. These warehouses are brownish buildings with a Bikez sign. Enter below the sign.");
 		rendertext((int)(1024*0.08f),(int)(768*0.43f),60,"To get a mission, you must find a man that looks like your character. After finding the guy you have to stop by him, a green circle is lit under him if everything is right. Then press enter to get a mission.");
 	}
@@ -7057,7 +7057,7 @@ void render_menu(void){//renders the menu
                 strcpy(menuteksti[6],"Shoot 2      ");
                 strcpy(menuteksti[7],"Shoot 3      ");
                 strcpy(menuteksti[8],"Shoot 4      ");
-                strcpy(menuteksti[9],"Slow´Mo      ");
+                strcpy(menuteksti[9],"SlowÂ´Mo      ");
 		strcpy(menuteksti[10],"Chance View  ");
 		strcpy(menuteksti[11],"Hand Brake   ");
 		strcpy(menuteksti[12],"Back");
