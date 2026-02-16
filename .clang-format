@@ -1,0 +1,16 @@
+Language: Cpp
+BasedOnStyle: webkit
+
+# Indentation
+IndentWidth: 8
+
+# Other formatting
+# I actually want comments to be indented properly
+#ReflowComments: false
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse
+AlignConsecutiveAssignments:
+  Enabled: true
+  AcrossComments: true
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterControlStatement: false
