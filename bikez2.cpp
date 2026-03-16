@@ -55,7 +55,6 @@ int main(int argc, char** argv) {
 }
 
 void startApplication(HINSTANCE hInstance) {
-        // TODO: Place code here.
         MSG msg;
 
         // Initialize global strings
@@ -91,7 +90,7 @@ void startApplication(HINSTANCE hInstance) {
                                 if (!is_quitting) {
                                         Render();
                                         dxctx->UpdateFrame(0);
-
+                                        SDL_Delay(100);
                                 } else {
                                         break;
                                 }
@@ -3107,7 +3106,7 @@ BOOL draw(obj* objects) {
                 m_pDevice->DrawPrimitive(D3DPT_TRIANGLELIST,
                     D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE2(0) //|D3DFVF_TEXCOORDSIZE1(1)
                     ,
-                    (LPVOID)objects->sisus[q].loota.triangle, objects->sisus[q].loota.vert, NULL);
+                    objects->sisus[q].loota.triangle, objects->sisus[q].loota.vert, NULL);
                 // matrices->Pop();
         }
         // m_pDevice->SetRenderState(D3DRENDERSTATE_SPECULARENABLE,FALSE);
@@ -3142,7 +3141,7 @@ BOOL drawfast(obj* objects) {
                 m_pDevice->DrawPrimitive(D3DPT_TRIANGLELIST,
                     D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE2(0) //|D3DFVF_TEXCOORDSIZE1(1)
                     ,
-                    (LPVOID)objects->sisus[q].loota.triangle, objects->sisus[q].loota.vert, NULL);
+                    objects->sisus[q].loota.triangle, objects->sisus[q].loota.vert, NULL);
                 // matrices->Pop();
 
                 /*m_pDevice->DrawPrimitive(D3DPT_TRIANGLELIST  ,
@@ -3672,7 +3671,6 @@ void rendercharacters(void) {
 // void rendertext(INT x, INT y, INT fontti,CHAR teksti[100],LPDIRECTDRAWSURFACE7 pinta,LPDIRECTDRAWSURFACE7 font1)
 void rendertext(INT x, INT y, INT fontti, const char teksti[100]) // write
 {
-        // std::cout<< "render text '"<<teksti<<"' @ "<<x <<"x"<<y <<std::endl;
         // RECT loota; //boxxy
         INT nume;
         int xplus = 0;
@@ -5345,7 +5343,7 @@ void render_game_text() {
 void render_game(void) { // just renders some moped driving.
 
         int a, b, q, c, d;
-        float kerroin;
+        float kerroin = 1.0;
         // gamephase2 		//gamephase2
         // 0=normaali peli 	//normal game
         // 1=loppudemo 		//end demo
