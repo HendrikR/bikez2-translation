@@ -325,9 +325,48 @@ void DIRECT3DDEVICE7::SetMaterial(D3DMATERIAL7* m) {
   glMaterialf(GL_FRONT | GL_BACK, GL_SHININESS, m->dvPower);
 }
 void DIRECT3DDEVICE7::ComputeSphereVisibility(D3DVECTOR* lpCenters, float* lpRadii, DWORD dwNumSpheres, DWORD dwFlags, DWORD* lpdwReturnValues) {
-  // TODO: Sphere visibility is computed by back-transforming the viewing frustum to the model space, using the inverse of the combined world, view, or projection matrices. If the combined matrix cannot be inverted (if the determinant is 0), the method fails, returning D3DERR_INVALIDMATRIX.
-  for(int i=0; i<dwNumSpheres; i++) {
-    lpdwReturnValues[i] = 1; // TODO: implement actual visibility test
+  // Build the combined clip matrix: proj * view * world
+  glm::mat4 clip = proj_matrix * view_matrix * world_matrix;
+
+  // Extract the 6 frustum planes using the Gribb/Hartmann method.
+  // For a column-major glm::mat4, row i = (clip[0][i], clip[1][i], clip[2][i], clip[3][i]).
+  // A point p=(x,y,z) is inside the frustum when plane·(p,1) >= 0 for every plane.
+  auto row = [&](int i) {
+    return glm::vec4(clip[0][i], clip[1][i], clip[2][i], clip[3][i]);
+  };
+  glm::vec4 planes[6] = {
+    row(3) + row(0), // left
+    row(3) - row(0), // right
+    row(3) + row(1), // bottom
+    row(3) - row(1), // top
+    row(3) + row(2), // near
+    row(3) - row(2), // far
+  };
+  // Normalize each plane so the signed distance equals actual distance
+  for (int p = 0; p < 6; p++) {
+    float len = glm::length(glm::vec3(planes[p]));
+    if (len > 0.0f) planes[p] /= len;
+  }
+
+  static const DWORD plane_flags[6] = {
+    D3DSTATUS_CLIPINTERSECTIONLEFT,
+    D3DSTATUS_CLIPINTERSECTIONRIGHT,
+    D3DSTATUS_CLIPINTERSECTIONBOTTOM,
+    D3DSTATUS_CLIPINTERSECTIONTOP,
+    D3DSTATUS_CLIPINTERSECTIONNEAR,
+    D3DSTATUS_CLIPINTERSECTIONFAR,
+  };
+
+  for (DWORD i = 0; i < dwNumSpheres; i++) {
+    lpdwReturnValues[i] = 0;
+    glm::vec4 center(lpCenters[i], 1.0f);
+    float r = lpRadii[i];
+    for (int p = 0; p < 6; p++) {
+      // Signed distance from sphere centre to the plane (positive = inside)
+      float dist = glm::dot(planes[p], center);
+      if (dist < -r)
+        lpdwReturnValues[i] |= plane_flags[p];
+    }
   }
 }
 void DIRECT3DDEVICE7::SetLight(int id, D3DLIGHT7* params) {
