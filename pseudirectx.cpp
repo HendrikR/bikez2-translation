@@ -275,8 +275,8 @@ void DIRECT3DDEVICE7::SetTransform(UINT enum_transformStateType, const D3DMATRIX
 }
 void DIRECT3DDEVICE7::LightEnable(int which, bool state) {
   int gl_which = GL_LIGHT0+which;
-  if (state == TRUE) glEnable(which);
-  else               glDisable(which);
+  if (state == TRUE) glEnable(gl_which);
+  else               glDisable(gl_which);
 }
 void DIRECT3DDEVICE7::Clear(int, void*, int, int color, int, int) {
   glClearColor(((color >> 16) & 0xFF) / 255.0,
