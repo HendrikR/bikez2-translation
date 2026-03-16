@@ -3694,7 +3694,11 @@ void rendertext(INT x, INT y, INT fontti, const char teksti[100]) // write
         /*m_pDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND, D3DBLEND_ONE    );
           m_pDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND, D3DBLEND_ONE    );	*/
         m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE, FALSE);
-        m_Projection = ProjectionMatrix(25.0f, maxvisible, (float)(80 * pi / 180)); // 60 visionfield
+        const float text_fov_half = (80.0f * (float)pi / 180.0f) * 1.25f * 0.5f; // ProjectionMatrix multiplies fov by 1.25
+        const float text_f = 1.0f / tanf(text_fov_half);
+        const float hw = (4.0f / 3.0f) * 1024.0f / text_f;
+        const float hh = 768.0f / text_f;
+        m_Projection = glm::ortho(-hw, hw, -hh, hh, -10.0f, 10.0f);
         m_pDevice->SetTransform(D3DTRANSFORMSTATE_PROJECTION, &m_Projection);
 
         for (int i = 0; i < abs((int)strlen(teksti)); i++)
