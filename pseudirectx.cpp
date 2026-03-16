@@ -260,32 +260,18 @@ void DIRECT3DDEVICE7::SetTransform(UINT enum_transformStateType, const D3DMATRIX
 }
 void DIRECT3DDEVICE7::SetTransform(UINT enum_transformStateType, const D3DMATRIX m) {
   switch (enum_transformStateType) {
-  case D3DTRANSFORMSTATE_PROJECTION: this->proj_matrix = D3DMATRIX(m[0][0], m[0][1], m[0][2], m[0][3],
-                                                                   m[1][0], m[1][1], m[1][2], m[1][3],
-                                                                   m[2][0], m[2][1], m[2][2], m[2][3]+1,
-                                                                   m[3][0], m[3][1], m[3][2]+50.0, m[3][3]+1);
-          break;
-  case D3DTRANSFORMSTATE_VIEW: this->view_matrix = D3DMATRIX(m[0][0], m[0][1], m[0][2], m[0][3],
-                                                             m[1][0], m[1][1], m[1][2], m[1][3],
-                                                             m[2][0], m[2][1], m[2][2], m[2][3],
-                                                             m[3][0], m[3][1], m[3][2], m[3][3]);
-          break;
-  case D3DTRANSFORMSTATE_WORLD: this->world_matrix = D3DMATRIX(m[0][0], m[0][1], m[0][2], m[0][3],
-                                                               m[1][0], m[1][1], m[1][2], m[1][3],
-                                                               m[2][0], m[2][1], m[2][2], m[2][3],
-                                                               m[3][0], m[3][1], m[3][2], m[3][3]);
-          break;
+  case D3DTRANSFORMSTATE_PROJECTION: this->proj_matrix = m; break;
+  case D3DTRANSFORMSTATE_VIEW: this->view_matrix = m; break;
+  case D3DTRANSFORMSTATE_WORLD: this->world_matrix = m; break;
   }
 
-  //printMatrix("set view matrix to ", view_matrix);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  glOrtho(-1024, 1024, -768, 768, 1.0f, -1.0f);
   glMultMatrixf((GLfloat*)(&this->proj_matrix));
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
-  //glMultMatrixf((GLfloat*)(&this->world_matrix));
   glMultMatrixf((GLfloat*)(&this->view_matrix));
+  glMultMatrixf((GLfloat*)(&this->world_matrix));
 }
 void DIRECT3DDEVICE7::LightEnable(int which, bool state) {
   int gl_which = GL_LIGHT0+which;
@@ -360,26 +346,33 @@ void DIRECT3DDEVICE7::SetLight(int id, D3DLIGHT7* params) {
   // TODO: this is ignoring direction, attenuation, range, falloff, type, theta, phi
   return;
 }
-void DIRECT3DDEVICE7::SetTextureStageState(DWORD, int, DWORD) {
+void DIRECT3DDEVICE7::SetTextureStageState(DWORD stage, int state, DWORD value) {
+  if (state == D3DTSS_MAGFILTER || state == D3DTSS_MINFILTER) {
+      GLint glFilter = GL_NEAREST;
+      if (value == D3DTFG_LINEAR || value == D3DTFN_ANISOTROPIC || value == D3DTFG_ANISOTROPIC) glFilter = GL_LINEAR;
+      glTexParameteri(GL_TEXTURE_2D, state, glFilter);
+  } else if (state == D3DTSS_MAXANISOTROPY) {
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, value);
+  } else if (state == D3DTSS_ADDRESS) {
+      GLenum glWrap = GL_REPEAT;
+      if (value == D3DTADDRESS_MIRROR) glWrap = GL_MIRRORED_REPEAT;
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, glWrap);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, glWrap);
+  } else if (state == D3DTSS_TEXTURETRANSFORMFLAGS) {
+    // D3DTTFF_COUNT2: enable 2D texture coordinate transform.
+    // In GL fixed-function, the texture matrix is set via glMatrixMode(GL_TEXTURE).
+    // No additional state to set here.
+  } else {
+    std::cerr << "SetTextureStageState: unhandled state " << state << std::endl;
+  }
 }
 void DIRECT3DDEVICE7::GetRenderTarget(LPDIRECTDRAWSURFACE7* surf) {
   *surf = this->render_surface;
   // TODO
 }
 void DIRECT3DDEVICE7::SetViewport(D3DVIEWPORT7* vp) {
-  // TODO: perspective, not ortho
-  std::cout << "setting viewport to " << vp->dwWidth <<"x"<< vp->dwHeight <<" @ "<< vp->dwX <<"x"<< vp->dwY << std::endl;
   glViewport(vp->dwX, vp->dwY, vp->dwWidth, vp->dwHeight);
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  //glOrtho(-(int)vp->dwWidth, vp->dwWidth, -1.8*(int)vp->dwHeight, vp->dwHeight, -1.0f, 1.0f);
-  glOrtho(-(int)vp->dwWidth*1.4, vp->dwWidth*1.4, -1.8*(int)vp->dwHeight*1.2, vp->dwHeight*1.2, -1.0f, 1.0f);
-  //glOrtho(-0.5*vp->dwWidth, vp->dwWidth/2, -0.5*vp->dwHeight, vp->dwHeight/2, -1.0f, 1.0f);
-  glFrustum(vp->dwX, vp->dwX + vp->dwWidth,
-            vp->dwY, vp->dwY + vp->dwHeight,
-            vp->dvMinZ, vp->dvMaxZ);
-  glMatrixMode(GL_MODELVIEW);
-  this->proj_matrix = this->view_matrix = this->world_matrix = D3DMATRIX(1,0,0,0,  0,1,0,0,  0,0,1,0, 0,0,0,1);
+  this->proj_matrix = this->view_matrix = this->world_matrix = glm::identity<glm::mat4>();
 }
 int  DIRECT3DDEVICE7::GetCaps(D3DDEVICEDESC7*) {
   // TODO
