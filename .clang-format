@@ -2,7 +2,7 @@ Language: Cpp
 BasedOnStyle: webkit
 
 # Indentation
-IndentWidth: 8
+IndentWidth: 4
 
 # Other formatting
 # I actually want comments to be indented properly

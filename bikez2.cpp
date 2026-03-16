@@ -19,11 +19,11 @@ const int objnum8  = 11; // character4
 const int objnum9  = 3; // obj4 - bike3
 const int objnum10 = 11; // character5
 
-#define RELEASE(x)            \
-        if (x) {              \
-                x->Release(); \
-                x = NULL;     \
-        }
+#define RELEASE(x)    \
+    if (x) {          \
+        x->Release(); \
+        x = NULL;     \
+    }
 #define sqr(x) ((x) * (x))
 static const float pi = 3.1415926535897932384626433832795f;
 
@@ -38,65 +38,65 @@ BOOL InitInstance(HINSTANCE, int);
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 int sub(int test) {
-        int age = 33;
-        return age * test;
+    int age = 33;
+    return age * test;
 }
 
 // BOOL loadwall(char nimi[200],RouteGroup *target,BOOL mirror);
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hInstNULL, LPSTR lpszCmdLine, int nCmdShow) {
-        startApplication(hInstance);
-        return 0;
+    startApplication(hInstance);
+    return 0;
 }
 
 int main(int argc, char** argv) {
-        WinMain(0, 0, argv[0], 1);
-        return 0;
+    WinMain(0, 0, argv[0], 1);
+    return 0;
 }
 
 void startApplication(HINSTANCE hInstance) {
-        MSG msg;
+    MSG msg;
 
-        // Initialize global strings
-        MyRegisterClass(hInstance);
+    // Initialize global strings
+    MyRegisterClass(hInstance);
 
-        // Perform application initialization:
-        if (!InitInstance(hInstance, 1)) {
-                return;
-        }
+    // Perform application initialization:
+    if (!InitInstance(hInstance, 1)) {
+        return;
+    }
 
-        init();
+    init();
 
-        BOOL bGotMsg;
-        m_LastTime     = GetTickCount(); // reset timer
-        bool g_bReady  = true;
-        bool g_bActive = true;
-        PeekMessage(&msg, NULL, 0U, 0U, PM_NOREMOVE);
-        while (msg.type != SDL_QUIT) {
-                // Use PeekMessage() if the app is active, so we can use idle time to
-                // render the scene. Else, use GetMessage() to avoid eating CPU time.
-                if (g_bActive)
-                        bGotMsg = PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE);
-                else
-                        bGotMsg = GetMessage(&msg, NULL, 0U, 0U);
-                if (bGotMsg) {
-                        TranslateMessage(&msg);
-                        DispatchMessage(&msg);
+    BOOL bGotMsg;
+    m_LastTime     = GetTickCount(); // reset timer
+    bool g_bReady  = true;
+    bool g_bActive = true;
+    PeekMessage(&msg, NULL, 0U, 0U, PM_NOREMOVE);
+    while (msg.type != SDL_QUIT) {
+        // Use PeekMessage() if the app is active, so we can use idle time to
+        // render the scene. Else, use GetMessage() to avoid eating CPU time.
+        if (g_bActive)
+            bGotMsg = PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE);
+        else
+            bGotMsg = GetMessage(&msg, NULL, 0U, 0U);
+        if (bGotMsg) {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        } else {
+            // Render a frame during idle time (no messages are waiting)
+            if (g_bActive && g_bReady) {
+
+                readkeyb();
+                if (!is_quitting) {
+                    Render();
+                    dxctx->UpdateFrame(0);
+                    SDL_Delay(100);
                 } else {
-                        // Render a frame during idle time (no messages are waiting)
-                        if (g_bActive && g_bReady) {
-
-                                readkeyb();
-                                if (!is_quitting) {
-                                        Render();
-                                        dxctx->UpdateFrame(0);
-                                        SDL_Delay(100);
-                                } else {
-                                        break;
-                                }
-                        }
+                    break;
                 }
+            }
         }
+    }
 }
 
 //
@@ -113,24 +113,24 @@ void startApplication(HINSTANCE hInstance) {
 //    with it.
 //
 ATOM MyRegisterClass(HINSTANCE hInstance) {
-        WNDCLASSEX wcex;
+    WNDCLASSEX wcex;
 
-        wcex.cbSize = sizeof(WNDCLASSEX);
+    wcex.cbSize = sizeof(WNDCLASSEX);
 
-        wcex.style         = CS_HREDRAW | CS_VREDRAW;
-        wcex.lpfnWndProc   = (WNDPROC)WndProc;
-        wcex.cbClsExtra    = 0;
-        wcex.cbWndExtra    = 0;
-        wcex.hInstance     = hInstance;
-        wcex.hIcon         = LoadIcon(hInstance, (LPCTSTR)IDI_ICON1);
-        wcex.hCursor       = LoadCursor(NULL, IDC_ARROW);
-        // wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
-        wcex.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
-        wcex.lpszMenuName  = (LPCSTR) "bikez2";
-        wcex.lpszClassName = "bikez2";
-        wcex.hIconSm       = LoadIcon(wcex.hInstance, (LPCTSTR)IDI_ICON1);
+    wcex.style         = CS_HREDRAW | CS_VREDRAW;
+    wcex.lpfnWndProc   = (WNDPROC)WndProc;
+    wcex.cbClsExtra    = 0;
+    wcex.cbWndExtra    = 0;
+    wcex.hInstance     = hInstance;
+    wcex.hIcon         = LoadIcon(hInstance, (LPCTSTR)IDI_ICON1);
+    wcex.hCursor       = LoadCursor(NULL, IDC_ARROW);
+    // wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
+    wcex.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
+    wcex.lpszMenuName  = (LPCSTR) "bikez2";
+    wcex.lpszClassName = "bikez2";
+    wcex.hIconSm       = LoadIcon(wcex.hInstance, (LPCTSTR)IDI_ICON1);
 
-        return RegisterClassEx(&wcex);
+    return RegisterClassEx(&wcex);
 }
 
 //
@@ -144,27 +144,27 @@ ATOM MyRegisterClass(HINSTANCE hInstance) {
 //        create and display the main program window.
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow) {
-        hInst = hInstance; // Store instance handle in our global variable
+    hInst = hInstance; // Store instance handle in our global variable
 
-        hWnd = CreateWindow(
-            "bikez2",
-            "bikez2",
-            WS_POPUPWINDOW | WS_VISIBLE,
-            CW_USEDEFAULT,
-            0,
-            1026,
-            770,
-            NULL,
-            NULL,
-            hInstance,
-            NULL);
+    hWnd = CreateWindow(
+        "bikez2",
+        "bikez2",
+        WS_POPUPWINDOW | WS_VISIBLE,
+        CW_USEDEFAULT,
+        0,
+        1026,
+        770,
+        NULL,
+        NULL,
+        hInstance,
+        NULL);
 
-        if (!hWnd) {
-                return FALSE;
-        }
+    if (!hWnd) {
+        return FALSE;
+    }
 
-        ShowWindow(hWnd, nCmdShow);
-        return TRUE;
+    ShowWindow(hWnd, nCmdShow);
+    return TRUE;
 }
 
 //
@@ -178,60 +178,60 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow) {
 //
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
-        // int wmId, wmEvent;
-        // PAINTSTRUCT ps;
-        // HDC hdc;
+    // int wmId, wmEvent;
+    // PAINTSTRUCT ps;
+    // HDC hdc;
 
-        switch (message) {
-        case WM_ACTIVATE: {
-                if (g_pMouse) {
-                        g_pMouse->Acquire();
-                }
-                if (g_lpDIDevice) {
-                        g_lpDIDevice->Acquire();
-                }
-        } break;
-        case WM_CHAR: // read keys for input name
-        {
-                if (gamephase == 4)
-                        if (gamephase2 == 3)
-                                if (keytimer < 0) {
-                                        keytimer = 25;
-                                        bug1     = bug1 + 1;
-
-                                        switch (wParam) {
-                                        case 0x0A:
-                                                break; // linefeed
-                                        case 0x1B:
-                                                break; // escape
-                                        case 0x09:
-                                                break; // tab
-                                        case 0x0D:
-                                                break; // carriage return
-
-                                        case 0x08: // backspace
-                                                letters_in_name = letters_in_name - 1;
-                                                if (letters_in_name < 0) letters_in_name = 0;
-                                                savefilename[letters_in_name] = 0;
-                                                break;
-
-                                        default:
-                                                char che                      = (char)wParam;
-                                                savefilename[letters_in_name] = che;
-                                                letters_in_name               = letters_in_name + 1;
-                                                if (letters_in_name > 49) letters_in_name = 49;
-                                        }
-                                }
-        } break;
-        case WM_DESTROY:
-                CleanUp();
-                PostQuitMessage(0);
-                break;
-
-        default:
-                return DefWindowProc(hWnd, message, wParam, lParam);
+    switch (message) {
+    case WM_ACTIVATE: {
+        if (g_pMouse) {
+            g_pMouse->Acquire();
         }
-        return 0;
+        if (g_lpDIDevice) {
+            g_lpDIDevice->Acquire();
+        }
+    } break;
+    case WM_CHAR: // read keys for input name
+    {
+        if (gamephase == 4)
+            if (gamephase2 == 3)
+                if (keytimer < 0) {
+                    keytimer = 25;
+                    bug1     = bug1 + 1;
+
+                    switch (wParam) {
+                    case 0x0A:
+                        break; // linefeed
+                    case 0x1B:
+                        break; // escape
+                    case 0x09:
+                        break; // tab
+                    case 0x0D:
+                        break; // carriage return
+
+                    case 0x08: // backspace
+                        letters_in_name = letters_in_name - 1;
+                        if (letters_in_name < 0) letters_in_name = 0;
+                        savefilename[letters_in_name] = 0;
+                        break;
+
+                    default:
+                        char che                      = (char)wParam;
+                        savefilename[letters_in_name] = che;
+                        letters_in_name               = letters_in_name + 1;
+                        if (letters_in_name > 49) letters_in_name = 49;
+                    }
+                }
+    } break;
+    case WM_DESTROY:
+        CleanUp();
+        PostQuitMessage(0);
+        break;
+
+    default:
+        return DefWindowProc(hWnd, message, wParam, lParam);
+    }
+    return 0;
 }
 /*
 // Mesage handler for about box.
@@ -6833,8 +6833,8 @@ void render_menu(void) { // renders the menu
                 matrices->TranslateLocal(40, 20, 0);
                 matrices->RotateYawPitchRollLocal(0, 0, moped[d].angle_yaw);
                 drawfast(&mallit[mopopicture].malli[2]);
-        }
-        if (mopopicture == 9) {
+            }
+            if (mopopicture == 9) {
                 // rear wheel
                 matrices->Push();
                 matrices->TranslateLocal(0, 20, 0);
