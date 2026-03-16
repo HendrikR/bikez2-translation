@@ -3815,18 +3815,6 @@ void rendertext(INT x, INT y, INT fontti, const char teksti[100]) // write
                         nume = 25;
                         goto fa;
                 }
-                case 'å': {
-                        nume = 26;
-                        goto fa;
-                }
-                case 'ä': {
-                        nume = 27;
-                        goto fa;
-                }
-                case 'ö': {
-                        nume = 28;
-                        goto fa;
-                }
                 case '1': {
                         nume = 29;
                         goto fa;
@@ -3881,10 +3869,6 @@ void rendertext(INT x, INT y, INT fontti, const char teksti[100]) // write
                 }
                 case ':': {
                         nume = 42;
-                        goto fa;
-                }
-                case '´': {
-                        nume = 43;
                         goto fa;
                 }
                 case '?': {
@@ -4002,18 +3986,6 @@ void rendertext(INT x, INT y, INT fontti, const char teksti[100]) // write
                 }
                 case 'Z': {
                         nume = 25;
-                        goto fr;
-                }
-                case 'Å': {
-                        nume = 26;
-                        goto fr;
-                }
-                case 'Ä': {
-                        nume = 27;
-                        goto fr;
-                }
-                case 'Ö': {
-                        nume = 28;
                         goto fr;
                 }
                 }
