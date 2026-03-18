@@ -90,7 +90,7 @@ void startApplication(HINSTANCE hInstance) {
                 if (!is_quitting) {
                     Render();
                     dxctx->UpdateFrame(0);
-                    SDL_Delay(100);
+                    //SDL_Delay(50);
                 } else {
                     break;
                 }
@@ -315,10 +315,8 @@ void init() {
     bool osuma = false;
     keytimer   = 0;
 
-    // randomgenerator(i didnt find command for this)
-    for (q = 0; q < (int)GetTickCount() / 100; q++) {
-        rand();
-    }
+    // initialize pseudo-random number generator
+    srand((int)GetTickCount());
 
     SOUNDS_ON     = true;
     SOUNDS_LOADED = false;
