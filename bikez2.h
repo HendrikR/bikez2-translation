@@ -356,7 +356,8 @@ void clearzbuffer(void);
 void startApplication(HINSTANCE hInstance);
 
 
-
+// enumerate gamephases
+enum Gamephase {GP_GAME, GP_NEWMISSION, GP_WORKSHOP, GP_UNUSED, GP_MENU};
 
 //game content objects
 const float maxvisible =25000.0f;

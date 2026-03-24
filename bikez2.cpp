@@ -193,7 +193,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
     } break;
     case WM_CHAR: // read keys for input name
     {
-        if (gamephase == 4)
+        if (gamephase == GP_MENU)
             if (gamephase2 == 3)
                 if (keytimer < 0) {
                     keytimer = 25;
@@ -776,7 +776,7 @@ void init() {
         ase[q]._type            = 4;
 
         gamephase2 = 0;
-        gamephase  = 4;
+        gamephase  = GP_MENU;
         elapsed    = 15;
         for (q = 0; q < 100; q++) {
                 elapsed3[q] = 15;
@@ -1495,11 +1495,11 @@ void readkeyb(void) {
         if ((!pressed && !pressed2) && (gamephase != 0)) return;
 
         switch (gamephase) {
-        case 0: { // game
+        case GP_GAME: { // game
                 readkey_game();
                 break;
         }
-        case 1: { // mission assigment
+        case GP_NEWMISSION: { // mission assigment
                 // accept mission
                 if (!KEYDOWN(buffer, DIK_RETURN) && KEYDOWN(buffer2, DIK_RETURN)) {
                         if (mission_is_read == 1) {
@@ -1514,7 +1514,7 @@ void readkeyb(void) {
                 }
                 break;
         }
-        case 2: { // workshop
+        case GP_WORKSHOP: { // workshop
                 // pressing esc means escape.
                 if ((!KEYDOWN(buffer, DIK_ESCAPE) && KEYDOWN(buffer2, DIK_ESCAPE)) || (!KEYDOWN(buffer, DIK_F9) && KEYDOWN(buffer2, DIK_F9))) {
                         gamephase2 = 0;
@@ -1523,9 +1523,9 @@ void readkeyb(void) {
                 }
                 break;
         }
-        case 3:
+        case GP_UNUSED:
                 break;
-        case 4: {
+        case GP_MENU: {
                 // pressing esc means escape.
                 if ((!KEYDOWN(buffer, DIK_ESCAPE) && KEYDOWN(buffer2, DIK_ESCAPE)) || (!KEYDOWN(buffer, DIK_F9) && KEYDOWN(buffer2, DIK_F9))) {
                         if (gamephase2 == 0)
