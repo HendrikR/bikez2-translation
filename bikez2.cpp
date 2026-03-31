@@ -6206,9 +6206,9 @@ void readkey_game(void) {
                 moped[0].up = true;
         if (KEYDOWN(buffer, DIK_DOWN))
                 moped[0].down = true;
-        if (KEYDOWN(buffer, DIK_LEFT))
-                moped[0].left = true;
         if (KEYDOWN(buffer, DIK_RIGHT))
+                moped[0].left = true;
+        if (KEYDOWN(buffer, DIK_LEFT))
                 moped[0].right = true;
         if (KEYDOWN(buffer, DIK_1))
                 moped[0].one = true;
