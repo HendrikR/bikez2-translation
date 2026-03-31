@@ -2418,7 +2418,7 @@ void shoot(int target, int from_character, int from_moped, float timer, bikebase
         }
 }
 
-void aja(bikebase* moped) {
+void move_moped(bikebase* moped) {
         int q, temp1;
         float temp2;
         float kerroin;
@@ -2583,7 +2583,7 @@ void aja(bikebase* moped) {
 
         float liike = elapsed * gamespeed * (moped->speed);
 
-        // fromt wheel moves
+        // front wheel moves
         moped->x1 = moped->x1 + (float)cos(moped->direction + moped->etudirection) * liike;
         moped->z1 = moped->z1 + (float)sin(moped->direction + moped->etudirection) * liike;
         // handbrake
@@ -3859,7 +3859,7 @@ void render_game_pre_fx() {
                 calc_moped(); // mopeds are rollin //calculatemopeds
                 for (int d = 0; d < num_mopeds; d++) {
                         if (moped[d].inactive) continue;
-                        aja(&moped[d]);
+                        move_moped(&moped[d]);
                 }
         }
 
@@ -6476,7 +6476,7 @@ void game_load(void) { // load game
 
         for (d = 0; d < num_mopeds; d++) {
                 if (moped[d].inactive) continue;
-                aja(&moped[d]);
+                move_moped(&moped[d]);
         }
 }
 void game_save(void) { // save game
@@ -7013,7 +7013,7 @@ void game_new(void) { // new game
 
         for (d = 0; d < num_mopeds; d++) {
                 if (moped[d].inactive) continue;
-                aja(&moped[d]);
+                move_moped(&moped[d]);
         }
 
         for (q = 0; q < MAX_BULLETS; q++) {
