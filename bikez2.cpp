@@ -315,7 +315,7 @@ void init() {
         int q;
         RECT rcSource, rcDest;
 
-        bool osuma = false;
+        bool collision = false;
         keytimer   = 0;
 
         // initialize pseudo-random number generator
@@ -923,7 +923,7 @@ void initMopeds(void) // initialize mopeds
         moped[d].sektoriz       = (int)moped[d].z1 / 8000;
         moped[d].inactive       = false;
         for (a = 0; a < 100; a++)
-                moped[d].osuma[a] = false;
+                moped[d].collision[a] = false;
         moped[d].directiontimer = 0;
         moped[d].visible        = true;
         moped[d].x3             = moped[d].x1;
@@ -1820,8 +1820,8 @@ void calculatebullets(void) // calculates bullets
 
         RECT r1;
 
-        bool osuma;
-        float osumax, osumaz, wallkulma, osumax2, osumaz2;
+        bool collision;
+        float collisionx, collisionz, wallkulma, collisionx2, collisionz2;
         float osuix, osuiz;
         int sektoreita, w[2], b, c;
         int wallhits;
@@ -1958,9 +1958,9 @@ void calculatebullets(void) // calculates bullets
                                                 continue;
                                         }
 
-                                        if (!linecollidesline(&osuma, &osumax, &osumaz, bullet[a].place_old.x - bullet[a].sektorix[j] * 8000, bullet[a].place_old.z - bullet[a].sektoriz[j] * 8000, bullet[a].place.x - bullet[a].sektorix[j] * 8000, bullet[a].place.z - bullet[a].sektoriz[j] * 8000, character[q].x - character[q].sektorix * 8000 - 40, character[q].z - character[q].sektoriz * 8000 - 40, character[q].x - character[q].sektorix * 8000 + 40, character[q].z - character[q].sektoriz * 8000 + 40)) continue;
-                                        if (linecollidesline(&osuma, &osumax, &osumaz, bullet[a].place_old.x - bullet[a].sektorix[j] * 8000, bullet[a].place_old.z - bullet[a].sektoriz[j] * 8000, bullet[a].place.x - bullet[a].sektorix[j] * 8000, bullet[a].place.z - bullet[a].sektoriz[j] * 8000, character[q].x - character[q].sektorix * 8000 + 40, character[q].z - character[q].sektoriz * 8000 + 40, character[q].x - character[q].sektorix * 8000 - 40, character[q].z - character[q].sektoriz * 8000 - 40)) {
-                                                kuljettumatka = (float)sqrtf(sqr(osumax + bullet[a].sektorix[j] * 8000 - bullet[a].place_old.x) + sqr(osumaz + bullet[a].sektoriz[j] * 8000 - bullet[a].place_old.z)) / (bullet[a].speed * elapsed * gamespeed);
+                                        if (!linecollidesline(&collision, &collisionx, &collisionz, bullet[a].place_old.x - bullet[a].sektorix[j] * 8000, bullet[a].place_old.z - bullet[a].sektoriz[j] * 8000, bullet[a].place.x - bullet[a].sektorix[j] * 8000, bullet[a].place.z - bullet[a].sektoriz[j] * 8000, character[q].x - character[q].sektorix * 8000 - 40, character[q].z - character[q].sektoriz * 8000 - 40, character[q].x - character[q].sektorix * 8000 + 40, character[q].z - character[q].sektoriz * 8000 + 40)) continue;
+                                        if (linecollidesline(&collision, &collisionx, &collisionz, bullet[a].place_old.x - bullet[a].sektorix[j] * 8000, bullet[a].place_old.z - bullet[a].sektoriz[j] * 8000, bullet[a].place.x - bullet[a].sektorix[j] * 8000, bullet[a].place.z - bullet[a].sektoriz[j] * 8000, character[q].x - character[q].sektorix * 8000 + 40, character[q].z - character[q].sektoriz * 8000 + 40, character[q].x - character[q].sektorix * 8000 - 40, character[q].z - character[q].sektoriz * 8000 - 40)) {
+                                                kuljettumatka = (float)sqrtf(sqr(collisionx + bullet[a].sektorix[j] * 8000 - bullet[a].place_old.x) + sqr(collisionz + bullet[a].sektoriz[j] * 8000 - bullet[a].place_old.z)) / (bullet[a].speed * elapsed * gamespeed);
                                                 height        = bullet[a].place_old.y + kuljettumatka * (bullet[a].place.y - bullet[a].place_old.y);
 
                                                 // a passive character may change tacktic if he is being shot
@@ -1979,7 +1979,7 @@ void calculatebullets(void) // calculates bullets
                                                 // blood
                                                 // if(ase[bullet[a].from_gun].num_bounces!=0){
                                                 for (q2 = 0; q2 < 50; q2++) {
-                                                        shoot(-6667, -1, bullet[a].from_moped, randDouble(0, 250), moped, 4, osumax + bullet[a].sektorix[j] * 8000, height, osumaz + bullet[a].sektoriz[j] * 8000, bullet[a].q, bullet[a].w, bullet[a].e);
+                                                        shoot(-6667, -1, bullet[a].from_moped, randDouble(0, 250), moped, 4, collisionx + bullet[a].sektorix[j] * 8000, height, collisionz + bullet[a].sektoriz[j] * 8000, bullet[a].q, bullet[a].w, bullet[a].e);
                                                 }
                                                 //}
 
@@ -2000,23 +2000,23 @@ void calculatebullets(void) // calculates bullets
                                                 // smoke to air
                                                 if (ase[bullet[a].from_gun].smoke_filled != 0)
                                                         for (q2 = 0; q2 < 3; q2++) {
-                                                                fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.001f, true, ase[bullet[a].from_gun].smoke_duration + 1000, osumax + bullet[a].sektorix[j] * 8000, bullet[a].place.y, osumaz + bullet[a].sektoriz[j] * 8000, ase[bullet[a].from_gun].smoke_filled, randDouble(-bullet[a].q + pi - pi / 2, -bullet[a].q + pi + pi / 2), (float)fabs(randDouble(0, pi)), randDouble(0, 2 * pi));
+                                                                fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.001f, true, ase[bullet[a].from_gun].smoke_duration + 1000, collisionx + bullet[a].sektorix[j] * 8000, bullet[a].place.y, collisionz + bullet[a].sektoriz[j] * 8000, ase[bullet[a].from_gun].smoke_filled, randDouble(-bullet[a].q + pi - pi / 2, -bullet[a].q + pi + pi / 2), (float)fabs(randDouble(0, pi)), randDouble(0, 2 * pi));
                                                         }
                                                 // explosion
                                                 if (ase[bullet[a].from_gun].explosion_size != 0) {
                                                         for (q2 = 0; q2 < ase[bullet[a].from_gun].explosion_size * 30; q2++) {
-                                                                shoot(-6667, -1, bullet[a].from_moped, randDouble(100, 300), moped, 2, osumax + bullet[a].sektorix[j] * 8000, bullet[a].place.y, osumaz + bullet[a].sektoriz[j] * 8000, randDouble(-pi, pi), randDouble(-pi, pi), randDouble(-pi, pi));
+                                                                shoot(-6667, -1, bullet[a].from_moped, randDouble(100, 300), moped, 2, collisionx + bullet[a].sektorix[j] * 8000, bullet[a].place.y, collisionz + bullet[a].sektoriz[j] * 8000, randDouble(-pi, pi), randDouble(-pi, pi), randDouble(-pi, pi));
                                                         }
                                                         for (q2 = 0; q2 < pommeja; q2++) {
-                                                                fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.004f * ase[bullet[a].from_gun].explosion_size, true, ase[bullet[a].from_gun].smoke_duration, osumax + bullet[a].sektorix[j] * 8000, bullet[a].place.y, osumaz + bullet[a].sektoriz[j] * 8000, 3, 0, 0, 0);
+                                                                fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.004f * ase[bullet[a].from_gun].explosion_size, true, ase[bullet[a].from_gun].smoke_duration, collisionx + bullet[a].sektorix[j] * 8000, bullet[a].place.y, collisionz + bullet[a].sektoriz[j] * 8000, 3, 0, 0, 0);
                                                         }
                                                         quake = 10000 / bullet[a].distance;
-                                                        playsound(8, 2, osumax + bullet[a].sektorix[j] * 8000, osumaz + bullet[a].sektoriz[j] * 8000);
+                                                        playsound(8, 2, collisionx + bullet[a].sektorix[j] * 8000, collisionz + bullet[a].sektoriz[j] * 8000);
                                                 }
                                                 // sound
                                                 if (ase[bullet[a].from_gun].explosion_size == 0) {
                                                         if (ase[bullet[a].from_gun]._type != 4)
-                                                                playsound(randInt(13, 18), 1, osumax + bullet[a].sektorix[j] * 8000, osumaz + bullet[a].sektoriz[j] * 8000);
+                                                                playsound(randInt(13, 18), 1, collisionx + bullet[a].sektorix[j] * 8000, collisionz + bullet[a].sektoriz[j] * 8000);
                                                 }
                                         }
                                 }
@@ -2056,19 +2056,19 @@ void calculatebullets(void) // calculates bullets
                                                                 fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.004f * ase[bullet[a].from_gun].explosion_size, true, ase[bullet[a].from_gun].smoke_duration, moped[d].x1, 70, moped[d].z1, 3, 0, 0, 0);
                                                         }
                                                         quake = 10000 / bullet[a].distance;
-                                                        playsound(8, 2, osumax + bullet[a].sektorix[j] * 8000, osumaz + bullet[a].sektoriz[j] * 8000);
+                                                        playsound(8, 2, collisionx + bullet[a].sektorix[j] * 8000, collisionz + bullet[a].sektoriz[j] * 8000);
                                                 }
                                                 // sound
                                                 if (ase[bullet[a].from_gun].explosion_size == 0) {
                                                         if (ase[bullet[a].from_gun]._type != 4)
-                                                                playsound(randInt(9, 13), 1, osumax + bullet[a].sektorix[j] * 8000, osumaz + bullet[a].sektoriz[j] * 8000);
+                                                                playsound(randInt(9, 13), 1, collisionx + bullet[a].sektorix[j] * 8000, collisionz + bullet[a].sektoriz[j] * 8000);
                                                 }
                                                 // removing bullet
                                                 bullet[a].remove = true;
                                         }
 
                                         // does it collide with lines
-                                        if (linecollidesline(&osuma, &osuix, &osuiz, bullet[a].place_old.x - bullet[a].sektorix[j] * 8000, bullet[a].place_old.z - bullet[a].sektoriz[j] * 8000, bullet[a].place.x - bullet[a].sektorix[j] * 8000, bullet[a].place.z - bullet[a].sektoriz[j] * 8000, moped[d].x6 - bullet[a].sektorix[j] * 8000, moped[d].z6 - bullet[a].sektoriz[j] * 8000, moped[d].x5 - bullet[a].sektorix[j] * 8000, moped[d].z5 - bullet[a].sektoriz[j] * 8000))
+                                        if (linecollidesline(&collision, &osuix, &osuiz, bullet[a].place_old.x - bullet[a].sektorix[j] * 8000, bullet[a].place_old.z - bullet[a].sektoriz[j] * 8000, bullet[a].place.x - bullet[a].sektorix[j] * 8000, bullet[a].place.z - bullet[a].sektoriz[j] * 8000, moped[d].x6 - bullet[a].sektorix[j] * 8000, moped[d].z6 - bullet[a].sektoriz[j] * 8000, moped[d].x5 - bullet[a].sektorix[j] * 8000, moped[d].z5 - bullet[a].sektoriz[j] * 8000))
 
                                         {
                                                 kuljettumatka = (float)sqrtf(sqr(osuix + bullet[a].sektorix[j] * 8000 - bullet[a].place_old.x) + sqr(osuiz + bullet[a].sektoriz[j] * 8000 - bullet[a].place_old.z)) / (bullet[a].speed * elapsed * gamespeed);
@@ -2081,7 +2081,7 @@ void calculatebullets(void) // calculates bullets
                                                 // is it inside a sidepicture
                                                 for (b = 0; b < wallgroup[1].routes[0].route_count; b++) {
                                                         for (c = 0; c < wallgroup[1].routes[0].route[b].line_count; c++) {
-                                                                if (linecollidesline(&osuma, &osumax, &osumaz, xa, za, xa + 1000, za + 1000, wallgroup[1].routes[0].route[b].point[c].x1, wallgroup[1].routes[0].route[b].point[c].z1, wallgroup[1].routes[0].route[b].point[c].x2, wallgroup[1].routes[0].route[b].point[c].z2))
+                                                                if (linecollidesline(&collision, &collisionx, &collisionz, xa, za, xa + 1000, za + 1000, wallgroup[1].routes[0].route[b].point[c].x1, wallgroup[1].routes[0].route[b].point[c].z1, wallgroup[1].routes[0].route[b].point[c].x2, wallgroup[1].routes[0].route[b].point[c].z2))
                                                                         wallhits = wallhits + 1;
                                                         }
                                                 }
@@ -2109,12 +2109,12 @@ void calculatebullets(void) // calculates bullets
                                                                         fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.004f * ase[bullet[a].from_gun].explosion_size, true, ase[bullet[a].from_gun].smoke_duration, osuix + bullet[a].sektorix[j] * 8000, height, osuiz + bullet[a].sektoriz[j] * 8000, 3, 0, 0, 0);
                                                                 }
                                                                 quake = 10000 / bullet[a].distance;
-                                                                playsound(8, 2, osumax + bullet[a].sektorix[j] * 8000, osumaz + bullet[a].sektoriz[j] * 8000);
+                                                                playsound(8, 2, collisionx + bullet[a].sektorix[j] * 8000, collisionz + bullet[a].sektoriz[j] * 8000);
                                                         }
                                                         // sound
                                                         if (ase[bullet[a].from_gun].explosion_size == 0) {
                                                                 if (ase[bullet[a].from_gun]._type != 4)
-                                                                        playsound(randInt(9, 13), 1, osumax + bullet[a].sektorix[j] * 8000, osumaz + bullet[a].sektoriz[j] * 8000);
+                                                                        playsound(randInt(9, 13), 1, collisionx + bullet[a].sektorix[j] * 8000, collisionz + bullet[a].sektoriz[j] * 8000);
                                                         }
                                                         // removing bullet
                                                         bullet[a].remove = true;
@@ -2174,47 +2174,47 @@ void calculatebullets(void) // calculates bullets
                         for (b = 0; b < wallgroup[0].routes[w[j]].route_count; b++) {
                                 for (c = 0; c < wallgroup[0].routes[w[j]].route[b].line_count; c++) {
 
-                                        if (linecollidesline(&osuma, &osumax, &osumaz, bullet[a].place_old.x - bullet[a].sektorix[j] * 8000, bullet[a].place_old.z - bullet[a].sektoriz[j] * 8000, bullet[a].place.x - bullet[a].sektorix[j] * 8000, bullet[a].place.z - bullet[a].sektoriz[j] * 8000, wallgroup[0].routes[w[j]].route[b].point[c].x1, wallgroup[0].routes[w[j]].route[b].point[c].z1, wallgroup[0].routes[w[j]].route[b].point[c].x2, wallgroup[0].routes[w[j]].route[b].point[c].z2)) {
+                                        if (linecollidesline(&collision, &collisionx, &collisionz, bullet[a].place_old.x - bullet[a].sektorix[j] * 8000, bullet[a].place_old.z - bullet[a].sektoriz[j] * 8000, bullet[a].place.x - bullet[a].sektorix[j] * 8000, bullet[a].place.z - bullet[a].sektoriz[j] * 8000, wallgroup[0].routes[w[j]].route[b].point[c].x1, wallgroup[0].routes[w[j]].route[b].point[c].z1, wallgroup[0].routes[w[j]].route[b].point[c].x2, wallgroup[0].routes[w[j]].route[b].point[c].z2)) {
                                                 wallkulma     = -atan2f(wallgroup[0].routes[w[j]].route[b].point[c].z2 - wallgroup[0].routes[w[j]].route[b].point[c].z1, wallgroup[0].routes[w[j]].route[b].point[c].x2 - wallgroup[0].routes[w[j]].route[b].point[c].x1);
-                                                osumax2       = osumax + cosf(-bullet[a].q + pi + pi) * -100;
-                                                osumaz2       = osumaz + sinf(-bullet[a].q + pi + pi) * -100;
+                                                collisionx2   = collisionx + cosf(-bullet[a].q + pi + pi) * -100;
+                                                collisionz2   = collisionz + sinf(-bullet[a].q + pi + pi) * -100;
                                                 // prosentual distance that the bullet has travelled before collision.
-                                                kuljettumatka = (float)sqrtf(sqr(osumax + bullet[a].sektorix[j] * 8000 - bullet[a].place_old.x) + sqr(osumaz + bullet[a].sektoriz[j] * 8000 - bullet[a].place_old.z)) / (bullet[a].speed * elapsed * gamespeed);
+                                                kuljettumatka = (float)sqrtf(sqr(collisionx + bullet[a].sektorix[j] * 8000 - bullet[a].place_old.x) + sqr(collisionz + bullet[a].sektoriz[j] * 8000 - bullet[a].place_old.z)) / (bullet[a].speed * elapsed * gamespeed);
                                                 height        = bullet[a].place_old.y + kuljettumatka * (bullet[a].place.y - bullet[a].place_old.y);
 
                                                 // bullet hole
                                                 if (ase[bullet[a].from_gun].decal_picture > -1)
-                                                        fromsmoke(ase[bullet[a].from_gun].smoke_size, 0, false, 40000, osumax + bullet[a].sektorix[j] * 8000, height, osumaz + bullet[a].sektoriz[j] * 8000, ase[bullet[a].from_gun].decal_picture, -wallkulma, randDouble(0, 2 * pi), 0);
+                                                        fromsmoke(ase[bullet[a].from_gun].smoke_size, 0, false, 40000, collisionx + bullet[a].sektorix[j] * 8000, height, collisionz + bullet[a].sektoriz[j] * 8000, ase[bullet[a].from_gun].decal_picture, -wallkulma, randDouble(0, 2 * pi), 0);
                                                 // smoke to air
                                                 if (ase[bullet[a].from_gun].smoke_filled != 0)
                                                         for (q = 0; q < 3; q++) {
-                                                                fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.001f, true, ase[bullet[a].from_gun].smoke_duration + 1000, osumax2 + bullet[a].sektorix[j] * 8000, height, osumaz2 + bullet[a].sektoriz[j] * 8000, ase[bullet[a].from_gun].smoke_filled, randDouble(-bullet[a].q + pi - pi / 2, -bullet[a].q + pi + pi / 2), (float)fabs(randDouble(0, pi)), randDouble(0, 2 * pi));
+                                                                fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.001f, true, ase[bullet[a].from_gun].smoke_duration + 1000, collisionx2 + bullet[a].sektorix[j] * 8000, height, collisionz2 + bullet[a].sektoriz[j] * 8000, ase[bullet[a].from_gun].smoke_filled, randDouble(-bullet[a].q + pi - pi / 2, -bullet[a].q + pi + pi / 2), (float)fabs(randDouble(0, pi)), randDouble(0, 2 * pi));
                                                         }
                                                 // explosion
                                                 if (ase[bullet[a].from_gun].explosion_size != 0) {
                                                         for (q2 = 0; q2 < ase[bullet[a].from_gun].explosion_size * 30; q2++) {
-                                                                shoot(-6667, -1, bullet[a].from_moped, randDouble(100, 300), moped, 2, osumax + bullet[a].sektorix[j] * 8000, height, osumaz + bullet[a].sektoriz[j] * 8000, randDouble(-pi, pi), randDouble(-pi, pi), randDouble(-pi, pi));
+                                                                shoot(-6667, -1, bullet[a].from_moped, randDouble(100, 300), moped, 2, collisionx + bullet[a].sektorix[j] * 8000, height, collisionz + bullet[a].sektoriz[j] * 8000, randDouble(-pi, pi), randDouble(-pi, pi), randDouble(-pi, pi));
                                                         }
                                                         for (q2 = 0; q2 < pommeja; q2++) {
-                                                                fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.004f * ase[bullet[a].from_gun].explosion_size, true, ase[bullet[a].from_gun].smoke_duration, osumax + bullet[a].sektorix[j] * 8000, height, osumaz + bullet[a].sektoriz[j] * 8000, 3, 0, 0, 0);
+                                                                fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.004f * ase[bullet[a].from_gun].explosion_size, true, ase[bullet[a].from_gun].smoke_duration, collisionx + bullet[a].sektorix[j] * 8000, height, collisionz + bullet[a].sektoriz[j] * 8000, 3, 0, 0, 0);
                                                         }
                                                         quake = 10000 / bullet[a].distance;
-                                                        playsound(8, 2, osumax + bullet[a].sektorix[j] * 8000, osumaz + bullet[a].sektoriz[j] * 8000);
+                                                        playsound(8, 2, collisionx + bullet[a].sektorix[j] * 8000, collisionz + bullet[a].sektoriz[j] * 8000);
                                                 }
                                                 // bounce
                                                 if (ase[bullet[a].from_gun].num_bounces > 0) {
                                                         for (q2 = 0; q2 < ase[bullet[a].from_gun].num_bounces; q2++) {
-                                                                shoot(-6667, -1, bullet[a].from_moped, randDouble(0, 50), moped, 3, osumax + bullet[a].sektorix[j] * 8000, height, osumaz + bullet[a].sektoriz[j] * 8000, randDouble(-pi, pi), randDouble(-pi, pi), randDouble(-pi, pi));
+                                                                shoot(-6667, -1, bullet[a].from_moped, randDouble(0, 50), moped, 3, collisionx + bullet[a].sektorix[j] * 8000, height, collisionz + bullet[a].sektoriz[j] * 8000, randDouble(-pi, pi), randDouble(-pi, pi), randDouble(-pi, pi));
                                                         }
                                                 }
                                                 // sound
                                                 if (ase[bullet[a].from_gun].explosion_size == 0) {
                                                         if (ase[bullet[a].from_gun]._type != 4)
-                                                                playsound(randInt(9, 13), 1, osumax + bullet[a].sektorix[j] * 8000, osumaz + bullet[a].sektoriz[j] * 8000);
+                                                                playsound(randInt(9, 13), 1, collisionx + bullet[a].sektorix[j] * 8000, collisionz + bullet[a].sektoriz[j] * 8000);
                                                 }
 
                                                 // light
-                                                //	setLights(osumax2+bullet[a].sektorix*8000,bullet[a].place.y,osumaz2+bullet[a].sektoriz*8000);
+                                                //	setLights(collisionx2+bullet[a].sektorix*8000,bullet[a].place.y,collisionz2+bullet[a].sektoriz*8000);
 
                                                 bullet[a].remove = true;
                                         }
@@ -2226,8 +2226,8 @@ void calculatebullets(void) // calculates bullets
                                 // smoke to air
                                 if (ase[bullet[a].from_gun].smoke_filled != 0)
                                         for (q = 0; q < 3; q++) {
-                                                osumax = osumax + cosf(-bullet[a].q + pi + pi) * -100;
-                                                osumaz = osumaz + sinf(-bullet[a].q + pi + pi) * -100;
+                                                collisionx = collisionx + cosf(-bullet[a].q + pi + pi) * -100;
+                                                collisionz = collisionz + sinf(-bullet[a].q + pi + pi) * -100;
                                                 fromsmoke(ase[bullet[a].from_gun].smoke_size, 0.001f, true, ase[bullet[a].from_gun].smoke_duration, bullet[a].place.x, 0, bullet[a].place.z, ase[bullet[a].from_gun].smoke_filled, randDouble(-bullet[a].q + pi - pi / 2, -bullet[a].q + pi + pi / 2), (float)fabs(randDouble(0, pi)), randDouble(0, 2 * pi));
                                         }
                                 // explosion
@@ -2720,8 +2720,8 @@ bool Render(void) {
 
 void calculateCollisions(void) // collisions
 {
-        bool osuma, osuma2;
-        float osumax, osumaz;
+        bool collision, collision2;
+        float collisionx, collisionz;
         float wallkulma;
         float temp1;
         int a, b, c, d;
@@ -2735,7 +2735,7 @@ void calculateCollisions(void) // collisions
 
         for (d = 0; d < num_mopeds; d++) {
                 if (moped[d].inactive) continue;
-                osuma = false;
+                collision = false;
                 osuu  = false;
 
                 mapx = moped[d].sektorix;
@@ -2744,7 +2744,7 @@ void calculateCollisions(void) // collisions
                 //}
                 //}
                 for (q = 99; q > 0; q--) {
-                        moped[d].osuma[q] = moped[d].osuma[q - 1];
+                        moped[d].collision[q] = moped[d].collision[q - 1];
                 }
                 kx = moped[d].x3;
                 kz = moped[d].z3;
@@ -2753,22 +2753,22 @@ void calculateCollisions(void) // collisions
                         kz = moped[d].z2;
                 }
 
-                moped[d].osuma[0] = false;
+                moped[d].collision[0] = false;
                 // collisions with walls
                 // for (a=0; a<wallgroup[0].group_count; a++){
                 a                 = maps[mapz][mapx];
                 for (b = 0; b < wallgroup[0].routes[a].route_count; b++) {
                         for (c = 0; c < wallgroup[0].routes[a].route[b].line_count; c++) {
-                                if (linecollidesline(&osuma, &osumax, &osumaz, moped[d].x1 - mapx * 8000, moped[d].z1 - mapz * 8000, kx - mapx * 8000, kz - mapz * 8000, wallgroup[0].routes[a].route[b].point[c].x1, wallgroup[0].routes[a].route[b].point[c].z1, wallgroup[0].routes[a].route[b].point[c].x2, wallgroup[0].routes[a].route[b].point[c].z2))
-                                //||(linecollidesline(&osuma,&osumax,&osumaz,mtempx1-mapx*8000,mtempz1-mapz*8000,mtempx2-mapx*8000,mtempz2-mapz*8000,	wallgroup[0].routes[a].route[b].point[c].x1,wallgroup[0].routes[a].route[b].point[c].z1,wallgroup[0].routes[a].route[b].point[c].x2,wallgroup[0].routes[a].route[b].point[c].z2)))
+                                if (linecollidesline(&collision, &collisionx, &collisionz, moped[d].x1 - mapx * 8000, moped[d].z1 - mapz * 8000, kx - mapx * 8000, kz - mapz * 8000, wallgroup[0].routes[a].route[b].point[c].x1, wallgroup[0].routes[a].route[b].point[c].z1, wallgroup[0].routes[a].route[b].point[c].x2, wallgroup[0].routes[a].route[b].point[c].z2))
+                                //||(linecollidesline(&collision,&collisionx,&collisionz,mtempx1-mapx*8000,mtempz1-mapz*8000,mtempx2-mapx*8000,mtempz2-mapz*8000,	wallgroup[0].routes[a].route[b].point[c].x1,wallgroup[0].routes[a].route[b].point[c].z1,wallgroup[0].routes[a].route[b].point[c].x2,wallgroup[0].routes[a].route[b].point[c].z2)))
                                 {
                                         // moped[d].speed=-moped[d].speed/3;
 
-                                        moped[d].osuma[0] = true;
+                                        moped[d].collision[0] = true;
                                         // sparks
                                         if (moped[d].timesparks < 0) {
                                                 for (q = 0; q < 70; q++) {
-                                                        shoot(-6667, -1, 2, randDouble(100, 200), moped, 3, osumax + mapx * 8000 + randDouble(-20, 20), 50 + randDouble(-20, 20), osumaz + mapz * 8000 + randDouble(-20, 20), randDouble(-pi, pi), randDouble(-pi, pi), randDouble(-pi, pi));
+                                                        shoot(-6667, -1, 2, randDouble(100, 200), moped, 3, collisionx + mapx * 8000 + randDouble(-20, 20), 50 + randDouble(-20, 20), collisionz + mapz * 8000 + randDouble(-20, 20), randDouble(-pi, pi), randDouble(-pi, pi), randDouble(-pi, pi));
                                                 }
                                                 moped[d].timesparks = moped[d].timesparks + randDouble(100, 500);
                                         }
@@ -2817,7 +2817,7 @@ void calculateCollisions(void) // collisions
                                                 // re check
                                                 for (b2 = 0; b2 < wallgroup[0].routes[a].route_count; b2++) {
                                                         for (c2 = 0; c2 < wallgroup[0].routes[a].route[b2].line_count; c2++) {
-                                                                if (linecollidesline(&osuma2, &osumax, &osumaz, moped[d].x1 - mapx * 8000, moped[d].z1 - mapz * 8000, kx - mapx * 8000, kz - mapz * 8000, wallgroup[0].routes[a].route[b2].point[c2].x1, wallgroup[0].routes[a].route[b2].point[c2].z1, wallgroup[0].routes[a].route[b2].point[c2].x2, wallgroup[0].routes[a].route[b2].point[c2].z2)) {
+                                                                if (linecollidesline(&collision2, &collisionx, &collisionz, moped[d].x1 - mapx * 8000, moped[d].z1 - mapz * 8000, kx - mapx * 8000, kz - mapz * 8000, wallgroup[0].routes[a].route[b2].point[c2].x1, wallgroup[0].routes[a].route[b2].point[c2].z1, wallgroup[0].routes[a].route[b2].point[c2].x2, wallgroup[0].routes[a].route[b2].point[c2].z2)) {
                                                                         moped[d].x1          = moped[d].x3;
                                                                         moped[d].y1          = moped[d].y3;
                                                                         moped[d].z1          = moped[d].z3;
@@ -2838,11 +2838,11 @@ void calculateCollisions(void) // collisions
                                         }
                                 }
 
-                                if (osuma) break;
+                                if (collision) break;
                         }
-                        if (osuma) break;
+                        if (collision) break;
                         //	}
-                        // if(osuma)break;
+                        // if(collision)break;
                 }
 
                 // is it inside a house
@@ -2851,9 +2851,9 @@ void calculateCollisions(void) // collisions
                 a         = maps[mapz][mapx];
                 for (b = 0; b < wallgroup[0].routes[a].route_count; b++) {
                         for (c = 0; c < wallgroup[0].routes[a].route[b].line_count; c++) {
-                                if (linecollidesline(&osuma, &osumax, &osumaz, moped[d].x1 - mapx * 8000, moped[d].z1 - mapz * 8000, moped[d].x1 - mapx * 8000 + 80000, moped[d].z1 - mapz * 8000 + 80000, wallgroup[0].routes[a].route[b].point[c].x1, wallgroup[0].routes[a].route[b].point[c].z1, wallgroup[0].routes[a].route[b].point[c].x2, wallgroup[0].routes[a].route[b].point[c].z2))
+                                if (linecollidesline(&collision, &collisionx, &collisionz, moped[d].x1 - mapx * 8000, moped[d].z1 - mapz * 8000, moped[d].x1 - mapx * 8000 + 80000, moped[d].z1 - mapz * 8000 + 80000, wallgroup[0].routes[a].route[b].point[c].x1, wallgroup[0].routes[a].route[b].point[c].z1, wallgroup[0].routes[a].route[b].point[c].x2, wallgroup[0].routes[a].route[b].point[c].z2))
                                         wallhits = wallhits + 1;
-                                if (linecollidesline(&osuma, &osumax, &osumaz, moped[d].x2 - mapx * 8000, moped[d].z2 - mapz * 8000, moped[d].x2 - mapx * 8000 + 80000, moped[d].z2 - mapz * 8000 + 80000, wallgroup[0].routes[a].route[b].point[c].x1, wallgroup[0].routes[a].route[b].point[c].z1, wallgroup[0].routes[a].route[b].point[c].x2, wallgroup[0].routes[a].route[b].point[c].z2))
+                                if (linecollidesline(&collision, &collisionx, &collisionz, moped[d].x2 - mapx * 8000, moped[d].z2 - mapz * 8000, moped[d].x2 - mapx * 8000 + 80000, moped[d].z2 - mapz * 8000 + 80000, wallgroup[0].routes[a].route[b].point[c].x1, wallgroup[0].routes[a].route[b].point[c].z1, wallgroup[0].routes[a].route[b].point[c].x2, wallgroup[0].routes[a].route[b].point[c].z2))
                                         wallhits2 = wallhits2 + 1;
                         }
                 }
@@ -2867,7 +2867,7 @@ void calculateCollisions(void) // collisions
                 // return old coordinates if it hits
                 if (osuu) {
 
-                        moped[d].osuma[0] = true;
+                        moped[d].collision[0] = true;
 
                         // return coordinates
                         moped[d].x1 = moped[d].x3;
@@ -3155,8 +3155,8 @@ void calculatecharacters(void) // calculatecharacters
 {
         int q, mapx, mapz, wallhits;
         int a, b, c;
-        bool osuma;
-        float osumax, osumaz;
+        bool collision;
+        float collisionx, collisionz;
         float cos, sin;
         float MOTION_SPEED = 0.1f;
         int inactiveko;
@@ -3171,7 +3171,7 @@ void calculatecharacters(void) // calculatecharacters
                 }
 
                 for (a = 99; a > 0; a--) {
-                        character[q].osuma[a] = character[q].osuma[a - 1];
+                        character[q].collision[a] = character[q].collision[a - 1];
                 }
 
                 character[q].x2 = character[q].x;
@@ -3338,11 +3338,11 @@ void calculatecharacters(void) // calculatecharacters
                                 wallhits = 0;
                                 for (b = 0; b < wallgroup[0].routes[a].route_count; b++) {
                                         for (c = 0; c < wallgroup[0].routes[a].route[b].line_count; c++) {
-                                                if (linecollidesline(&osuma, &osumax, &osumaz, character[q].x + cos * 100 * character[q].walk_dir - mapx * 8000, character[q].z + sin * 100 * character[q].walk_dir - mapz * 8000, character[q].x + cos * 100 * character[q].walk_dir + 8000 - mapx * 8000, character[q].z + sin * 100 * character[q].walk_dir - mapz * 8000, wallgroup[0].routes[a].route[b].point[c].x1, wallgroup[0].routes[a].route[b].point[c].z1, wallgroup[0].routes[a].route[b].point[c].x2, wallgroup[0].routes[a].route[b].point[c].z2))
+                                                if (linecollidesline(&collision, &collisionx, &collisionz, character[q].x + cos * 100 * character[q].walk_dir - mapx * 8000, character[q].z + sin * 100 * character[q].walk_dir - mapz * 8000, character[q].x + cos * 100 * character[q].walk_dir + 8000 - mapx * 8000, character[q].z + sin * 100 * character[q].walk_dir - mapz * 8000, wallgroup[0].routes[a].route[b].point[c].x1, wallgroup[0].routes[a].route[b].point[c].z1, wallgroup[0].routes[a].route[b].point[c].x2, wallgroup[0].routes[a].route[b].point[c].z2))
                                                         wallhits = wallhits + 1;
                                         }
                                 }
-                                character[q].osuma[0] = false;
+                                character[q].collision[0] = false;
                                 if ((float)wallhits / 2 * 1000 != ((int)(wallhits / 2)) * 1000) {
                                         character[q].rx                     = 0;
                                         character[q].lx                     = 0;
@@ -3353,7 +3353,7 @@ void calculatecharacters(void) // calculatecharacters
                                         character[q].speed                  = 0;
                                         character[q].x                      = character[q].x2;
                                         character[q].z                      = character[q].z2;
-                                        character[q].osuma[0]               = true;
+                                        character[q].collision[0]               = true;
                                 }
 
                                 // legs are swingin
@@ -3418,7 +3418,7 @@ void calculatecharacters(void) // calculatecharacters
                                         wallhits               = 0;
                                         for (b = 0; b < wallgroup[0].routes[a].route_count; b++) {
                                                 for (c = 0; c < wallgroup[0].routes[a].route[b].line_count; c++) {
-                                                        if (linecollidesline(&osuma, &osumax, &osumaz, character[q].x + cos * 100 - mapx * 8000, character[q].z + sin * 100 - mapz * 8000, character[q].x + cos * 100 + 8000 - mapx * 8000, character[q].z + sin * 100 - mapz * 8000, wallgroup[0].routes[a].route[b].point[c].x1, wallgroup[0].routes[a].route[b].point[c].z1, wallgroup[0].routes[a].route[b].point[c].x2, wallgroup[0].routes[a].route[b].point[c].z2))
+                                                        if (linecollidesline(&collision, &collisionx, &collisionz, character[q].x + cos * 100 - mapx * 8000, character[q].z + sin * 100 - mapz * 8000, character[q].x + cos * 100 + 8000 - mapx * 8000, character[q].z + sin * 100 - mapz * 8000, wallgroup[0].routes[a].route[b].point[c].x1, wallgroup[0].routes[a].route[b].point[c].z1, wallgroup[0].routes[a].route[b].point[c].x2, wallgroup[0].routes[a].route[b].point[c].z2))
                                                                 wallhits = wallhits + 1;
                                                 }
                                         }
@@ -3439,12 +3439,12 @@ void calculatecharacters(void) // calculatecharacters
                 osumia = 0;
                 // if can get out of the wall
                 for (a = 0; a < 100; a++) {
-                        if (character[q].osuma[a])
+                        if (character[q].collision[a])
                                 osumia = osumia + 1;
                 }
                 if ((osumia > 40) && (character[q].visible == false)) {
                         for (a = 0; a < 100; a++) {
-                                character[q].osuma[a] = false;
+                                character[q].collision[a] = false;
                         }
 
                         calc_coordinates(&character[q].x, &character[q].z);
@@ -4013,7 +4013,7 @@ void render_game_workshop() {
                         moped[0].angle_pitch  = 0;
                         moped[0].etudirection = 0;
                         for (int a = 0; a < 100; a++)
-                                moped[0].osuma[a] = false;
+                                moped[0].collision[a] = false;
                 }
         }
 }
@@ -5277,8 +5277,8 @@ void create_mission(bikebase* moped, int missionumero) { // randomize a mission.
 void calc_coordinates(float* xa, float* za) { // calculate coordinates
 
         int a, b, c;
-        bool osuma = false;
-        float osumax, osumaz;
+        bool collision = false;
+        float collisionx, collisionz;
 fa:
 
         *xa = randDouble(0, (float)mapsx * 8000);
@@ -5291,7 +5291,7 @@ fa:
         int wallhits = 0;
         for (b = 0; b < wallgroup[0].routes[a].route_count; b++) {
                 for (c = 0; c < wallgroup[0].routes[a].route[b].line_count; c++) {
-                        if (linecollidesline(&osuma, &osumax, &osumaz, *xa - mapx * 8000, *za - mapz * 8000, *xa + 10000 - mapx * 8000, *za + 10000 - mapz * 8000, wallgroup[0].routes[a].route[b].point[c].x1, wallgroup[0].routes[a].route[b].point[c].z1, wallgroup[0].routes[a].route[b].point[c].x2, wallgroup[0].routes[a].route[b].point[c].z2))
+                        if (linecollidesline(&collision, &collisionx, &collisionz, *xa - mapx * 8000, *za - mapz * 8000, *xa + 10000 - mapx * 8000, *za + 10000 - mapz * 8000, wallgroup[0].routes[a].route[b].point[c].x1, wallgroup[0].routes[a].route[b].point[c].z1, wallgroup[0].routes[a].route[b].point[c].x2, wallgroup[0].routes[a].route[b].point[c].z2))
                                 wallhits = wallhits + 1;
                 }
         }
@@ -5404,7 +5404,7 @@ void create_character(int q) { // create random character
         int prosentti;
 
         for (a = 0; a < 100; a++)
-                character[q].osuma[a] = false;
+                character[q].collision[a] = false;
         character[q].height      = randDouble(0.9f, 1.1f);
         character[q].walk_dir    = 1;
         character[q].menoajastin = 0;
@@ -5764,12 +5764,12 @@ void calc_moped(void) { // calculate mopeds
                         osumia = 0;
                         // if cant get off the wall
                         for (q = 0; q < 100; q++) {
-                                if (moped[d].osuma[q])
+                                if (moped[d].collision[q])
                                         osumia = osumia + 1;
                         }
 
                         // if it is clearly in the wall
-                        if (moped[d].osuma[0]) {
+                        if (moped[d].collision[0]) {
                                 moped[d].walltimer = (float)(osumia + 20) * 30;
                                 // if it was going straigth ahaed use reverse
                                 if (moped[d].up3 > moped[d].down3) {
@@ -5826,7 +5826,7 @@ void create_mopo(int d) { // randomize moped
         moped[d].sektoriz = (int)moped[d].z1 / 8000;
         moped[d].inactive = false;
         for (a = 0; a < 100; a++)
-                moped[d].osuma[a] = false;
+                moped[d].collision[a] = false;
         moped[d].directiontimer = 0;
         moped[d].tacticstimer   = 0;
         moped[d].visible        = true;
@@ -6172,7 +6172,7 @@ void render_workshop(void) { // render workshop
 
 void readkey_game(void) {
 
-        // mopep control
+        // moped control
         moped[0].enter2 = moped[0].enter;
         moped[0].esc2   = moped[0].esc;
         moped[0].up2    = moped[0].up;

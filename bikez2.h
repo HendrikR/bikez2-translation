@@ -128,7 +128,7 @@ struct person
 	int movement_type;//0=own 1=passive 2=enemy
 	bool visible;//visible or not.
 	float height;//What size it is
-	bool osuma[100];//has it collided with walls lately
+	bool collision[100];//has it collided with walls lately
 };
 
 struct missio
@@ -184,7 +184,7 @@ struct bikebase
 	int target_character;//what character is aimed at -3=no-one
 	float energy;//energy
 	int level;//level of the given mission
-	bool osuma[100];//has it collided with walls lately
+	bool collision[100];//has it collided with walls lately
 	float directiontimer;//For artificial intelligence: how long it is gone to same direction
 	float tacticstimer;//For artificial intelligence: tactic timer
 	int tactics;//0=attack 1=escape
