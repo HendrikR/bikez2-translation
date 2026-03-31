@@ -1,19 +1,19 @@
 #include "func.h"
 
-bool linecollidesline(bool *osuma,float *osumax,float *osumay,float x1,float y1,float x2,float y2,float x3,float y3,float x4,float y4) {
+bool linecollidesline(bool *intersect,float *intersectx,float *intersecty,float x1,float y1,float x2,float y2,float x3,float y3,float x4,float y4) {
   float div = ((y4-y3)*(x2-x1)) - ((x4-x3)*(y2-y1));
   float num1= ((x4-x3)*(y1-y3)) - ((y4-y3)*(x1-x3));
   float num2= ((x2-x1)*(y1-y3)) - ((y2-y1)*(x1-x3));
 
-  if (div == 0) {
-    *osuma = false;
+  if (fabsf(div) < 1e-6) {
+    *intersect = false;
   } else {
     float u1 = num1/div, u2 = num2/div;
-    *osumax = x1 + (u1 * (x2-x1));
-    *osumay = y1 + (u1 * (y2-y1));
-    *osuma = true;
+    *intersect = (0.0f <= u1 && u1 <= 1.0f) && (0.0f <= u2 && u2 <= 1.0f);
+    *intersectx = x1 + (u1 * (x2-x1));
+    *intersecty = y1 + (u1 * (y2-y1));
   }
-  return *osuma;
+  return *intersect;
 }//does a line collide with another
 
 LPDIRECTDRAWSURFACE7 loadPicture(LPDIRECTDRAW7 m_pDD, char name[200], BOOL hardware) {
