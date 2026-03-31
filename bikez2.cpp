@@ -3488,7 +3488,7 @@ void rendercharacters(void) {
                 if (character[a].dying) pictureaja = 5;
 
                 // from farther away all characters look ugly
-                if (!mapmode) {
+                if (!shoulder_view) {
                         if (character[a].distance > 3100) continue;
                         pictureaja = 4;
                 }
@@ -3547,7 +3547,7 @@ void rendercharacters(void) {
                                                 }
 
                         // render balls if viewed from above
-                        if (!mapmode) {
+                        if (!shoulder_view) {
                                 matrices->LoadIdentity();
                                 matrices->TranslateLocal(character[a].x, 1, character[a].z);
                                 matrices->RotateYawPitchRollLocal(0, 0, pi / 2);
@@ -3872,8 +3872,8 @@ void render_game_pre_fx() {
         // SndObjPlay(voices[1], DSBPLAY_LOOPING,options[1]&&SOUNDS_LOADED);
 }
 
-void render_game_mapmode() {
-        if (mapmode) {
+void render_game_shoulder_view() {
+        if (shoulder_view) {
                 // background is grey ; it is not needed if sky is renderet separetly
                 m_pDevice->Clear(0, NULL, D3DCLEAR_TARGET, 0x004C4C4C, 0, 0);
                 float kameraspeed;
@@ -3881,7 +3881,7 @@ void render_game_mapmode() {
                 float xcam  = moped[0].x1;
                 float zcam  = moped[0].z1;
                 kameraspeed = 0.006f;
-                if (mapmode2 != mapmode) kameraspeed = 1 / elapsed;
+                if (shoulder_view2 != shoulder_view) kameraspeed = 1 / elapsed;
                 dx2    = moped[0].direction * 180 / pi - 180;
                 fSinXY = sinf((dy / 180 * pi));
                 fSinXZ = sinf(((dx + dx2) / 180 * pi));
@@ -3933,7 +3933,7 @@ void render_game_mapmode() {
 
 void render_game_prepare(float& kerroin) {
         // vision from above
-        if (!mapmode) {
+        if (!shoulder_view) {
                 kerroin  = 0.45f;
                 kamerax1 = moped[0].x1 + 100;
                 kameray1 = 10000;
@@ -4289,7 +4289,7 @@ void render_game_mopeds() {
                         if (moped[d].mopona == 0) {
                                 mopopicture = 0;
                                 if (moped[d].distance > 2000) mopopicture = 9;
-                                if (!mapmode) mopopicture = 9;
+                                if (!shoulder_view) mopopicture = 9;
                         }
                         if (moped[d].mopona == 1) {
                                 mopopicture = 6;
@@ -5071,7 +5071,7 @@ void render_game(void) { // just renders some moped driving.
         render_game_pre_fx();
 
         // normal vision angle
-        render_game_mapmode();
+        render_game_shoulder_view();
 
         render_game_prepare(kerroin);
 
@@ -6184,7 +6184,7 @@ void readkey_game(void) {
         moped[0].three2 = moped[0].three;
         moped[0].four2  = moped[0].four;
         moped[0].space2 = moped[0].space;
-        mapmode2        = mapmode;
+        shoulder_view2  = shoulder_view;
 
         moped[0].enter = false;
         moped[0].esc   = false;
@@ -6265,8 +6265,8 @@ void readkey_game(void) {
         // changching camera mode
         if (KEYDOWN(buffer, DIK_TAB))
                 if (!(KEYDOWN(buffer2, DIK_TAB))) {
-                        if (!mapmode) mapmode = true;
-                        else mapmode = false;
+                        if (!shoulder_view) shoulder_view = true;
+                        else shoulder_view = false;
                 }
 
         // controlling camera
@@ -7002,7 +7002,7 @@ void game_new(void) { // new game
 
         quake           = 0; // at the beginning there will be no erthquakes
         mission_is_read = 0; // read introduction
-        mapmode         = true;
+        shoulder_view   = true;
         dx              = 0; // camera
         dy              = 13; // camera
         bullet_count    = 0; // at the beginning there will be not a single bullet

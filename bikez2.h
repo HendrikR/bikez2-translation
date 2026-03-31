@@ -391,7 +391,7 @@ float radiusmap[1000];
 int gamephase,gamephase_old;//gamephase, gamepahse_was
 int gamephase2,gamephase2_old;//gamephase2, gamepahse_was2
 light lights[MAX_LIGHTS];
-bool mapmode,mapmode2;//0 =normal 1=from above
+bool shoulder_view,shoulder_view2;//0 =normal 1=from above
 float kamerax1,kameray1,kameraz1;//camera from
 float kamerax2,kameray2,kameraz2;//camera to
 charactertextures charactertexture[10];//charactertextures
