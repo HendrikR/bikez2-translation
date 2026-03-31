@@ -3160,7 +3160,7 @@ void calculatecharacters(void) // calculatecharacters
         float cos, sin;
         float MOTION_SPEED = 0.1f;
         int inactiveko;
-        int osumia;
+        int collisions;
         moped[0].nearestcharacter = -1;
 
         for (q = 0; q < characters; q++) {
@@ -3436,13 +3436,13 @@ void calculatecharacters(void) // calculatecharacters
                         }
                 }
 
-                osumia = 0;
+                collisions = 0;
                 // if can get out of the wall
                 for (a = 0; a < 100; a++) {
                         if (character[q].collision[a])
-                                osumia = osumia + 1;
+                                collisions = collisions + 1;
                 }
-                if ((osumia > 40) && (character[q].visible == false)) {
+                if ((collisions > 40) && (character[q].visible == false)) {
                         for (a = 0; a < 100; a++) {
                                 character[q].collision[a] = false;
                         }
@@ -5585,7 +5585,7 @@ void calc_moped(void) { // calculate mopeds
         int q, q2, d;
         float dq, temp1;
         int negaatio;
-        int osumia;
+        int collisions;
         // if(num_mopeds==1)return;
 
         if (moped->mission.status != 0) return;
@@ -5761,16 +5761,16 @@ void calc_moped(void) { // calculate mopeds
                                 }
                         }
 
-                        osumia = 0;
+                        collisions = 0;
                         // if cant get off the wall
                         for (q = 0; q < 100; q++) {
                                 if (moped[d].collision[q])
-                                        osumia = osumia + 1;
+                                        collisions = collisions + 1;
                         }
 
                         // if it is clearly in the wall
                         if (moped[d].collision[0]) {
-                                moped[d].walltimer = (float)(osumia + 20) * 30;
+                                moped[d].walltimer = (float)(collisions + 20) * 30;
                                 // if it was going straigth ahaed use reverse
                                 if (moped[d].up3 > moped[d].down3) {
                                         moped[d].down = false;
@@ -5795,7 +5795,7 @@ void calc_moped(void) { // calculate mopeds
                                 }
                         }
 
-                        if ((osumia > 90) && (moped[d].visible == false)) {
+                        if ((collisions > 90) && (moped[d].visible == false)) {
 
                                 calc_coordinates(&moped[d].x1, &moped[d].z1);
                         }
