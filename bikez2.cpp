@@ -454,7 +454,7 @@ void init() {
           moveparts(5);//moves character1 pieces to their places
         */
 
-        // initialize matrix
+        // initialize matrix
         ZeroMemory(&matrices, sizeof(matrices));
         D3DXCreateMatrixStack(0, &matrices);
 
@@ -2572,9 +2572,9 @@ void move_moped(bikebase* moped) {
         if (turnrate > 1) turnrate = 1;
 
         if (moped->left) {
-                moped->etudirection = moped->etudirection + turnrate * maksimi / 0.2f / 1000 * elapsed * gamespeed;
-        } else if (moped->right) {
                 moped->etudirection = moped->etudirection - turnrate * maksimi / 0.2f / 1000 * elapsed * gamespeed;
+        } else if (moped->right) {
+                moped->etudirection = moped->etudirection + turnrate * maksimi / 0.2f / 1000 * elapsed * gamespeed;
         } else {
                 moped->etudirection = moped->etudirection - moped->etudirection * 0.004f * elapsed * gamespeed;
         }
@@ -6199,9 +6199,9 @@ void readkey_game(void) {
                 moped[0].up = true;
         if (KEYDOWN(buffer, DIK_DOWN))
                 moped[0].down = true;
-        if (KEYDOWN(buffer, DIK_RIGHT))
-                moped[0].left = true;
         if (KEYDOWN(buffer, DIK_LEFT))
+                moped[0].left = true;
+        if (KEYDOWN(buffer, DIK_RIGHT))
                 moped[0].right = true;
         if (KEYDOWN(buffer, DIK_1))
                 moped[0].one = true;
