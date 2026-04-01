@@ -19,7 +19,7 @@ void printMatrix(const char* text, const D3DMATRIX mat) {
 ID3DXMatrixStack::ID3DXMatrixStack() : _stack() {}
 void ID3DXMatrixStack::Push() {
   #ifdef GLM_STACK
-  _stack.push(glm::identity<glm::mat4>());
+  _stack.push(_stack.empty() ? glm::identity<glm::mat4>() : _stack.top());
   #else
   glPushMatrix();
   #endif
