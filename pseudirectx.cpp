@@ -319,10 +319,10 @@ void DIRECT3DDEVICE7::DrawPrimitive(UINT primitiveType, DWORD texflags, const vo
 
 //void DIRECT3DDEVICE7::DrawPrimitive(enum primitive_type, UINT start_vertex, UINT primitive_count) {}
 void DIRECT3DDEVICE7::SetMaterial(D3DMATERIAL7* m) {
-  glMaterialfv(GL_FRONT | GL_BACK, GL_AMBIENT,   (GLfloat*)(&m->dcvAmbient));
-  glMaterialfv(GL_FRONT | GL_BACK, GL_DIFFUSE,   (GLfloat*)(&m->dcvDiffuse));
-  glMaterialfv(GL_FRONT | GL_BACK, GL_SPECULAR,  (GLfloat*)(&m->dcvSpecular));
-  glMaterialf(GL_FRONT | GL_BACK, GL_SHININESS, m->dvPower);
+  glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT,   (GLfloat*)(&m->dcvAmbient));
+  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,   (GLfloat*)(&m->dcvDiffuse));
+  glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR,  (GLfloat*)(&m->dcvSpecular));
+  glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, m->dvPower);
 }
 void DIRECT3DDEVICE7::ComputeSphereVisibility(D3DVECTOR* lpCenters, float* lpRadii, DWORD dwNumSpheres, DWORD dwFlags, DWORD* lpdwReturnValues) {
   // Build the combined clip matrix: proj * view * world
