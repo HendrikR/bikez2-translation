@@ -3454,7 +3454,7 @@ void calculatecharacters(void) // calculatecharacters
         }
 }
 
-void rendercharacters(void) {
+void render_game_characters(void) {
         int q, a, d;
 
         // rendering humans -characters (character)
@@ -4503,10 +4503,6 @@ void render_game_mopeds() {
 }
 
 void render_game_crosshair1(float& camq, float& camw, float& came) {
-        m_pDevice->LightEnable(1, FALSE);
-        rendercharacters();
-        m_pDevice->LightEnable(1, TRUE);
-
         // camera angle
         camq = -atan2f(-kamerax2 + kamerax1, -kameraz2 + kameraz1);
         camw = 0;
@@ -5075,6 +5071,9 @@ void render_game(void) { // just renders some moped driving.
         render_game_houses(kerroin);
         render_game_bullets();
         render_game_mopeds();
+        //m_pDevice->LightEnable(1, FALSE);
+        render_game_characters();
+        m_pDevice->LightEnable(1, TRUE);
 
         float camq, camw, came;
         render_game_crosshair1(camq, camw, came);
