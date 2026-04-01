@@ -46,9 +46,14 @@ LPDIRECTDRAWSURFACE7 loadPicture(LPDIRECTDRAW7 m_pDD, char name[200], BOOL hardw
 }//loadpicture
 
 int randInt( int low, int high ) {
+  if (low >= high) {
+    printf("WARN randInt called with high<=low==%d\n", low);
+    return low;
+  }
   return low + std::rand() % (high-low);
 }
 float randDouble( float low, float high ) {
+  if (low >= high) return low;
   return low + (std::rand() / (float)RAND_MAX) * (high-low);
 }
 bool intersect(RECT a, RECT b) {
