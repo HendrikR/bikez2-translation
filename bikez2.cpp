@@ -5488,48 +5488,11 @@ void load_missions(void) { // read missions
         // load missions
         fil = fopen("data/mission.dat", "rt");
 
-        stripped_fgets(row, sizeof(row), fil);
-        strcpy(missioninfo[0], row);
-        stripped_fgets(row, sizeof(row), fil);
-        strcpy(missioninfo[1], row);
-        stripped_fgets(row, sizeof(row), fil);
-        strcpy(missioninfo[2], row);
-        stripped_fgets(row, sizeof(row), fil);
-        strcpy(missioninfo[3], row);
-        stripped_fgets(row, sizeof(row), fil);
-        strcpy(missioninfo[4], row);
-        stripped_fgets(row, sizeof(row), fil);
-        strcpy(missioninfo[5], row);
-        stripped_fgets(row, sizeof(row), fil);
-        strcpy(missioninfo[6], row);
-        stripped_fgets(row, sizeof(row), fil);
-        strcpy(missioninfo[7], row);
-        stripped_fgets(row, sizeof(row), fil);
-        strcpy(missioninfo[8], row);
-        stripped_fgets(row, sizeof(row), fil);
-        strcpy(missioninfo[9], row);
-        stripped_fgets(row, sizeof(row), fil);
-        strcpy(missioninfo[10], row);
-        stripped_fgets(row, sizeof(row), fil);
-        strcpy(missioninfo[11], row);
-        stripped_fgets(row, sizeof(row), fil);
-        strcpy(missioninfo[12], row);
-        stripped_fgets(row, sizeof(row), fil);
-        strcpy(missioninfo[13], row);
-        stripped_fgets(row, sizeof(row), fil);
-        strcpy(missioninfo[14], row);
-        stripped_fgets(row, sizeof(row), fil);
-        strcpy(missioninfo[15], row);
-        stripped_fgets(row, sizeof(row), fil);
-        strcpy(missioninfo[16], row);
-        stripped_fgets(row, sizeof(row), fil);
-        strcpy(missioninfo[17], row);
-        stripped_fgets(row, sizeof(row), fil);
-        strcpy(missioninfo[18], row);
-        stripped_fgets(row, sizeof(row), fil);
-        strcpy(missioninfo[19], row);
-        stripped_fgets(row, sizeof(row), fil);
-        strcpy(missioninfo[20], row);
+        for (int i=0; i<=20; ++i) {
+                stripped_fgets(row, sizeof(row), fil);
+                strcpy(missioninfo[i], row);
+                std::cout << "mission "<< i <<" info: "<< row <<std::endl;
+        }
 
         stripped_fgets(row, sizeof(row), fil);
         level = atoi(row);
