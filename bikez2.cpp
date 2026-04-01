@@ -194,7 +194,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
     case WM_CHAR: // read keys for input name
     {
         if (gamephase == GP_MENU)
-            if (gamephase2 == 3)
+            if (menuitem == 3)
                 if (keytimer < 0) {
                     keytimer = 25;
                     bug1     = bug1 + 1;
@@ -775,8 +775,9 @@ void init() {
         ase[q].prate_of_fire    = 1;
         ase[q]._type            = 4;
 
-        gamephase2 = 0;
         gamephase  = GP_MENU;
+        menuitem   = 0;
+        gamephase2 = GP2_GAME;
         elapsed    = 15;
         for (q = 0; q < 100; q++) {
                 elapsed3[q] = 15;
@@ -1492,7 +1493,7 @@ void readkeyb(void) {
         if (KEYDOWN(buffer, DIK_ADD))
                 plusmiinus = plusmiinus + 0.001f * elapsed * gamespeed;
 
-        if ((!pressed && !pressed2) && (gamephase != 0)) return;
+        if ((!pressed && !pressed2) && (gamephase != GP_GAME)) return;
 
         switch (gamephase) {
         case GP_GAME: { // game
@@ -1503,7 +1504,7 @@ void readkeyb(void) {
                 // accept mission
                 if (!KEYDOWN(buffer, DIK_RETURN) && KEYDOWN(buffer2, DIK_RETURN)) {
                         if (mission_is_read == 1) {
-                                gamephase = 0; // back to riding
+                                gamephase = GP_GAME; // back to riding
                                 SndObjPlay(voices[1], DSBPLAY_LOOPING, options[1] && SOUNDS_LOADED);
                                 moped[0].mission = moped[0].mission_random;
                                 // a dude comes aboard
@@ -1517,8 +1518,9 @@ void readkeyb(void) {
         case GP_WORKSHOP: { // workshop
                 // pressing esc means escape.
                 if ((!KEYDOWN(buffer, DIK_ESCAPE) && KEYDOWN(buffer2, DIK_ESCAPE)) || (!KEYDOWN(buffer, DIK_F9) && KEYDOWN(buffer2, DIK_F9))) {
-                        gamephase2 = 0;
-                        gamephase  = 0;
+                        gamephase  = GP_GAME;
+                        gamephase2 = GP2_GAME;
+                        menuitem   = 0;
                         SndObjPlay(voices[1], DSBPLAY_LOOPING, options[1] && SOUNDS_LOADED);
                 }
                 break;
@@ -1528,44 +1530,44 @@ void readkeyb(void) {
         case GP_MENU: {
                 // pressing esc means escape.
                 if ((!KEYDOWN(buffer, DIK_ESCAPE) && KEYDOWN(buffer2, DIK_ESCAPE)) || (!KEYDOWN(buffer, DIK_F9) && KEYDOWN(buffer2, DIK_F9))) {
-                        if (gamephase2 == 0)
+                        if (menuitem == 0)
                                 SendMessage(hWnd, WM_CLOSE, 0, 0);
                         else {
                                 // if it came to load from workshop
-                                if ((gamephase2 == 1) || (gamephase2 == 2)) {
-                                        if (gamephase_old == 2) {
-                                                gamephase2 = 0;
-                                                gamephase  = 2;
+                                if ((menuitem == 1) || (menuitem == 2)) {
+                                        if (gamephase_old == GP_WORKSHOP) {
+                                                menuitem = 0;
+                                                gamephase  = GP2_PAUSE;
                                         }
-                                        if (gamephase_old == 4) {
-                                                gamephase2 = 0;
-                                                gamephase  = 4;
+                                        if (gamephase_old == GP_MENU) {
+                                                menuitem = 0;
+                                                gamephase  = GP_MENU;
                                         }
-                                } else if (gamephase2 == 3)
-                                        gamephase2 = 2;
+                                } else if (menuitem == 3)
+                                        menuitem = 2;
                                 else {
-                                        gamephase2 = 0;
-                                        gamephase  = 4;
+                                        menuitem = 0;
+                                        gamephase  = GP_MENU;
                                 }
                         }
                 }
                 // down
-                if (gamephase2 != 3)
+                if (menuitem != 3)
                         if (!KEYDOWN(buffer, DIK_DOWN) && KEYDOWN(buffer2, DIK_DOWN)) {
                                 menu_selection = menu_selection + 1;
-                                if (menu_selection >= menuja[gamephase2]) menu_selection = 0;
+                                if (menu_selection >= menuja[menuitem]) menu_selection = 0;
                                 SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
                         }
                 // up
-                if (gamephase2 != 3)
+                if (menuitem != 3)
                         if (!KEYDOWN(buffer, DIK_UP) && KEYDOWN(buffer2, DIK_UP)) {
                                 menu_selection = menu_selection - 1;
-                                if (menu_selection < 0) menu_selection = menuja[gamephase2] - 1;
+                                if (menu_selection < 0) menu_selection = menuja[menuitem] - 1;
                                 SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
                         }
 
                 // changching keys
-                if (gamephase2 == 6)
+                if (menuitem == 6)
                         if ((menu_selection < 12) && (menu_selection > 0) && (pressed) && (is_selected)) {
                                 key[menu_selection] = down;
                                 is_selected         = false;
@@ -1576,7 +1578,7 @@ void readkeyb(void) {
                 // selection pressed
                 if (((mousestate2.rgbButtons[0]) && (!mousestate.rgbButtons[0])) || (!KEYDOWN(buffer, DIK_RETURN) && KEYDOWN(buffer2, DIK_RETURN))) {
                         // loading a game
-                        if (gamephase2 == 1)
+                        if (menuitem == 1)
                                 if ((menu_selection < 11) && (menu_selection > 0)) {
                                         savegame_slot = menu_selection - 1;
                                         game_load();
@@ -1584,10 +1586,10 @@ void readkeyb(void) {
                                         break;
                                 }
                         // selecting a load
-                        if (gamephase2 == 2)
+                        if (menuitem == 2)
                                 if ((menu_selection < 11) && (menu_selection > 0)) {
                                         savegame_slot   = menu_selection - 1;
-                                        gamephase2      = 3;
+                                        menuitem      = 3;
                                         letters_in_name = letters_in_file_names[savegame_slot];
                                         strcpy(savefilename, "                                                 ");
                                         strcpy(savefilename, m_filenames[savegame_slot]);
@@ -1599,24 +1601,24 @@ void readkeyb(void) {
                                         break;
                                 }
                         // saving a game
-                        if (gamephase2 == 3)
+                        if (menuitem == 3)
                                 if ((menu_selection < 11) && (menu_selection > 0)) {
                                         savegame_slot = menu_selection - 1;
                                         game_save();
-                                        if (gamephase_old == 2) {
-                                                gamephase2 = 0;
-                                                gamephase  = 2;
+                                        if (gamephase_old == GP_WORKSHOP) {
+                                                menuitem = 0;
+                                                gamephase  = GP_WORKSHOP;
                                         }
-                                        if (gamephase_old == 4) {
-                                                gamephase2 = 0;
-                                                gamephase  = 4;
+                                        if (gamephase_old == GP_MENU) {
+                                                menuitem = 0;
+                                                gamephase  = GP_MENU;
                                         }
                                         readsaves();
                                         SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
                                         break;
                                 }
                         // changching settings
-                        if (gamephase2 == 4)
+                        if (menuitem == 4)
                                 if ((menu_selection < 10) && (menu_selection > 0)) {
                                         if (options[menu_selection]) options[menu_selection] = false;
                                         else options[menu_selection] = true;
@@ -1626,7 +1628,7 @@ void readkeyb(void) {
                                 }
 
                         // changching keys //select a key
-                        if (gamephase2 == 6)
+                        if (menuitem == 6)
                                 if ((menu_selection < 12) && (menu_selection > 0)) {
                                         is_selected = true;
                                         SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
@@ -1634,82 +1636,82 @@ void readkeyb(void) {
 
                         switch (menu_selection) {
                         case 0:
-                                if (gamephase2 == 0) { // new game
-                                        gamephase2 = 5;
+                                if (menuitem == 0) { // new game
+                                        menuitem = 5;
                                         SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
                                         break;
                                 }
-                                if (gamephase2 == 5) { // difficulty level
+                                if (menuitem == 5) { // difficulty level
                                         game_difficulty = 0;
                                         SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
                                         game_new();
                                 }
                                 break;
                         case 1:
-                                if (gamephase2 == 0) { // load
+                                if (menuitem == 0) { // load
                                         readsaves();
-                                        gamephase2    = 1;
-                                        gamephase_old = 4;
+                                        menuitem    = 1;
+                                        gamephase_old = GP_MENU;
                                         SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
                                 }
-                                if (gamephase2 == 5) { // difficulty level
+                                if (menuitem == 5) { // difficulty level
                                         game_difficulty = 1;
                                         SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
                                         game_new();
                                 }
                                 break;
                         case 2:
-                                if (gamephase2 == 0) { // options
-                                        gamephase2 = 4;
+                                if (menuitem == 0) { // options
+                                        menuitem = 4;
                                         SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
                                 }
-                                if (gamephase2 == 5) { // difficulty level
+                                if (menuitem == 5) { // difficulty level
                                         game_difficulty = 2;
                                         SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
                                         game_new();
                                 }
                                 break;
                         case 3:
-                                if (gamephase2 == 0) { // exit
+                                if (menuitem == 0) { // exit
                                         SendMessage(hWnd, WM_CLOSE, 0, 0);
                                         // SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
                                 }
-                                if (gamephase2 == 5) { // Back
-                                        gamephase2 = 0;
+                                if (menuitem == 5) { // Back
+                                        menuitem = 0;
                                         SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
                                 }
                                 break;
                         case 11:
-                                if (gamephase2 == 4) { // set keys
-                                        gamephase2  = 6;
+                                if (menuitem == 4) { // set keys
+                                        menuitem  = 6;
                                         is_selected = false; // key not selected
                                         SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
                                 }
                                 break;
                         case 12:
-                                if ((gamephase2 == 1) || (gamephase2 == 2)) { // back
+                                if ((menuitem == 1) || (menuitem == 2)) { // back
                                         // if it came to load from workshop
-                                        if (gamephase_old == 2) {
-                                                gamephase2 = 0;
-                                                gamephase  = 2;
+                                        if (gamephase_old == GP_WORKSHOP) {
+                                                menuitem = 0;
+                                                gamephase  = GP_WORKSHOP;
                                         }
                                         // if it came to load from menu
-                                        if (gamephase_old == 4) {
-                                                gamephase2 = 0;
-                                                gamephase  = 4;
+                                        if (gamephase_old == GP_MENU) {
+                                                menuitem = 0;
+                                                gamephase  = GP_MENU;
                                         }
                                         SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
                                 }
-                                if (gamephase2 == 3) {
-                                        gamephase2 = 2;
+                                if (menuitem == 3) {
+                                        menuitem = 2;
                                         SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
                                 }
-                                if (gamephase2 == 4) {
-                                        gamephase2 = 0;
+                                if (menuitem == 4) {
+                                        menuitem = 0;
                                         SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
                                 }
-                                if (gamephase2 == 6) {
-                                        gamephase2 = 4;
+                                if (menuitem == 6) {
+                                        menuitem = 4;
                                         SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
                                 }
                                 break;
@@ -2513,7 +2515,7 @@ void move_moped(bikebase* moped) {
                                         if (!character[moped->nearestcharacter].dying)
                                                 if (fabs(moped->speed) < 0.7f) {
                                                         create_mission(moped, -1);
-                                                        gamephase = 1;
+                                                        gamephase = GP_NEWMISSION;
                                                         SndObjStop(voices[1]);
                                                 }
         }
@@ -2662,24 +2664,24 @@ bool Render(void) {
         m_pDevice->BeginScene();
 
         switch (gamephase) {
-        case 0: {
+        case GP_GAME: {
                 clearzbuffer();
                 render_game();
                 break;
         }
-        case 1: {
+        case GP_NEWMISSION: {
 
                 clearzbuffer();
                 render_mission();
                 break;
         }
-        case 2: {
+        case GP_WORKSHOP: {
                 render_workshop();
                 break;
         }
-        case 3:
+        case GP_UNUSED:
                 break;
-        case 4: {
+        case GP_MENU: {
                 clearzbuffer();
                 if (keytimer > -10 * elapsed) keytimer = keytimer - (int)elapsed;
                 render_menu();
@@ -3854,7 +3856,7 @@ void render_game_pre_fx() {
         if (quake > 7) quake = 7;
         if (quake > 0) quake = quake - 0.03f * elapsed * gamespeed; // earthquake
 
-        if (gamephase2 == 0) {
+        if (gamephase2 == GP2_GAME) {
                 calculateCollisions(); // does mopeds collide with anything
                 calc_moped(); // mopeds are rollin //calculatemopeds
                 for (int d = 0; d < num_mopeds; d++) {
@@ -3950,7 +3952,7 @@ void render_game_prepare(float& kerroin) {
         }
 
         bullet_count = 0;
-        if (gamephase2 == 0) {
+        if (gamephase2 == GP2_GAME) {
                 svolume(voices[1], DSBVOLUME_MAX, options[1] && SOUNDS_LOADED);
                 calculatecharacters();
                 calculatebullets();
@@ -3959,8 +3961,8 @@ void render_game_prepare(float& kerroin) {
         }
 
         // is character dead
-        if ((moped[0].energy < 0) && (gamephase2 != 5)) {
-                gamephase2 = 5;
+        if ((moped[0].energy < 0) && (gamephase2 != GP2_DEAD)) {
+                gamephase2 = GP2_DEAD;
                 // moped[0].inactive=true;
 
                 SndObjStop(voices[1]); // motor stops
@@ -3996,7 +3998,7 @@ void render_game_workshop() {
 
                 if ((moped[0].korjaamolla == true) & (moped[0].korjaamolla2 == false)) {
                         SndObjStop(voices[1]);
-                        gamephase             = 2;
+                        gamephase             = GP_WORKSHOP;
                         repair_cost           = 0;
                         moped[0].direction    = pi / 2;
                         moped[0].x1           = (float)(moped[0].sektorix * 8000 + 4950);
@@ -4274,7 +4276,7 @@ void render_game_mopeds() {
         int e, mopopicture;
 
         // chasis
-        if (gamephase2 != 5) // if player is not dead
+        if (gamephase2 != GP2_DEAD) // if player is not dead
                 for (int d = 0; d < num_mopeds; d++) {
                         if (moped[d].inactive) continue;
                         moped[d].visible = true;
@@ -4863,30 +4865,29 @@ void render_arrows_and_crosshairs(float camq, float camw, float came) {
 void render_game_text() {
         m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE, FALSE);
 
-        // end demo
-        if (gamephase2 == 1) {
+        if (gamephase2 == GP2_ENDDEMO) {
                 rendertext((int)(1024 * 0.08f), (int)(768 * 0.15f), 60, missioninfo[20]);
         }
-        // pause
-        if (gamephase2 == 2) {
+
+        if (gamephase2 == GP2_PAUSE) {
                 svolume(voices[1], DSBVOLUME_MIN, options[1] && SOUNDS_LOADED);
                 rendertext((int)(1024 * 0.15f), (int)(768 * 0.48f + 15 * 0), 70, "Bikez II is now paused");
                 rendertext((int)(1024 * 0.15f), (int)(768 * 0.48f + 15 * 1), 70, "esc to return to game");
                 rendertext((int)(1024 * 0.15f), (int)(768 * 0.48f + 15 * 2), 70, "f9 to exit");
         }
-        // beginning demo
-        if (gamephase2 == 3) {
+
+        if (gamephase2 == GP2_DEMO1) {
                 rendertext((int)(1024 * 0.08f), (int)(768 * 0.15f), 60, "You are a mercenary biker in a near future dark city. The local criminal faction, Bikez, has just signed a contract with you about completing a series of missions including a whole lot of killing and blood...");
                 rendertext((int)(1024 * 0.08f), (int)(768 * 0.24f), 60, "If you are new to Bikez press Enter to learn the basics. Otherwise press Esc to start playing.");
         }
-        // beginning demo
-        if (gamephase2 == 4) {
+
+        if (gamephase2 == GP2_DEMO2) {
                 rendertext((int)(1024 * 0.08f), (int)(768 * 0.15f), 60, "Keys: Put your right hand on the arrow keys and your left hand so that your little finger is on number 1 and your index finger on number 4. Use 5 to slow the game down. Shift between bird´s eye view and following camera by pressing the tab key. Space is hand brake.");
                 rendertext((int)(1024 * 0.08f), (int)(768 * 0.30f), 60, "When you are low on energy, in need of a weapons upgrade, or need to save your game, you should find a Bikez warehouse. These warehouses are brownish buildings with a Bikez sign. Enter below the sign.");
                 rendertext((int)(1024 * 0.08f), (int)(768 * 0.43f), 60, "To get a mission, you must find a man that looks like your character. After finding the guy you have to stop by him, a green circle is lit under him if everything is right. Then press enter to get a mission.");
         }
         // is dead
-        if (gamephase2 == 5) {
+        if (gamephase2 == GP2_DEAD) {
                 bullet[0].remove = true;
                 gamespeed        = 0.2f;
                 calculatebullets();
@@ -5057,13 +5058,6 @@ void render_game(void) { // just renders some moped driving.
 
         int a, b, q, c, d;
         float kerroin = 1.0;
-        // gamephase2 		//gamephase2
-        // 0=normaali peli 	//normal game
-        // 1=loppudemo 		//end demo
-        // 2=paussi 		// pause
-        // 3=alkudemo 		//beginning demo
-        // 4=alkudemo 		//beginning demo
-        // 5=dyingma 		//death
         ase[2]._type = 4;
         ase[3]._type = 4;
         ase[4]._type = 4;
@@ -5112,7 +5106,7 @@ void render_mission(void) { // render mission briefing
         //accept mission
         if((moped[0].enter2==false) & (moped[0].enter==true)){
         if(mission_is_read==1){
-        gamephase=0;//back to riding
+        gamephase=GP_GAME;//back to riding
         moped[0].mission=moped[0].mission_random;
         //character tulee kyytiin
         if(moped[0].mission._type==1)
@@ -5121,7 +5115,7 @@ void render_mission(void) { // render mission briefing
         mission_is_read=1;//mission briefing is readed
         }*/
         /*if((moped[0].esc2==false) & (moped[0].esc==true)){
-          gamephase=0;//back to riding
+          gamephase=GP_GAME;//back to riding
           }*/
 
         // maps	- kartat
@@ -5393,7 +5387,7 @@ void calc_missions(bikebase* moped) { // calculate missions
                 mission_is_read = 0;
                 // if there is no more missions
                 if (missionlevel[moped->level].missions == 0) {
-                        gamephase2 = 1; // game over
+                        gamephase2 = GP2_ENDDEMO; // game over
                 }
         }
 }
@@ -6051,8 +6045,8 @@ void render_workshop(void) { // render workshop
                 // key is pressed one time
                 if ((mousestate2.rgbButtons[0]) && (!mousestate.rgbButtons[0])) {
                         SndObjPlay(voices[1], DSBPLAY_LOOPING, options[1] && SOUNDS_LOADED);
-                        gamephase  = 0;
-                        gamephase2 = 0;
+                        gamephase  = GP_GAME;
+                        gamephase2 = GP2_GAME;
                 }
         }
         taka->Blt(&rcDest, pictures[3], &rcSource, 0, NULL);
@@ -6075,9 +6069,9 @@ void render_workshop(void) { // render workshop
                 // key is pressed one time
                 if ((mousestate2.rgbButtons[0]) && (!mousestate.rgbButtons[0])) {
                         readsaves(); // read saves
-                        gamephase     = 4;
-                        gamephase2    = 1;
-                        gamephase_old = 2;
+                        gamephase     = GP_MENU;
+                        menuitem      = 1;
+                        gamephase_old = GP_WORKSHOP;
                 }
         }
         taka->Blt(&rcDest, pictures[3], &rcSource, 0, NULL);
@@ -6100,10 +6094,10 @@ void render_workshop(void) { // render workshop
                 // key is pressed one time
                 if ((mousestate2.rgbButtons[0]) && (!mousestate.rgbButtons[0])) {
                         readsaves(); // read saves
-                        gamephase2    = 2;
-                        gamephase     = 4;
+                        gamephase2    = GP2_PAUSE;
+                        gamephase     = GP_MENU;
                         is_saved      = false;
-                        gamephase_old = 2;
+                        gamephase_old = GP_WORKSHOP;
                 }
         }
         taka->Blt(&rcDest, pictures[3], &rcSource, 0, NULL);
@@ -6223,30 +6217,31 @@ void readkey_game(void) {
 
         // skip demo by pressing enter
         if (!KEYDOWN(buffer, DIK_RETURN) && KEYDOWN(buffer2, DIK_RETURN)) {
-                if (gamephase2 == 3) gamephase2 = 4;
-                else if (gamephase2 == 4) gamephase2 = 0;
-                if (gamephase2 == 5) {
-                        gamephase2 = 0;
-                        gamephase  = 4;
+                if (gamephase2 == GP2_DEMO1) gamephase2 = GP2_DEMO2;
+                else if (gamephase2 == GP2_DEMO2) gamephase2 = GP2_GAME;
+                if (gamephase2 == GP2_DEAD) {
+                        gamephase2 = GP2_GAME;
+                        gamephase  = GP_MENU;
                 }
-                if (gamephase2 == 1) {
-                        gamephase2 = 0;
-                        gamephase  = 4;
+                if (gamephase2 == GP2_ENDDEMO) {
+                        gamephase2 = GP2_GAME;
+                        gamephase  = GP_MENU;
                 }
         }
 
         // pause by pressing esc
         if (!KEYDOWN(buffer, DIK_ESCAPE) && KEYDOWN(buffer2, DIK_ESCAPE)) {
-                if (gamephase2 == 0) gamephase2 = 2;
-                else if (gamephase2 == 2) gamephase2 = 0;
-                if (gamephase2 == 3) gamephase2 = 0;
-                if (gamephase2 == 4) gamephase2 = 0;
+                if (gamephase2 == GP2_GAME) gamephase2 = GP2_PAUSE;
+                else if (gamephase2 == GP2_PAUSE) gamephase2 = GP2_GAME;
+                if (gamephase2 == GP2_DEMO1) gamephase2 = GP2_GAME;
+                if (gamephase2 == GP2_DEMO2) gamephase2 = GP2_GAME;
         }
 
         // exit
         if (!KEYDOWN(buffer, DIK_F9) && KEYDOWN(buffer2, DIK_F9)) {
-                gamephase  = 4;
-                gamephase2 = 0;
+                gamephase  = GP_MENU;
+                gamephase2 = GP2_GAME;
+                menuitem   = 0;
                 // SendMessage( hWnd, WM_CLOSE, 0, 0 );
         }
 
@@ -6335,8 +6330,9 @@ void game_load(void) { // load game
         repair_cost           = 0;
         moped[0].korjaamolla2 = false;
         moped[0].korjaamolla  = true;
-        gamephase2            = 0;
-        gamephase             = 2;
+        gamephase             = GP_WORKSHOP;
+        gamephase2            = GP2_GAME;
+        menuitem              = 0;
 
         // stripped_fgets(temprow,sizeof(temprow),fil);//temprow
         // fgets(temprow,sizeof(temprow),fil);nextmatsi=atoi(temprow);
@@ -6630,14 +6626,14 @@ void render_menu(void) { // renders the menu
 
         rendertext(340, 738, 0, "game version 1.21");
 
-        if (gamephase2 == 0) { // headmenu
+        if (menuitem == 0) { // headmenu
                 space = 40;
                 strcpy(menuteksti[0], "New Game");
                 strcpy(menuteksti[1], "Load Game");
                 strcpy(menuteksti[2], "Options");
                 strcpy(menuteksti[3], "Exit");
         }
-        if ((gamephase2 == 1) || (gamephase2 == 2) || (gamephase2 == 3)) { // load and save
+        if ((menuitem == 1) || (menuitem == 2) || (menuitem == 3)) { // load and save
                 space = 20;
                 strcpy(menuteksti[0], " ");
                 strcpy(menuteksti[11], " ");
@@ -6647,7 +6643,7 @@ void render_menu(void) { // renders the menu
                         // menuteksti[q]=savefilename[q]
                 }
         }
-        if (gamephase2 == 4) { // options
+        if (menuitem == 4) { // options
                 space = 20;
                 strcpy(menuteksti[0], " ");
                 strcpy(menuteksti[1], "Sounds");
@@ -6664,14 +6660,14 @@ void render_menu(void) { // renders the menu
                 strcpy(menuteksti[11], "Set Keys");
                 strcpy(menuteksti[12], "Back");
         }
-        if (gamephase2 == 5) { // new game
+        if (menuitem == 5) { // new game
                 space = 40;
                 strcpy(menuteksti[0], "Easy");
                 strcpy(menuteksti[1], "Normal");
                 strcpy(menuteksti[2], "Hard");
                 strcpy(menuteksti[3], "Back");
         }
-        if (gamephase2 == 6) { // set keys
+        if (menuitem == 6) { // set keys
                 space = 20;
                 strcpy(menuteksti[0], " ");
                 strcpy(menuteksti[1], "Up           ");
@@ -6694,45 +6690,45 @@ void render_menu(void) { // renders the menu
 
         tex = 270;
         tey = 220 + 0 * space;
-        if (gamephase2 == 1) strcpy(row, "Load");
-        if (gamephase2 == 2) {
+        if (menuitem == 1) strcpy(row, "Load");
+        if (menuitem == 2) {
                 if (!is_saved)
                         strcpy(row, "Save");
                 else
                         strcpy(row, "Game saved");
         }
-        if (gamephase2 == 3) {
+        if (menuitem == 3) {
                 strcpy(row, "Enter a name");
                 strcpy(menuteksti[menu_selection], savefilename);
         }
-        if (gamephase2 == 4) strcpy(row, "Options");
-        if (gamephase2 == 6) strcpy(row, "Set Keys");
+        if (menuitem == 4) strcpy(row, "Options");
+        if (menuitem == 6) strcpy(row, "Set Keys");
 
-        if ((gamephase2 == 1) || (gamephase2 == 2) || (gamephase2 == 3) || (gamephase2 == 4) || (gamephase2 == 6))
+        if ((menuitem == 1) || (menuitem == 2) || (menuitem == 3) || (menuitem == 4) || (menuitem == 6))
                 rendertext((int)(tex), (int)(tey), 0, row);
 
         // menu_selection=-1;
 
-        for (q = 0; q < menuja[gamephase2]; q++) {
+        for (q = 0; q < menuja[menuitem]; q++) {
                 rendertext(210, 220 + q * space, 0, menuteksti[q]);
                 rcDest.top    = (210 + q * space) * SCREEN_HEIGHT / 768;
                 rcDest.left   = (205) * SCREEN_WIDTH / 1024;
                 rcDest.bottom = rcDest.top + space * SCREEN_HEIGHT / 768;
                 rcDest.right  = rcDest.left + 230 * SCREEN_WIDTH / 1024;
                 // thing selected while saving cannot be changed.
-                if ((gamephase2 != 3) && ((gamephase2 != 6) || (is_selected == false)))
+                if ((menuitem != 3) && ((menuitem != 6) || (is_selected == false)))
                         if ((mousex < rcDest.right) && (mousex > rcDest.left) && (mousey > rcDest.top) && (mousey < rcDest.bottom)) {
                                 menu_selection = q;
                         }
 
-                if ((q == menu_selection) && ((gamephase2 != 4) || (q > 10)))
+                if ((q == menu_selection) && ((menuitem != 4) || (q > 10)))
                         rendertext(210, 220 + q * space, 0, menuteksti[q]);
-                if (((q < 10) && (q > 0)) && ((gamephase2 == 4) && (options[q])))
+                if (((q < 10) && (q > 0)) && ((menuitem == 4) && (options[q])))
                         rendertext(210, 220 + q * space, 0, menuteksti[q]);
 
                 // cursor
                 if ((menu_selection < 11) && (menu_selection > 0)) {
-                        if ((gamephase2 == 3) && (menu_selection == q) && (cursor_timer < 0) && (letters_in_name < 49))
+                        if ((menuitem == 3) && (menu_selection == q) && (cursor_timer < 0) && (letters_in_name < 49))
                                 rendertext(int(210 + (letters_in_name) * 12.5f), (220 + q * space), 0, ":");
                 }
         }
@@ -7092,9 +7088,9 @@ void game_new(void) { // new game
         m_pDevice->LightEnable(0, TRUE);
 
         // render one screen before beginning demo
-        gamephase2 = 0;
+        gamephase2 = GP2_GAME;
         render_game();
-        gamephase2 = 3;
+        gamephase2 = GP2_DEMO1;
 }
 
 void sounds_start() {

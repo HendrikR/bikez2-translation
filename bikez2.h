@@ -358,6 +358,7 @@ void startApplication(HINSTANCE hInstance);
 
 // enumerate gamephases
 enum Gamephase {GP_GAME, GP_NEWMISSION, GP_WORKSHOP, GP_UNUSED, GP_MENU};
+enum Gamephase2 {GP2_GAME, GP2_ENDDEMO, GP2_PAUSE, GP2_DEMO1, GP2_DEMO2, GP2_DEAD};
 
 //game content objects
 const float maxvisible =25000.0f;
@@ -388,8 +389,9 @@ D3DVECTOR center_pointmap[1000];//centerpoint character
 DWORD visiblemap[1000];
 float radiusmap[1000];
 //float speedoli;
-int gamephase,gamephase_old;//gamephase, gamepahse_was
-int gamephase2,gamephase2_old;//gamephase2, gamepahse_was2
+int gamephase, gamephase_old;
+int gamephase2, gamephase2_old;
+int menuitem, menuitem_old;
 light lights[MAX_LIGHTS];
 bool shoulder_view,shoulder_view2;//0 =normal 1=from above
 float kamerax1,kameray1,kameraz1;//camera from
