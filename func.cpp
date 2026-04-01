@@ -63,7 +63,7 @@ bool intersect(RECT a, RECT b) {
 char *stripped_fgets(char *s, int n, FILE *f) {
   // TODO: remove whitespace and ‘;‘-prefixed line comments
   char* ret = fgets(s,n,f);
-  return fgets(s, n, f);
+  return ret;
 }
 D3DMATRIX IdentityMatrix() {
   return glm::identity<glm::mat4>();
