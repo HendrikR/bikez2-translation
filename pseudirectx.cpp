@@ -374,7 +374,7 @@ void DIRECT3DDEVICE7::SetLight(int id, D3DLIGHT7* params) {
   if (id >= 0 && id <= 7) {
     gl_id = GL_LIGHT0 + id;
   } else {
-    std::cerr << "invalid light id: " << id << std::endl;
+    logg.error("invalid light id: %d", id);
     return;
   }
   glEnable(gl_id);
@@ -402,7 +402,7 @@ void DIRECT3DDEVICE7::SetTextureStageState(DWORD stage, int state, DWORD value) 
     // In GL fixed-function, the texture matrix is set via glMatrixMode(GL_TEXTURE).
     // No additional state to set here.
   } else {
-    std::cerr << "SetTextureStageState: unhandled state " << state << std::endl;
+    logg.error("SetTextureStageState: unhandled state %d", state);
   }
 }
 void DIRECT3DDEVICE7::GetRenderTarget(LPDIRECTDRAWSURFACE7* surf) {
@@ -467,7 +467,7 @@ BOOL SndObjStop(HSNDOBJ obj) {
 HSNDOBJ SndObjCreate(LPDIRECTSOUND ds, HSTR name, int concurrent) {
   char buf[255];
   sprintf(buf, "sound/snd%s\0", name);
-  std::cout << "loading sound file " << buf << std::endl;
+  logg.debug("loading sound file %s", buf);
   Mix_Chunk* ret = Mix_LoadWAV(buf);
   if (ret == nullptr) {
     throw MyEx(Mix_GetError());

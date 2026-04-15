@@ -47,7 +47,7 @@ LPDIRECTDRAWSURFACE7 loadPicture(LPDIRECTDRAW7 m_pDD, char name[200], BOOL hardw
 
 int randInt( int low, int high ) {
   if (low >= high) {
-    printf("WARN randInt called with high<=low==%d\n", low);
+    logg.warn("randInt called with high <= low == %d", low);
     return low;
   }
   return low + std::rand() % (high-low);

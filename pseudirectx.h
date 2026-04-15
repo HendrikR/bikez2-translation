@@ -11,6 +11,9 @@
 #include <stack>
 #include <exception>
 
+#include "logging.hpp"
+extern Logger logg;
+
 #define WINAPI
 
 typedef int INT;

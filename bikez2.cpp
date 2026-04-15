@@ -4,6 +4,8 @@
 #include "bikez2.h"
 #include "pseudirectx.h"
 #include <iostream>
+#include "logging.hpp"
+extern Logger logg;
 
 int numpictures = 6;
 
@@ -50,6 +52,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hInstNULL, LPSTR lpszCmdLine
 }
 
 int main(int argc, char** argv) {
+    Logger logg(std::cout, Logger::DEBUG);
     WinMain(0, 0, argv[0], 1);
     return 0;
 }
@@ -353,7 +356,7 @@ void init() {
 
         plusmiinus = 0;
 
-        std::cout << "initializing 3D parameters" << std::endl;
+        logg.info("initializing 3D parameters");
         // Initialize and set the matrices
         m_World = IdentityMatrix();
         m_View  = ViewMatrix(D3DVECTOR(0, 0, 0), D3DVECTOR(0, 0, 1), D3DVECTOR(0, 1, 0), 0);
@@ -424,7 +427,7 @@ void init() {
         background[15]->SetColorKey(DDCKEY_SRCBLT, &color);
 
         // load objects //remember to add mallit[n]
-        std::cout << "loading objects" << std::endl;
+        logg.info("loading objects");
         mallit[0].malli  = new obj[objnum0];
         mallit[1].malli  = new obj[objnum1];
         mallit[2].malli  = new obj[objnum2];
@@ -459,7 +462,7 @@ void init() {
         D3DXCreateMatrixStack(0, &matrices);
 
         // load walls
-        std::cout << "loading walls" << std::endl;
+        logg.info("loading walls");
         num_wallgroups = 2; // remember to add it to the header
         loadwall("models/wall0.3dw", &wallgroup[0], false); // walls of maps(or levels)
         loadwall("models/wall1.3dw", &wallgroup[1], false); // moped
@@ -504,7 +507,7 @@ void init() {
 
         // weapons
         // weapons could be loaded from a file.
-        std::cout << "initializing weapons" << std::endl;
+        logg.info("initializing weapons");
         q                       = 0;
         ase[q].picture          = 0; // machine gun
         ase[q].speed            = 70;
@@ -1214,7 +1217,7 @@ BOOL load(const char filename[200], obj* target, BOOL mirror, BOOL miekkakala) {
 }
 
 BOOL loadtext() {
-        std::cout << "loading textures" << std::endl;
+        logg.info("loading textures");
 
         FILE* fil;
         CHAR row[300];
@@ -1376,7 +1379,7 @@ static HRESULT WINAPI EnumZBufferCallback(DDPIXELFORMAT* pddpf, VOID* pddpfDesir
 }
 
 bool createscreen(void) {
-        std::cout << "creating screen" << std::endl;
+        logg.info("creating screen");
         SCREEN_WIDTH  = 1024;
         SCREEN_HEIGHT = 768;
         SCREEN_BITS   = 32;
@@ -2883,7 +2886,7 @@ void calculateCollisions(void) // collisions
 }
 
 bool readpictures(void) {
-        std::cout << "loading pictures" << std::endl;
+        logg.info("loading pictures");
 
         DDCOLORKEY color;
         int q;
@@ -2914,7 +2917,7 @@ bool readpictures(void) {
 }
 
 bool initkeyb(void) {
-        std::cout << "initializing keyboard" << std::endl;
+        logg.info("initializing keyboard");
         HRESULT hr;
         // Create the DirectInput object.
         hr = DirectInput8Create(hInst, DIRECTINPUT_VERSION,
@@ -5475,7 +5478,7 @@ void create_character(int q) { // create random character
 }
 
 void load_missions(void) { // read missions
-        std::cout << "loading missions" << std::endl;
+        logg.info("loading missions");
 
         FILE* fil;
         CHAR row[800];
@@ -5800,7 +5803,7 @@ void render_workshop(void) { // render workshop
         char row[200], temprow[200];
         float nop;
 
-        std::cout << "rendering workshop" << std::endl;
+        logg.info("rendering workshop");
         gamespeed = 1;
 
         // background picture
@@ -6279,7 +6282,7 @@ void game_load(void) { // load game
 
         if (!loadable[savegame_slot]) return; // exit if not right
 
-        std::cout << "loading game ..." << std::endl;
+        logg.info("loading game ...");
         itoa(savegame_slot, temprow, 10);
         strcpy(tallennusrow, "save/s");
         strcat(tallennusrow, temprow);
@@ -6445,7 +6448,7 @@ void game_save(void) { // save game
         char tallennusrow[300];
         float kx, kz;
 
-        std::cout << "saving game" << std::endl;
+        logg.info("saving game");
         itoa(savegame_slot, temprow, 10);
         strcpy(tallennusrow, "save/s");
         strcat(tallennusrow, temprow);
@@ -6830,7 +6833,7 @@ void game_new(void) { // new game
         int a, b, d, q;
         float nop;
 
-        std::cout << "starting new game" << std::endl;
+        logg.info("starting new game");
         SndObjPlay(voices[1], DSBPLAY_LOOPING, options[1] && SOUNDS_LOADED);
 
         q                       = 6;
@@ -7055,7 +7058,7 @@ void game_new(void) { // new game
 }
 
 void sounds_start() {
-        std::cout << "initializing sound" << std::endl;
+        logg.info("initializing sound");
 
         // sounds
         if ((!options[1]) && (!options[2])) {
@@ -7143,7 +7146,7 @@ void cfg_save(void) {
 }
 
 void cfg_load(void) {
-        std::cout << "loading config" << std::endl;
+        logg.info("loading config");
         FILE* fil;
         int q, b;
         char temprow[300];
