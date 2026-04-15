@@ -454,7 +454,7 @@ void init() {
           moveparts(5);//moves character1 pieces to their places
         */
 
-        // initialize matrix
+        // initialize matrix
         ZeroMemory(&matrices, sizeof(matrices));
         D3DXCreateMatrixStack(0, &matrices);
 
@@ -2572,9 +2572,9 @@ void move_moped(bikebase* moped) {
         if (turnrate > 1) turnrate = 1;
 
         if (moped->left) {
-                moped->etudirection = moped->etudirection - turnrate * maksimi / 0.2f / 1000 * elapsed * gamespeed;
-        } else if (moped->right) {
                 moped->etudirection = moped->etudirection + turnrate * maksimi / 0.2f / 1000 * elapsed * gamespeed;
+        } else if (moped->right) {
+                moped->etudirection = moped->etudirection - turnrate * maksimi / 0.2f / 1000 * elapsed * gamespeed;
         } else {
                 moped->etudirection = moped->etudirection - moped->etudirection * 0.004f * elapsed * gamespeed;
         }
@@ -3698,7 +3698,7 @@ void rendertext(INT x, INT y, INT fontti, const char teksti[100]) // write
         const float text_f = 1.0f / tanf(text_fov_half);
         const float hw = (4.0f / 3.0f) * 1024.0f / text_f;
         const float hh = 768.0f / text_f;
-        m_Projection = glm::ortho(-hw, hw, -hh, hh, -10.0f, 10.0f);
+        m_Projection = glm::ortho(hw, -hw, -hh, hh, 1.0f, 3000.0f);
         m_pDevice->SetTransform(D3DTRANSFORMSTATE_PROJECTION, &m_Projection);
 
         for (int i = 0; i < abs((int)strlen(teksti)); i++)
@@ -5491,7 +5491,6 @@ void load_missions(void) { // read missions
         for (int i=0; i<=20; ++i) {
                 stripped_fgets(row, sizeof(row), fil);
                 strcpy(missioninfo[i], row);
-                std::cout << "mission "<< i <<" info: "<< row <<std::endl;
         }
 
         stripped_fgets(row, sizeof(row), fil);

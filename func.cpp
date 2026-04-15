@@ -81,5 +81,5 @@ D3DMATRIX ViewMatrix(const D3DVECTOR from, const D3DVECTOR at, const D3DVECTOR w
 }
 
 D3DMATRIX ProjectionMatrix(const float near_plane, const float far_plane, const float fov) {
-  return glm::perspective<float>(fov*1.25, 4.0/3.0, near_plane, far_plane);
+  return glm::perspective<float>(fov*1.25, -4.0/3.0, near_plane, far_plane);
 }
