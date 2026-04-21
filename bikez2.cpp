@@ -317,7 +317,6 @@ void init() {
         int q;
         RECT rcSource, rcDest;
 
-        bool collision = false;
         keytimer   = 0;
 
         // initialize pseudo-random number generator
@@ -1034,8 +1033,6 @@ BOOL load(const char filename[200], obj* target, BOOL mirror, BOOL miekkakala) {
         INT sivu22[2000];
         D3DVECTOR p1;
         D3DVECTOR vNormal;
-        INT cur  = 0;
-        INT cura = 0;
         // int lootia;//boxes
         // INT kolmion;//triangle's
 
@@ -1222,8 +1219,6 @@ BOOL loadtext() {
         CHAR row[300];
         CHAR rows[13];
         CHAR texturefilename[100];
-        DWORD x          = 100;
-        DWORD y          = 100;
         DWORD mipmaps    = D3DX_DEFAULT;
         DWORD mipmapping = D3DX_DEFAULT;
         int q;
@@ -1433,9 +1428,6 @@ void readkeyb(void) {
         int down; // which key is pressed
 
         HRESULT hr;
-
-        D3DXVECTOR3 intersect;
-        // int kolmio;//,sisus,q; //==> triangle;//,interrior,q;
 
         long thistime = GetTickCount();
         elapsed2      = 0;
@@ -5053,8 +5045,6 @@ void render_game_text() {
 }
 
 void render_game(void) { // just renders some moped driving.
-
-        int a, b, q, c, d;
         float kerroin = 1.0;
         ase[2]._type = 4;
         ase[3]._type = 4;
