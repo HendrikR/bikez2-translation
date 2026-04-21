@@ -304,6 +304,7 @@ BOOL load(const char filename[200],obj *target,BOOL mirror,BOOL miekkakala);//lo
 BOOL loadwall(const char filename[200],RouteGroup *target,BOOL mirror);//loadwall
 BOOL loadtext();//loadtext
 void init(void);
+void initWeapons();
 bool createscreen(void);
 bool Render(void);
 bool readpictures(void);//read pictures

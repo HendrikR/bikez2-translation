@@ -314,7 +314,6 @@ void SetupVertexFog(float fStart, float fEnd, DWORD dwColor, DWORD dwMode, BOOL 
 
 // Program initialization
 void init() {
-        int q;
         RECT rcSource, rcDest;
 
         keytimer   = 0;
@@ -503,8 +502,21 @@ void init() {
 
         sounds_start();
 
-        // weapons
-        // weapons could be loaded from a file.
+        initWeapons();
+        gamephase  = GP_MENU;
+        menuitem   = 0;
+        gamephase2 = GP2_GAME;
+        elapsed    = 15;
+        for (int q = 0; q < 100; q++) {
+                elapsed3[q] = 15;
+        }
+        setLights(0, 0, 0);
+        setLights(0, 0, 0);
+}
+
+void initWeapons() {
+        int q;
+        // TODO weapons could be loaded from a file.
         logg.info("initializing weapons");
         q                       = 0;
         ase[q].picture          = 0; // machine gun
@@ -775,16 +787,6 @@ void init() {
         ase[q].pspeed           = 1;
         ase[q].prate_of_fire    = 1;
         ase[q]._type            = 4;
-
-        gamephase  = GP_MENU;
-        menuitem   = 0;
-        gamephase2 = GP2_GAME;
-        elapsed    = 15;
-        for (q = 0; q < 100; q++) {
-                elapsed3[q] = 15;
-        }
-        setLights(0, 0, 0);
-        setLights(0, 0, 0);
 }
 
 void moveparts(int q) {
