@@ -5,7 +5,7 @@
 #include "pseudirectx.h"
 #include <iostream>
 #include "logging.hpp"
-extern Logger logg;
+Logger logg(std::cout, Logger::DEBUG);
 
 int numpictures = 6;
 
@@ -52,7 +52,6 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hInstNULL, LPSTR lpszCmdLine
 }
 
 int main(int argc, char** argv) {
-    Logger logg(std::cout, Logger::DEBUG);
     WinMain(0, 0, argv[0], 1);
     return 0;
 }

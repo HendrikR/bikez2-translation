@@ -143,16 +143,7 @@ void DIRECT3D7::Release() {
 }
 
 HRESULT DIRECTDRAWSURFACE7::Blt(LPRECT dstRect, DIRECTDRAWSURFACE7*& src, LPRECT srcRect, DWORD dwFlags, void* blt_fx) {
-  /*SDL_Rect srcRect2{srcRect->top,
-                    srcRect->left,
-                    srcRect->right - srcRect->left,
-                    srcRect->bottom - srcRect->top};
-  SDL_Rect destRect2{destRect->top,
-                    destRect->left,
-                    destRect->right - destRect->left,
-                    destRect->bottom - destRect->top};
-  int status = SDL_BlitSurface(src->surface, &srcRect2, this->surface, &destRect2);*/
-  // TODO: a feeble try to simulate blitting -- won‘t work, because screen might be turned to some arbitrary position
+  // TODO an ugly way to simulate blitting, can be done better
   glMatrixMode(GL_PROJECTION);
   glPushMatrix();
   glLoadIdentity();
