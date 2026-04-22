@@ -313,27 +313,56 @@ void SetupVertexFog(float fStart, float fEnd, DWORD dwColor, DWORD dwMode, BOOL 
 }
 
 // Program initialization
-void init() {
-        RECT rcSource, rcDest;
 
+void initGame() {
         keytimer   = 0;
 
         // initialize pseudo-random number generator
         srand((int)GetTickCount());
 
+        // load missions
+        load_missions();
+        initWeapons();
+
+        gamephase  = GP_MENU;
+        menuitem   = 0;
+        gamephase2 = GP2_GAME;
+        elapsed    = 15;
+        for (int q = 0; q < 100; q++) {
+                elapsed3[q] = 15;
+        }
+
+        plusmiinus = 0;
+
+        is_selected    = false;
+        menu_selection = 1;
+        menuja[0]      = 4;
+        menuja[1]      = 13;
+        menuja[2]      = 13;
+        menuja[3]      = 13;
+        menuja[4]      = 13;
+        menuja[5]      = 4;
+        menuja[6]      = 13;
+}
+
+void initSound() {
         SOUNDS_ON     = true;
         SOUNDS_LOADED = false;
+        sounds_start();
+}
 
+void initGraphics() {
         // initialize 3d
         D3DXInitialize();
         ShowCursor(false);
         SetCursor(NULL);
         LoadCursor(NULL, IDC_ARROW);
-        initkeyb();
         createscreen();
         readpictures();
         cfg_load();
+
         // background image
+        RECT rcSource, rcDest;
         m_pDevice->Clear(0, NULL, D3DCLEAR_TARGET, 0xFFFFFFFF, 0, 0);
         rcSource.top    = 0;
         rcSource.left   = 0;
@@ -350,8 +379,6 @@ void init() {
 
         taka->Blt(&rcDest, pictures[5], &rcSource, DDBLT_WAIT, NULL);
         dxctx->UpdateFrame(0);
-
-        plusmiinus = 0;
 
         logg.info("initializing 3D parameters");
         // Initialize and set the matrices
@@ -410,9 +437,6 @@ void init() {
         mousex = (float)(SCREEN_WIDTH / 2);
         mousey = (float)(SCREEN_HEIGHT / 2);
 
-        // load missions
-        load_missions();
-
         // load textures
         loadtext();
         DDCOLORKEY color;
@@ -448,12 +472,6 @@ void init() {
         load("models/obj4.3dw", mallit[9].malli, false, false);
         load("models/ukko5.3dw", mallit[10].malli, false, false);
 
-        /*
-          moveparts(3);//moves character0 pieces to their places
-          moveparts(4);//moves character1 pieces to their places
-          moveparts(5);//moves character1 pieces to their places
-        */
-
         // initialize matrix
         ZeroMemory(&matrices, sizeof(matrices));
         D3DXCreateMatrixStack(0, &matrices);
@@ -463,16 +481,6 @@ void init() {
         num_wallgroups = 2; // remember to add it to the header
         loadwall("models/wall0.3dw", &wallgroup[0], false); // walls of maps(or levels)
         loadwall("models/wall1.3dw", &wallgroup[1], false); // moped
-
-        is_selected    = false;
-        menu_selection = 1;
-        menuja[0]      = 4;
-        menuja[1]      = 13;
-        menuja[2]      = 13;
-        menuja[3]      = 13;
-        menuja[4]      = 13;
-        menuja[5]      = 4;
-        menuja[6]      = 13;
 
         // character textures
         charactertexture[0].bodypart[0] = 10; // torso
@@ -500,18 +508,15 @@ void init() {
         charactertexture[4].bodypart[2] = 58; // hand
         charactertexture[4].bodypart[3] = 56; // face
 
-        sounds_start();
+        setLights(0, 0, 0);
+        setLights(0, 0, 0);
+}
 
-        initWeapons();
-        gamephase  = GP_MENU;
-        menuitem   = 0;
-        gamephase2 = GP2_GAME;
-        elapsed    = 15;
-        for (int q = 0; q < 100; q++) {
-                elapsed3[q] = 15;
-        }
-        setLights(0, 0, 0);
-        setLights(0, 0, 0);
+void init() {
+        initGraphics();
+        initSound();
+        initKeyb();
+        initGame();
 }
 
 void initWeapons() {
@@ -2909,7 +2914,7 @@ bool readpictures(void) {
         return true;
 }
 
-bool initkeyb(void) {
+bool initKeyb(void) {
         logg.info("initializing keyboard");
         HRESULT hr;
         // Create the DirectInput object.

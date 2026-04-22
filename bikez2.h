@@ -311,7 +311,7 @@ bool readpictures(void);//read pictures
 void CleanUp(void);//destroys stuff
 BOOL draw(obj *objects);
 void removeobj(obj *target, int indeksi);//delete object
-bool initkeyb(void);
+bool initKeyb(void);
 bool deinitkeyb(void);
 void readkeyb(void);//readkeyb
 void aja(bikebase *moped);//driving mopeds
