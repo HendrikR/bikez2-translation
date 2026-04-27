@@ -438,7 +438,7 @@ void initGraphics() {
         mousey = (float)(SCREEN_HEIGHT / 2);
 
         // load textures
-        loadtext();
+        loadtextures();
         DDCOLORKEY color;
         color.dwColorSpaceHighValue = 0x000000; // CLR_INVALID is top corner
         color.dwColorSpaceLowValue  = 0x000000;
@@ -1219,7 +1219,7 @@ BOOL load(const char filename[200], obj* target, BOOL mirror, BOOL miekkakala) {
         return true;
 }
 
-BOOL loadtext() {
+BOOL loadtextures() {
         logg.info("loading textures");
 
         FILE* fil;

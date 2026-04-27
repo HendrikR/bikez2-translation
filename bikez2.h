@@ -302,7 +302,7 @@ struct light
 
 BOOL load(const char filename[200],obj *target,BOOL mirror,BOOL miekkakala);//load... swordfish
 BOOL loadwall(const char filename[200],RouteGroup *target,BOOL mirror);//loadwall
-BOOL loadtext();//loadtext
+BOOL loadtextures();
 void init(void);
 void initWeapons();
 bool createscreen(void);
