@@ -3,54 +3,52 @@
 //
 //////////////////////////////////////////////////////////////////////
 #define D3D_OVERLOADS
+#include "logging.hpp"
 #include "pseudirectx.h"
 #include <stdio.h>
-#include "logging.hpp"
 extern Logger logg;
 
-struct D3DDEVICE
-{
-	// D3D Device info
-        CHAR           strDesc[40];
-        //GUID*          pDeviceGUID;
-        D3DDEVICEDESC7 ddDeviceDesc;
-        //BOOL           bHardware;
+struct D3DDEVICE {
+    // D3D Device info
+    CHAR strDesc[40];
+    // GUID*          pDeviceGUID;
+    D3DDEVICEDESC7 ddDeviceDesc;
+    // BOOL           bHardware;
 };
 
-struct D3DDEVICEINFO
-{
-        CHAR           nimi[100];//name
+struct D3DDEVICEINFO {
+    CHAR nimi[100]; // name
 
-        D3DDEVICE d3device[100];
+    D3DDEVICE d3device[100];
 
-        // DDraw Driver info
-        GUID*          pDriverGUID;
-        DDCAPS         ddDriverCaps;
-        DDCAPS         ddHELCaps;
+    // DDraw Driver info
+    GUID* pDriverGUID;
+    DDCAPS ddDriverCaps;
+    DDCAPS ddHELCaps;
 
-        // DDraw Mode Info
-        DDSURFACEDESC2 ddsdMode;
-        BOOL           bFullscreen;
+    // DDraw Mode Info
+    DDSURFACEDESC2 ddsdMode;
+    BOOL bFullscreen;
 
-        // For internal use (apps should not need these)
-        GUID           guidDevice;
-        GUID           guidDriver;
-        DDSURFACEDESC2 ddsdModes[100];
-        INT          dwNumModes;
-        DWORD          dwCurrentMode;
-        BOOL           bDesktopCompatible;
+    // For internal use (apps should not need these)
+    GUID guidDevice;
+    GUID guidDriver;
+    DDSURFACEDESC2 ddsdModes[100];
+    INT dwNumModes;
+    DWORD dwCurrentMode;
+    BOOL bDesktopCompatible;
 };
 
-//bool lineline(bool *collision,float *collisionx,float *collisionz,float point1x,float point1z,float point2x,float point2z,float point3x,float point3z,float point4x,float point4z);
-bool linecollidesline(bool *intersect,float *intersectx,float *intersectz,float piste1x,float piste1z,float piste2x,float piste2z,float piste3x,float piste3z,float piste4x,float piste4z);//does a line collide with another
-LPDIRECTDRAWSURFACE7 loadPicture(LPDIRECTDRAW7 m_pDD, char nimi[200], BOOL hardware);//loadpicture
-LPDIRECTDRAWSURFACE7 loadTexture(int screenmode,D3DDEVICEINFO info, LPDIRECT3DDEVICE7 *m_pDevice,LPDIRECTDRAW7 m_pDD,char nimi[200], BOOL hardware);//loadtexture
-int randInt( int low, int high );
-float randDouble( float low, float high );
-bool intersect(RECT eka,RECT toka);
-char *stripped_fgets(char *s, int n, FILE *f);
+// bool lineline(bool *collision,float *collisionx,float *collisionz,float point1x,float point1z,float point2x,float point2z,float point3x,float point3z,float point4x,float point4z);
+bool linecollidesline(bool* intersect, float* intersectx, float* intersectz, float piste1x, float piste1z, float piste2x, float piste2z, float piste3x, float piste3z, float piste4x, float piste4z); // does a line collide with another
+LPDIRECTDRAWSURFACE7 loadPicture(LPDIRECTDRAW7 m_pDD, char nimi[200], BOOL hardware); // loadpicture
+LPDIRECTDRAWSURFACE7 loadTexture(int screenmode, D3DDEVICEINFO info, LPDIRECT3DDEVICE7* m_pDevice, LPDIRECTDRAW7 m_pDD, char nimi[200], BOOL hardware); // loadtexture
+int randInt(int low, int high);
+float randDouble(float low, float high);
+bool intersect(RECT eka, RECT toka);
+char* stripped_fgets(char* s, int n, FILE* f);
 D3DMATRIX IdentityMatrix();
 D3DMATRIX ZeroMatrix(void);
 D3DMATRIX MatrixMult(const D3DMATRIX a, const D3DMATRIX b);
-D3DMATRIX ViewMatrix(const D3DVECTOR from,const D3DVECTOR at, const D3DVECTOR world_up, const float roll);
+D3DMATRIX ViewMatrix(const D3DVECTOR from, const D3DVECTOR at, const D3DVECTOR world_up, const float roll);
 D3DMATRIX ProjectionMatrix(const float near_plane, const float far_plane, const float fov);

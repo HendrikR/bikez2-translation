@@ -11,6 +11,6 @@ AllowShortIfStatementsOnASingleLine: AllIfsAndElse
 AlignConsecutiveAssignments:
   Enabled: true
   AcrossComments: true
-BreakBeforeBraces: Custom
+BreakBeforeBraces: WebKit
 BraceWrapping:
   AfterControlStatement: false
