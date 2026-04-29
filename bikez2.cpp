@@ -9,17 +9,21 @@ Logger logg(std::cout, Logger::DEBUG);
 
 int numpictures = 6;
 
-const int objnum0  = 6; // obj1 - bike
-const int objnum1  = 8; // map0
-const int objnum2  = 18; // obj2 - bullets
-const int objnum3  = 11; // character0 (character0)
-const int objnum4  = 11; // character1
-const int objnum5  = 11; // character2
-const int objnum6  = 3; // obj3 - bike2
-const int objnum7  = 11; // character3
-const int objnum8  = 11; // character4
-const int objnum9  = 3; // obj4 - bike3
-const int objnum10 = 11; // character5
+enum { OBJ_BIKE1, OBJ_MAP, OBJ_BULLET, OBJ_CHAR0, OBJ_CHAR1, OBJ_CHAR2, OBJ_BIKE2, OBJ_CHAR3, OBJ_CHAR4, OBJ_BIKE3, OBJ_CHAR5 };
+
+const int objcount[] = {
+    6, // obj1 - bike
+    8, // map0
+    18, // obj2 - bullets
+    11, // character0 (character0)
+    11, // character1
+    11, // character2
+    3, // obj3 - bike2
+    11, // character3
+    11, // character4
+    3, // obj4 - bike3
+    11, // character5
+};
 
 #define RELEASE(x)    \
     if (x) {          \
@@ -452,28 +456,28 @@ void initGraphics()
 
     // load objects //remember to add mallit[n]
     logg.info("loading objects");
-    mallit[0].malli  = new obj[objnum0];
-    mallit[1].malli  = new obj[objnum1];
-    mallit[2].malli  = new obj[objnum2];
-    mallit[3].malli  = new obj[objnum3];
-    mallit[4].malli  = new obj[objnum4];
-    mallit[5].malli  = new obj[objnum5];
-    mallit[6].malli  = new obj[objnum6];
-    mallit[7].malli  = new obj[objnum7];
-    mallit[8].malli  = new obj[objnum8];
-    mallit[9].malli  = new obj[objnum9];
-    mallit[10].malli = new obj[objnum10];
-    load("models/obj1.3dw", mallit[0].malli, false, false);
-    load("models/map0.3dw", mallit[1].malli, false, false);
-    load("models/obj2.3dw", mallit[2].malli, false, false);
-    load("models/ukko0.3dw", mallit[3].malli, false, false);
-    load("models/ukko1.3dw", mallit[4].malli, false, false);
-    load("models/ukko2.3dw", mallit[5].malli, false, false);
-    load("models/obj3.3dw", mallit[6].malli, false, false);
-    load("models/ukko3.3dw", mallit[7].malli, false, false);
-    load("models/ukko4.3dw", mallit[8].malli, false, false);
-    load("models/obj4.3dw", mallit[9].malli, false, false);
-    load("models/ukko5.3dw", mallit[10].malli, false, false);
+    mallit[OBJ_BIKE1].malli  = new obj[objcount[OBJ_BIKE1]];
+    mallit[OBJ_MAP].malli    = new obj[objcount[OBJ_MAP]];
+    mallit[OBJ_BULLET].malli = new obj[objcount[OBJ_BULLET]];
+    mallit[OBJ_CHAR0].malli  = new obj[objcount[OBJ_CHAR0]];
+    mallit[OBJ_CHAR1].malli  = new obj[objcount[OBJ_CHAR1]];
+    mallit[OBJ_CHAR2].malli  = new obj[objcount[OBJ_CHAR2]];
+    mallit[OBJ_BIKE2].malli  = new obj[objcount[OBJ_BIKE2]];
+    mallit[OBJ_CHAR3].malli  = new obj[objcount[OBJ_CHAR3]];
+    mallit[OBJ_CHAR4].malli  = new obj[objcount[OBJ_CHAR4]];
+    mallit[OBJ_BIKE3].malli  = new obj[objcount[OBJ_BIKE3]];
+    mallit[OBJ_CHAR5].malli  = new obj[objcount[OBJ_CHAR5]];
+    load("models/obj1.3dw",  mallit[OBJ_BIKE1].malli, false, false);
+    load("models/map0.3dw",  mallit[OBJ_MAP].malli,   false, false);
+    load("models/obj2.3dw",  mallit[OBJ_BULLET].malli,false, false);
+    load("models/ukko0.3dw", mallit[OBJ_CHAR0].malli, false, false);
+    load("models/ukko1.3dw", mallit[OBJ_CHAR1].malli, false, false);
+    load("models/ukko2.3dw", mallit[OBJ_CHAR2].malli, false, false);
+    load("models/obj3.3dw",  mallit[OBJ_BIKE2].malli, false, false);
+    load("models/ukko3.3dw", mallit[OBJ_CHAR3].malli, false, false);
+    load("models/ukko4.3dw", mallit[OBJ_CHAR4].malli, false, false);
+    load("models/obj4.3dw",  mallit[OBJ_BIKE3].malli, false, false);
+    load("models/ukko5.3dw", mallit[OBJ_CHAR5].malli, false, false);
 
     // initialize matrix
     ZeroMemory(&matrices, sizeof(matrices));
@@ -2123,17 +2127,17 @@ void calculatebullets(void) // calculates bullets
                   matrices->LoadIdentity();
                   matrices->TranslateLocal(moped->x6+xa,0+za,moped->z6);
                   matrices->ScaleLocal(0.2f,0.2f,0.2f);
-                  drawfast(&mallit[2].malli[5]);
+                  drawfast(&mallit[OBJ_BULLET].malli[5]);
 
                   matrices->LoadIdentity();
                   matrices->TranslateLocal(moped->x5,0,moped->z5);
                   matrices->ScaleLocal(0.2f,0.2f,0.2f);
-                  drawfast(&mallit[2].malli[5]);
+                  drawfast(&mallit[OBJ_BULLET].malli[5]);
 
                   matrices->LoadIdentity();
                   matrices->TranslateLocal(moped->x6,0,moped->z6);
                   matrices->ScaleLocal(0.2f,0.2f,0.2f);
-                  drawfast(&mallit[2].malli[5]);
+                  drawfast(&mallit[OBJ_BULLET].malli[5]);
 
                   pvertex bullet_trace[MAX_BULLETS*2];
                   q=6;
@@ -3035,17 +3039,17 @@ void CleanUp(void)
         delete (wallgroup[c].routes);
     }
 
-    removeobj(mallit[0].malli, objnum0);
-    removeobj(mallit[1].malli, objnum1);
-    removeobj(mallit[2].malli, objnum2);
-    removeobj(mallit[3].malli, objnum3);
-    removeobj(mallit[4].malli, objnum4);
-    removeobj(mallit[5].malli, objnum5);
-    removeobj(mallit[6].malli, objnum6);
-    removeobj(mallit[7].malli, objnum7);
-    removeobj(mallit[8].malli, objnum8);
-    removeobj(mallit[9].malli, objnum9);
-    removeobj(mallit[10].malli, objnum10);
+    removeobj(mallit[OBJ_BIKE1 ].malli, objcount[OBJ_BIKE1 ]);
+    removeobj(mallit[OBJ_MAP   ].malli, objcount[OBJ_MAP   ]);
+    removeobj(mallit[OBJ_BULLET].malli, objcount[OBJ_BULLET]);
+    removeobj(mallit[OBJ_CHAR0 ].malli, objcount[OBJ_CHAR0 ]);
+    removeobj(mallit[OBJ_CHAR1 ].malli, objcount[OBJ_CHAR1 ]);
+    removeobj(mallit[OBJ_CHAR2 ].malli, objcount[OBJ_CHAR2 ]);
+    removeobj(mallit[OBJ_BIKE2 ].malli, objcount[OBJ_BIKE2 ]);
+    removeobj(mallit[OBJ_CHAR3 ].malli, objcount[OBJ_CHAR3 ]);
+    removeobj(mallit[OBJ_CHAR4 ].malli, objcount[OBJ_CHAR4 ]);
+    removeobj(mallit[OBJ_BIKE3 ].malli, objcount[OBJ_BIKE3 ]);
+    removeobj(mallit[OBJ_CHAR5 ].malli, objcount[OBJ_CHAR5 ]);
 
     delete (background);
     // RELEASE(font1);
@@ -3550,7 +3554,7 @@ void render_game_characters(void)
                             matrices->LoadIdentity();
                             matrices->TranslateLocal(character[a].x, 1, character[a].z);
                             matrices->RotateYawPitchRollLocal(0, 0, pi / 2);
-                            drawfast(&mallit[2].malli[6]);
+                            drawfast(&mallit[OBJ_BULLET].malli[6]);
                         }
 
             // render balls if viewed from above
@@ -3558,9 +3562,9 @@ void render_game_characters(void)
                 matrices->LoadIdentity();
                 matrices->TranslateLocal(character[a].x, 1, character[a].z);
                 matrices->RotateYawPitchRollLocal(0, 0, pi / 2);
-                if (character[a].movement_type == 0) drawfast(&mallit[2].malli[13]);
-                if (character[a].movement_type == 1) drawfast(&mallit[2].malli[11]);
-                if (character[a].movement_type == 2) drawfast(&mallit[2].malli[14]);
+                if (character[a].movement_type == 0) drawfast(&mallit[OBJ_BULLET].malli[13]);
+                if (character[a].movement_type == 1) drawfast(&mallit[OBJ_BULLET].malli[11]);
+                if (character[a].movement_type == 2) drawfast(&mallit[OBJ_BULLET].malli[14]);
             }
             m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE, FALSE);
         }
@@ -3634,7 +3638,7 @@ void render_game_characters(void)
                 matrices->Push();
                 matrices->TranslateLocal(30, 30, 0);
                 // matrices->RotateYawPitchRollLocal(character[a].bodypart_coords[q].rx,character[a].bodypart_coords[q].ry,character[a].bodypart_coords[q].rz);
-                drawfast(&mallit[2].malli[12]);
+                drawfast(&mallit[OBJ_BULLET].malli[12]);
                 matrices->Pop();
             }
 
@@ -3950,7 +3954,7 @@ void render_game_shoulder_view()
         m_pDevice->SetTransform(D3DTRANSFORMSTATE_WORLD, *matrices->GetTop());
         //m_View = ViewMatrix(D3DVECTOR(680,0,0), D3DVECTOR(0,0,0), D3DVECTOR(0,1,0), 0);
         //m_pDevice->SetTransform(D3DTRANSFORMSTATE_VIEW, &m_View);
-        drawfast(&mallit[2].malli[11]);
+        drawfast(&mallit[OBJ_BULLET].malli[11]);
         m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE,TRUE);
         m_pDevice->LightEnable(0, TRUE);
         SetupVertexFog(maxvisible-5000,maxvisible,0x004C4C4C, D3DFOG_LINEAR, TRUE, 0);//sumu
@@ -4133,7 +4137,7 @@ void render_game_lights()
       matrices->LoadIdentity();
       matrices->TranslateLocal(lightsx[e],0,lightsz[e]);
 
-      drawfast(&mallit[2].malli[12]);
+      drawfast(&mallit[OBJ_BULLET].malli[12]);
 
       }
     */
@@ -4201,11 +4205,11 @@ void render_game_houses(float kerroin)
         matrices->LoadIdentity();
         matrices->TranslateLocal((float)maporderx[c] * 8000, 0, (float)maporderz[c] * 8000);
         matrices->ScaleLocal(1, kerroin, 1);
-        drawfast(&mallit[1].malli[maps[maporderz[c]][maporderx[c]]]); // map
+        drawfast(&mallit[OBJ_MAP].malli[maps[maporderz[c]][maporderx[c]]]); // map
 
         if ((abs(moped[0].sektorix - maporderx[c]) < 2) & (abs(moped[0].sektoriz - maporderz[c]) < 2))
-            drawfast(&mallit[0].malli[5]); // base
-        else drawfast(&mallit[0].malli[4]); // base
+            drawfast(&mallit[OBJ_BIKE1].malli[5]); // base
+        else drawfast(&mallit[OBJ_BIKE1].malli[4]); // base
     }
     /*
     //render bases
@@ -4217,8 +4221,8 @@ void render_game_houses(float kerroin)
     matrices->LoadIdentity();
     matrices->TranslateLocal((float)b*8000,0,(float)a*8000);
     if((abs(moped[0].sektorix-b)<2)&(abs(moped[0].sektoriz-a)<2))
-    drawfast(&mallit[0].malli[5]);//pohja
-    else drawfast(&mallit[0].malli[4]);//pohja
+    drawfast(&mallit[OBJ_BIKE1].malli[5]);//pohja
+    else drawfast(&mallit[OBJ_BIKE1].malli[4]);//pohja
     }
     }
     */
@@ -4476,7 +4480,7 @@ void render_game_mopeds()
             matrices->RotateYawPitchRollLocal(0, randDouble(-pi, pi), 0);
             moped[d].piippu = *matrices->GetTop();
             if (moped[d].has_muzzle_flare) {
-                drawfast(&mallit[2].malli[15]);
+                drawfast(&mallit[OBJ_BULLET].malli[15]);
             }
             matrices->Pop();
 
@@ -4551,14 +4555,14 @@ void render_game_crosshair1(float& camq, float& camw, float& came)
             matrices->LoadIdentity();
             matrices->TranslateLocal(character[moped[0].target_character].x, 57, character[moped[0].target_character].z);
             matrices->RotateYawPitchRollLocal(-camq + pi / 2, camw, came);
-            drawfast(&mallit[2].malli[0]);
+            drawfast(&mallit[OBJ_BULLET].malli[0]);
         }
         // rendering crosshair
         if (moped[0].target_character <= 1) {
             matrices->LoadIdentity();
             matrices->TranslateLocal(moped[-moped[0].target_character - 1].x1, 57, moped[-moped[0].target_character - 1].z1);
             matrices->RotateYawPitchRollLocal(-camq + pi / 2, camw, came);
-            drawfast(&mallit[2].malli[0]);
+            drawfast(&mallit[OBJ_BULLET].malli[0]);
         }
         m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE, FALSE);
     }
@@ -4712,7 +4716,7 @@ void render_game_bulletholes(float camq, float camw, float came)
                     D3DBLEND_DESTCOLOR);
                 m_pDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND,
                     D3DBLEND_SRCALPHA);
-                drawfast(&mallit[2].malli[10]);
+                drawfast(&mallit[OBJ_BULLET].malli[10]);
                 // m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,FALSE);
                 break;
             }
@@ -4727,7 +4731,7 @@ void render_game_bulletholes(float camq, float camw, float came)
                     D3DBLEND_ONE);
                 m_pDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND,
                     D3DBLEND_ONE);
-                drawfast(&mallit[2].malli[5]);
+                drawfast(&mallit[OBJ_BULLET].malli[5]);
                 // m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,FALSE);
                 break;
             }
@@ -4745,9 +4749,9 @@ void render_game_bulletholes(float camq, float camw, float came)
 
                 // select randomly from two options
                 if (smokes[q].picture == 0) {
-                    drawfast(&mallit[2].malli[3]);
+                    drawfast(&mallit[OBJ_BULLET].malli[3]);
                 } else {
-                    drawfast(&mallit[2].malli[7]);
+                    drawfast(&mallit[OBJ_BULLET].malli[7]);
                 }
                 // m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,FALSE);
                 break;
@@ -4763,7 +4767,7 @@ void render_game_bulletholes(float camq, float camw, float came)
                     D3DBLEND_ONE);
                 m_pDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND,
                     D3DBLEND_ONE);
-                drawfast(&mallit[2].malli[4]);
+                drawfast(&mallit[OBJ_BULLET].malli[4]);
 
                 matrices->LoadIdentity();
                 matrices->TranslateLocal(smokes[q].place.x, smokes[q].place.y, smokes[q].place.z);
@@ -4774,7 +4778,7 @@ void render_game_bulletholes(float camq, float camw, float came)
                     D3DBLEND_ZERO);
                 m_pDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND,
                     D3DBLEND_INVSRCCOLOR);
-                drawfast(&mallit[2].malli[4]);
+                drawfast(&mallit[OBJ_BULLET].malli[4]);
 
                 break;
             }
@@ -4787,7 +4791,7 @@ void render_game_bulletholes(float camq, float camw, float came)
                         matrices->RotateYawPitchRollLocal(-smokes[q].q+pi/2,smokes[q].w,smokes[q].e);
                         matrices->ScaleLocal(smokes[q].size,smokes[q].size,smokes[q].size);
                         m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,false);
-                        drawfast(&mallit[2].malli[16]);
+                        drawfast(&mallit[OBJ_BULLET].malli[16]);
                         m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,true);
                         //m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE, TRUE);
                         //m_pDevice->SetRenderState(D3DRENDERSTATE_ZFUNC,D3DCMP_LESSEQUAL);
@@ -4830,13 +4834,13 @@ void render_arrows_and_crosshairs(float camq, float camw, float came)
             }
             matrices->TranslateLocal(kx, 57, kz);
             matrices->RotateYawPitchRollLocal(-camq + pi / 2, camw, came);
-            drawfast(&mallit[2].malli[8]);
+            drawfast(&mallit[OBJ_BULLET].malli[8]);
 
             // arrow
             matrices->LoadIdentity();
             matrices->TranslateLocal(moped[0].x1, 10, moped[0].z1);
             matrices->RotateYawPitchRollLocal(-atan2f(moped[0].z1 - kz, moped[0].x1 - kx) + pi / 2 + pi, 0, pi / 2);
-            drawfast(&mallit[2].malli[9]);
+            drawfast(&mallit[OBJ_BULLET].malli[9]);
             if (moped[0].mission.target_type == 1) // render first one of the coordinates
                 if (f >= 0) {
                     break;
@@ -4956,12 +4960,12 @@ void render_game_text()
     matrices->TranslateLocal(156 - 500, 256 - 500, -4.199f * 100);
     matrices->ScaleLocal(2.5f, 2.5f, 2.5f);
     matrices->RotateYawPitchRollLocal(0, 4.5f, 0.15f);
-    drawfast(&mallit[2].malli[16]);
+    drawfast(&mallit[OBJ_BULLET].malli[16]);
     // needle of meter
     if (moped[0].energy < 0) moped[0].energy = 0;
     float energymittari = -moped[0].energy / 100 * 4.24f + 2.120f;
     matrices->RotateYawPitchRollLocal(energymittari, 0, 0);
-    drawfast(&mallit[2].malli[17]);
+    drawfast(&mallit[OBJ_BULLET].malli[17]);
 
     m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE, TRUE);
 
@@ -5175,8 +5179,8 @@ void render_mission(void)
             matrices->LoadIdentity();
             matrices->TranslateLocal((float)b * 8000 * kerroin, 0, (float)a * 8000 * kerroin);
             matrices->ScaleLocal(kerroin, kerroin, kerroin);
-            drawfast(&mallit[0].malli[4]); // base
-            drawfast(&mallit[1].malli[maps[a][b]]); // map
+            drawfast(&mallit[OBJ_BIKE1].malli[4]); // base
+            drawfast(&mallit[OBJ_MAP].malli[maps[a][b]]); // map
         }
     }
 
@@ -5189,7 +5193,7 @@ void render_mission(void)
     matrices->LoadIdentity();
     matrices->TranslateLocal(moped[0].x1 * kerroin, 100, moped[0].z1 * kerroin);
     matrices->RotateYawPitchRollLocal(0, 0, pi / 2);
-    drawfast(&mallit[2].malli[6]);
+    drawfast(&mallit[OBJ_BULLET].malli[6]);
 
     // location of target
     int f;
@@ -5204,7 +5208,7 @@ void render_mission(void)
 
         matrices->RotateYawPitchRollLocal(0, 0, pi / 2);
         // matrices->ScaleLocal(0.4f,0.4f,0.4f);
-        drawfast(&mallit[2].malli[0]);
+        drawfast(&mallit[OBJ_BULLET].malli[0]);
     }
 
     m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE, TRUE);
@@ -6968,7 +6972,7 @@ void game_new(void)
         for (b = 0; b < mapsx; b++) {
             maps[a][b] = 4;
             while ((maps[a][b] == 4) | (maps[a][b] == 5))
-                maps[a][b] = randInt(0, objnum1);
+                maps[a][b] = randInt(0, objcount[OBJ_MAP]);
         }
     }
 
