@@ -404,7 +404,7 @@ void initGraphics()
     m_pDevice->SetTransform(D3DTRANSFORMSTATE_PROJECTION, &m_Projection);
 
     // Set the render states
-    // m_pDevice->SetRenderState(D3DRENDERSTATE_ANTIALIAS,D3DANTIALIAS_SORTDEPENDENT );//ota DDSCAPS2_HINTANTIALIASING inactive jos inactivetat
+    m_pDevice->SetRenderState(D3DRENDERSTATE_ANTIALIAS,D3DANTIALIAS_SORTDEPENDENT );
 
     // sumut
     if ((desc3d.dpcTriCaps.dwRasterCaps & D3DPRASTERCAPS_FOGVERTEX) && (!(desc3d.dpcTriCaps.dwRasterCaps & D3DPRASTERCAPS_FOGRANGE)))
@@ -420,8 +420,8 @@ void initGraphics()
     m_pDevice->SetRenderState(D3DRENDERSTATE_CULLMODE, D3DCULL_CCW); // D3DCULL_CCW
     m_pDevice->SetRenderState(D3DRENDERSTATE_ZWRITEENABLE, TRUE);
 
-    // m_pDevice->SetTextureStageState(0,D3DTSS_MAGFILTER, D3DTFG_LINEAR);
-    // m_pDevice->SetTextureStageState(0,D3DTSS_MINFILTER, D3DTFN_LINEAR);
+    m_pDevice->SetTextureStageState(0,D3DTSS_MAGFILTER, D3DTFG_LINEAR);
+    m_pDevice->SetTextureStageState(0,D3DTSS_MINFILTER, D3DTFN_LINEAR);
 
     // first linear filter
     if (desc3d.dpcTriCaps.dwTextureFilterCaps & D3DPTFILTERCAPS_MAGFLINEAR)

@@ -217,6 +217,11 @@ void DIRECTDRAWSURFACE7::Release()
     // SDL_FreeSurface(this->surface);
 }
 
+void _glAble(int key, DWORD value) {
+    if (value == TRUE) glEnable(key);
+    else glDisable(key);
+}
+
 void DIRECT3DDEVICE7::SetRenderState(int key, DWORD value)
 {
     switch (key) {
@@ -225,7 +230,7 @@ void DIRECT3DDEVICE7::SetRenderState(int key, DWORD value)
     case D3DRENDERSTATE_FOGENABLE:
     case D3DRENDERSTATE_ALPHABLENDENABLE:
     case D3DRENDERSTATE_ZENABLE:
-        value == TRUE ? glEnable(key) : glDisable(key);
+        _glAble(key, value);
         break;
     case D3DRENDERSTATE_COLORKEYENABLE:
         break; // TODO: GL supports no colorkey
@@ -237,6 +242,9 @@ void DIRECT3DDEVICE7::SetRenderState(int key, DWORD value)
             (GLint)(value >> 24 & 0xFF) }; // ARGB-->RGBA (TODO: verify)
         glFogiv(key, colors);
     } break;
+    case D3DRENDERSTATE_ANTIALIAS:
+        _glAble(GL_MULTISAMPLE, value);
+        break;
     case D3DRENDERSTATE_FOGSTART:
     case D3DRENDERSTATE_FOGEND:
         glFogf(key, *(float*)(&value));
@@ -309,8 +317,7 @@ void DIRECT3DDEVICE7::SetTransform(UINT enum_transformStateType, const D3DMATRIX
 void DIRECT3DDEVICE7::LightEnable(int which, bool state)
 {
     int gl_which = GL_LIGHT0 + which;
-    if (state == TRUE) glEnable(gl_which);
-    else glDisable(gl_which);
+    _glAble(gl_which, state);
 }
 void DIRECT3DDEVICE7::Clear(int, void*, int, int color, int, int)
 {
@@ -431,7 +438,9 @@ void DIRECT3DDEVICE7::SetTextureStageState(DWORD stage, int state, DWORD value)
 {
     if (state == D3DTSS_MAGFILTER || state == D3DTSS_MINFILTER) {
         GLint glFilter = GL_NEAREST;
-        if (value == D3DTFG_LINEAR || value == D3DTFN_ANISOTROPIC || value == D3DTFG_ANISOTROPIC) glFilter = GL_LINEAR;
+        if (value == D3DTFG_LINEAR || value == D3DTFN_LINEAR || value == D3DTFN_ANISOTROPIC || value == D3DTFG_ANISOTROPIC)
+            glFilter = GL_LINEAR;
+        else throw "unknown texture filter value", value;
         glTexParameteri(GL_TEXTURE_2D, state, glFilter);
     } else if (state == D3DTSS_MAXANISOTROPY) {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, value);
