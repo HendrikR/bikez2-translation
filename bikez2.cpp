@@ -373,7 +373,6 @@ void initGraphics()
     LoadCursor(NULL, IDC_ARROW);
     createscreen();
     readpictures();
-    cfg_load();
 
     // background image
     RECT rcSource, rcDest;
@@ -521,6 +520,7 @@ void initGraphics()
 
 void init()
 {
+    cfg_load();
     initGraphics();
     initSound();
     initKeyb();
