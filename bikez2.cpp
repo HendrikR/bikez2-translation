@@ -316,9 +316,7 @@ void SetupVertexFog(float fStart, float fEnd, DWORD dwColor, DWORD dwMode, BOOL 
     // Note: this is slightly more performance intensive
     //       than non-range-based fog.
     if (fUseRange)
-        m_pDevice->SetRenderState(
-            D3DRENDERSTATE_RANGEFOGENABLE,
-            TRUE);
+        m_pDevice->SetRenderState(D3DRENDERSTATE_RANGEFOGENABLE, TRUE);
 }
 
 // Program initialization
@@ -384,11 +382,6 @@ void initGraphics()
     rcDest.left     = (int)((SCREEN_WIDTH - 351) / 2);
     rcDest.bottom   = rcDest.top + 132;
     rcDest.right    = rcDest.left + 351;
-    /*if(rcDest.top<0)rcDest.top=0;
-      if(rcDest.left<0)rcDest.left=0;
-      if(rcDest.bottom>SCREEN_HEIGHT)rcDest.bottom=SCREEN_HEIGHT;
-      if(rcDest.right>SCREEN_WIDTH)rcDest.right=SCREEN_WIDTH;*/
-
     taka->Blt(&rcDest, pictures[5], &rcSource, DDBLT_WAIT, NULL);
     dxctx->UpdateFrame(0);
 
@@ -411,8 +404,6 @@ void initGraphics()
         SetupVertexFog(maxvisible - 5000, maxvisible, 0x004C4C4C, D3DFOG_LINEAR, FALSE, 0); // sumu
     if ((desc3d.dpcTriCaps.dwRasterCaps & D3DPRASTERCAPS_FOGVERTEX) && (desc3d.dpcTriCaps.dwRasterCaps & D3DPRASTERCAPS_FOGRANGE))
         SetupVertexFog(maxvisible - 5000, maxvisible, 0x004C4C4C, D3DFOG_LINEAR, TRUE, 0); // sumu
-    /*if(desc3d.dpcTriCaps.dwRasterCaps&D3DPRASTERCAPS_FOGTABLE)
-      SetupPixelFog(0x004C4C4C, D3DFOG_LINEAR);*/
 
     m_pDevice->SetRenderState(D3DRENDERSTATE_TEXTUREPERSPECTIVE, TRUE);
     m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE, TRUE);
@@ -1413,25 +1404,10 @@ bool createscreen(void)
         1024,
         768,
         &dxctx);
-    /*D3DXCreateContextEx(D3DX_DEFAULT,
-      D3DX_CONTEXT_FULLSCREEN*fs,  //windowed = 0
-      hWnd,
-      hWnd,
-      24,
-      0,
-      8,
-      0,
-      1,
-      1024,
-      768,
-      0,
-      &dxctx);*/
     m_pDD     = dxctx->GetDD();
     m_pDevice = dxctx->GetD3DDevice();
-    // taka=dxctx->GetBackBuffer(0);
     m_pDevice->GetRenderTarget(&taka);
 
-    // memset(&m_pViewport, 0, sizeof(D3DVIEWPORT7));
     D3DVIEWPORT7 m_pViewport;
     m_pViewport.dwX      = 0;
     m_pViewport.dwY      = 0;
@@ -1441,11 +1417,7 @@ bool createscreen(void)
     m_pViewport.dvMaxZ   = 1.0f;
 
     m_pDevice->SetViewport(&m_pViewport);
-    //!= D3D_OK)
-    // return FALSE;
     m_pDevice->GetCaps(&desc3d);
-    // desc3d=infot[driver].d3device[device].ddDeviceDesc;
-    // info=infot[driver];
     return true;
 }
 
@@ -3969,20 +3941,19 @@ void render_game_shoulder_view()
         m_pDevice->SetTransform(D3DTRANSFORMSTATE_VIEW, &m_View);
         m_pDevice->SetTransform(D3DTRANSFORMSTATE_PROJECTION, &m_Projection);
 
-        // SetupVertexFog(0,200,0x004C4C4C, D3DFOG_LINEAR  , TRUE, 0);//fog
-        /*	//sky
-                m_pDevice->LightEnable(0, FALSE);
-                m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE,FALSE);
-                matrices->LoadIdentity();
-                matrices->TranslateLocal(camx,camy+20,camz);
-                m_pDevice->SetTransform(D3DTRANSFORMSTATE_WORLD, *matrices->GetTop());
-                //m_View = ViewMatrix(D3DVECTOR(680,0,0), D3DVECTOR(0,0,0), D3DVECTOR(0,1,0), 0);
-                //m_pDevice->SetTransform(D3DTRANSFORMSTATE_VIEW, &m_View);
-                drawfast(&mallit[2].malli[11]);
-                m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE,TRUE);
-                m_pDevice->LightEnable(0, TRUE);
-        */
-        // SetupVertexFog(maxvisible-5000,maxvisible,0x004C4C4C, D3DFOG_LINEAR  , TRUE, 0);//sumu
+        SetupVertexFog(1000,200,0x004C4C4C, D3DFOG_LINEAR, TRUE, 0);//fog
+        //sky
+        m_pDevice->LightEnable(0, FALSE);
+        m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE,FALSE);
+        matrices->LoadIdentity();
+        matrices->TranslateLocal(camx,camy+20,camz);
+        m_pDevice->SetTransform(D3DTRANSFORMSTATE_WORLD, *matrices->GetTop());
+        //m_View = ViewMatrix(D3DVECTOR(680,0,0), D3DVECTOR(0,0,0), D3DVECTOR(0,1,0), 0);
+        //m_pDevice->SetTransform(D3DTRANSFORMSTATE_VIEW, &m_View);
+        drawfast(&mallit[2].malli[11]);
+        m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE,TRUE);
+        m_pDevice->LightEnable(0, TRUE);
+        SetupVertexFog(maxvisible-5000,maxvisible,0x004C4C4C, D3DFOG_LINEAR, TRUE, 0);//sumu
     }
 }
 

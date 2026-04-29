@@ -199,7 +199,8 @@ enum {
     DDPF_ZBUFFER,
     D3DCLEAR_TARGET,
     D3DCLEAR_ZBUFFER,
-    D3DRENDERSTATE_ZWRITEENABLE
+    D3DRENDERSTATE_ZWRITEENABLE,
+    D3DPRASTERCAPS_FOGTABLE,
 };
 
 // D3D sphere visibility / clip intersection flags (bitmask, per DirectX 7 spec)
@@ -261,13 +262,13 @@ struct pvertex {
 struct DDCOLORKEY {
     DWORD dwColorSpaceHighValue, dwColorSpaceLowValue;
 };
-struct TODO_TriCaps {
+struct TriCaps {
     DWORD dwRasterCaps;
     DWORD dwTextureFilterCaps;
 };
 
 struct D3DDEVICEDESC7 {
-    TODO_TriCaps dpcTriCaps;
+    TriCaps dpcTriCaps;
 };
 typedef struct DIRECTINPUTDEVICE8 {
     HRESULT Acquire();

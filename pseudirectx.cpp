@@ -234,7 +234,6 @@ void DIRECT3DDEVICE7::SetRenderState(int key, DWORD value)
         break;
     case D3DRENDERSTATE_COLORKEYENABLE:
         break; // TODO: GL supports no colorkey
-        // case D3DTRANSFORMSTATE_WORLD: break; // TODO
     case D3DRENDERSTATE_FOGCOLOR: {
         GLint colors[] = { (GLint)(value >> 16 & 0xFF),
             (GLint)(value >> 8 & 0xFF),
@@ -467,9 +466,10 @@ void DIRECT3DDEVICE7::SetViewport(D3DVIEWPORT7* vp)
     glViewport(vp->dwX, vp->dwY, vp->dwWidth, vp->dwHeight);
     this->proj_matrix = this->view_matrix = this->world_matrix = glm::identity<glm::mat4>();
 }
-int DIRECT3DDEVICE7::GetCaps(D3DDEVICEDESC7*)
+int DIRECT3DDEVICE7::GetCaps(D3DDEVICEDESC7* caps)
 {
-    // TODO
+    caps->dpcTriCaps.dwRasterCaps = D3DPRASTERCAPS_FOGVERTEX | D3DPRASTERCAPS_FOGRANGE | D3DPRASTERCAPS_FOGTABLE;
+    caps->dpcTriCaps.dwTextureFilterCaps = D3DPTFILTERCAPS_MAGFLINEAR | D3DPTFILTERCAPS_MINFLINEAR | D3DPTFILTERCAPS_MAGFANISOTROPIC | D3DPTFILTERCAPS_MINFANISOTROPIC;
     return 0;
 }
 void DIRECT3DDEVICE7::Release()
