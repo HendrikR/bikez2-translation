@@ -49,8 +49,6 @@ int sub(int test)
     return age * test;
 }
 
-// BOOL loadwall(char nimi[200],RouteGroup *target,BOOL mirror);
-
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hInstNULL, LPSTR lpszCmdLine, int nCmdShow)
 {
     startApplication(hInstance);
@@ -246,26 +244,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     }
     return 0;
 }
-/*
-// Mesage handler for about box.
-LRESULT CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-switch (message)
-{
-case WM_INITDIALOG:
-return TRUE;
-
-case WM_COMMAND:
-if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
-{
-EndDialog(hDlg, LOWORD(wParam));
-return TRUE;
-}
-break;
-}
-return FALSE;
-}
-*/
 
 void SetupPixelFog(DWORD dwColor, DWORD dwMode)
 {
@@ -659,83 +637,7 @@ void initWeapons()
     ase[q].prate_of_fire    = 2;
     ase[q].bullets_per_shot = 1;
     ase[q]._type            = 4;
-    /*
-      q=6;
-      ase[q].picture=0;//mopedweapon0 // mopo ase0
-      ase[q].speed=45;
-      ase[q].dispersion=0.2f;
-      ase[q].rate_of_fire=711;
-      ase[q].decal_picture=0;
-      ase[q].bullet_picture=0;
-      ase[q].smoke_filled=0;
-      ase[q].smoke_duration=5000;
-      ase[q].weight=0.00001f;
-      ase[q].explosion_size=0;
-      ase[q].smoke_count=0;
-      ase[q].num_bounces=2;
-      ase[q].damage=0.1f;
-      ase[q].homing=false;
-      ase[q].pdamage=2;
-      ase[q].pspeed=2;
-      ase[q].prate_of_fire=2;
 
-      q=7;
-      ase[q].picture=0;//mopedweapon1 // mopo ase1
-      ase[q].speed=45;
-      ase[q].dispersion=0.2f;
-      ase[q].rate_of_fire=711;
-      ase[q].decal_picture=0;
-      ase[q].bullet_picture=0;
-      ase[q].smoke_filled=0;
-      ase[q].smoke_duration=5000;
-      ase[q].weight=0.00001f;
-      ase[q].explosion_size=0;
-      ase[q].smoke_count=0;
-      ase[q].num_bounces=2;
-      ase[q].damage=0.1f;
-      ase[q].homing=false;
-      ase[q].pdamage=2;
-      ase[q].pspeed=2;
-      ase[q].prate_of_fire=2;
-
-      q=8;
-      ase[q].picture=0;//mopedweapon2 // mopo ase2
-      ase[q].speed=45;
-      ase[q].dispersion=0.2f;
-      ase[q].rate_of_fire=711;
-      ase[q].decal_picture=0;
-      ase[q].bullet_picture=0;
-      ase[q].smoke_filled=0;
-      ase[q].smoke_duration=5000;
-      ase[q].weight=0.00001f;
-      ase[q].explosion_size=0;
-      ase[q].smoke_count=0;
-      ase[q].num_bounces=2;
-      ase[q].damage=0.1f;
-      ase[q].homing=false;
-      ase[q].pdamage=2;
-      ase[q].pspeed=2;
-      ase[q].prate_of_fire=2;
-
-      q=9;
-      ase[q].picture=0;//mopedweapon3 // mopo ase3
-      ase[q].speed=45;
-      ase[q].dispersion=0.2f;
-      ase[q].rate_of_fire=711;
-      ase[q].decal_picture=0;
-      ase[q].bullet_picture=0;
-      ase[q].smoke_filled=0;
-      ase[q].smoke_duration=5000;
-      ase[q].weight=0.00001f;
-      ase[q].explosion_size=0;
-      ase[q].smoke_count=0;
-      ase[q].num_bounces=2;
-      ase[q].damage=0.1f;
-      ase[q].homing=false;
-      ase[q].pdamage=2;
-      ase[q].pspeed=2;
-      ase[q].prate_of_fire=2;
-    */
     q                       = 10;
     ase[q].picture          = 0; // police gun 0 pistole
     ase[q].speed            = 70;
@@ -856,57 +758,6 @@ void moveparts(int q)
     character[q].bodypart_coords[7].z = 16.8f - character[q].bodypart_coords[8].z;
 
     /*
-    //head
-    mallit[q].malli[2].x=0;
-    mallit[q].malli[2].y=37.1f;
-    mallit[q].malli[2].z=0;
-
-    //torso
-    mallit[q].malli[1].x=0;
-    mallit[q].malli[1].y=0;
-    mallit[q].malli[1].z=0;
-
-    //butt
-    mallit[q].malli[0].x=0;
-    mallit[q].malli[0].y=0;
-    mallit[q].malli[0].z=0;
-
-    //upper leg
-    mallit[q].malli[5].x=-0.8f;
-    mallit[q].malli[5].y=-3.9f;
-    mallit[q].malli[5].z=-6.7f;
-    mallit[q].malli[9].x=-0.8f;
-    mallit[q].malli[9].y=-3.9f;
-    mallit[q].malli[9].z=6.7f;
-
-    //lower leg
-    mallit[q].malli[6].x= 3.2f -mallit[q].malli[5].x;
-    mallit[q].malli[6].y=-26.5f-mallit[q].malli[5].y;
-    mallit[q].malli[6].z=-8.0f-mallit[q].malli[5].z;
-    mallit[q].malli[10].x= 3.2f -mallit[q].malli[9].x;
-    mallit[q].malli[10].y=-26.5f-mallit[q].malli[9].y;
-    mallit[q].malli[10].z=8.0f-mallit[q].malli[9].z;
-
-
-    //upper arm
-    mallit[q].malli[3].x=-1.7f;
-    mallit[q].malli[3].y=30.15f;
-    mallit[q].malli[3].z=-14.7f;
-    mallit[q].malli[8].x=-1.7f;
-    mallit[q].malli[8].y=30.15f;
-    mallit[q].malli[8].z=14.7f;
-
-
-    //lower arm
-    mallit[q].malli[4].x=-3.26f -mallit[q].malli[3].x;
-    mallit[q].malli[4].y=16.3f -mallit[q].malli[3].y;
-    mallit[q].malli[4].z=-16.8f-mallit[q].malli[3].z;
-    mallit[q].malli[7].x=-3.27f -mallit[q].malli[8].x;
-    mallit[q].malli[7].y=16.3f -mallit[q].malli[8].y;
-    mallit[q].malli[7].z=16.8f-mallit[q].malli[8].z;
-    */
-    /*
-
     //hand
     mallit[q].malli[5].x=+1.1f-mallit[q].malli[4].x;
     mallit[q].malli[5].y=-3.2f-mallit[q].malli[4].y;
@@ -1252,27 +1103,6 @@ BOOL loadtextures()
 
     for (q = 0; q < material_count; q++)
         filter[q] = false;
-    /*
-    //audience is not filtered
-    filter[49]=true;
-    filter[50]=true;
-    */
-
-    /*for (q=material_count; q<material_count+40; q++)
-      {
-
-      D3DXCreateTexture(
-      m_pDevice,
-      NULL,
-      &x,
-      &y,
-      NULL,
-      NULL,
-      &background[q],
-      NULL
-      );
-
-      }*/
 
     for (q = 0; q < material_count; q++) {
         ZeroMemory(&background[q], sizeof(background[q]));
@@ -1309,38 +1139,14 @@ BOOL loadtextures()
         fgets(rows, sizeof(rows), fil);
         fgets(row, sizeof(row), fil);
 
-        // itoa(savegame_slot,temprow,10);//(saveplace, templine, 10)
         strcpy(texturefilename, "textures/");
         strcat(texturefilename, rows);
-
-        // if(atoi(row)==155)
-
-        // if(atoi(row)==255)
-
-        // background[q]=loadPicture(m_pDD,rows,true);//background[q]loadpicture
 
         D3DX_SURFACEFORMAT pixel;
 
         if (SCREEN_BITS == 32) pixel = D3DX_SF_UNKNOWN; // 32
         if (SCREEN_BITS == 24) pixel = D3DX_SF_UNKNOWN; // 24
         if (SCREEN_BITS == 16) pixel = D3DX_SF_UNKNOWN; // 16
-        /*if(SCREEN_BITS==32)pixel=D3DX_SF_A8R8G8B8 ; //32
-          if(SCREEN_BITS==24)pixel=D3DX_SF_R8G8B8; //24
-          if(SCREEN_BITS==16)pixel=D3DX_SF_R5G6B5; //16*/
-
-        // D3DXCheckTextureRequirements(m_pDevice,NULL,0,0,&pixel);
-
-        // background[q]=loadTexture(screenmode,info,&m_pDevice,m_pDD,texturefilename,true);//background[q]=loadtexture(screenmode,info,&m_pDevice,m_pDD,texturename,true);
-        /*
-          D3DXLoadTextureFromFile(
-          m_pDevice,
-          background[q],                       // destination
-          D3DX_DEFAULT ,               // all mip levels
-          texturefilename,		//texturefilename		        // source
-          NULL,                       // entire source
-          NULL,                       // entire destination
-          D3DX_FT_LINEAR );
-        */
 
         if (filter[q])
             D3DXCreateTextureFromFile(
@@ -1442,10 +1248,6 @@ void readkeyb(void)
     }
     elapsed    = elapsed2 / 30;
     m_LastTime = thistime;
-    /*
-      elapsed2=elapsed;
-      elapsed = (float)((thistime - m_LastTime)+elapsed+elapsed2)/3;
-      m_LastTime = thistime;*/
 
     mousestate2 = mousestate;
     hr          = g_pMouse->GetDeviceState(sizeof(mousestate), &mousestate);
@@ -4859,25 +4661,6 @@ void render_arrows_and_crosshairs(float camq, float camw, float came)
 
         // mission brief text
         rendertext((int)(1024 * 0.03f), (int)(768 * 0.95f - 15), 0, moped[0].mission.briefing_short);
-        /*//go and kill some one
-          if(moped[0].mission._type==0){
-          if(moped[0].mission.subtype==0){
-          rendertext((int)(1024*0.03f),(int)(768*0.95f-15),0,"kill him");
-          }
-          if(moped[0].mission.subtype==1){
-          rendertext((int)(1024*0.03f),(int)(768*0.95f-15),0,"kill him");
-          }
-          }
-          //taxi
-          if(moped[0].mission._type==1){
-          if(moped[0].mission.subtype==0){
-          rendertext((int)(1024*0.03f),(int)(768*0.95f-15),0,"take me there");
-          }
-          if(moped[0].mission.subtype==1){
-          rendertext((int)(1024*0.03f),(int)(768*0.95f-15),0,"take me there");
-          }
-          }
-        */
     }
 
     m_pDevice->SetRenderState(D3DRENDERSTATE_ZWRITEENABLE, TRUE);
@@ -4973,119 +4756,6 @@ void render_game_text()
     char row[200];
     itoa((int)moped[0].money, row, 10);
     rendertext(896, 710, 0, row);
-
-    /*
-    //energy meter
-    pvertex vertex[6];
-    float height=50;
-    vertex[0].position.x=-500;
-    vertex[0].position.y=-height;
-    vertex[0].position.z=0;
-    vertex[0].u=0;
-    vertex[0].v=1;
-
-    vertex[1].position.x=500;
-    vertex[1].position.y=height;
-    vertex[1].position.z=0;
-    vertex[1].u=1;
-    vertex[1].v=0;
-
-    vertex[2].position.x=-500;
-    vertex[2].position.y=height;
-    vertex[2].position.z=0;
-    vertex[2].u=0;
-    vertex[2].v=0;
-
-    vertex[3].position.x=-500;
-    vertex[3].position.y=-height;
-    vertex[3].position.z=0;
-    vertex[3].u=0;
-    vertex[3].v=1;
-
-    vertex[4].position.x=500;
-    vertex[4].position.y=-height;
-    vertex[4].position.z=0;
-    vertex[4].u=1;
-    vertex[4].v=1;
-
-    vertex[5].position.x=500;
-    vertex[5].position.y=height;
-    vertex[5].position.z=0;
-    vertex[5].u=1;
-    vertex[5].v=0;
-
-    //set camera to its place
-    kamerax1=0;
-    kameray1=0;
-    kameraz1=1660;
-    kamerax2=0;
-    kameray2=960;
-    kameraz2=0;
-    m_View = ViewMatrix(D3DVECTOR(kamerax1,kameray1,kameraz1), D3DVECTOR(kamerax2,kameray2,kameraz2), D3DVECTOR(0,1,0), 0);
-    m_Projection = ProjectionMatrix(25.0f, maxvisible, (float)(80*pi/180)); // 60 vision field
-    m_pDevice->SetTransform(D3DTRANSFORMSTATE_VIEW, &m_View);
-    m_pDevice->SetTransform(D3DTRANSFORMSTATE_PROJECTION, &m_Projection);
-
-    //render energy meter
-    m_pDevice->SetMaterial( &mat[45] );
-    m_pDevice->SetTexture( 0, background[45] );
-    matrices->LoadIdentity();
-    //matrices->TranslateLocal(moped[0].x1,0,moped[0].z1);
-    m_pDevice->SetTransform(D3DTRANSFORMSTATE_WORLD, *matrices->GetTop());
-    m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,TRUE);
-    m_pDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND,D3DBLEND_ONE);
-    m_pDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND,D3DBLEND_ONE);
-    m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE, FALSE);
-    m_pDevice->DrawPrimitive(D3DPT_TRIANGLELIST  ,
-    D3DFVF_XYZ |D3DFVF_TEX1|D3DFVF_TEXCOORDSIZE2(0) ,vertex,6,NULL);
-    //m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE, TRUE);
-    //m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,FALSE);
-
-
-    vertex[0].position.x=-moped[0].energy/100*1000+500;
-    vertex[0].position.y=-height;
-    vertex[0].position.z=0;
-    vertex[0].u=1-moped[0].energy/100;
-    vertex[0].v=1;
-
-    vertex[1].position.x=500;
-    vertex[1].position.y=height;
-    vertex[1].position.z=0;
-    vertex[1].u=1;
-    vertex[1].v=0;
-
-    vertex[2].position.x=-moped[0].energy/100*1000+500;
-    vertex[2].position.y=height;
-    vertex[2].position.z=0;
-    vertex[2].u=1-moped[0].energy/100;
-    vertex[2].v=0;
-
-    vertex[3].position.x=-moped[0].energy/100*1000+500;
-    vertex[3].position.y=-height;
-    vertex[3].position.z=0;
-    vertex[3].u=1-moped[0].energy/100;
-    vertex[3].v=1;
-
-    vertex[4].position.x=500;
-    vertex[4].position.y=-height;
-    vertex[4].position.z=0;
-    vertex[4].u=1;
-    vertex[4].v=1;
-
-    vertex[5].position.x=500;
-    vertex[5].position.y=height;
-    vertex[5].position.z=0;
-    vertex[5].u=1;
-    vertex[5].v=0;
-
-    //render energy meter
-    m_pDevice->SetMaterial( &mat[46] );
-    m_pDevice->SetTexture( 0, background[46] );
-    m_pDevice->DrawPrimitive(D3DPT_TRIANGLELIST  ,
-    D3DFVF_XYZ |D3DFVF_TEX1|D3DFVF_TEXCOORDSIZE2(0) ,vertex,6,NULL);
-    m_pDevice->SetRenderState(D3DRENDERSTATE_ZENABLE, TRUE);
-    m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE ,FALSE);
-    */
 }
 
 void render_game(void)
@@ -5130,46 +4800,12 @@ void render_mission(void)
     char row[200], temprow[200];
 
     float kerroin = 0.055f;
-    // m_pDevice->Clear( 0, NULL, D3DCLEAR_TARGET, 0x00000000, 0, 0 );
-
-    // m_View = ViewMatrix(D3DVECTOR(10,50000,10), D3DVECTOR(0,0,0), D3DVECTOR(0,1,0), 0);
     m_View       = ViewMatrix(D3DVECTOR(mapsx * 8000 * 0.5f * kerroin + 100, 10000, mapsz * 8000 * 0.5f * kerroin), D3DVECTOR(mapsx * 8000 * 0.5f * kerroin, 0, mapsz * 8000 * 0.5f * kerroin), D3DVECTOR(0, 1, 0), 0);
     m_Projection = ProjectionMatrix(4000, 11000, (float)(30 * pi / 180)); // 60 vision field
 
     m_pDevice->SetTransform(D3DTRANSFORMSTATE_VIEW, &m_View);
     m_pDevice->SetTransform(D3DTRANSFORMSTATE_PROJECTION, &m_Projection);
-    /*
-    //keyboard control
-    //accept mission
-    if((moped[0].enter2==false) & (moped[0].enter==true)){
-    if(mission_is_read==1){
-    gamephase=GP_GAME;//back to riding
-    moped[0].mission=moped[0].mission_random;
-    //character tulee kyytiin
-    if(moped[0].mission._type==1)
-    character[moped->nearestcharacter].inactive=true;
-    }
-    mission_is_read=1;//mission briefing is readed
-    }*/
-    /*if((moped[0].esc2==false) & (moped[0].esc==true)){
-      gamephase=GP_GAME;//back to riding
-      }*/
 
-    // maps	- kartat
-    /*
-    //is it visible?
-    for (a=0; a<mapsz; a++){
-    for (b=0; b<mapsx; b++){
-    center_pointmap[a*mapsx+b].x=(float)b*8000+4000;
-    center_pointmap[a*mapsx+b].y=0;
-    center_pointmap[a*mapsx+b].z=(float)a*8000+4000;
-    radiusmap[a*mapsx+b]=4000;
-    }
-    }
-    matrices->LoadIdentity();
-    m_pDevice->SetTransform(D3DTRANSFORMSTATE_WORLD, *matrices->GetTop());
-    m_pDevice->ComputeSphereVisibility(center_pointmap,radiusmap,mapsx*mapsz,0,visiblemap);//remember SetTransform
-    */
     // rendering map
     for (a = 0; a < mapsz; a++) {
         for (b = 0; b < mapsx; b++) {
@@ -5269,16 +4905,12 @@ void create_mission(bikebase* moped, int missionumero)
 
     // target is moped
     if (moped->mission_random.target_type == 2) {
-        // num_mopeds=moped->mission_random.kohteita+1;
         for (f = 0; f < moped->mission_random.kohteita; f++) {
-            // moped->mission_random.target=randInt(1,num_mopeds);
             moped->mission_random.target[f] = f + 1;
             create_mopo(moped->mission_random.target[f]);
             moped[moped->mission_random.target[f]].mopona = moped->mission_random.asiakas[f].picture;
             moped[moped->mission_random.target[f]].ase[0] = moped->mission_random.asiakas[f].weapon_idx;
             moped[moped->mission_random.target[f]].energy = moped->mission_random.asiakas[f].energy;
-            // moped[moped->mission_random.target].tactics=moped->mission_random.asiakas.tactics;
-            // moped[moped->mission_random.target].movement_type=moped->mission_random.asiakas.movement_type;
         }
     }
 
@@ -5412,11 +5044,6 @@ void calc_missions(bikebase* moped)
         }
     }
 
-    /*//if failed
-      if(moped->mission.status==2){
-      moped->money=moped->money-100;
-      if(moped->money<0)moped->money=0;
-      }*/
     // if accomplished
     if (moped->mission.status == 1) {
         // money is payed
@@ -5499,21 +5126,6 @@ void create_character(int q)
         character[q].tactics = 1;
         character[q].energy  = randDouble(0.5f, 1.7f);
     }
-
-    /*
-      character[q].picture=randInt(0,2);
-      switch (character[q].picture)
-      {
-      case 0:{
-      character[q].picture=3;
-      break;
-      }
-      case 1:{
-      character[q].picture=7;
-      break;
-      }
-      }
-    */
 }
 
 void load_missions(void)
@@ -5609,7 +5221,6 @@ void calc_moped(void)
                 //}
             }
         }
-        // if(moped[d].inactive==true) num_mopeds=1;//create_mopo(d);
 
         // angle towards player
         moped[d].player_angle = atan2f(moped[0].z1 - moped[d].z1, moped[0].x1 - moped[d].x1) + pi;
@@ -6344,9 +5955,6 @@ void game_load(void)
     gamephase2            = GP2_GAME;
     menuitem              = 0;
 
-    // stripped_fgets(temprow,sizeof(temprow),fil);//temprow
-    // fgets(temprow,sizeof(temprow),fil);nextmatsi=atoi(temprow);
-
     // name
     fgets(temprow, sizeof(temprow), fil);
     fgets(temprow, sizeof(temprow), fil);
@@ -6579,28 +6187,6 @@ void game_save(void)
     // energy
     fprintf(fil, "%f\n", moped[0].mission.asiakas[0].energy);
 
-    /*		float x1,z1;//front wheel coordinates
-                    float x2,z2;//rear wheel
-                    int money;//ammount of money left
-                    float energy;//energy
-                    int level;//level of missions that will be given.
-                    int missionumero;//what mission from this level has been given
-
-                    int kohteita;//ammount of similiar targets
-                    int target[100];//possible target (kill some one?)
-                    float targetx[100], targetz[100];//targets coordinates (go to location x?)
-                    float timer;//time
-                    int status;//0=not accomplished 1=accomplished2=failed 3=there is no mission
-
-
-                    //person asiakas[100];//as a passanger in a taxi
-                    int picture;//what picture is on character
-                    int weapon_idx;//wich weapon does it have -1=no weapon
-                    float energy;//energy
-                    int tactics;//what will it do. 0=pursues 1=walks normally 2=escapes
-                    int movement_type;//0=friend 1=passive 2=enemy
-    */
-
     fclose(fil);
 }
 void render_menu(void)
@@ -6617,8 +6203,6 @@ void render_menu(void)
     m_pDevice->LightEnable(0, FALSE);
     m_pDevice->SetRenderState(D3DRENDERSTATE_AMBIENT, 0xFFFFFFFF);
     m_pDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE, FALSE);
-
-    // m_pDevice->GetRenderTarget(&taka);
 
     // cusor
     cursor_timer = cursor_timer - elapsed;
@@ -6816,7 +6400,6 @@ void render_menu(void)
         matrices->Pop();
         // front side
         matrices->TranslateLocal(70, 0, 0);
-        // matrices->RotateYawPitchRollLocal(-moped[d].direction,0,0);
         matrices->RotateYawPitchRollLocal(-moped[d].etudirection, 0, 0);
         drawfast(&mallit[mopopicture].malli[2]);
         // front wheel
@@ -7125,15 +6708,6 @@ void sounds_start()
     if (SOUNDS_ON) {
         if (!SOUNDS_LOADED) {
             IDirectSound_SetCooperativeLevel(lpDS, hWnd, DSSCL_PRIORITY);
-
-            /*
-              DSBUFFERDESC dsBD = {0};
-              dsBD.dwSize = sizeof(dsBD);
-              dsBD.dwFlags = DSBCAPS_STATIC | DSBCAPS_CTRLVOLUME | DSBCAPS_GETCURRENTPOSITION2;
-
-
-              IDirectSound_CreateSoundBuffer(lpDS,&dsBD,&pDSB,NULL);
-            */
         }
 
         if ((options[1]) && (!SOUNDS_LOADED)) {
@@ -7157,22 +6731,6 @@ void sounds_start()
             voices[17]    = SndObjCreate(lpDS, "#161", 2); // die4
             voices[18]    = SndObjCreate(lpDS, "#162", 2); // upgrade
             voices[19]    = SndObjCreate(lpDS, "#163", 2); // downgrade
-            /*voices[1]=SndObjCreate(lpDS, "#143", 1);
-              voices[2]=SndObjCreate(lpDS, "#144", 1);
-              voices[3]=SndObjCreate(lpDS, "#145", 1);
-              voices[4]=SndObjCreate(lpDS, "#146", 1);//meat
-              voices[5]=SndObjCreate(lpDS, "#147", 1);
-              voices[6]=SndObjCreate(lpDS, "#148", 1);
-              voices[7]=SndObjCreate(lpDS, "#149", 1);
-              voices[8]=SndObjCreate(lpDS, "#150", 1);
-              voices[9]=SndObjCreate(lpDS, "#151", 2);//cloth
-              voices[10]=SndObjCreate(lpDS, "#152", 1);
-              voices[11]=SndObjCreate(lpDS, "#153", 1);//menu1
-              voices[12]=SndObjCreate(lpDS, "#154", 1);//aah
-              voices[13]=SndObjCreate(lpDS, "#155", 1);//yohe
-              voices[14]=SndObjCreate(lpDS, "#156", 2);//walk1
-              voices[15]=SndObjCreate(lpDS, "#157", 2);//walk2
-              voices[16]=SndObjCreate(lpDS, "#158", 2);//walk3*/
             SAMPLE_NUMBER = 2;
             SOUNDS_LOADED = true;
         }
@@ -7260,14 +6818,5 @@ void playsound(int samplenumero, float volume, float placex, float placez)
 }
 void clearzbuffer(void)
 {
-    // if(!options[3]){
     m_pDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, 0x00000000, 1, 0);
-    /*}
-      else{
-      DDBLTFX ddbltfx;
-      memset(&ddbltfx, 0, sizeof(ddbltfx));
-      ddbltfx.dwSize = sizeof(DDBLTFX);
-      ddbltfx.dwFillDepth=0x00FFFFFF;
-      zbuffer->Blt(NULL,NULL,NULL,DDBLT_DEPTHFILL,&ddbltfx);
-      }*/
 }
