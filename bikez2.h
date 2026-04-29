@@ -469,3 +469,5 @@ LPDIRECTDRAWSURFACE7
     //,font1
     ,
     *pictures; // pictures
+
+enum { OPT_SOUND=1, OPT_MUSIC=2, OPT_DOUBLEBUFFER_=3 }; // no other options used by game

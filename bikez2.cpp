@@ -1305,7 +1305,7 @@ void readkeyb(void)
         if (!KEYDOWN(buffer, DIK_RETURN) && KEYDOWN(buffer2, DIK_RETURN)) {
             if (mission_is_read == 1) {
                 gamephase = GP_GAME; // back to riding
-                SndObjPlay(voices[1], DSBPLAY_LOOPING, options[1] && SOUNDS_LOADED);
+                SndObjPlay(voices[1], DSBPLAY_LOOPING, options[OPT_SOUND] && SOUNDS_LOADED);
                 moped[0].mission = moped[0].mission_random;
                 // a dude comes aboard
                 if (moped[0].mission._type == 1)
@@ -1321,7 +1321,7 @@ void readkeyb(void)
             gamephase  = GP_GAME;
             gamephase2 = GP2_GAME;
             menuitem   = 0;
-            SndObjPlay(voices[1], DSBPLAY_LOOPING, options[1] && SOUNDS_LOADED);
+            SndObjPlay(voices[1], DSBPLAY_LOOPING, options[OPT_SOUND] && SOUNDS_LOADED);
         }
         break;
     }
@@ -1356,14 +1356,14 @@ void readkeyb(void)
             if (!KEYDOWN(buffer, DIK_DOWN) && KEYDOWN(buffer2, DIK_DOWN)) {
                 menu_selection = menu_selection + 1;
                 if (menu_selection >= menuja[menuitem]) menu_selection = 0;
-                SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
+                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
             }
         // up
         if (menuitem != 3)
             if (!KEYDOWN(buffer, DIK_UP) && KEYDOWN(buffer2, DIK_UP)) {
                 menu_selection = menu_selection - 1;
                 if (menu_selection < 0) menu_selection = menuja[menuitem] - 1;
-                SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
+                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
             }
 
         // changching keys
@@ -1371,7 +1371,7 @@ void readkeyb(void)
             if ((menu_selection < 12) && (menu_selection > 0) && (pressed) && (is_selected)) {
                 key[menu_selection] = down;
                 is_selected         = false;
-                SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
+                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                 cfg_save();
             }
 
@@ -1382,7 +1382,7 @@ void readkeyb(void)
                 if ((menu_selection < 11) && (menu_selection > 0)) {
                     savegame_slot = menu_selection - 1;
                     game_load();
-                    SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
+                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                     break;
                 }
             // selecting a load
@@ -1397,7 +1397,7 @@ void readkeyb(void)
                         letters_in_name = 0;
                         strcpy(savefilename, "                                                 ");
                     }
-                    SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
+                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                     break;
                 }
             // saving a game
@@ -1414,7 +1414,7 @@ void readkeyb(void)
                         gamephase = GP_MENU;
                     }
                     readsaves();
-                    SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
+                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                     break;
                 }
             // changching settings
@@ -1422,28 +1422,28 @@ void readkeyb(void)
                 if ((menu_selection < 10) && (menu_selection > 0)) {
                     if (options[menu_selection]) options[menu_selection] = false;
                     else options[menu_selection] = true;
-                    options[2] = false; // music permanently off
+                    options[OPT_MUSIC] = false; // music permanently off
                     cfg_save();
-                    SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
+                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                 }
 
             // changching keys //select a key
             if (menuitem == 6)
                 if ((menu_selection < 12) && (menu_selection > 0)) {
                     is_selected = true;
-                    SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
+                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                 }
 
             switch (menu_selection) {
             case 0:
                 if (menuitem == 0) { // new game
                     menuitem = 5;
-                    SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
+                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                     break;
                 }
                 if (menuitem == 5) { // difficulty level
                     game_difficulty = 0;
-                    SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
+                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                     game_new();
                 }
                 break;
@@ -1452,40 +1452,40 @@ void readkeyb(void)
                     readsaves();
                     menuitem      = 1;
                     gamephase_old = GP_MENU;
-                    SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
+                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                 }
                 if (menuitem == 5) { // difficulty level
                     game_difficulty = 1;
-                    SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
+                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                     game_new();
                 }
                 break;
             case 2:
                 if (menuitem == 0) { // options
                     menuitem = 4;
-                    SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
+                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                 }
                 if (menuitem == 5) { // difficulty level
                     game_difficulty = 2;
-                    SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
+                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                     game_new();
                 }
                 break;
             case 3:
                 if (menuitem == 0) { // exit
                     SendMessage(hWnd, WM_CLOSE, 0, 0);
-                    // SndObjPlay(voices[0], 0, options[1]&&SOUNDS_LOADED);
+                    // SndObjPlay(voices[0], 0, options[OPT_SOUND]&&SOUNDS_LOADED);
                 }
                 if (menuitem == 5) { // Back
                     menuitem = 0;
-                    SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
+                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                 }
                 break;
             case 11:
                 if (menuitem == 4) { // set keys
                     menuitem    = 6;
                     is_selected = false; // key not selected
-                    SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
+                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                 }
                 break;
             case 12:
@@ -1500,19 +1500,19 @@ void readkeyb(void)
                         menuitem  = 0;
                         gamephase = GP_MENU;
                     }
-                    SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
+                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                 }
                 if (menuitem == 3) {
                     menuitem = 2;
-                    SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
+                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                 }
                 if (menuitem == 4) {
                     menuitem = 0;
-                    SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
+                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                 }
                 if (menuitem == 6) {
                     menuitem = 4;
-                    SndObjPlay(voices[0], 0, options[1] && SOUNDS_LOADED);
+                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                 }
                 break;
             }
@@ -2492,7 +2492,7 @@ bool Render(void)
     }
     }
 
-    if (options[1] && SOUNDS_LOADED) {
+    if (options[OPT_SOUND] && SOUNDS_LOADED) {
         int q;
         for (q = 0; q < 25; q++) {
             soundtimer[q] = soundtimer[q] + elapsed * gamespeed;
@@ -3699,9 +3699,9 @@ void render_game_pre_fx()
     int hertsi = (int)(1.66f * 10000 * (fabs(moped->speed) + 2.5f)) + randInt(-3000, 3000);
     if (hertsi < 100) hertsi = 100;
     if (hertsi > 100000) hertsi = 100000;
-    if (options[1] && SOUNDS_LOADED)
+    if (options[OPT_SOUND] && SOUNDS_LOADED)
         SndObjSetFrequency(voices[1], hertsi);
-    // SndObjPlay(voices[1], DSBPLAY_LOOPING,options[1]&&SOUNDS_LOADED);
+    // SndObjPlay(voices[1], DSBPLAY_LOOPING,options[OPT_SOUND]&&SOUNDS_LOADED);
 }
 
 void render_game_shoulder_view()
@@ -3784,7 +3784,7 @@ void render_game_prepare(float& kerroin)
 
     bullet_count = 0;
     if (gamephase2 == GP2_GAME) {
-        svolume(voices[1], DSBVOLUME_MAX, options[1] && SOUNDS_LOADED);
+        svolume(voices[1], DSBVOLUME_MAX, options[OPT_SOUND] && SOUNDS_LOADED);
         calculatecharacters();
         calculatebullets();
         calculatesmokes();
@@ -4687,7 +4687,7 @@ void render_game_text()
     }
 
     if (gamephase2 == GP2_PAUSE) {
-        svolume(voices[1], DSBVOLUME_MIN, options[1] && SOUNDS_LOADED);
+        svolume(voices[1], DSBVOLUME_MIN, options[OPT_SOUND] && SOUNDS_LOADED);
         rendertext((int)(1024 * 0.15f), (int)(768 * 0.48f + 15 * 0), 70, "Bikez II is now paused");
         rendertext((int)(1024 * 0.15f), (int)(768 * 0.48f + 15 * 1), 70, "esc to return to game");
         rendertext((int)(1024 * 0.15f), (int)(768 * 0.48f + 15 * 2), 70, "f9 to exit");
@@ -5583,13 +5583,13 @@ void render_workshop(void)
                 if (is_selectedc == 1)
                     if (ase[moped[0].ase[is_selectedb]].pdamage < 10)
                         if (moped[0].money >= ase[moped[0].ase[is_selectedb]].price) {
-                            SndObjPlay(voices[18], 0, options[1] && SOUNDS_LOADED);
+                            SndObjPlay(voices[18], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                             ase[moped[0].ase[is_selectedb]].pdamage = ase[moped[0].ase[is_selectedb]].pdamage + 1;
                             moped[0].money                          = moped[0].money - ase[moped[0].ase[is_selectedb]].price;
                         }
                 if (is_selectedc == -1)
                     if (ase[moped[0].ase[is_selectedb]].pdamage > 1) {
-                        SndObjPlay(voices[19], 0, options[1] && SOUNDS_LOADED);
+                        SndObjPlay(voices[19], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                         ase[moped[0].ase[is_selectedb]].pdamage = ase[moped[0].ase[is_selectedb]].pdamage - 1;
                         moped[0].money                          = moped[0].money + ase[moped[0].ase[is_selectedb]].price2;
                     }
@@ -5599,13 +5599,13 @@ void render_workshop(void)
                 if (is_selectedc == 1)
                     if (ase[moped[0].ase[is_selectedb]].prate_of_fire < 10)
                         if (moped[0].money >= ase[moped[0].ase[is_selectedb]].price) {
-                            SndObjPlay(voices[18], 0, options[1] && SOUNDS_LOADED);
+                            SndObjPlay(voices[18], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                             ase[moped[0].ase[is_selectedb]].prate_of_fire = ase[moped[0].ase[is_selectedb]].prate_of_fire + 1;
                             moped[0].money                                = moped[0].money - ase[moped[0].ase[is_selectedb]].price;
                         }
                 if (is_selectedc == -1)
                     if (ase[moped[0].ase[is_selectedb]].prate_of_fire > 1) {
-                        SndObjPlay(voices[19], 0, options[1] && SOUNDS_LOADED);
+                        SndObjPlay(voices[19], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                         ase[moped[0].ase[is_selectedb]].prate_of_fire = ase[moped[0].ase[is_selectedb]].prate_of_fire - 1;
                         moped[0].money                                = moped[0].money + ase[moped[0].ase[is_selectedb]].price2;
                     }
@@ -5615,13 +5615,13 @@ void render_workshop(void)
                 if (is_selectedc == 1)
                     if (ase[moped[0].ase[is_selectedb]].pspeed < 10)
                         if (moped[0].money >= ase[moped[0].ase[is_selectedb]].price) {
-                            SndObjPlay(voices[18], 0, options[1] && SOUNDS_LOADED);
+                            SndObjPlay(voices[18], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                             ase[moped[0].ase[is_selectedb]].pspeed = ase[moped[0].ase[is_selectedb]].pspeed + 1;
                             moped[0].money                         = moped[0].money - ase[moped[0].ase[is_selectedb]].price;
                         }
                 if (is_selectedc == -1)
                     if (ase[moped[0].ase[is_selectedb]].pspeed > 1) {
-                        SndObjPlay(voices[19], 0, options[1] && SOUNDS_LOADED);
+                        SndObjPlay(voices[19], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                         ase[moped[0].ase[is_selectedb]].pspeed = ase[moped[0].ase[is_selectedb]].pspeed - 1;
                         moped[0].money                         = moped[0].money + ase[moped[0].ase[is_selectedb]].price2;
                     }
@@ -5631,13 +5631,13 @@ void render_workshop(void)
                 if (is_selectedc == 1)
                     if (ase[moped[0].ase[is_selectedb]].homing == false)
                         if (moped[0].money >= ase[moped[0].ase[is_selectedb]].pricehoming) {
-                            SndObjPlay(voices[18], 0, options[1] && SOUNDS_LOADED);
+                            SndObjPlay(voices[18], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                             ase[moped[0].ase[is_selectedb]].homing = true;
                             moped[0].money                         = moped[0].money - ase[moped[0].ase[is_selectedb]].pricehoming;
                         }
                 if (is_selectedc == -1)
                     if (ase[moped[0].ase[is_selectedb]].homing == true) {
-                        SndObjPlay(voices[19], 0, options[1] && SOUNDS_LOADED);
+                        SndObjPlay(voices[19], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                         ase[moped[0].ase[is_selectedb]].homing = false;
                         moped[0].money                         = moped[0].money + ase[moped[0].ase[is_selectedb]].pricehoming;
                     }
@@ -5662,7 +5662,7 @@ void render_workshop(void)
         }
         // key is pressed one time
         if ((mousestate2.rgbButtons[0]) && (!mousestate.rgbButtons[0])) {
-            SndObjPlay(voices[1], DSBPLAY_LOOPING, options[1] && SOUNDS_LOADED);
+            SndObjPlay(voices[1], DSBPLAY_LOOPING, options[OPT_SOUND] && SOUNDS_LOADED);
             gamephase  = GP_GAME;
             gamephase2 = GP2_GAME;
         }
@@ -6243,7 +6243,7 @@ void render_menu(void)
         space = 20;
         strcpy(menuteksti[0], " ");
         strcpy(menuteksti[1], "Sounds");
-        if (options[1] && !SOUNDS_ON) strcpy(menuteksti[1], "Sounds  unable to play"); // if sounds cannot be played
+        if (options[OPT_SOUND] && !SOUNDS_ON) strcpy(menuteksti[1], "Sounds  unable to play"); // if sounds cannot be played
         strcpy(menuteksti[2], " ");
         strcpy(menuteksti[3], " ");
         strcpy(menuteksti[4], " ");
@@ -6466,7 +6466,7 @@ void game_new(void)
     float nop;
 
     logg.info("starting new game");
-    SndObjPlay(voices[1], DSBPLAY_LOOPING, options[1] && SOUNDS_LOADED);
+    SndObjPlay(voices[1], DSBPLAY_LOOPING, options[OPT_SOUND] && SOUNDS_LOADED);
 
     q                       = 6;
     ase[q].picture          = 0; // moped gun 0
@@ -6694,11 +6694,11 @@ void sounds_start()
     logg.info("initializing sound");
 
     // sounds
-    if ((!options[1]) && (!options[2])) {
+    if ((!options[OPT_SOUND]) && (!options[OPT_MUSIC])) {
         return;
     }
 
-    // if((options[1])||(options[2]))
+    // if((options[OPT_SOUND])||(options[OPT_MUSIC]))
     if (!SOUNDS_LOADED) {
         if (DirectSoundCreate(NULL, &lpDS, NULL) != DS_OK) {
             SOUNDS_ON = false;
@@ -6710,7 +6710,7 @@ void sounds_start()
             IDirectSound_SetCooperativeLevel(lpDS, hWnd, DSSCL_PRIORITY);
         }
 
-        if ((options[1]) && (!SOUNDS_LOADED)) {
+        if ((options[OPT_SOUND]) && (!SOUNDS_LOADED)) {
             voices[0]     = SndObjCreate(lpDS, "#140", 1); // menu1 //remember SAMPLE_NUMBER
             voices[1]     = SndObjCreate(lpDS, "#145", 1); // motor
             voices[2]     = SndObjCreate(lpDS, "#146", 4); // pistol
@@ -6751,7 +6751,7 @@ void cfg_save(void)
     }
 
     fclose(fil);
-    if (options[1] && !SOUNDS_LOADED) sounds_start();
+    if (options[OPT_SOUND] && !SOUNDS_LOADED) sounds_start();
 }
 
 void cfg_load(void)
@@ -6776,12 +6776,12 @@ void cfg_load(void)
 
     fclose(fil);
 
-    // SOUNDS_ON=options[1];
+    // SOUNDS_ON=options[OPT_SOUND];
 }
 void playsound(int samplenumero, float volume, float placex, float placez)
 { // play a sound
     if (soundtimer[samplenumero] < 40) return;
-    if (!(options[1] && SOUNDS_LOADED)) return;
+    if (!(options[OPT_SOUND] && SOUNDS_LOADED)) return;
 
     // TODO: use Mix_SetPosition here instead
     float distance = sqrtf(sqr(placex - moped[0].x1) + sqr(placez - moped[0].z1));
@@ -6809,8 +6809,8 @@ void playsound(int samplenumero, float volume, float placex, float placez)
         // float voluumi=-(distance*distance*0.0001f-10000)/10000-(1-volume);
         float voluumi            = (10000 - distance) / 10000 - (1 - volume);
         soundtimer[samplenumero] = 0;
-        SndObjPlay(voices[samplenumero], 0, options[1] && SOUNDS_LOADED);
-        svolume(voices[samplenumero], (int)((1 - voluumi) * (-6000 - DSBVOLUME_MAX)), options[1] && SOUNDS_LOADED);
+        SndObjPlay(voices[samplenumero], 0, options[OPT_SOUND] && SOUNDS_LOADED);
+        svolume(voices[samplenumero], (int)((1 - voluumi) * (-6000 - DSBVOLUME_MAX)), options[OPT_SOUND] && SOUNDS_LOADED);
         // DSBPLAY_LOOPING   DSBVOLUME_MIN
         float pan = (float)(negaatio / 10000 * distance);
         SndObjSetPan(voices[samplenumero], pan);
