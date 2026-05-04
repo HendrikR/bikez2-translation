@@ -4,8 +4,12 @@
 #include "bikez2.h"
 #include "logging.hpp"
 #include "pseudirectx.h"
+#include "json11.hpp"
 #include <iostream>
+#include <fstream>
 Logger logg(std::cout, Logger::DEBUG);
+
+using json11::Json;
 
 int numpictures = 6;
 
@@ -505,204 +509,62 @@ void init()
     initGame();
 }
 
-void initWeapons()
-{
-    int q;
-    // TODO weapons could be loaded from a file.
-    logg.info("initializing weapons");
-    q                       = 0;
-    ase[q].picture          = 0; // machine gun
-    ase[q].speed            = 70;
-    ase[q].dispersion       = 0.2f;
-    ase[q].rate_of_fire     = 30;
-    ase[q].decal_picture    = 0;
-    ase[q].bullet_picture   = 0;
-    ase[q].smoke_filled     = 0;
-    ase[q].smoke_duration   = 5000;
-    ase[q].weight           = 0.00001f;
-    ase[q].explosion_size   = 0;
-    ase[q].smoke_count      = 0;
-    ase[q].num_bounces      = 3;
-    ase[q].damage           = 0.4f;
-    ase[q].homing           = false;
-    ase[q].smoke_size       = 1.0f;
-    ase[q].pdamage          = 1;
-    ase[q].pspeed           = 5;
-    ase[q].prate_of_fire    = 9;
-    ase[q].bullets_per_shot = 1;
-    ase[q]._type            = 4;
 
-    q                       = 1;
-    ase[q].picture          = 1; // homing missile
-    ase[q].speed            = 3.7f;
-    ase[q].dispersion       = 0.01f;
-    ase[q].rate_of_fire     = 1000;
-    ase[q].decal_picture    = 1;
-    ase[q].bullet_picture   = 1;
-    ase[q].smoke_filled     = 2;
-    ase[q].smoke_duration   = 1000;
-    ase[q].weight           = 0.0f;
-    ase[q].explosion_size   = 3;
-    ase[q].smoke_count      = 10;
-    ase[q].num_bounces      = 0;
-    ase[q].damage           = 8;
-    ase[q].homing           = true;
-    ase[q].smoke_size       = 1.0f;
-    ase[q].pdamage          = 10;
-    ase[q].pspeed           = 1;
-    ase[q].prate_of_fire    = 2;
-    ase[q].bullets_per_shot = 1;
-    ase[q]._type            = 4;
+void initWeapons() {
+    const char* filename = "data/weapons.json";
+    // open and parse json
+    logg.info("loading weapons from %s", filename);
+    std::ifstream file(filename);
+    if (!file.good()) throw std::runtime_error("could not load file '" + std::string(filename) + "'");
+    file.seekg(0, std::ios_base::end);
+    size_t filesize = file.tellg();
+    if (filesize == 0) throw std::runtime_error("trying to load empty file");
+    file.seekg(0);
+    char* buffer = (char*)malloc(filesize+1);
+    file.read(buffer, filesize);
+    buffer[filesize-1] = '\0';
+    std::string err;
+    Json json = Json::parse(buffer, err);
+    if ( json == Json() ) {
+        throw std::runtime_error("error parsing json: " + err);
+    }
+    free(buffer);
+    for (int i=0; i<NUM_WEAPONS; ++i) ase[i].clear();
 
-    q                       = 2;
-    ase[q].picture          = 0; // bounce and explode
-    ase[q].speed            = 666; // speed=random
-    ase[q].dispersion       = 0.1f;
-    ase[q].rate_of_fire     = 1;
-    ase[q].decal_picture    = -1;
-    ase[q].bullet_picture   = 2;
-    ase[q].smoke_filled     = 0;
-    ase[q].smoke_duration   = 5000;
-    ase[q].weight           = 0.01f;
-    ase[q].explosion_size   = 0;
-    ase[q].smoke_count      = 0;
-    ase[q].num_bounces      = 0;
-    ase[q].damage           = 1;
-    ase[q].homing           = false;
-    ase[q].pdamage          = 2;
-    ase[q].pspeed           = 2;
-    ase[q].prate_of_fire    = 2;
-    ase[q].bullets_per_shot = 1;
-    ase[q]._type            = 4;
+    // load next weapon
 
-    q                       = 3;
-    ase[q].picture          = 1; // spark
-    ase[q].speed            = 3;
-    ase[q].dispersion       = 0.1f;
-    ase[q].rate_of_fire     = 1;
-    ase[q].decal_picture    = -1;
-    ase[q].bullet_picture   = 2;
-    ase[q].smoke_filled     = 0;
-    ase[q].smoke_duration   = 5000;
-    ase[q].weight           = 0.01f;
-    ase[q].explosion_size   = 0;
-    ase[q].smoke_count      = 0;
-    ase[q].num_bounces      = 0;
-    ase[q].damage           = 0;
-    ase[q].homing           = false;
-    ase[q].pdamage          = 2;
-    ase[q].pspeed           = 2;
-    ase[q].prate_of_fire    = 2;
-    ase[q].bullets_per_shot = 1;
-    ase[q]._type            = 4;
-
-    q                       = 4;
-    ase[q].picture          = 1; // blood
-    ase[q].speed            = 2;
-    ase[q].dispersion       = 0.4f;
-    ase[q].rate_of_fire     = 1;
-    ase[q].decal_picture    = -1;
-    ase[q].bullet_picture   = 3;
-    ase[q].smoke_filled     = 0;
-    ase[q].smoke_duration   = 5000;
-    ase[q].weight           = 0.01f;
-    ase[q].explosion_size   = 0;
-    ase[q].smoke_count      = 0;
-    ase[q].num_bounces      = 0;
-    ase[q].damage           = 0;
-    ase[q].homing           = false;
-    ase[q].pdamage          = 2;
-    ase[q].pspeed           = 2;
-    ase[q].prate_of_fire    = 2;
-    ase[q].bullets_per_shot = 1;
-    ase[q]._type            = 4;
-
-    q                       = 5;
-    ase[q].picture          = 0; // pistole
-    ase[q].speed            = 50;
-    ase[q].dispersion       = 0.2f;
-    ase[q].rate_of_fire     = 500;
-    ase[q].decal_picture    = 0;
-    ase[q].bullet_picture   = 0;
-    ase[q].smoke_filled     = 0;
-    ase[q].smoke_duration   = 5000;
-    ase[q].weight           = 0.00001f;
-    ase[q].explosion_size   = 0;
-    ase[q].smoke_count      = 0;
-    ase[q].num_bounces      = 2;
-    ase[q].damage           = 2.1f;
-    ase[q].homing           = false;
-    ase[q].pdamage          = 2;
-    ase[q].pspeed           = 2;
-    ase[q].prate_of_fire    = 2;
-    ase[q].bullets_per_shot = 1;
-    ase[q]._type            = 4;
-
-    q                       = 10;
-    ase[q].picture          = 0; // police gun 0 pistole
-    ase[q].speed            = 70;
-    ase[q].dispersion       = 0.2f;
-    ase[q].rate_of_fire     = 711;
-    ase[q].decal_picture    = 0;
-    ase[q].bullet_picture   = 0;
-    ase[q].smoke_filled     = 0;
-    ase[q].smoke_duration   = 5000;
-    ase[q].weight           = 0.00001f;
-    ase[q].explosion_size   = 0;
-    ase[q].smoke_count      = 0;
-    ase[q].num_bounces      = 5;
-    ase[q].damage           = 5.5f;
-    ase[q].homing           = false;
-    ase[q].smoke_size       = 1.0f;
-    ase[q].bullets_per_shot = 1;
-    ase[q].pdamage          = 3;
-    ase[q].pspeed           = 2;
-    ase[q].prate_of_fire    = 2;
-    ase[q]._type            = 4;
-
-    q                       = 11;
-    ase[q].picture          = 0; // police gun 1 machinegun
-    ase[q].speed            = 70;
-    ase[q].dispersion       = 0.2f;
-    ase[q].rate_of_fire     = 30;
-    ase[q].decal_picture    = 0;
-    ase[q].bullet_picture   = 0;
-    ase[q].smoke_filled     = 0;
-    ase[q].smoke_duration   = 5000;
-    ase[q].weight           = 0.00001f;
-    ase[q].explosion_size   = 0;
-    ase[q].smoke_count      = 0;
-    ase[q].num_bounces      = 3;
-    ase[q].damage           = 0.8f;
-    ase[q].homing           = false;
-    ase[q].smoke_size       = 1.0f;
-    ase[q].bullets_per_shot = 1;
-    ase[q].pdamage          = 2;
-    ase[q].pspeed           = 5;
-    ase[q].prate_of_fire    = 9;
-    ase[q]._type            = 4;
-
-    q                       = 12;
-    ase[q].picture          = 0; // police gun 2 missile
-    ase[q].speed            = 3.7f;
-    ase[q].dispersion       = 0.01f;
-    ase[q].rate_of_fire     = 2000;
-    ase[q].decal_picture    = 1;
-    ase[q].bullet_picture   = 1;
-    ase[q].smoke_filled     = 2;
-    ase[q].smoke_duration   = 1000;
-    ase[q].weight           = 0.0f;
-    ase[q].explosion_size   = 3;
-    ase[q].smoke_count      = 10;
-    ase[q].num_bounces      = 0;
-    ase[q].damage           = 10;
-    ase[q].homing           = true;
-    ase[q].smoke_size       = 1.0f;
-    ase[q].bullets_per_shot = 1;
-    ase[q].pdamage          = 10;
-    ase[q].pspeed           = 1;
-    ase[q].prate_of_fire    = 1;
-    ase[q]._type            = 4;
+    int last_q = -1;
+    for (const Json& weapon_json : json["weapons"].array_items()) {
+        // TODO: more sanity checks, put them into own function
+        //std::cout << weapon_json.dump() << std::endl;
+        if (weapon_json.is_null()) { logg.error("could not load weapon data"); exit(-1); }
+        int q = jsonInt(weapon_json, "id", 0);
+        if (q <= last_q) { logg.error("sanity check failed: weapon index %d <= %d", q, last_q); exit(-1); }
+        ase[q]._type            = jsonInt(weapon_json, "_type", 0);
+        if (ase[q]._type < 0 || ase[q]._type > 4) { logg.error("sanity check failed: unknow weapon type %d", ase[q]._type); exit(-1); }
+        ase[q].bullet_picture   = jsonInt(weapon_json, "bullet_picture", 0);
+        ase[q].bullets_per_shot = jsonInt(weapon_json, "bullets_per_shot", 0);
+        if (ase[q].bullets_per_shot < 1) { logg.error("sanity check failed: no bullets_per_shot"); exit(-1); }
+        ase[q].damage           = jsonFloat(weapon_json, "damage", 0.0f);
+        if (ase[q].bullets_per_shot < 0) { logg.error("sanity check failed: negative weapon damage"); exit(-1); }
+        ase[q].decal_picture    = jsonInt(weapon_json, "decal_picture", 0);
+        ase[q].homing           = jsonBool(weapon_json, "homing", false);
+        ase[q].dispersion       = jsonFloat(weapon_json, "dispersion", 0.0f);
+        ase[q].explosion_size   = jsonInt(weapon_json, "explosion_size", 0);
+        ase[q].num_bounces      = jsonInt(weapon_json, "num_bounces", 0);
+        ase[q].weight           = jsonFloat(weapon_json, "weight", 0.0f);
+        ase[q].pdamage          = jsonInt(weapon_json, "pdamage", 0);
+        ase[q].picture          = jsonInt(weapon_json, "picture", 0);
+        ase[q].pspeed           = jsonInt(weapon_json, "pspeed", 0);
+        ase[q].prate_of_fire    = jsonInt(weapon_json, "prate_of_fire", 0);
+        ase[q].rate_of_fire     = jsonInt(weapon_json, "rate_of_fire", 0);
+        ase[q].smoke_count      = jsonFloat(weapon_json, "smoke_count", 0.0f);
+        ase[q].smoke_duration   = jsonFloat(weapon_json, "smoke_duration", 0.0f);
+        ase[q].smoke_filled     = jsonInt(weapon_json, "smoke_filled", 0);
+        ase[q].smoke_size       = jsonFloat(weapon_json, "smoke_size", 0.0f);
+        ase[q].speed            = jsonInt(weapon_json, "speed", 0);
+        last_q = q;
+    }
 }
 
 void moveparts(int q)

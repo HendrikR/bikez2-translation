@@ -259,6 +259,12 @@ struct weapon {
     int pdamage, pspeed, prate_of_fire, price, price2, pricehoming; // related to peddling //pdamage,pspeed,prateoffire,price,price2,pricesearch
     int bullets_per_shot; // how many bullets from one shot
     int _type; // gun type 0=pistol 1=machinegun 2=shotgun 3=rocketlauncher 4=no sound
+    void clear() {
+        smoke_size = damage = dispersion = speed = smoke_duration = weight = smoke_count = 0.0f;
+        picture = bullet_picture = decal_picture = smoke_filled = explosion_size = 0;
+        rate_of_fire = num_bounces = bullets_per_shot = _type = 0;
+        pdamage = pspeed = prate_of_fire = price = price2 = pricehoming = 0;
+    }
 };
 
 struct smoke {

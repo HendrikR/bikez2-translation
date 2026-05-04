@@ -37,5 +37,4 @@ public:
     void info (const char* format, ...) { std::va_list a; va_start(a, format); va_end(a); log2(LogLevel::INFO, format, a);  }
     void debug(const char* format, ...) { std::va_list a; va_start(a, format); va_end(a); log2(LogLevel::DEBUG, format, a); }
     void trace(const char* format, ...) { std::va_list a; va_start(a, format); va_end(a); log2(LogLevel::TRACE, format, a); }
-    
 };
