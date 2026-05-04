@@ -4,6 +4,7 @@
 //////////////////////////////////////////////////////////////////////
 #define D3D_OVERLOADS
 #include "logging.hpp"
+#include "json11.hpp"
 #include "pseudirectx.h"
 #include <stdio.h>
 extern Logger logg;
@@ -52,3 +53,8 @@ D3DMATRIX ZeroMatrix(void);
 D3DMATRIX MatrixMult(const D3DMATRIX a, const D3DMATRIX b);
 D3DMATRIX ViewMatrix(const D3DVECTOR from, const D3DVECTOR at, const D3DVECTOR world_up, const float roll);
 D3DMATRIX ProjectionMatrix(const float near_plane, const float far_plane, const float fov);
+
+
+int jsonInt(json11::Json json, const char* id, int defaultval = 0);
+float jsonFloat(json11::Json json, const char* id, float defaultval = 0.0f);
+bool jsonBool(json11::Json json, const char* id, bool defaultval = false);

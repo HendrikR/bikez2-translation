@@ -93,3 +93,25 @@ D3DMATRIX ProjectionMatrix(const float near_plane, const float far_plane, const 
 {
     return glm::perspective<float>(fov * 1.25, -4.0 / 3.0, near_plane, far_plane);
 }
+
+
+int jsonInt(json11::Json json, const char* id, int defaultval) {
+    json11::Json j = json[id];
+    if (j == json11::Json()) {
+            printf("field %s not exist, use defaultval\n", id);
+            return defaultval;
+    }
+    else return j.int_value();
+}
+
+float jsonFloat(json11::Json json, const char* id, float defaultval) {
+    json11::Json j = json[id];
+    if (j == json11::Json()) return defaultval;
+    else return (float)j.number_value();
+}
+
+bool jsonBool(json11::Json json, const char* id, bool defaultval) {
+    json11::Json j = json[id];
+    if (j == json11::Json()) return defaultval;
+    else return j.bool_value();
+}

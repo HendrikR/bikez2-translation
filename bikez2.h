@@ -55,6 +55,10 @@ struct D3DDEVICEINFO
 
 */
 
+const unsigned NUM_WEAPONS = 20;
+const unsigned MAP_WIDTH = 200;
+const unsigned MAP_HEIGHT = 200;
+
 struct charactertextures { // character textures
     int bodypart[4];
 };
@@ -370,9 +374,9 @@ int headquarter_posx, headquarter_posz; // coordinates of headquarters
 RouteGroup wallgroup[2]; // walls
 int num_wallgroups; // ammount of wall groups
 bullet bullet[MAX_BULLETS]; // bullets
-weapon ase[20]; // guns
+weapon ase[NUM_WEAPONS]; // guns
 smoke smokes[MAX_SMOKES]; // smokes
-int maps[200][200];
+int maps[MAP_WIDTH][MAP_HEIGHT];
 person character[MAX_CHARACTERS]; // person character[maximium ammount of characters]
 D3DVECTOR center_pointcharacter[MAX_CHARACTERS]; // center point character
 DWORD visiblecharacter[MAX_CHARACTERS]; // visible character
