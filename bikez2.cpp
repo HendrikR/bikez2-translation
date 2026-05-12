@@ -1158,7 +1158,12 @@ void readkeyb(void)
     }
     case GP_UNUSED:
         break;
-    case GP_MENU: {
+    case GP_MENU:
+        readkey_menu(down);
+        break;}
+}
+
+void readkey_menu(int down) {
         // pressing esc means escape.
         if ((!KEYDOWN(buffer, DIK_ESCAPE) && KEYDOWN(buffer2, DIK_ESCAPE)) || (!KEYDOWN(buffer, DIK_F9) && KEYDOWN(buffer2, DIK_F9))) {
             if (menuitem == 0)
@@ -1214,7 +1219,7 @@ void readkeyb(void)
                     savegame_slot = menu_selection - 1;
                     game_load();
                     SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                    break;
+                    return;
                 }
             // selecting a load
             if (menuitem == 2)
@@ -1229,7 +1234,7 @@ void readkeyb(void)
                         strcpy(savefilename, "                                                 ");
                     }
                     SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                    break;
+                    return;
                 }
             // saving a game
             if (menuitem == 3)
@@ -1246,7 +1251,7 @@ void readkeyb(void)
                     }
                     readsaves();
                     SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                    break;
+                    return;
                 }
             // changching settings
             if (menuitem == 4)
@@ -1270,14 +1275,14 @@ void readkeyb(void)
                 if (menuitem == 0) { // new game
                     menuitem = 5;
                     SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                    break;
+                    return;
                 }
                 if (menuitem == 5) { // difficulty level
                     game_difficulty = 0;
                     SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                     game_new();
                 }
-                break;
+                return;
             case 1:
                 if (menuitem == 0) { // load
                     readsaves();
@@ -1290,7 +1295,7 @@ void readkeyb(void)
                     SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                     game_new();
                 }
-                break;
+                return;
             case 2:
                 if (menuitem == 0) { // options
                     menuitem = 4;
@@ -1301,7 +1306,7 @@ void readkeyb(void)
                     SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                     game_new();
                 }
-                break;
+                return;
             case 3:
                 if (menuitem == 0) { // exit
                     SendMessage(hWnd, WM_CLOSE, 0, 0);
@@ -1311,14 +1316,14 @@ void readkeyb(void)
                     menuitem = 0;
                     SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                 }
-                break;
+                return;
             case 11:
                 if (menuitem == 4) { // set keys
                     menuitem    = 6;
                     is_selected = false; // key not selected
                     SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                 }
-                break;
+                return;
             case 12:
                 if ((menuitem == 1) || (menuitem == 2)) { // back
                     // if it came to load from workshop
@@ -1345,12 +1350,9 @@ void readkeyb(void)
                     menuitem = 4;
                     SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                 }
-                break;
+                return;
             }
         }
-
-    } break;
-    }
 }
 
 void calculatesmokes(void) // calculate smokes
