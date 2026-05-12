@@ -1164,195 +1164,195 @@ void readkeyb(void)
 }
 
 void readkey_menu(int down) {
-        // pressing esc means escape.
-        if ((!KEYDOWN(buffer, DIK_ESCAPE) && KEYDOWN(buffer2, DIK_ESCAPE)) || (!KEYDOWN(buffer, DIK_F9) && KEYDOWN(buffer2, DIK_F9))) {
-            if (menuitem == 0)
-                SendMessage(hWnd, WM_CLOSE, 0, 0);
-            else {
-                // if it came to load from workshop
-                if ((menuitem == 1) || (menuitem == 2)) {
-                    if (gamephase_old == GP_WORKSHOP) {
-                        menuitem  = 0;
-                        gamephase = GP2_PAUSE;
-                    }
-                    if (gamephase_old == GP_MENU) {
-                        menuitem  = 0;
-                        gamephase = GP_MENU;
-                    }
-                } else if (menuitem == 3)
-                    menuitem = 2;
-                else {
+    // pressing esc means escape.
+    if ((!KEYDOWN(buffer, DIK_ESCAPE) && KEYDOWN(buffer2, DIK_ESCAPE)) || (!KEYDOWN(buffer, DIK_F9) && KEYDOWN(buffer2, DIK_F9))) {
+        if (menuitem == 0)
+            SendMessage(hWnd, WM_CLOSE, 0, 0);
+        else {
+            // if it came to load from workshop
+            if ((menuitem == 1) || (menuitem == 2)) {
+                if (gamephase_old == GP_WORKSHOP) {
+                    menuitem  = 0;
+                    gamephase = GP2_PAUSE;
+                }
+                if (gamephase_old == GP_MENU) {
                     menuitem  = 0;
                     gamephase = GP_MENU;
                 }
+            } else if (menuitem == 3)
+                menuitem = 2;
+            else {
+                menuitem  = 0;
+                gamephase = GP_MENU;
             }
         }
-        // down
-        if (menuitem != 3)
-            if (!KEYDOWN(buffer, DIK_DOWN) && KEYDOWN(buffer2, DIK_DOWN)) {
-                menu_selection = menu_selection + 1;
-                if (menu_selection >= menuja[menuitem]) menu_selection = 0;
-                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-            }
-        // up
-        if (menuitem != 3)
-            if (!KEYDOWN(buffer, DIK_UP) && KEYDOWN(buffer2, DIK_UP)) {
-                menu_selection = menu_selection - 1;
-                if (menu_selection < 0) menu_selection = menuja[menuitem] - 1;
-                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-            }
+    }
+    // down
+    if (menuitem != 3)
+        if (!KEYDOWN(buffer, DIK_DOWN) && KEYDOWN(buffer2, DIK_DOWN)) {
+            menu_selection = menu_selection + 1;
+            if (menu_selection >= menuja[menuitem]) menu_selection = 0;
+            SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
+        }
+    // up
+    if (menuitem != 3)
+        if (!KEYDOWN(buffer, DIK_UP) && KEYDOWN(buffer2, DIK_UP)) {
+            menu_selection = menu_selection - 1;
+            if (menu_selection < 0) menu_selection = menuja[menuitem] - 1;
+            SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
+        }
 
-        // changching keys
-        if (menuitem == 6)
-            if ((menu_selection < 12) && (menu_selection > 0) && (pressed) && (is_selected)) {
-                key[menu_selection] = down;
-                is_selected         = false;
-                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                cfg_save();
-            }
+    // changching keys
+    if (menuitem == 6)
+        if ((menu_selection < 12) && (menu_selection > 0) && (pressed) && (is_selected)) {
+            key[menu_selection] = down;
+            is_selected         = false;
+            SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
+            cfg_save();
+        }
 
-        // selection pressed
-        if (((mousestate2.rgbButtons[0]) && (!mousestate.rgbButtons[0])) || (!KEYDOWN(buffer, DIK_RETURN) && KEYDOWN(buffer2, DIK_RETURN))) {
-            // loading a game
-            if (menuitem == 1)
-                if ((menu_selection < 11) && (menu_selection > 0)) {
-                    savegame_slot = menu_selection - 1;
-                    game_load();
-                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                    return;
-                }
-            // selecting a load
-            if (menuitem == 2)
-                if ((menu_selection < 11) && (menu_selection > 0)) {
-                    savegame_slot   = menu_selection - 1;
-                    menuitem        = 3;
-                    letters_in_name = letters_in_file_names[savegame_slot];
+    // selection pressed
+    if (((mousestate2.rgbButtons[0]) && (!mousestate.rgbButtons[0])) || (!KEYDOWN(buffer, DIK_RETURN) && KEYDOWN(buffer2, DIK_RETURN))) {
+        // loading a game
+        if (menuitem == 1)
+            if ((menu_selection < 11) && (menu_selection > 0)) {
+                savegame_slot = menu_selection - 1;
+                game_load();
+                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
+                return;
+            }
+        // selecting a load
+        if (menuitem == 2)
+            if ((menu_selection < 11) && (menu_selection > 0)) {
+                savegame_slot   = menu_selection - 1;
+                menuitem        = 3;
+                letters_in_name = letters_in_file_names[savegame_slot];
+                strcpy(savefilename, "                                                 ");
+                strcpy(savefilename, m_filenames[savegame_slot]);
+                if (!loadable[savegame_slot]) {
+                    letters_in_name = 0;
                     strcpy(savefilename, "                                                 ");
-                    strcpy(savefilename, m_filenames[savegame_slot]);
-                    if (!loadable[savegame_slot]) {
-                        letters_in_name = 0;
-                        strcpy(savefilename, "                                                 ");
-                    }
-                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                    return;
                 }
-            // saving a game
-            if (menuitem == 3)
-                if ((menu_selection < 11) && (menu_selection > 0)) {
-                    savegame_slot = menu_selection - 1;
-                    game_save();
-                    if (gamephase_old == GP_WORKSHOP) {
-                        menuitem  = 0;
-                        gamephase = GP_WORKSHOP;
-                    }
-                    if (gamephase_old == GP_MENU) {
-                        menuitem  = 0;
-                        gamephase = GP_MENU;
-                    }
-                    readsaves();
-                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                    return;
-                }
-            // changching settings
-            if (menuitem == 4)
-                if ((menu_selection < 10) && (menu_selection > 0)) {
-                    if (options[menu_selection]) options[menu_selection] = false;
-                    else options[menu_selection] = true;
-                    options[OPT_MUSIC] = false; // music permanently off
-                    cfg_save();
-                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                }
-
-            // changching keys //select a key
-            if (menuitem == 6)
-                if ((menu_selection < 12) && (menu_selection > 0)) {
-                    is_selected = true;
-                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                }
-
-            switch (menu_selection) {
-            case 0:
-                if (menuitem == 0) { // new game
-                    menuitem = 5;
-                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                    return;
-                }
-                if (menuitem == 5) { // difficulty level
-                    game_difficulty = 0;
-                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                    game_new();
-                }
-                return;
-            case 1:
-                if (menuitem == 0) { // load
-                    readsaves();
-                    menuitem      = 1;
-                    gamephase_old = GP_MENU;
-                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                }
-                if (menuitem == 5) { // difficulty level
-                    game_difficulty = 1;
-                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                    game_new();
-                }
-                return;
-            case 2:
-                if (menuitem == 0) { // options
-                    menuitem = 4;
-                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                }
-                if (menuitem == 5) { // difficulty level
-                    game_difficulty = 2;
-                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                    game_new();
-                }
-                return;
-            case 3:
-                if (menuitem == 0) { // exit
-                    SendMessage(hWnd, WM_CLOSE, 0, 0);
-                    // SndObjPlay(voices[0], 0, options[OPT_SOUND]&&SOUNDS_LOADED);
-                }
-                if (menuitem == 5) { // Back
-                    menuitem = 0;
-                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                }
-                return;
-            case 11:
-                if (menuitem == 4) { // set keys
-                    menuitem    = 6;
-                    is_selected = false; // key not selected
-                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                }
-                return;
-            case 12:
-                if ((menuitem == 1) || (menuitem == 2)) { // back
-                    // if it came to load from workshop
-                    if (gamephase_old == GP_WORKSHOP) {
-                        menuitem  = 0;
-                        gamephase = GP_WORKSHOP;
-                    }
-                    // if it came to load from menu
-                    if (gamephase_old == GP_MENU) {
-                        menuitem  = 0;
-                        gamephase = GP_MENU;
-                    }
-                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                }
-                if (menuitem == 3) {
-                    menuitem = 2;
-                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                }
-                if (menuitem == 4) {
-                    menuitem = 0;
-                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                }
-                if (menuitem == 6) {
-                    menuitem = 4;
-                    SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
-                }
+                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
                 return;
             }
+        // saving a game
+        if (menuitem == 3)
+            if ((menu_selection < 11) && (menu_selection > 0)) {
+                savegame_slot = menu_selection - 1;
+                game_save();
+                if (gamephase_old == GP_WORKSHOP) {
+                    menuitem  = 0;
+                    gamephase = GP_WORKSHOP;
+                }
+                if (gamephase_old == GP_MENU) {
+                    menuitem  = 0;
+                    gamephase = GP_MENU;
+                }
+                readsaves();
+                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
+                return;
+            }
+        // changching settings
+        if (menuitem == 4)
+            if ((menu_selection < 10) && (menu_selection > 0)) {
+                if (options[menu_selection]) options[menu_selection] = false;
+                else options[menu_selection] = true;
+                options[OPT_MUSIC] = false; // music permanently off
+                cfg_save();
+                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
+            }
+
+        // changching keys //select a key
+        if (menuitem == 6)
+            if ((menu_selection < 12) && (menu_selection > 0)) {
+                is_selected = true;
+                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
+            }
+
+        switch (menu_selection) {
+        case 0:
+            if (menuitem == 0) { // new game
+                menuitem = 5;
+                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
+                return;
+            }
+            if (menuitem == 5) { // difficulty level
+                game_difficulty = 0;
+                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
+                game_new();
+            }
+            return;
+        case 1:
+            if (menuitem == 0) { // load
+                readsaves();
+                menuitem      = 1;
+                gamephase_old = GP_MENU;
+                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
+            }
+            if (menuitem == 5) { // difficulty level
+                game_difficulty = 1;
+                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
+                game_new();
+            }
+            return;
+        case 2:
+            if (menuitem == 0) { // options
+                menuitem = 4;
+                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
+            }
+            if (menuitem == 5) { // difficulty level
+                game_difficulty = 2;
+                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
+                game_new();
+            }
+            return;
+        case 3:
+            if (menuitem == 0) { // exit
+                SendMessage(hWnd, WM_CLOSE, 0, 0);
+                // SndObjPlay(voices[0], 0, options[OPT_SOUND]&&SOUNDS_LOADED);
+            }
+            if (menuitem == 5) { // Back
+                menuitem = 0;
+                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
+            }
+            return;
+        case 11:
+            if (menuitem == 4) { // set keys
+                menuitem    = 6;
+                is_selected = false; // key not selected
+                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
+            }
+            return;
+        case 12:
+            if ((menuitem == 1) || (menuitem == 2)) { // back
+                // if it came to load from workshop
+                if (gamephase_old == GP_WORKSHOP) {
+                    menuitem  = 0;
+                    gamephase = GP_WORKSHOP;
+                }
+                // if it came to load from menu
+                if (gamephase_old == GP_MENU) {
+                    menuitem  = 0;
+                    gamephase = GP_MENU;
+                }
+                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
+            }
+            if (menuitem == 3) {
+                menuitem = 2;
+                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
+            }
+            if (menuitem == 4) {
+                menuitem = 0;
+                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
+            }
+            if (menuitem == 6) {
+                menuitem = 4;
+                SndObjPlay(voices[0], 0, options[OPT_SOUND] && SOUNDS_LOADED);
+            }
+            return;
         }
+    }
 }
 
 void calculatesmokes(void) // calculate smokes

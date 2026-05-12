@@ -337,7 +337,7 @@ void calc_moped(void); // calculate mopeds //for Artificial intelligence of mope
 void create_mopo(int d); // randomizes a moped to field
 void render_workshop(void); // draws a depot
 void readkey_game(void); // process keys during game
-void readkey_menu(void); // process keys in menu
+void readkey_menu(int down); // process keys in menu
 void readsaves(void); // read saved games
 void game_load(void); // loads a game
 void game_save(void); // saves a game
