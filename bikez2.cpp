@@ -541,18 +541,20 @@ void initWeapons() {
         int q = jsonInt(weapon_json, "id", 0);
         if (q <= last_q) { logg.error("sanity check failed: weapon index %d <= %d", q, last_q); exit(-1); }
         ase[q]._type            = jsonInt(weapon_json, "_type", 0);
-        if (ase[q]._type < 0 || ase[q]._type > 4) { logg.error("sanity check failed: unknow weapon type %d", ase[q]._type); exit(-1); }
+        if (ase[q]._type < 0 || ase[q]._type > 4) { logg.error("sanity check failed: weapon %d has unknown weapon type %d", q, ase[q]._type); exit(-1); }
         ase[q].bullet_picture   = jsonInt(weapon_json, "bullet_picture", 0);
-        ase[q].bullets_per_shot = jsonInt(weapon_json, "bullets_per_shot", 0);
-        if (ase[q].bullets_per_shot < 1) { logg.error("sanity check failed: no bullets_per_shot"); exit(-1); }
-        ase[q].damage           = jsonFloat(weapon_json, "damage", 0.0f);
-        if (ase[q].bullets_per_shot < 0) { logg.error("sanity check failed: negative weapon damage"); exit(-1); }
+        ase[q].bullets_per_shot = jsonInt(weapon_json, "bullets_per_shot", -1);
+        if (ase[q].bullets_per_shot < 1) { logg.error("sanity check failed: weapon %d has no bullets_per_shot", q); exit(-1); }
+        ase[q].damage           = jsonFloat(weapon_json, "damage", -1.0f);
+        if (ase[q].damage < 0) { logg.error("sanity check failed: weapon %d damage negative", q); exit(-1); }
         ase[q].decal_picture    = jsonInt(weapon_json, "decal_picture", 0);
         ase[q].homing           = jsonBool(weapon_json, "homing", false);
-        ase[q].dispersion       = jsonFloat(weapon_json, "dispersion", 0.0f);
+        ase[q].dispersion       = jsonFloat(weapon_json, "dispersion", -1.0f);
+        if (ase[q].dispersion <= 0) { logg.error("sanity check failed: weapon %d dispersion non-positive", q); exit(-1); }
         ase[q].explosion_size   = jsonInt(weapon_json, "explosion_size", 0);
         ase[q].num_bounces      = jsonInt(weapon_json, "num_bounces", 0);
-        ase[q].weight           = jsonFloat(weapon_json, "weight", 0.0f);
+        ase[q].weight           = jsonFloat(weapon_json, "weight", -1.0f);
+        if (ase[q].weight < 0) { logg.error("sanity check failed: weapon %d has negative weight", q); exit(-1); }
         ase[q].pdamage          = jsonInt(weapon_json, "pdamage", 0);
         ase[q].picture          = jsonInt(weapon_json, "picture", 0);
         ase[q].pspeed           = jsonInt(weapon_json, "pspeed", 0);

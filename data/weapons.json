@@ -4,7 +4,7 @@
       "id": 0,
       "picture": 0,
       "speed": 70,
-      "dispersion": 0.2f,
+      "dispersion": 0.2,
       "rate_of_fire": 30,
       "decal_picture": 0,
       "bullet_picture": 0,
