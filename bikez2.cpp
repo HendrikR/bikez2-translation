@@ -1926,114 +1926,72 @@ int find_free_bullet() {
 void shoot(int target, int from_character, int from_moped, float timer, bikebase* moped, int weapon_idx, float placex, float placey, float placez, float directionx, float directiony, float directionz) // shooting
 {
     int a, q;
-    int d = -1;
     float recoil;
 
     if (placex == 0.0) { // shooting from a bike
-        while (moped->gun_timer[weapon_idx] >= 0) {
-            moped->gun_timer[weapon_idx] = moped->gun_timer[weapon_idx] - ase[moped->ase[weapon_idx]].rate_of_fire;
-            for (q = 0; q < ase[moped->ase[weapon_idx]].bullets_per_shot; q++) {
-                a = find_free_bullet();
-
-                d            = a;
-                // recoil
-                recoil       = ((ase[moped->ase[weapon_idx]].pdamage + ase[moped->ase[weapon_idx]].pspeed) / ase[moped->ase[weapon_idx]].prate_of_fire) * 0.05f;
-                moped->speed = moped->speed - recoil;
-                if (moped->speed < -1.5f) moped->speed = -1.5f;
-
-                moped->has_muzzle_flare = true;
-                bullet[a].remove        = false;
-                bullet[a].from_moped    = from_moped;
-                bullet[a].from_gun      = moped->ase[weapon_idx];
-                bullet[a].smoke_count   = ase[moped->ase[weapon_idx]].smoke_count;
-                /*bullet[a].place.x=moped->x1+cosf(moped->direction)*15*moped->speed;
-                  bullet[a].place.y=moped->y1+70;
-                  bullet[a].place.z=moped->z1+sinf(moped->direction)*15*moped->speed;*/
-                bullet[a].place.x       = moped->piippu[3][0];
-                bullet[a].place.y       = moped->piippu[3][1];
-                bullet[a].place.z       = moped->piippu[3][2];
-
-                bullet[a].place_old      = bullet[a].place;
-                bullet[a].q              = -moped->direction; //-mopeds->frontdirection;
-                bullet[a].w              = moped->angle_roll;
-                bullet[a].e              = moped->angle_pitch;
-                bullet[a].timer          = timer;
-                bullet[a].from_character = from_character;
-                // player is target if it is a AI-player's
-                if (from_moped > 0) bullet[a].target = -1;
-                else bullet[a].target = target;
-
-                // bullet speed
-                if (ase[moped->ase[weapon_idx]].speed == 666)
-                    bullet[a].speed = randDouble(1.5f, 3.5f);
-                else bullet[a].speed = ase[moped->ase[weapon_idx]].speed;
-
-                // speed=random
-                if (ase[moped->ase[weapon_idx]].speed == 666) {
-                    bullet[a].direction.x = (float)cos(-bullet[a].q) * bullet[a].speed + randDouble(-ase[moped->ase[weapon_idx]].dispersion, ase[moped->ase[weapon_idx]].dispersion);
-                    bullet[a].direction.z = (float)sin(-bullet[a].q) * bullet[a].speed + randDouble(-ase[moped->ase[weapon_idx]].dispersion, ase[moped->ase[weapon_idx]].dispersion);
-                    bullet[a].direction.y = (float)sin(bullet[a].e) * bullet[a].speed + randDouble(-ase[moped->ase[weapon_idx]].dispersion, ase[moped->ase[weapon_idx]].dispersion);
-                }
-                // moving normally
-                else {
-                    bullet[a].direction.x = (float)cos(-bullet[a].q) * bullet[a].speed + randDouble(-ase[moped->ase[weapon_idx]].dispersion, ase[moped->ase[weapon_idx]].dispersion);
-                    bullet[a].direction.z = (float)sin(-bullet[a].q) * bullet[a].speed + randDouble(-ase[moped->ase[weapon_idx]].dispersion, ase[moped->ase[weapon_idx]].dispersion);
-                    bullet[a].direction.y = (float)sin(bullet[a].e) * bullet[a].speed + randDouble(-ase[moped->ase[weapon_idx]].dispersion, ase[moped->ase[weapon_idx]].dispersion);
-                }
-            }
-        }
+        if (moped->gun_timer[weapon_idx] < 0) return;
+        moped->gun_timer[weapon_idx] -= ase[moped->ase[weapon_idx]].rate_of_fire;
+        weapon_idx = moped->ase[weapon_idx];
     }
 
-    else { // shot from else where
-        for (q = 0; q < ase[weapon_idx].bullets_per_shot; q++) {
-            a = find_free_bullet();
+    for (q = 0; q < ase[weapon_idx].bullets_per_shot; q++) {
+        a = find_free_bullet();
 
-            // moped->gun_timer[weapon_idx]=moped->gun_timer[weapon_idx]-ase[moped->ase[weapon_idx]].rate_of_fire;
-            bullet[a].remove         = false;
-            bullet[a].from_moped     = from_moped;
-            bullet[a].from_gun       = weapon_idx;
-            bullet[a].smoke_count    = ase[weapon_idx].smoke_count;
+        bullet[a].remove         = false;
+        bullet[a].from_moped     = from_moped;
+        bullet[a].from_gun       = weapon_idx;
+        bullet[a].smoke_count    = ase[weapon_idx].smoke_count;
+        bullet[a].place_old      = bullet[a].place;
+        bullet[a].timer          = timer;
+        bullet[a].from_character = from_character;
+        bullet[a].target = target;
+        if (placex == 0.0) {
+                        bullet[a].place          = moped->piippu[3];
+            bullet[a].q              = -moped->direction; //-mopeds->frontdirection;
+            bullet[a].w              = moped->angle_roll;
+            bullet[a].e              = moped->angle_pitch;
+        } else {
             bullet[a].place          = D3DVECTOR(placex, placey, placez);
-            bullet[a].place_old      = bullet[a].place;
             bullet[a].q              = directionx;
             bullet[a].w              = directiony;
             bullet[a].e              = directionz;
-            bullet[a].timer          = timer;
-            bullet[a].from_character = from_character;
-            bullet[a].target         = target;
-
-            // bullet speed
-            if ((ase[weapon_idx].speed == 666))
-                bullet[a].speed = randDouble(1.5f, 3.5f);
-            else bullet[a].speed = ase[weapon_idx].speed;
-
-            // voices
-            if (ase[bullet[a].from_gun]._type == 0) playsound(2, 1, bullet[a].place.x, bullet[a].place.z);
-            if (ase[bullet[a].from_gun]._type == 1) playsound(5, 1, bullet[a].place.x, bullet[a].place.z);
-            if (ase[bullet[a].from_gun]._type == 2) playsound(4, 1, bullet[a].place.x, bullet[a].place.z);
-            if (ase[bullet[a].from_gun]._type == 3) playsound(3, 1, bullet[a].place.x, bullet[a].place.z);
-
-            // speed=random
-            if (ase[weapon_idx].speed == 666) {
-                bullet[a].direction.x = (float)cos(-bullet[a].q) * bullet[a].speed + randDouble(-ase[weapon_idx].dispersion, ase[weapon_idx].dispersion);
-                bullet[a].direction.z = (float)sin(-bullet[a].q) * bullet[a].speed + randDouble(-ase[weapon_idx].dispersion, ase[weapon_idx].dispersion);
-                bullet[a].direction.y = (float)sin(bullet[a].e) * bullet[a].speed + randDouble(-ase[weapon_idx].dispersion, ase[weapon_idx].dispersion);
-            }
-            // moves normally
-            else {
-                bullet[a].direction.x = (float)cos(-bullet[a].q) * bullet[a].speed + randDouble(-ase[weapon_idx].dispersion, ase[weapon_idx].dispersion);
-                bullet[a].direction.z = (float)sin(-bullet[a].q) * bullet[a].speed + randDouble(-ase[weapon_idx].dispersion, ase[weapon_idx].dispersion);
-                bullet[a].direction.y = (float)sin(bullet[a].e) * bullet[a].speed + randDouble(-ase[weapon_idx].dispersion, ase[weapon_idx].dispersion);
-            }
         }
-    }
 
-    // äänet //a= vähän epävarma
-    if (d >= 0) {
-        if (ase[bullet[d].from_gun]._type == 0) playsound(2, 1, bullet[d].place.x, bullet[d].place.z);
-        if (ase[bullet[d].from_gun]._type == 1) playsound(5, 1, bullet[d].place.x, bullet[d].place.z);
-        if (ase[bullet[d].from_gun]._type == 2) playsound(4, 1, bullet[d].place.x, bullet[d].place.z);
-        if (ase[bullet[d].from_gun]._type == 3) playsound(3, 1, bullet[d].place.x, bullet[d].place.z);
+        if (placex == 0.0) { // shooting from a bike
+            // target is player
+            if (from_moped > 0) bullet[a].target = -1;
+            // recoil
+            recoil       = ((ase[weapon_idx].pdamage + ase[weapon_idx].pspeed) / ase[weapon_idx].prate_of_fire) * 0.05f;
+            moped->speed = moped->speed - recoil;
+            if (moped->speed < -1.5f) moped->speed = -1.5f;
+
+            moped->has_muzzle_flare = true;
+            /*bullet[a].place.x=moped->x1+cosf(moped->direction)*15*moped->speed;
+              bullet[a].place.y=moped->y1+70;
+              bullet[a].place.z=moped->z1+sinf(moped->direction)*15*moped->speed;*/
+            // player is target if it is a AI-player's
+        }
+
+        // bullet speed
+        if ((ase[weapon_idx].speed == 666))
+            bullet[a].speed = randDouble(1.5f, 3.5f);
+        else bullet[a].speed = ase[weapon_idx].speed;
+
+        // play sound
+        if (ase[bullet[a].from_gun]._type == 0) playsound(2, 1, bullet[a].place.x, bullet[a].place.z);
+        if (ase[bullet[a].from_gun]._type == 1) playsound(5, 1, bullet[a].place.x, bullet[a].place.z);
+        if (ase[bullet[a].from_gun]._type == 2) playsound(4, 1, bullet[a].place.x, bullet[a].place.z);
+        if (ase[bullet[a].from_gun]._type == 3) playsound(3, 1, bullet[a].place.x, bullet[a].place.z);
+
+        if (ase[weapon_idx].speed == 666) { // speed=random
+            bullet[a].direction.x = (float)cos(-bullet[a].q) * bullet[a].speed + randDouble(-ase[weapon_idx].dispersion, ase[weapon_idx].dispersion);
+            bullet[a].direction.z = (float)sin(-bullet[a].q) * bullet[a].speed + randDouble(-ase[weapon_idx].dispersion, ase[weapon_idx].dispersion);
+            bullet[a].direction.y = (float)sin(bullet[a].e) * bullet[a].speed + randDouble(-ase[weapon_idx].dispersion, ase[weapon_idx].dispersion);
+        } else {  // moves normally
+            bullet[a].direction.x = (float)cos(-bullet[a].q) * bullet[a].speed + randDouble(-ase[weapon_idx].dispersion, ase[weapon_idx].dispersion);
+            bullet[a].direction.z = (float)sin(-bullet[a].q) * bullet[a].speed + randDouble(-ase[weapon_idx].dispersion, ase[weapon_idx].dispersion);
+            bullet[a].direction.y = (float)sin(bullet[a].e) * bullet[a].speed + randDouble(-ase[weapon_idx].dispersion, ase[weapon_idx].dispersion);
+        }
     }
 }
 
@@ -2932,15 +2890,11 @@ void calculatecharacters(void) // calculatecharacters
 
                 // character shoots
                 if (character[q].gun_timer < 0) character[q].gun_timer = character[q].gun_timer + elapsed * gamespeed;
-                // if((character[q].distance<1000)|(randInt(0,(int)(elapsed*gamespeed*300))==0)){
                 if (randInt(0, (int)(elapsed * gamespeed * character[q].distance * character[q].distance * ase[character[q].weapon_idx].rate_of_fire * 0.02f * 0.000001f + 1)) <= 1) {
-                    if (character[q].dying != true)
-                        if (character[q].weapon_idx != -1) {
-                            while (character[q].gun_timer >= 0) {
-                                character[q].gun_timer = character[q].gun_timer - ase[character[q].weapon_idx].rate_of_fire;
-                                shoot(-1, q, -1, -1, moped, character[q].weapon_idx, character[q].x + cos * 33, 92 * character[q].height, character[q].z + sin * 33, -character[q].direction, randDouble(-0.03f, 0.03f), randDouble(-0.03f, 0.03f));
-                                // shoot(q,2,-1,moped,character[q].weapon_idx,character[q].x+cos*33,85,character[q].z+sin*33,-character[q].direction,0,0); //shoot
-                            }
+                    if (! character[q].dying && character[q].weapon_idx != -1)
+                        while (character[q].gun_timer >= 0) {
+                            character[q].gun_timer = character[q].gun_timer - ase[character[q].weapon_idx].rate_of_fire;
+                            shoot(-1, q, -1, -1, moped, character[q].weapon_idx, character[q].x + cos * 33, 92 * character[q].height, character[q].z + sin * 33, -character[q].direction, randDouble(-0.03f, 0.03f), randDouble(-0.03f, 0.03f));
                         }
                 }
             }
