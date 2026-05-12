@@ -45,9 +45,7 @@ class __ANY__ { };
 
 typedef int DDCAPS, DDSURFACEDESC2, HRESULT, ATOM, LRESULT, HACCEL, D3DX_SURFACEFORMAT, LPDIRECTDRAWPALETTE, D3DX_FILTERTYPE;
 
-struct RGB {
-    float r, g, b, a;
-};
+typedef glm::vec4 RGBA;
 /*struct D3DVECTOR {
         D3DVECTOR(float x=0) :
                         x(x), y(x), z(x) {};
@@ -59,7 +57,7 @@ typedef glm::vec3 D3DVECTOR;
 typedef glm::vec3 D3DXVECTOR3;
 
 struct D3DLIGHT7 {
-    RGB dcvDiffuse, dcvAmbient, dcvSpecular;
+    RGBA dcvDiffuse, dcvAmbient, dcvSpecular;
     D3DVECTOR dvDirection, dvPosition;
     float dvAttenuation0, dvAttenuation1, dvAttenuation2, dvRange;
     float dvFalloff, dltType, dvTheta, dvPhi;
@@ -304,7 +302,7 @@ struct WNDCLASSEX {
 };
 
 struct D3DMATERIAL7 {
-    RGB dcvAmbient, dcvDiffuse, dcvSpecular;
+    RGBA dcvAmbient, dcvDiffuse, dcvSpecular;
     float dvPower;
 };
 struct D3DVIEWPORT7 {

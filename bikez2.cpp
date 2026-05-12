@@ -1917,15 +1917,9 @@ void setLights(float x, float y, float z)
 
     lights[q].on                  = true;
     lights[q].valo.dltType        = D3DLIGHT_POINT;
-    lights[q].valo.dcvDiffuse.r   = 1.0f;
-    lights[q].valo.dcvDiffuse.g   = 1.0f;
-    lights[q].valo.dcvDiffuse.b   = 1.0f;
-    lights[q].valo.dcvAmbient.r   = 1.0f;
-    lights[q].valo.dcvAmbient.g   = 1.0f;
-    lights[q].valo.dcvAmbient.b   = 1.0f;
-    lights[q].valo.dcvSpecular.r  = 1.0f;
-    lights[q].valo.dcvSpecular.g  = 1.0f;
-    lights[q].valo.dcvSpecular.b  = 1.0f;
+    lights[q].valo.dcvDiffuse     = RGBA(1.0f, 1.0f, 1.0f, 0.0f);
+    lights[q].valo.dcvAmbient     = RGBA(1.0f, 1.0f, 1.0f, 0.0f);
+    lights[q].valo.dcvSpecular    = RGBA(1.0f, 1.0f, 1.0f, 0.0f);
     lights[q].valo.dvDirection    = D3DVECTOR(1.0f);
     lights[q].valo.dvPosition.x   = x;
     lights[q].valo.dvPosition.y   = y;
@@ -3723,15 +3717,9 @@ void render_game_lights()
     lights[1].valo.dvPosition.y   = 5000;
     lights[1].valo.dvPosition.z   = kameraz1;
     lights[1].valo.dvRange        = maxvisible - 4000;
-    lights[1].valo.dcvDiffuse.r   = 0.1f;
-    lights[1].valo.dcvDiffuse.g   = 0.1f;
-    lights[1].valo.dcvDiffuse.b   = 0.1f;
-    lights[1].valo.dcvAmbient.r   = 0.0f;
-    lights[1].valo.dcvAmbient.g   = 0.0f;
-    lights[1].valo.dcvAmbient.b   = 0.0f;
-    lights[1].valo.dcvSpecular.r  = 0.0f;
-    lights[1].valo.dcvSpecular.g  = 0.0f;
-    lights[1].valo.dcvSpecular.b  = 0.0f;
+    lights[1].valo.dcvDiffuse     = RGBA(0.1f, 0.1f, 0.1f, 0.0f);
+    lights[1].valo.dcvAmbient     = RGBA(0.0f);
+    lights[1].valo.dcvSpecular    = RGBA(0.0f);
     lights[1].valo.dvDirection    = D3DVECTOR(1.0f);
     lights[1].valo.dvFalloff      = 1.0f;
     lights[1].valo.dltType        = D3DLIGHT_POINT;
@@ -3742,15 +3730,9 @@ void render_game_lights()
     m_pDevice->LightEnable(1, TRUE);
 
     /*	lights[q].valo.dltType = D3DLIGHT_POINT;
-            lights[q].valo.dcvDiffuse.r = 1.0f;
-            lights[q].valo.dcvDiffuse.g = 1.0f;
-            lights[q].valo.dcvDiffuse.b = 1.0f;
-            lights[q].valo.dcvAmbient.r = 1.0f;
-            lights[q].valo.dcvAmbient.g = 1.0f;
-            lights[q].valo.dcvAmbient.b = 1.0f;
-            lights[q].valo.dcvSpecular.r = 1.0f;
-            lights[q].valo.dcvSpecular.g = 1.0f;
-            lights[q].valo.dcvSpecular.b = 1.0f;
+            lights[q].valo.dcvDiffuse = RGBA(1.0f, 1.0f, 1.0f, 0.0f);
+            lights[q].valo.dcvAmbient = RGBA(1.0f, 1.0f, 1.0f, 0.0f);
+            lights[q].valo.dcvSpecular = RGBA(1.0f, 1.0f, 1.0f, 0.0f);
             lights[q].valo.dvDirection=1.0f;
             lights[q].valo.dvPosition.x = x;
             lights[q].valo.dvPosition.y = y;
@@ -6193,15 +6175,9 @@ void render_menu(void)
     m_pDevice->SetTransform(D3DTRANSFORMSTATE_VIEW, &m_View);
 
     lights[1].valo.dltType        = D3DLIGHT_POINT;
-    lights[1].valo.dcvDiffuse.r   = 1.0f;
-    lights[1].valo.dcvDiffuse.g   = 1.0f;
-    lights[1].valo.dcvDiffuse.b   = 1.0f;
-    lights[1].valo.dcvAmbient.r   = 1.0f;
-    lights[1].valo.dcvAmbient.g   = 1.0f;
-    lights[1].valo.dcvAmbient.b   = 1.0f;
-    lights[1].valo.dcvSpecular.r  = 1.0f;
-    lights[1].valo.dcvSpecular.g  = 1.0f;
-    lights[1].valo.dcvSpecular.b  = 1.0f;
+    lights[1].valo.dcvDiffuse     = RGBA(1.0f, 1.0f, 1.0f, 0.0f);
+    lights[1].valo.dcvAmbient     = RGBA(1.0f, 1.0f, 1.0f, 0.0f);
+    lights[1].valo.dcvSpecular    = RGBA(1.0f, 1.0f, 1.0f, 0.0f);
     lights[1].valo.dvDirection    = D3DVECTOR(1.0f);
     lights[1].valo.dvPosition.x   = 0;
     lights[1].valo.dvPosition.y   = 0;
