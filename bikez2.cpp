@@ -569,9 +569,6 @@ void initWeapons() {
 
 void moveparts(int q)
 {
-    // int q;
-    // for (q=0; q<1; q++){
-
     // head
     character[q].bodypart_coords[2].x = 0;
     character[q].bodypart_coords[2].y = 37.1f;
@@ -811,13 +808,9 @@ BOOL load_obj(const char filename[200], obj* target, BOOL mirror)
                 target[b].sisus[q].loota.triangle = new vvertex[faces * 3];
                 target[b].sisus[q].loota.vert     = faces * 3;
 
-                target[b].sisus[q].upleft.x = 0;
-                target[b].sisus[q].upleft.y = 0;
-                target[b].sisus[q].upleft.z = 0;
+                target[b].sisus[q].upleft = D3DVECTOR(0,0,0);
 
-                target[b].sisus[q].downright.x = 0;
-                target[b].sisus[q].downright.y = 0;
-                target[b].sisus[q].downright.z = 0;
+                target[b].sisus[q].downright = D3DVECTOR(0,0,0);
 
                 for (i = 0; i < kolme; i++) {
                     fgets(row, sizeof(row), fil);
@@ -877,34 +870,22 @@ BOOL load_obj(const char filename[200], obj* target, BOOL mirror)
                 }
 
                 for (i = 0; i < faces; i++) {
-                    p1.x                                                  = x[sivu0[i]];
-                    p1.y                                                  = y[sivu0[i]];
-                    p1.z                                                  = z[sivu0[i]];
-                    vNormal.x                                             = x1[sivu0[i]];
-                    vNormal.y                                             = y1[sivu0[i]];
-                    vNormal.z                                             = z1[sivu0[i]];
+                    p1 = D3DVECTOR(x[sivu0[i]], y[sivu0[i]], z[sivu0[i]]);
+                    vNormal = D3DVECTOR(x1[sivu0[i]], y1[sivu0[i]], z1[sivu0[i]]);
                     target[b].sisus[q].loota.triangle[i * 3 + 0].position = p1;
                     target[b].sisus[q].loota.triangle[i * 3 + 0].normal   = vNormal;
                     target[b].sisus[q].loota.triangle[i * 3 + 0].u        = u[sivu20[i]]; // w[sivu20[i]];//side
                     target[b].sisus[q].loota.triangle[i * 3 + 0].v        = v[sivu20[i]]; // w[sivu20[i]];
 
-                    p1.x                                                  = x[sivu1[i]];
-                    p1.y                                                  = y[sivu1[i]];
-                    p1.z                                                  = z[sivu1[i]];
-                    vNormal.x                                             = x1[sivu1[i]];
-                    vNormal.y                                             = y1[sivu1[i]];
-                    vNormal.z                                             = z1[sivu1[i]];
+                    p1 = D3DVECTOR(x[sivu1[i]], y[sivu1[i]], z[sivu1[i]]);
+                    vNormal = D3DVECTOR(x1[sivu1[i]], y1[sivu1[i]], z1[sivu1[i]]);
                     target[b].sisus[q].loota.triangle[i * 3 + 1].position = p1;
                     target[b].sisus[q].loota.triangle[i * 3 + 1].normal   = vNormal;
                     target[b].sisus[q].loota.triangle[i * 3 + 1].u        = u[sivu21[i]]; // w[sivu21[i]];
                     target[b].sisus[q].loota.triangle[i * 3 + 1].v        = v[sivu21[i]]; // w[sivu21[i]];
 
-                    p1.x                                                  = x[sivu2[i]];
-                    p1.y                                                  = y[sivu2[i]];
-                    p1.z                                                  = z[sivu2[i]];
-                    vNormal.x                                             = x1[sivu2[i]];
-                    vNormal.y                                             = y1[sivu2[i]];
-                    vNormal.z                                             = z1[sivu2[i]];
+                    p1 = D3DVECTOR(x[sivu2[i]], y[sivu2[i]], z[sivu2[i]]);
+                    vNormal = D3DVECTOR(x1[sivu2[i]], y1[sivu2[i]], z1[sivu2[i]]);
                     target[b].sisus[q].loota.triangle[i * 3 + 2].position = p1;
                     target[b].sisus[q].loota.triangle[i * 3 + 2].normal   = vNormal;
                     target[b].sisus[q].loota.triangle[i * 3 + 2].u        = u[sivu22[i]]; // w[sivu22[i]];
@@ -1405,14 +1386,7 @@ void calculatesmokes(void) // calculate smokes
 
         // smokes fly
         if (smokes[a].up != 0) {
-            //	camx,camy,camz)
-            /*smokes[a].q=-atan2f(-kamerax2+kamerax1,-kameraz2+kameraz1);
-              smokes[a].w=0;
-              smokes[a].e=-atan2f(-kameray2+kameray1,((-kameraz2+kameraz1+0.1f)*(-kamerax2+kamerax1+0.1f)));
-            */
-            smokes[a].place.x = smokes[a].place.x + smokes[a].cos * elapsed * gamespeed * smoke_speed;
-            smokes[a].place.y = smokes[a].place.y + smokes[a].up * elapsed * gamespeed * smoke_speed;
-            smokes[a].place.z = smokes[a].place.z + smokes[a].sin * elapsed * gamespeed * smoke_speed;
+            smokes[a].place = D3DVECTOR(smokes[a].cos, smokes[a].up, smokes[a].sin) * elapsed * gamespeed * smoke_speed;
         }
     }
 }
@@ -1437,9 +1411,7 @@ alku1:
     if (!smokes[a].inactive) goto alku1;
 
     smokes[a].inactive = false;
-    smokes[a].place.x  = x;
-    smokes[a].place.y  = y;
-    smokes[a].place.z  = z;
+    smokes[a].place    = D3DVECTOR(x,y,z);
     smokes[a]._type    = _type;
     smokes[a].size     = size + randDouble(-0.2f, 0.2f);
     if (size < 0.1f) size = 0.1f;
@@ -1555,9 +1527,7 @@ void calculatebullets(void) // calculates bullets
 
             bullet[a].q = bullet[a].q + negaatio * (dq - bullet[a].q) * elapsed * gamespeed * 3 * 0.001f;
 
-            bullet[a].direction.x = (float)cos(-bullet[a].q) * bullet[a].speed;
-            bullet[a].direction.z = (float)sin(-bullet[a].q) * bullet[a].speed;
-            bullet[a].direction.y = (float)sin(bullet[a].e) * bullet[a].speed;
+            bullet[a].direction = D3DVECTOR(cos(-bullet[a].q), sin(-bullet[a].q), sin(bullet[a].e)) * bullet[a].speed;
         }
 
         // smoketrail
@@ -1921,9 +1891,7 @@ void setLights(float x, float y, float z)
     lights[q].valo.dcvAmbient     = RGBA(1.0f, 1.0f, 1.0f, 0.0f);
     lights[q].valo.dcvSpecular    = RGBA(1.0f, 1.0f, 1.0f, 0.0f);
     lights[q].valo.dvDirection    = D3DVECTOR(1.0f);
-    lights[q].valo.dvPosition.x   = x;
-    lights[q].valo.dvPosition.y   = y;
-    lights[q].valo.dvPosition.z   = z;
+    lights[q].valo.dvPosition     = D3DVECTOR(x, y, z);
     lights[q].valo.dvAttenuation0 = 0.5f;
     lights[q].valo.dvAttenuation1 = 0.0f;
     lights[q].valo.dvAttenuation2 = 0.0f;
@@ -2019,9 +1987,7 @@ void shoot(int target, int from_character, int from_moped, float timer, bikebase
             bullet[a].from_moped     = from_moped;
             bullet[a].from_gun       = weapon_idx;
             bullet[a].smoke_count    = ase[weapon_idx].smoke_count;
-            bullet[a].place.x        = placex;
-            bullet[a].place.y        = placey;
-            bullet[a].place.z        = placez;
+            bullet[a].place          = D3DVECTOR(placex, placey, placez);
             bullet[a].place_old      = bullet[a].place;
             bullet[a].q              = directionx;
             bullet[a].w              = directiony;
@@ -3734,9 +3700,7 @@ void render_game_lights()
             lights[q].valo.dcvAmbient = RGBA(1.0f, 1.0f, 1.0f, 0.0f);
             lights[q].valo.dcvSpecular = RGBA(1.0f, 1.0f, 1.0f, 0.0f);
             lights[q].valo.dvDirection=1.0f;
-            lights[q].valo.dvPosition.x = x;
-            lights[q].valo.dvPosition.y = y;
-            lights[q].valo.dvPosition.z = z;
+            lights[q].valo.dvPosition = D3DVECTOR(x, y, z);
             lights[q].valo.dvAttenuation0 = 0.5f;
             lights[q].valo.dvAttenuation1=0.0f;
             lights[q].valo.dvAttenuation2=0.0f;
@@ -6179,9 +6143,7 @@ void render_menu(void)
     lights[1].valo.dcvAmbient     = RGBA(1.0f, 1.0f, 1.0f, 0.0f);
     lights[1].valo.dcvSpecular    = RGBA(1.0f, 1.0f, 1.0f, 0.0f);
     lights[1].valo.dvDirection    = D3DVECTOR(1.0f);
-    lights[1].valo.dvPosition.x   = 0;
-    lights[1].valo.dvPosition.y   = 0;
-    lights[1].valo.dvPosition.z   = 0;
+    lights[1].valo.dvPosition     = D3DVECTOR(0.0, 0.0, 0.0);
     lights[1].valo.dvAttenuation0 = 0.5f;
     lights[1].valo.dvAttenuation1 = 0.0f;
     lights[1].valo.dvAttenuation2 = 0.0f;
