@@ -448,17 +448,17 @@ void initGraphics()
     mallit[OBJ_CHAR4].malli  = new obj[objcount[OBJ_CHAR4]];
     mallit[OBJ_BIKE3].malli  = new obj[objcount[OBJ_BIKE3]];
     mallit[OBJ_CHAR5].malli  = new obj[objcount[OBJ_CHAR5]];
-    load("models/obj1.3dw",  mallit[OBJ_BIKE1].malli, false, false);
-    load("models/map0.3dw",  mallit[OBJ_MAP].malli,   false, false);
-    load("models/obj2.3dw",  mallit[OBJ_BULLET].malli,false, false);
-    load("models/ukko0.3dw", mallit[OBJ_CHAR0].malli, false, false);
-    load("models/ukko1.3dw", mallit[OBJ_CHAR1].malli, false, false);
-    load("models/ukko2.3dw", mallit[OBJ_CHAR2].malli, false, false);
-    load("models/obj3.3dw",  mallit[OBJ_BIKE2].malli, false, false);
-    load("models/ukko3.3dw", mallit[OBJ_CHAR3].malli, false, false);
-    load("models/ukko4.3dw", mallit[OBJ_CHAR4].malli, false, false);
-    load("models/obj4.3dw",  mallit[OBJ_BIKE3].malli, false, false);
-    load("models/ukko5.3dw", mallit[OBJ_CHAR5].malli, false, false);
+    load_obj("models/obj1.3dw",  mallit[OBJ_BIKE1].malli, false);
+    load_obj("models/map0.3dw",  mallit[OBJ_MAP].malli,   false);
+    load_obj("models/obj2.3dw",  mallit[OBJ_BULLET].malli,false);
+    load_obj("models/ukko0.3dw", mallit[OBJ_CHAR0].malli, false);
+    load_obj("models/ukko1.3dw", mallit[OBJ_CHAR1].malli, false);
+    load_obj("models/ukko2.3dw", mallit[OBJ_CHAR2].malli, false);
+    load_obj("models/obj3.3dw",  mallit[OBJ_BIKE2].malli, false);
+    load_obj("models/ukko3.3dw", mallit[OBJ_CHAR3].malli, false);
+    load_obj("models/ukko4.3dw", mallit[OBJ_CHAR4].malli, false);
+    load_obj("models/obj4.3dw",  mallit[OBJ_BIKE3].malli, false);
+    load_obj("models/ukko5.3dw", mallit[OBJ_CHAR5].malli, false);
 
     // initialize matrix
     ZeroMemory(&matrices, sizeof(matrices));
@@ -733,7 +733,7 @@ BOOL loadwall(const char* nimi, RouteGroup* target, BOOL mirror)
     return true;
 }
 
-BOOL load(const char filename[200], obj* target, BOOL mirror, BOOL miekkakala)
+BOOL load_obj(const char filename[200], obj* target, BOOL mirror)
 {
     FILE* fil;
     CHAR row[300];
@@ -788,18 +788,6 @@ BOOL load(const char filename[200], obj* target, BOOL mirror, BOOL miekkakala)
         groupy = (float)atof(row);
         fgets(row, sizeof(row), fil);
         groupz = (float)atof(row);
-
-        // At this point we load the tip of the sword.
-
-        if (miekkakala) // swordfish
-        {
-            fgets(row, sizeof(row), fil);
-            target[b].swordpointx = (float)atof(row) - groupx;
-            fgets(row, sizeof(row), fil);
-            target[b].swordpointy = (float)atof(row) - groupy;
-            fgets(row, sizeof(row), fil);
-            target[b].swordpointz = (float)atof(row) - groupz;
-        }
 
         target[b].mirror = mirror;
         target[b].sisus  = new objekt[a];
