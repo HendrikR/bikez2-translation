@@ -1905,29 +1905,40 @@ void setLights(float x, float y, float z)
     m_pDevice->LightEnable(q, TRUE);
 }
 
+
+// deciding wich bullet is replaced with a new one
+int find_free_bullet() {
+    // TODO: becomes inefficient if many bullets are {{.removed == false}} at the same time
+    uint32_t free_bullets = 0;
+    for (uint32_t i=10; i<MAX_BULLETS; ++i) if (bullet[i].remove == true) free_bullets += 1;
+    //std::cout << "randomly finding one out of "<< free_bullets <<" free bullets" << std::endl;
+
+    int a = 10;
+    int b = 0;
+    do {
+        a = randInt(10, MAX_BULLETS);
+        b = b + 1;
+        if (b > MAX_BULLETS) bullet[a].remove = true;
+    } while (!bullet[a].remove);
+    return a;
+}
+
 void shoot(int target, int from_character, int from_moped, float timer, bikebase* moped, int weapon_idx, float placex, float placey, float placez, float directionx, float directiony, float directionz) // shooting
 {
-    int a, b, q;
+    int a, q;
     int d = -1;
-    float rekyyli;
+    float recoil;
 
     if (placex == 0.0) { // shooting from a bike
         while (moped->gun_timer[weapon_idx] >= 0) {
             moped->gun_timer[weapon_idx] = moped->gun_timer[weapon_idx] - ase[moped->ase[weapon_idx]].rate_of_fire;
             for (q = 0; q < ase[moped->ase[weapon_idx]].bullets_per_shot; q++) {
-                // deciding wich bullet is replaced with a new one
-                a = 10;
-                b = 0;
-            alku1:
-                a = randInt(10, MAX_BULLETS);
-                b = b + 1;
-                if (b > MAX_BULLETS) bullet[a].remove = true;
-                if (!bullet[a].remove) goto alku1;
+                a = find_free_bullet();
 
                 d            = a;
                 // recoil
-                rekyyli      = ((ase[moped->ase[weapon_idx]].pdamage + ase[moped->ase[weapon_idx]].pspeed) / ase[moped->ase[weapon_idx]].prate_of_fire) * 0.05f;
-                moped->speed = moped->speed - rekyyli;
+                recoil       = ((ase[moped->ase[weapon_idx]].pdamage + ase[moped->ase[weapon_idx]].pspeed) / ase[moped->ase[weapon_idx]].prate_of_fire) * 0.05f;
+                moped->speed = moped->speed - recoil;
                 if (moped->speed < -1.5f) moped->speed = -1.5f;
 
                 moped->has_muzzle_flare = true;
@@ -1975,16 +1986,7 @@ void shoot(int target, int from_character, int from_moped, float timer, bikebase
 
     else { // shot from else where
         for (q = 0; q < ase[weapon_idx].bullets_per_shot; q++) {
-            // deciding wich bullet is replaced with a new one
-
-            a = 10;
-            b = 0;
-        alku2:
-            a = randInt(10, MAX_BULLETS);
-            b = b + 1;
-            if (b > MAX_BULLETS) bullet[a].remove = true;
-            if (!bullet[a].remove) goto alku2;
-            d = a;
+            a = find_free_bullet();
 
             // moped->gun_timer[weapon_idx]=moped->gun_timer[weapon_idx]-ase[moped->ase[weapon_idx]].rate_of_fire;
             bullet[a].remove         = false;
